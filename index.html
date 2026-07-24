@@ -244,6 +244,31 @@ body { font-family: 'Poppins', sans-serif; background: var(--darker); color: var
 
 .mobile-menu-btn { display: none; background: none; border: none; color: var(--text); font-size: 1.5rem; cursor: pointer; }
 
+
+/* ===== MAP SECTION ===== */
+.map-wrapper {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid var(--glass);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+}
+.map-wrapper iframe {
+  width: 100%;
+  height: 400px;
+  border: none;
+  display: block;
+}
+.map-btn-group {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+}
+
 @media (max-width: 768px) {
   .top-bar { justify-content: center; text-align: center; font-size: 0.75rem; }
   .top-bar-left, .top-bar-right { justify-content: center; width: 100%; gap: 1rem; }
@@ -263,6 +288,9 @@ body { font-family: 'Poppins', sans-serif; background: var(--darker); color: var
   .calendar-section { padding: 1.5rem; }
   .announcement-content span { margin: 0 1.2rem; }
   .featured-grid { grid-template-columns: 1fr; }
+  .map-wrapper iframe { height: 280px; }
+  .map-btn-group { gap: 0.8rem; }
+
 }
 </style>
 <base target="_blank">
@@ -651,7 +679,7 @@ body { font-family: 'Poppins', sans-serif; background: var(--darker); color: var
     <div class="section-tag">Find Us</div>
     <h2 class="section-title">Visit Our Campus</h2>
   </div>
-  <div class="location-section reveal">
+  <div class="location-section reveal" style="padding: 2.5rem;">
     <h3>📍 NEXA Computer Institute</h3>
     <div class="location-address">
       <strong>NEXA Building</strong><br>
@@ -659,7 +687,21 @@ body { font-family: 'Poppins', sans-serif; background: var(--darker); color: var
       Mau Darwaja, <strong>Farrukhabad, Uttar Pradesh — 209625</strong>
     </div>
     <p style="color: var(--text-muted); margin-bottom: 1.5rem; font-size:0.95rem;">Easily accessible location in the heart of Farrukhabad. Visit us for a <strong>FREE demo class</strong>!</p>
-    <a href="https://wa.me/917696566162" target="_blank" class="btn btn-whatsapp" style="font-size:1rem;">📱 Get Directions on WhatsApp</a>
+
+    <!-- GOOGLE MAPS EMBED -->
+    <div class="map-wrapper reveal">
+      <iframe 
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3542.343013861802!2d79.5689419!3d27.396226299999995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399e3105d67b7ff3%3A0x6f26c8aef37dab37!2sNEXA%20computer%20institute.!5e0!3m2!1sen!2sin!4v1784894131313!5m2!1sen!2sin" 
+        allowfullscreen="" 
+        loading="lazy" 
+        referrerpolicy="strict-origin-when-cross-origin">
+      </iframe>
+    </div>
+
+    <div class="map-btn-group">
+      <a href="https://www.google.com/maps/dir/?api=1&destination=NEXA+computer+institute,+Bahadurganj+Tarai,+Farrukhabad" target="_blank" class="btn btn-primary" style="font-size:0.9rem; padding:0.8rem 1.8rem;">🗺️ Open in Google Maps</a>
+      <a href="https://wa.me/917696566162" target="_blank" class="btn btn-whatsapp" style="font-size:0.9rem; padding:0.8rem 1.8rem;">💬 Get Directions on WhatsApp</a>
+    </div>
   </div>
 </section>
 
