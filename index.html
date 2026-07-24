@@ -204,6 +204,11 @@ body { font-family: 'Poppins', sans-serif; background: var(--darker); color: var
 .location-address { font-size: 1.1rem; color: var(--text-muted); margin-bottom: 1.5rem; line-height: 1.8; }
 .location-address strong { color: var(--secondary); }
 
+/* MAP */
+.map-wrapper { width: 100%; max-width: 900px; margin: 0 auto; border-radius: 20px; overflow: hidden; border: 1px solid var(--glass); box-shadow: 0 20px 50px rgba(0,0,0,0.3); }
+.map-wrapper iframe { width: 100%; height: 400px; border: none; display: block; }
+.map-btn-group { display: flex; justify-content: center; gap: 1rem; margin-top: 1.5rem; flex-wrap: wrap; }
+
 /* CTA */
 .cta-section { text-align: center; padding: 5rem 5%; position: relative; z-index: 1; }
 .cta-box { max-width: 700px; margin: 0 auto; padding: 3.5rem 2.5rem; background: linear-gradient(135deg, rgba(99, 102, 241, 0.08), rgba(245, 158, 11, 0.08)); border: 1px solid var(--glass); border-radius: 24px; position: relative; overflow: hidden; }
@@ -244,31 +249,6 @@ body { font-family: 'Poppins', sans-serif; background: var(--darker); color: var
 
 .mobile-menu-btn { display: none; background: none; border: none; color: var(--text); font-size: 1.5rem; cursor: pointer; }
 
-
-/* ===== MAP SECTION ===== */
-.map-wrapper {
-  width: 100%;
-  max-width: 900px;
-  margin: 0 auto;
-  border-radius: 20px;
-  overflow: hidden;
-  border: 1px solid var(--glass);
-  box-shadow: 0 20px 50px rgba(0,0,0,0.3);
-}
-.map-wrapper iframe {
-  width: 100%;
-  height: 400px;
-  border: none;
-  display: block;
-}
-.map-btn-group {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  margin-top: 1.5rem;
-  flex-wrap: wrap;
-}
-
 @media (max-width: 768px) {
   .top-bar { justify-content: center; text-align: center; font-size: 0.75rem; }
   .top-bar-left, .top-bar-right { justify-content: center; width: 100%; gap: 1rem; }
@@ -290,7 +270,6 @@ body { font-family: 'Poppins', sans-serif; background: var(--darker); color: var
   .featured-grid { grid-template-columns: 1fr; }
   .map-wrapper iframe { height: 280px; }
   .map-btn-group { gap: 0.8rem; }
-
 }
 </style>
 <base target="_blank">
@@ -300,16 +279,16 @@ body { font-family: 'Poppins', sans-serif; background: var(--darker); color: var
 <!-- MARQUEE -->
 <div class="announcement-bar">
   <div class="announcement-content">
-    <span>🎓 Admission Open 2026 — Enroll Now!</span>
-    <span>📞 Call / WhatsApp: 7696566162</span>
-    <span>🏆 NIELIT CCC & O Level — Govt. Certified</span>
-    <span>🤖 New: Artificial Intelligence (AI Master Course)</span>
-    <span>📊 Tally Prime + GST — Most Demanded Course</span>
-    <span>🎓 Admission Open 2026 — Enroll Now!</span>
-    <span>📞 Call / WhatsApp: 7696566162</span>
-    <span>🏆 NIELIT CCC & O Level — Govt. Certified</span>
-    <span>🤖 New: Artificial Intelligence (AI Master Course)</span>
-    <span>📊 Tally Prime + GST — Most Demanded Course</span>
+    <span>🎓 एडमिशन खुला है 2026 — अभी एनरोल करें!</span>
+    <span>📞 कॉल / व्हाट्सएप: 7696566162</span>
+    <span>🏆 NIELIT CCC & O Level — सरकारी प्रमाणित</span>
+    <span>🤖 नया: Artificial Intelligence (AI मास्टर कोर्स)</span>
+    <span>📊 Tally Prime + GST — सबसे ज़्यादा डिमांड वाला कोर्स</span>
+    <span>🎓 एडमिशन खुला है 2026 — अभी एनरोल करें!</span>
+    <span>📞 कॉल / व्हाट्सएप: 7696566162</span>
+    <span>🏆 NIELIT CCC & O Level — सरकारी प्रमाणित</span>
+    <span>🤖 नया: Artificial Intelligence (AI मास्टर कोर्स)</span>
+    <span>📊 Tally Prime + GST — सबसे ज़्यादा डिमांड वाला कोर्स</span>
   </div>
 </div>
 
@@ -328,7 +307,7 @@ body { font-family: 'Poppins', sans-serif; background: var(--darker); color: var
   <div class="top-bar-right">
     <span>
       <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-      Bahadurganj Tarai, Near Police Station Maudarwaja, Farrukhabad
+      बहादुरगंज तिराहा, पुलिस स्टेशन के पास मऊदरवाजा, फर्रुखाबाद
     </span>
   </div>
 </div>
@@ -342,14 +321,14 @@ body { font-family: 'Poppins', sans-serif; background: var(--darker); color: var
     NEXA <span>Institute</span>
   </div>
   <ul class="nav-links">
-    <li><a href="#home">Home</a></li>
-    <li><a href="#featured">Featured</a></li>
-    <li><a href="#courses">Courses</a></li>
-    <li><a href="#calendar">Calendar</a></li>
-    <li><a href="#why-us">Why Us</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="https://deepaknic.github.io/NEXA/Quiz.html" target="_blank" class="mcq-btn">📝 MCQ Test</a></li>
-    <li><a href="https://wa.me/917696566162" target="_blank" class="admission-btn">🎓 Admission</a></li>
+    <li><a href="#home">होम</a></li>
+    <li><a href="#featured">टॉप कोर्स</a></li>
+    <li><a href="#courses">सभी कोर्स</a></li>
+    <li><a href="#calendar">परीक्षा कैलेंडर</a></li>
+    <li><a href="#why-us">क्यों NEXA?</a></li>
+    <li><a href="#contact">संपर्क करें</a></li>
+    <li><a href="https://deepaknic.github.io/NEXA/Quiz.html" target="_blank" class="mcq-btn">📝 MCQ टेस्ट</a></li>
+    <li><a href="https://wa.me/917696566162" target="_blank" class="admission-btn">🎓 एडमिशन</a></li>
   </ul>
   <button class="mobile-menu-btn">☰</button>
 </nav>
@@ -358,16 +337,16 @@ body { font-family: 'Poppins', sans-serif; background: var(--darker); color: var
 <section class="hero" id="home">
   <div class="hero-container">
     <div class="hero-content">
-      <div class="hero-badge">🚀 Best Computer Institute in Farrukhabad</div>
-      <h1>Transforming Digital Education, Transforming India</h1>
-      <p>Master <strong>CCC, O Level, Tally Prime + GST, AI</strong> & more with expert faculty. Govt. certified courses with 100% practical training. Your career starts here!</p>
+      <div class="hero-badge">🚀 फर्रुखाबाद का बेस्ट कंप्यूटर इंस्टीट्यूट</div>
+      <h1>डिजिटल शिक्षा में क्रांति, भारत को नई दिशा</h1>
+      <p><strong>CCC, O Level, Tally Prime + GST, AI</strong> और बहुत कुछ एक्सपर्ट फैकल्टी के साथ सीखें। सरकारी प्रमाणित कोर्स, 100% प्रैक्टिकल ट्रेनिंग। आपका करियर यहीं से शुरू होता है!</p>
       <div class="hero-location">
         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-        NEXA Building, Near Police Station, Mau Darwaja, Farrukhabad, UP — 209625
+        NEXA Building, पुलिस स्टेशन के पास, मऊ दरवाजा, फर्रुखाबाद, UP — 209625
       </div>
       <div class="btn-group">
-        <a href="#featured" class="btn btn-primary">Explore Courses</a>
-        <a href="https://wa.me/917696566162" target="_blank" class="btn btn-whatsapp">💬 WhatsApp Now</a>
+        <a href="#featured" class="btn btn-primary">कोर्स देखें</a>
+        <a href="https://wa.me/917696566162" target="_blank" class="btn btn-whatsapp">💬 व्हाट्सएप करें</a>
       </div>
     </div>
     <div class="hero-image-wrapper">
@@ -377,11 +356,11 @@ body { font-family: 'Poppins', sans-serif; background: var(--darker); color: var
       </div>
       <div class="floating-card">
         <div class="floating-card-icon">👨‍🎓</div>
-        <div class="floating-card-text"><strong>500+</strong>Students Trained</div>
+        <div class="floating-card-text"><strong>500+</strong>छात्र प्रशिक्षित</div>
       </div>
       <div class="floating-card">
         <div class="floating-card-icon">⭐</div>
-        <div class="floating-card-text"><strong>4.9/5</strong>Student Rating</div>
+        <div class="floating-card-text"><strong>4.9/5</strong>छात्र रेटिंग</div>
       </div>
     </div>
   </div>
@@ -391,72 +370,72 @@ body { font-family: 'Poppins', sans-serif; background: var(--darker); color: var
 <div class="stats-bar">
   <div class="stat-item reveal">
     <div class="stat-number">13+</div>
-    <div class="stat-label">Professional Courses</div>
+    <div class="stat-label">प्रोफेशनल कोर्स</div>
   </div>
   <div class="stat-item reveal">
     <div class="stat-number">100%</div>
-    <div class="stat-label">Practical Training</div>
+    <div class="stat-label">प्रैक्टिकल ट्रेनिंग</div>
   </div>
   <div class="stat-item reveal">
     <div class="stat-number">Govt.</div>
-    <div class="stat-label">NIELIT Certified</div>
+    <div class="stat-label">NIELIT प्रमाणित</div>
   </div>
   <div class="stat-item reveal">
     <div class="stat-number">Expert</div>
-    <div class="stat-label">Faculty Members</div>
+    <div class="stat-label">अनुभवी फैकल्टी</div>
   </div>
 </div>
 
 <!-- FEATURED COURSES (Tally, O Level, CCC, AI) -->
 <section class="section" id="featured">
   <div class="section-header reveal">
-    <div class="section-tag">⭐ Best Sellers</div>
-    <h2 class="section-title">Our Star Courses</h2>
-    <p class="section-subtitle">Most enrolled & career-boosting programs at NEXA.</p>
+    <div class="section-tag">⭐ बेस्ट सेलर्स</div>
+    <h2 class="section-title">हमारे स्टार कोर्स</h2>
+    <p class="section-subtitle">NEXA में सबसे ज़्यादा एनरोल किए जाने वाले और करियर बूस्ट करने वाले प्रोग्राम।</p>
   </div>
   <div class="featured-grid">
     <div class="featured-card reveal">
-      <span class="featured-badge">Most Popular</span>
+      <span class="featured-badge">सबसे लोकप्रिय</span>
       <div class="featured-icon">📊</div>
       <h3>Tally Prime + GST</h3>
-      <p>India's most demanded accounting software. Master GST billing, inventory, financial statements & business accounting with real-world projects.</p>
+      <p>भारत का सबसे ज़्यादा डिमांड वाला अकाउंटिंग सॉफ्टवेयर। GST बिलिंग, इन्वेंटरी, फाइनेंशियल स्टेटमेंट्स और बिजनेस अकाउंटिंग रीयल-वर्ल्ड प्रोजेक्ट्स के साथ सीखें।</p>
       <div class="featured-meta">
-        <span>📅 3 Months</span>
-        <span>🖥️ Practical</span>
-        <span>📜 Certificate</span>
+        <span>📅 3 महीने</span>
+        <span>🖥️ प्रैक्टिकल</span>
+        <span>📜 सर्टिफिकेट</span>
       </div>
     </div>
     <div class="featured-card reveal">
-      <span class="featured-badge">Career Booster</span>
+      <span class="featured-badge">करियर बूस्टर</span>
       <div class="featured-icon">🏆</div>
       <h3>NIELIT O Level</h3>
-      <p>One-Year Govt. Diploma in IT. Covers Python, Web Design, IoT, Practical Labs & Mock Tests. Perfect for government jobs & IT careers.</p>
+      <p>एक साल का सरकारी IT डिप्लोमा। Python, Web Design, IoT, प्रैक्टिकल लैब और मॉक टेस्ट शामिल। सरकारी नौकरी और IT करियर के लिए बेस्ट।</p>
       <div class="featured-meta">
-        <span>📅 12 Months</span>
+        <span>📅 12 महीने</span>
         <span>🏛️ NIELIT</span>
-        <span>💼 Placement</span>
+        <span>💼 प्लेसमेंट</span>
       </div>
     </div>
     <div class="featured-card reveal">
-      <span class="featured-badge">Job Essential</span>
+      <span class="featured-badge">नौकरी के लिए ज़रूरी</span>
       <div class="featured-icon">📜</div>
       <h3>NIELIT CCC</h3>
-      <p>Course on Computer Concepts — mandatory for government jobs. Covers IT tools, internet, MS Office & digital literacy with mock tests.</p>
+      <p>Course on Computer Concepts — सरकारी नौकरी के लिए अनिवार्य। IT टूल्स, इंटरनेट, MS Office और डिजिटल साक्षरता के साथ मॉक टेस्ट।</p>
       <div class="featured-meta">
-        <span>📅 3 Months</span>
+        <span>📅 3 महीने</span>
         <span>🏛️ NIELIT</span>
-        <span>📝 Mock Tests</span>
+        <span>📝 मॉक टेस्ट</span>
       </div>
     </div>
     <div class="featured-card reveal">
-      <span class="featured-badge">Future Ready</span>
+      <span class="featured-badge">भविष्य के लिए तैयार</span>
       <div class="featured-icon">🤖</div>
       <h3>Artificial Intelligence</h3>
-      <p>AI Master Course — learn machine learning basics, AI tools, automation & future-tech skills. Be ready for the AI revolution!</p>
+      <p>AI मास्टर कोर्स — मशीन लर्निंग बेसिक्स, AI टूल्स, ऑटोमेशन और फ्यूचर-टेक स्किल्स सीखें। AI क्रांति के लिए तैयार रहें!</p>
       <div class="featured-meta">
-        <span>📅 3 Months</span>
-        <span>🤖 AI Tools</span>
-        <span>🚀 Future Skill</span>
+        <span>📅 3 महीने</span>
+        <span>🤖 AI टूल्स</span>
+        <span>🚀 फ्यूचर स्किल</span>
       </div>
     </div>
   </div>
@@ -465,88 +444,88 @@ body { font-family: 'Poppins', sans-serif; background: var(--darker); color: var
 <!-- ALL COURSES -->
 <section class="section" id="courses">
   <div class="section-header reveal">
-    <div class="section-tag">All Programs</div>
-    <h2 class="section-title">Complete Course List</h2>
-    <p class="section-subtitle">Industry-relevant courses designed to make you job-ready from day one. No hidden fees — quality education for everyone.</p>
+    <div class="section-tag">सभी प्रोग्राम</div>
+    <h2 class="section-title">पूरा कोर्स लिस्ट</h2>
+    <p class="section-subtitle">इंडस्ट्री से जुड़े कोर्स जो आपको पहले दिन से जॉब-रेडी बनाते हैं। कोई हिडन फीस नहीं — सभी के लिए क्वालिटी एजुकेशन।</p>
   </div>
   <div class="courses-grid">
     <div class="course-card reveal">
       <div class="course-icon">⌨️</div>
-      <h3>Typing (Hindi/English)</h3>
-      <p>Speed typing mastery in Hindi & English. Essential skill for data entry, government exams & office jobs.</p>
-      <span class="course-tag">3 Months</span>
+      <h3>Typing (हिंदी/अंग्रेज़ी)</h3>
+      <p>हिंदी और अंग्रेज़ी में स्पीड टाइपिंग मास्टरी। डेटा एंट्री, सरकारी परीक्षा और ऑफिस जॉब के लिए ज़रूरी स्किल।</p>
+      <span class="course-tag">3 महीने</span>
     </div>
     <div class="course-card reveal">
       <div class="course-icon">📑</div>
       <h3>MS Office 2010</h3>
-      <p>Complete Word, Excel, PowerPoint & Outlook training. The foundation of every office job.</p>
-      <span class="course-tag">3 Months</span>
+      <p>Word, Excel, PowerPoint और Outlook की पूरी ट्रेनिंग। हर ऑफिस जॉब की नींव।</p>
+      <span class="course-tag">3 महीने</span>
     </div>
     <div class="course-card reveal">
       <div class="course-icon">📈</div>
       <h3>Advanced Excel</h3>
-      <p>Pivot tables, VLOOKUP, macros, data analysis, dashboards & financial modeling for professionals.</p>
-      <span class="course-tag">2 Months</span>
+      <p>Pivot tables, VLOOKUP, macros, डेटा एनालिसिस, dashboards और फाइनेंशियल मॉडलिंग प्रोफेशनल्स के लिए।</p>
+      <span class="course-tag">2 महीने</span>
     </div>
     <div class="course-card reveal">
       <div class="course-icon">📜</div>
       <h3>CCC (NIELIT)</h3>
-      <p>Govt. certified computer concepts course. Essential eligibility for all government job applications.</p>
-      <span class="course-tag">3 Months</span><span class="course-duration">🏛️ NIELIT</span>
+      <p>सरकारी प्रमाणित कंप्यूटर कॉन्सेप्ट्स कोर्स। सभी सरकारी नौकरियों के लिए अनिवार्य योग्यता।</p>
+      <span class="course-tag">3 महीने</span><span class="course-duration">🏛️ NIELIT</span>
     </div>
     <div class="course-card reveal">
       <div class="course-icon">📊</div>
       <h3>Tally Prime + GST</h3>
-      <p>Master India's #1 accounting software. GST billing, inventory, financial statements & business accounting.</p>
-      <span class="course-tag">3 Months</span><span class="course-duration">⭐ Most Demanded</span>
+      <p>भारत का #1 अकाउंटिंग सॉफ्टवेयर मास्टर करें। GST बिलिंग, इन्वेंटरी, फाइनेंशियल स्टेटमेंट्स और बिजनेस अकाउंटिंग।</p>
+      <span class="course-tag">3 महीने</span><span class="course-duration">⭐ सबसे ज़्यादा डिमांड</span>
     </div>
     <div class="course-card reveal">
       <div class="course-icon">💻</div>
       <h3>DCA</h3>
-      <p>Diploma in Computer Applications — programming, database, web basics, hardware & networking.</p>
-      <span class="course-tag">6 Months</span>
+      <p>Diploma in Computer Applications — प्रोग्रामिंग, डेटाबेस, वेब बेसिक्स, हार्डवेयर और नेटवर्किंग।</p>
+      <span class="course-tag">6 महीने</span>
     </div>
     <div class="course-card reveal">
       <div class="course-icon">🎨</div>
       <h3>DTP</h3>
-      <p>Desktop Publishing — CorelDRAW, Photoshop, page layout & design skills for print & digital media.</p>
-      <span class="course-tag">6 Months</span>
+      <p>Desktop Publishing — CorelDRAW, Photoshop, पेज लेआउट और डिज़ाइन स्किल्स प्रिंट और डिजिटल मीडिया के लिए।</p>
+      <span class="course-tag">6 महीने</span>
     </div>
     <div class="course-card reveal">
       <div class="course-icon">🌐</div>
       <h3>Web Designing</h3>
-      <p>HTML, CSS, JavaScript, responsive design & modern UI/UX principles. Build real websites.</p>
-      <span class="course-tag">6 Months</span>
+      <p>HTML, CSS, JavaScript, रेस्पॉन्सिव डिज़ाइन और मॉडर्न UI/UX सिद्धांत। असली वेबसाइट बनाना सीखें।</p>
+      <span class="course-tag">6 महीने</span>
     </div>
     <div class="course-card reveal">
       <div class="course-icon">🐍</div>
       <h3>Python Programming</h3>
-      <p>Learn Python from scratch — syntax, loops, functions, file handling & real-world projects.</p>
-      <span class="course-tag">3 Months</span>
+      <p>Python शून्य से सीखें — syntax, loops, functions, file handling और रीयल-वर्ल्ड प्रोजेक्ट्स।</p>
+      <span class="course-tag">3 महीने</span>
     </div>
     <div class="course-card reveal">
       <div class="course-icon">📉</div>
       <h3>Data Analytics</h3>
-      <p>Excel + SQL + Power BI. Data visualization, reporting & business intelligence for modern careers.</p>
-      <span class="course-tag">4 Months</span><span class="course-duration">📊 High Growth</span>
+      <p>Excel + SQL + Power BI। डेटा विज़ुअलाइज़ेशन, रिपोर्टिंग और बिजनेस इंटेलिजेंस मॉडर्न करियर के लिए।</p>
+      <span class="course-tag">4 महीने</span><span class="course-duration">📊 हाई ग्रोथ</span>
     </div>
     <div class="course-card reveal">
       <div class="course-icon">🏆</div>
       <h3>ADCA</h3>
-      <p>Advanced Diploma in Computer Applications — comprehensive 1-year program covering all IT domains.</p>
-      <span class="course-tag">12 Months</span>
+      <p>Advanced Diploma in Computer Applications — सभी IT डोमेन को कवर करने वाला 1 साल का व्यापक प्रोग्राम।</p>
+      <span class="course-tag">12 महीने</span>
     </div>
     <div class="course-card reveal">
       <div class="course-icon">🎓</div>
       <h3>O Level (NIELIT)</h3>
-      <p>One-year Govt. IT diploma. Python, Web Design, IoT, practical labs, mock tests & placement guidance.</p>
-      <span class="course-tag">12 Months</span><span class="course-duration">🏛️ NIELIT</span>
+      <p>एक साल का सरकारी IT डिप्लोमा। Python, Web Design, IoT, प्रैक्टिकल लैब, मॉक टेस्ट और प्लेसमेंट गाइडेंस।</p>
+      <span class="course-tag">12 महीने</span><span class="course-duration">🏛️ NIELIT</span>
     </div>
     <div class="course-card reveal">
       <div class="course-icon">🤖</div>
       <h3>Artificial Intelligence</h3>
-      <p>AI Master Course — ML basics, AI tools, prompt engineering, automation & future-ready skills.</p>
-      <span class="course-tag">3 Months</span><span class="course-duration">🚀 Future Ready</span>
+      <p>AI मास्टर कोर्स — ML बेसिक्स, AI टूल्स, prompt engineering, ऑटोमेशन और फ्यूचर-रेडी स्किल्स।</p>
+      <span class="course-tag">3 महीने</span><span class="course-duration">🚀 फ्यूचर रेडी</span>
     </div>
   </div>
 </section>
@@ -554,80 +533,80 @@ body { font-family: 'Poppins', sans-serif; background: var(--darker); color: var
 <!-- EXAM CALENDAR -->
 <section class="section" id="calendar">
   <div class="section-header reveal">
-    <div class="section-tag">📅 Exam Dates</div>
-    <h2 class="section-title">NIELIT Exam Calendar 2026</h2>
-    <p class="section-subtitle">Stay updated with CCC & O Level examination schedules. Plan your preparation with NEXA!</p>
+    <div class="section-tag">📅 परीक्षा तिथियाँ</div>
+    <h2 class="section-title">NIELIT परीक्षा कैलेंडर 2026</h2>
+    <p class="section-subtitle">CCC और O Level परीक्षा शेड्यूल के साथ अपडेट रहें। NEXA के साथ अपनी तैयारी प्लान करें!</p>
   </div>
 
   <div class="calendar-section reveal" style="margin-bottom: 3rem;">
-    <h3 style="font-family:'Orbitron',sans-serif; font-size:1.3rem; margin-bottom:0.3rem; color:var(--primary);">📜 NIELIT CCC Exam Calendar 2026</h3>
-    <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:1.5rem;">Quarterly examinations — "कोशल आज का, फायदा कल का"</p>
+    <h3 style="font-family:'Orbitron',sans-serif; font-size:1.3rem; margin-bottom:0.3rem; color:var(--primary);">📜 NIELIT CCC परीक्षा कैलेंडर 2026</h3>
+    <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:1.5rem;">त्रैमासिक परीक्षाएँ — "कोशल आज का, फायदा कल का"</p>
     <div class="calendar-grid">
       <div class="calendar-card">
-        <div class="calendar-label">Exam Cycle</div>
-        <div class="calendar-month">March 2026</div>
-        <div class="calendar-label">Form Dates</div>
-        <div class="calendar-date">01 Nov 2025 – 31 Jan 2026</div>
-        <div class="calendar-label">Last Date</div>
-        <div class="calendar-date" style="color:var(--danger);">31 January 2026</div>
+        <div class="calendar-label">परीक्षा साइकिल</div>
+        <div class="calendar-month">मार्च 2026</div>
+        <div class="calendar-label">फॉर्म की तारीख</div>
+        <div class="calendar-date">01 नवंबर 2025 – 31 जनवरी 2026</div>
+        <div class="calendar-label">अंतिम तिथि</div>
+        <div class="calendar-date" style="color:var(--danger);">31 जनवरी 2026</div>
       </div>
       <div class="calendar-card">
-        <div class="calendar-label">Exam Cycle</div>
-        <div class="calendar-month">June 2026</div>
-        <div class="calendar-label">Form Dates</div>
-        <div class="calendar-date">01 Feb 2026 – 30 Apr 2026</div>
-        <div class="calendar-label">Last Date</div>
-        <div class="calendar-date" style="color:var(--danger);">30 April 2026</div>
+        <div class="calendar-label">परीक्षा साइकिल</div>
+        <div class="calendar-month">जून 2026</div>
+        <div class="calendar-label">फॉर्म की तारीख</div>
+        <div class="calendar-date">01 फरवरी 2026 – 30 अप्रैल 2026</div>
+        <div class="calendar-label">अंतिम तिथि</div>
+        <div class="calendar-date" style="color:var(--danger);">30 अप्रैल 2026</div>
       </div>
       <div class="calendar-card">
-        <div class="calendar-label">Exam Cycle</div>
-        <div class="calendar-month">September 2026</div>
-        <div class="calendar-label">Form Dates</div>
-        <div class="calendar-date">01 May 2026 – 31 Jul 2026</div>
-        <div class="calendar-label">Last Date</div>
-        <div class="calendar-date" style="color:var(--danger);">31 July 2026</div>
+        <div class="calendar-label">परीक्षा साइकिल</div>
+        <div class="calendar-month">सितंबर 2026</div>
+        <div class="calendar-label">फॉर्म की तारीख</div>
+        <div class="calendar-date">01 मई 2026 – 31 जुलाई 2026</div>
+        <div class="calendar-label">अंतिम तिथि</div>
+        <div class="calendar-date" style="color:var(--danger);">31 जुलाई 2026</div>
       </div>
       <div class="calendar-card">
-        <div class="calendar-label">Exam Cycle</div>
-        <div class="calendar-month">December 2026</div>
-        <div class="calendar-label">Form Dates</div>
-        <div class="calendar-date">01 Aug 2026 – 31 Oct 2026</div>
-        <div class="calendar-label">Last Date</div>
-        <div class="calendar-date" style="color:var(--danger);">31 October 2026</div>
+        <div class="calendar-label">परीक्षा साइकिल</div>
+        <div class="calendar-month">दिसंबर 2026</div>
+        <div class="calendar-label">फॉर्म की तारीख</div>
+        <div class="calendar-date">01 अगस्त 2026 – 31 अक्टूबर 2026</div>
+        <div class="calendar-label">अंतिम तिथि</div>
+        <div class="calendar-date" style="color:var(--danger);">31 अक्टूबर 2026</div>
       </div>
     </div>
     <div class="calendar-note">
-      💡 <strong>Tip:</strong> Exam is conducted on the <strong>first Saturday</strong> of the respective month. Practical exams follow the theory schedule as per NIELIT guidelines.
+      💡 <strong>टिप:</strong> परीक्षा संबंधित महीने के <strong>पहले शनिवार</strong> को होती है। प्रैक्टिकल परीक्षा NIELIT गाइडलाइंस के अनुसार थियरी के बाद होती है।
     </div>
   </div>
 
   <div class="calendar-section reveal">
-    <h3 style="font-family:'Orbitron',sans-serif; font-size:1.3rem; margin-bottom:0.3rem; color:var(--secondary);">🏆 NIELIT O Level Exam Calendar 2026</h3>
-    <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:1.5rem;">One-Year Govt. Diploma — Your gateway to IT careers</p>
+    <h3 style="font-family:'Orbitron',sans-serif; font-size:1.3rem; margin-bottom:0.3rem; color:var(--secondary);">🏆 NIELIT O Level परीक्षा कैलेंडर 2026</h3>
+    <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:1.5rem;">एक साल का सरकारी डिप्लोमा — IT करियर का गेटवे</p>
     <div class="calendar-grid">
       <div class="calendar-card">
-        <div class="calendar-label">Exam Cycle 1</div>
-        <div class="calendar-month">January 2026</div>
-        <div class="calendar-label">Form Available From</div>
-        <div class="calendar-date">1 September 2025</div>
-        <div class="calendar-label">Last Date to Apply</div>
-        <div class="calendar-date" style="color:var(--danger);">31 October 2025</div>
-        <div class="calendar-label">Theory Exam</div>
-        <div class="calendar-date">Second Saturday of Jan 2026</div>
+        <div class="calendar-label">परीक्षा साइकिल 1</div>
+        <div class="calendar-month">जनवरी 2026</div>
+        <div class="calendar-label">फॉर्म उपलब्ध</div>
+        <div class="calendar-date">1 सितंबर 2025</div>
+        <div class="calendar-label">आवेदन की अंतिम तिथि</div>
+        <div class="calendar-date" style="color:var(--danger);">31 अक्टूबर 2025</div>
+        <div class="calendar-label">थियरी परीक्षा</div>
+        <div class="calendar-date">जनवरी 2026 का दूसरा शनिवार</div>
       </div>
       <div class="calendar-card">
-        <div class="calendar-label">Exam Cycle 2</div>
-        <div class="calendar-month">July 2026</div>
-        <div class="calendar-label">Form Available From</div>
-        <div class="calendar-date">2 March 2026</div>
-        <div class="calendar-label">Last Date to Apply</div>
-        <div class="calendar-date" style="color:var(--danger);">30 April 2026</div>
-        <div class="calendar-label">Theory Exam</div>
-        <div class="calendar-date">Second Saturday of Jul 2026</div>
+        <div class="calendar-label">परीक्षा साइकिल 2</div>
+        <div class="calendar-month">जुलाई 2026</div>
+        <div class="calendar-label">फॉर्म उपलब्ध</div>
+        <div class="calendar-date">2 मार्च 2026</div>
+        <div class="calendar-label">आवेदन की अंतिम तिथि</div>
+        <div class="calendar-date" style="color:var(--danger);">30 अप्रैल 2026</div>
+        <div class="calendar-label">थियरी परीक्षा</div>
+        <div class="calendar-date">जुलाई 2026 का दूसरा शनिवार</div>
       </div>
     </div>
     <div class="calendar-note">
-      💡 <strong>Note:</strong> Practical examinations are conducted after the theory examination as per NIELIT schedule. O Level includes Python, Web Designing, IoT & Practical Lab Training.
+      💡 <strong>नोट:</strong> प्रैक्टिकल परीक्षा थियरी परीक्षा के बाद NIELIT शेड्यूल के अनुसार होती है। O Level में Python, Web Designing, IoT और प्रैक्टिकल लैब ट्रेनिंग शामिल है।
     </div>
   </div>
 </section>
@@ -635,40 +614,40 @@ body { font-family: 'Poppins', sans-serif; background: var(--darker); color: var
 <!-- WHY US -->
 <section class="section" id="why-us">
   <div class="section-header reveal">
-    <div class="section-tag">Why NEXA?</div>
-    <h2 class="section-title">Why Students Choose Us</h2>
-    <p class="section-subtitle">We don't just teach — we build careers.</p>
+    <div class="section-tag">क्यों NEXA?</div>
+    <h2 class="section-title">छात्र हमें क्यों चुनते हैं</h2>
+    <p class="section-subtitle">हम सिर्फ पढ़ाते नहीं — करियर बनाते हैं।</p>
   </div>
   <div class="features-grid">
     <div class="feature-item reveal">
       <div class="feature-icon">👨‍🏫</div>
-      <h4>Expert Faculty</h4>
-      <p>Learn from experienced instructors with real-world industry knowledge & NIELIT certified training.</p>
+      <h4>एक्सपर्ट फैकल्टी</h4>
+      <p>रियल-वर्ल्ड इंडस्ट्री नॉलेज और NIELIT प्रमाणित ट्रेनिंग वाले अनुभवी इंस्ट्रक्टर्स से सीखें।</p>
     </div>
     <div class="feature-item reveal">
       <div class="feature-icon">🖥️</div>
-      <h4>Practical Training</h4>
-      <p>Hands-on lab sessions with latest computers, software & real-world project assignments.</p>
+      <h4>प्रैक्टिकल ट्रेनिंग</h4>
+      <p>लेटेस्ट कंप्यूटर, सॉफ्टवेयर और रीयल-वर्ल्ड प्रोजेक्ट असाइनमेंट्स के साथ हेंड्स-ऑन लैब सेशन।</p>
     </div>
     <div class="feature-item reveal">
       <div class="feature-icon">📜</div>
-      <h4>Govt. Certificates</h4>
-      <p>NIELIT accredited certifications that boost your resume for government & private jobs.</p>
+      <h4>सरकारी सर्टिफिकेट</h4>
+      <p>NIELIT मान्यता प्राप्त सर्टिफिकेशन जो आपके रिज्यूमे को सरकारी और प्राइवेट जॉब के लिए मज़बूत बनाते हैं।</p>
     </div>
     <div class="feature-item reveal">
       <div class="feature-icon">📝</div>
-      <h4>Weekly Mock Tests</h4>
-      <p>Regular tests & MCQ practice to ensure you crack NIELIT exams in the first attempt.</p>
+      <h4>हफ्तावार मॉक टेस्ट</h4>
+      <p>नियमित टेस्ट और MCQ प्रैक्टिस ताकि आप NIELIT परीक्षा पहली बार में ही क्रैक कर सकें।</p>
     </div>
     <div class="feature-item reveal">
       <div class="feature-icon">💼</div>
-      <h4>Placement Guidance</h4>
-      <p>Interview preparation, resume building & job placement support for every student.</p>
+      <h4>प्लेसमेंट गाइडेंस</h4>
+      <p>हर छात्र के लिए इंटरव्यू तैयारी, रिज्यूमे बिल्डिंग और जॉब प्लेसमेंट सपोर्ट।</p>
     </div>
     <div class="feature-item reveal">
       <div class="feature-icon">💰</div>
-      <h4>Affordable Fees</h4>
-      <p>Quality education at pocket-friendly prices. Flexible payment options available.</p>
+      <h4>सस्ती फीस</h4>
+      <p>जेब पर हल्की कीमत में क्वालिटी एजुकेशन। लचीला पेमेंट ऑप्शन उपलब्ध।</p>
     </div>
   </div>
 </section>
@@ -676,17 +655,17 @@ body { font-family: 'Poppins', sans-serif; background: var(--darker); color: var
 <!-- LOCATION -->
 <section class="section" id="location">
   <div class="section-header reveal">
-    <div class="section-tag">Find Us</div>
-    <h2 class="section-title">Visit Our Campus</h2>
+    <div class="section-tag">हमें खोजें</div>
+    <h2 class="section-title">हमारे कैंपस पर आएँ</h2>
   </div>
   <div class="location-section reveal" style="padding: 2.5rem;">
     <h3>📍 NEXA Computer Institute</h3>
     <div class="location-address">
       <strong>NEXA Building</strong><br>
-      Bahadurganj Tiraha, Near Police Station<br>
-      Mau Darwaja, <strong>Farrukhabad, Uttar Pradesh — 209625</strong>
+      बहादुरगंज तिराहा, पुलिस स्टेशन के पास<br>
+      मऊ दरवाजा, <strong>फर्रुखाबाद, उत्तर प्रदेश — 209625</strong>
     </div>
-    <p style="color: var(--text-muted); margin-bottom: 1.5rem; font-size:0.95rem;">Easily accessible location in the heart of Farrukhabad. Visit us for a <strong>FREE demo class</strong>!</p>
+    <p style="color: var(--text-muted); margin-bottom: 1.5rem; font-size:0.95rem;">फर्रुखाबाद के दिल में आसानी से पहुँचने वाली जगह। <strong>फ्री डेमो क्लास</strong> के लिए हमसे मिलें!</p>
 
     <!-- GOOGLE MAPS EMBED -->
     <div class="map-wrapper reveal">
@@ -699,8 +678,8 @@ body { font-family: 'Poppins', sans-serif; background: var(--darker); color: var
     </div>
 
     <div class="map-btn-group">
-      <a href="https://www.google.com/maps/dir/?api=1&destination=NEXA+computer+institute,+Bahadurganj+Tarai,+Farrukhabad" target="_blank" class="btn btn-primary" style="font-size:0.9rem; padding:0.8rem 1.8rem;">🗺️ Open in Google Maps</a>
-      <a href="https://wa.me/917696566162" target="_blank" class="btn btn-whatsapp" style="font-size:0.9rem; padding:0.8rem 1.8rem;">💬 Get Directions on WhatsApp</a>
+      <a href="https://www.google.com/maps/dir/?api=1&destination=NEXA+computer+institute,+Bahadurganj+Tarai,+Farrukhabad" target="_blank" class="btn btn-primary" style="font-size:0.9rem; padding:0.8rem 1.8rem;">🗺️ Google Maps में खोलें</a>
+      <a href="https://wa.me/917696566162" target="_blank" class="btn btn-whatsapp" style="font-size:0.9rem; padding:0.8rem 1.8rem;">💬 व्हाट्सएप पर दिशा लें</a>
     </div>
   </div>
 </section>
@@ -709,13 +688,13 @@ body { font-family: 'Poppins', sans-serif; background: var(--darker); color: var
 <section class="cta-section" id="contact">
   <div class="cta-box reveal">
     <div class="cta-content">
-      <h2>Ready to Build Your Future?</h2>
-      <p>Join NEXA Computer Institute today. Admissions open for 2026-27 batch — limited seats available for all courses!</p>
-      <a href="https://wa.me/917696566162" target="_blank" class="btn btn-whatsapp" style="font-size: 1.05rem; padding: 1.1rem 2.5rem;">💬 Enroll Now via WhatsApp</a>
+      <h2>अपना भविष्य बनाने के लिए तैयार हैं?</h2>
+      <p>आज ही NEXA Computer Institute से जुड़ें। 2026-27 बैच के लिए एडमिशन खुला है — सभी कोर्स के लिए सीमित सीटें!</p>
+      <a href="https://wa.me/917696566162" target="_blank" class="btn btn-whatsapp" style="font-size: 1.05rem; padding: 1.1rem 2.5rem;">💬 व्हाट्सएप से अभी एनरोल करें</a>
       <div class="contact-info">
         <div class="contact-item">
           <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-          <span>Farrukhabad, UP</span>
+          <span>फर्रुखाबाद, UP</span>
         </div>
         <div class="contact-item">
           <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
@@ -723,7 +702,7 @@ body { font-family: 'Poppins', sans-serif; background: var(--darker); color: var
         </div>
         <div class="contact-item">
           <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-          <span>Mon-Sat: 9AM - 6PM</span>
+          <span>सोम-शनि: सुबह 9 - शाम 6</span>
         </div>
       </div>
     </div>
@@ -735,7 +714,7 @@ body { font-family: 'Poppins', sans-serif; background: var(--darker); color: var
   <div class="footer-grid">
     <div class="footer-brand">
       <div class="footer-logo">🎓 NEXA Computer</div>
-      <p>Empowering the next generation of tech leaders through quality education and hands-on training in Farrukhabad.</p>
+      <p>फर्रुखाबाद में क्वालिटी एजुकेशन और प्रैक्टिकल ट्रेनिंग के माध्यम से अगली पीढ़ी के टेक लीडर्स को तैयार करना।</p>
       <div class="social-links">
         <a href="#">📘</a>
         <a href="#">🐦</a>
@@ -744,42 +723,42 @@ body { font-family: 'Poppins', sans-serif; background: var(--darker); color: var
       </div>
     </div>
     <div class="footer-column">
-      <h4>Quick Links</h4>
+      <h4>त्वरित लिंक</h4>
       <ul>
-        <li><a href="#home">Home</a></li>
-        <li><a href="#courses">About Us</a></li>
-        <li><a href="#courses">Courses</a></li>
-        <li><a href="#contact">Contact</a></li>
+        <li><a href="#home">होम</a></li>
+        <li><a href="#courses">हमारे बारे में</a></li>
+        <li><a href="#courses">कोर्स</a></li>
+        <li><a href="#contact">संपर्क</a></li>
       </ul>
     </div>
     <div class="footer-column">
-      <h4>Resources</h4>
+      <h4>संसाधन</h4>
       <ul>
-        <li><a href="#">PDF Notes</a></li>
-        <li><a href="https://deepaknic.github.io/NEXA/Quiz.html" target="_blank">Online Tests</a></li>
-        <li><a href="#">Gallery</a></li>
-        <li><a href="#">Verify Certificate</a></li>
+        <li><a href="#">PDF नोट्स</a></li>
+        <li><a href="https://deepaknic.github.io/NEXA/Quiz.html" target="_blank">ऑनलाइन टेस्ट</a></li>
+        <li><a href="#">गैलरी</a></li>
+        <li><a href="#">सर्टिफिकेट वेरिफाई</a></li>
       </ul>
     </div>
     <div class="footer-column">
-      <h4>Support</h4>
+      <h4>सहायता</h4>
       <ul>
-        <li><a href="#contact">Admission</a></li>
-        <li><a href="#">Student Login</a></li>
-        <li><a href="#">Admin Login</a></li>
-        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#contact">एडमिशन</a></li>
+        <li><a href="#">छात्र लॉगिन</a></li>
+        <li><a href="#">एडमिन लॉगिन</a></li>
+        <li><a href="#">प्राइवेसी पॉलिसी</a></li>
       </ul>
     </div>
   </div>
   <div class="footer-bottom">
-    <p>Made with <span class="footer-heart">❤</span> for Farrukhabad | © 2026 NEXA Computer Institute. All rights reserved. Built with passion for education.</p>
+    <p>फर्रुखाबाद के लिए <span class="footer-heart">❤</span> से बनाया गया | © 2026 NEXA Computer Institute. सर्वाधिकार सुरक्षित। शिक्षा के लिए जुनून के साथ बनाया गया।</p>
   </div>
 </footer>
 
 <!-- FLOATING WHATSAPP BUTTON -->
 <a href="https://wa.me/917696566162" target="_blank" class="whatsapp-float">
   💬
-  <span class="whatsapp-tooltip">Chat on WhatsApp</span>
+  <span class="whatsapp-tooltip">व्हाट्सएप पर चैट करें</span>
 </a>
 
 <script>
