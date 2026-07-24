@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Online MCQ Tests | NEXA Computer Institute</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #6366f1;
+    --primary-dark: #4f46e5;
+    --secondary: #f59e0b;
+    --accent: #10b981;
+    --dark: #0f172a;
+    --darker: #020617;
+    --card-bg: rgba(30, 41, 59, 0.6);
+    --glass: rgba(255, 255, 255, 0.05);
+    --text: #e2e8f0;
+    --text-muted: #94a3b8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: var(--darker);
+    color: var(--text);
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+
+  /* ===== SIDEBAR NAVIGATION ===== */
+  .sidebar {
+    position: fixed;
+    left: 0; top: 0;
+    width: 280px;
+    height: 100vh;
+    background: linear-gradient(180deg, rgba(15,23,42,0.98) 0%, rgba(2,6,23,0.99) 100%);
+    border-right: 1px solid var(--glass);
+    z-index: 1000;
+    padding: 2rem 0;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+  }
+  .sidebar-logo {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 800;
+    text-align: center;
+    padding: 0 1.5rem 2rem;
+    border-bottom: 1px solid var(--glass);
+    margin-bottom: 1.5rem;
+  }
+  .sidebar-logo .nexa {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .sidebar-logo .institute {
+    color: var(--text-muted);
+    font-size: 0.7rem;
+    display: block;
+    margin-top: 0.3rem;
+    letter-spacing: 3px;
+    -webkit-text-fill-color: var(--text-muted);
+  }
+  .sidebar-menu { list-style: none; padding: 0 1rem; }
+  .sidebar-menu li { margin-bottom: 0.4rem; }
+  .sidebar-menu a {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.85rem 1.2rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+  }
+  .sidebar-menu a:hover {
+    background: rgba(99, 102, 241, 0.1);
+    color: var(--primary);
+  }
+  .sidebar-menu a.active {
+    background: linear-gradient(135deg, rgba(99,102,241,0.2), rgba(79,70,229,0.15));
+    color: var(--primary);
+    border: 1px solid rgba(99,102,241,0.3);
+  }
+  .sidebar-menu .icon {
+    font-size: 1.2rem;
+    width: 28px;
+    text-align: center;
+  }
+  .sidebar-footer {
+    margin-top: auto;
+    padding: 1.5rem;
+    border-top: 1px solid var(--glass);
+    text-align: center;
+  }
+  .sidebar-footer p {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+  }
+  .back-home-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.8rem;
+    background: var(--glass);
+    border: 1px solid var(--glass);
+    border-radius: 10px;
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    margin: 0 1.5rem 1.5rem;
+  }
+  .back-home-btn:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+    background: rgba(99,102,241,0.1);
+  }
+
+  /* ===== MAIN CONTENT ===== */
+  .main-content {
+    margin-left: 280px;
+    min-height: 100vh;
+    position: relative;
+  }
+
+  /* Top Bar */
+  .top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 3rem;
+    border-bottom: 1px solid var(--glass);
+    background: rgba(2,6,23,0.6);
+    backdrop-filter: blur(10px);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .page-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+  }
+  .page-title span {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .search-box {
+    position: relative;
+    width: 300px;
+  }
+  .search-box input {
+    width: 100%;
+    padding: 0.7rem 1rem 0.7rem 2.8rem;
+    background: var(--card-bg);
+    border: 1px solid var(--glass);
+    border-radius: 12px;
+    color: var(--text);
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.9rem;
+    outline: none;
+    transition: all 0.3s ease;
+  }
+  .search-box input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(99,102,241,0.15);
+  }
+  .search-box input::placeholder { color: var(--text-muted); }
+  .search-box .search-icon {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1rem;
+    color: var(--text-muted);
+  }
+
+  /* Stats Row */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    padding: 2rem 3rem;
+  }
+  .stat-card {
+    background: var(--card-bg);
+    border: 1px solid var(--glass);
+    border-radius: 16px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    transition: all 0.3s ease;
+  }
+  .stat-card:hover {
+    border-color: var(--primary);
+    transform: translateY(-3px);
+  }
+  .stat-icon {
+    width: 50px; height: 50px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    background: rgba(99, 102, 241, 0.15);
+  }
+  .stat-info h4 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .stat-info p {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+
+  /* Content Area */
+  .content-area {
+    padding: 0 3rem 3rem;
+  }
+  .section-label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+  }
+  .section-label h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .section-label .count {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    background: var(--card-bg);
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    border: 1px solid var(--glass);
+  }
+
+  /* Test Cards - Horizontal Layout */
+  .test-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .test-card {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    background: var(--card-bg);
+    border: 1px solid var(--glass);
+    border-radius: 16px;
+    padding: 1.2rem 1.5rem;
+    text-decoration: none;
+    transition: all 0.35s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .test-card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 4px;
+    background: linear-gradient(180deg, var(--primary), var(--secondary));
+    transform: scaleY(0);
+    transition: transform 0.35s ease;
+  }
+  .test-card:hover::before { transform: scaleY(1); }
+  .test-card:hover {
+    border-color: rgba(99,102,241,0.4);
+    transform: translateX(6px);
+    box-shadow: 0 10px 40px rgba(99,102,241,0.15);
+  }
+
+  .test-num {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    min-width: 40px;
+    text-align: center;
+  }
+  .test-card:hover .test-num { color: var(--primary); }
+
+  .test-icon-box {
+    width: 55px; height: 55px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    background: rgba(99, 102, 241, 0.12);
+    flex-shrink: 0;
+  }
+
+  .test-details {
+    flex: 1;
+    min-width: 0;
+  }
+  .test-details h3 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 0.3rem;
+  }
+  .test-details p {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .test-meta {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    flex-shrink: 0;
+  }
+  .meta-item {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+  .meta-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+
+  .start-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.4rem;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+    text-decoration: none;
+  }
+  .start-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(99,102,241,0.5);
+  }
+
+  /* Color variations */
+  .test-card:nth-child(2) .test-icon-box { background: rgba(245, 158, 11, 0.12); }
+  .test-card:nth-child(3) .test-icon-box { background: rgba(16, 185, 129, 0.12); }
+  .test-card:nth-child(4) .test-icon-box { background: rgba(236, 72, 153, 0.12); }
+  .test-card:nth-child(5) .test-icon-box { background: rgba(139, 92, 246, 0.12); }
+  .test-card:nth-child(6) .test-icon-box { background: rgba(14, 165, 233, 0.12); }
+  .test-card:nth-child(7) .test-icon-box { background: rgba(249, 115, 22, 0.12); }
+  .test-card:nth-child(8) .test-icon-box { background: rgba(20, 184, 166, 0.12); }
+  .test-card:nth-child(9) .test-icon-box { background: rgba(244, 63, 94, 0.12); }
+  .test-card:nth-child(10) .test-icon-box { background: rgba(168, 85, 247, 0.12); }
+  .test-card:nth-child(11) .test-icon-box { background: rgba(59, 130, 246, 0.12); }
+  .test-card:nth-child(12) .test-icon-box { background: rgba(234, 179, 8, 0.12); }
+  .test-card:nth-child(13) .test-icon-box { background: rgba(16, 185, 129, 0.12); }
+  .test-card:nth-child(14) .test-icon-box { background: rgba(236, 72, 153, 0.12); }
+  .test-card:nth-child(15) .test-icon-box { background: rgba(99, 102, 241, 0.12); }
+  .test-card:nth-child(16) .test-icon-box { background: rgba(245, 158, 11, 0.12); }
+  .test-card:nth-child(17) .test-icon-box { background: rgba(14, 165, 233, 0.12); }
+
+  /* Mobile Toggle */
+  .mobile-toggle {
+    display: none;
+    position: fixed;
+    top: 1rem; left: 1rem;
+    z-index: 2000;
+    width: 45px; height: 45px;
+    background: var(--card-bg);
+    border: 1px solid var(--glass);
+    border-radius: 10px;
+    color: var(--text);
+    font-size: 1.3rem;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .sidebar { transform: translateX(-100%); transition: transform 0.3s ease; }
+    .sidebar.open { transform: translateX(0); }
+    .main-content { margin-left: 0; }
+    .mobile-toggle { display: flex; align-items: center; justify-content: center; }
+    .stats-row { grid-template-columns: repeat(2, 1fr); padding: 1.5rem; }
+    .top-bar { padding: 1rem 1.5rem; flex-direction: column; gap: 1rem; align-items: flex-start; }
+    .search-box { width: 100%; }
+    .content-area { padding: 0 1.5rem 2rem; }
+    .test-card { flex-wrap: wrap; gap: 1rem; }
+    .test-meta { width: 100%; justify-content: flex-start; margin-top: 0.5rem; }
+  }
+  @media (max-width: 640px) {
+    .stats-row { grid-template-columns: 1fr; }
+    .test-card { padding: 1rem; }
+    .test-num { display: none; }
+  }
+</style>
+<base target="_blank">
+</head>
+<body>
+
+<button class="mobile-toggle" onclick="toggleSidebar()">☰</button>
+
+<!-- ===== SIDEBAR ===== -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-logo">
+    <span class="nexa">NEXA</span>
+    <span class="institute">COMPUTER INSTITUTE</span>
+  </div>
+
+  <a href="index.html" class="back-home-btn">
+    ← Back to Home
+  </a>
+
+  <ul class="sidebar-menu">
+    <li><a href="index.html"><span class="icon">🏠</span> Home</a></li>
+    <li><a href="index.html#courses"><span class="icon">📚</span> Courses</a></li>
+    <li><a href="tests.html" class="active"><span class="icon">📝</span> MCQ Tests</a></li>
+    <li><a href="index.html#why-us"><span class="icon">⭐</span> Why Us</a></li>
+    <li><a href="index.html#location"><span class="icon">📍</span> Location</a></li>
+    <li><a href="index.html#contact"><span class="icon">📞</span> Contact</a></li>
+  </ul>
+
+  <div class="sidebar-footer">
+    <p>© 2026 NEXA Institute<br>Farrukhabad, UP</p>
+  </div>
+</aside>
+
+<!-- ===== MAIN CONTENT ===== -->
+<main class="main-content">
+
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div class="page-title">Online <span>MCQ Tests</span></div>
+    <div class="search-box">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="searchInput" placeholder="Search subjects..." onkeyup="filterTests()">
+    </div>
+  </div>
+
+  <!-- Stats Row -->
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-icon">📋</div>
+      <div class="stat-info">
+        <h4>17</h4>
+        <p>Subjects Available</p>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon" style="background:rgba(16,185,129,0.15);">⏱️</div>
+      <div class="stat-info">
+        <h4>60 Min</h4>
+        <p>Per Test Duration</p>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon" style="background:rgba(245,158,11,0.15);">❓</div>
+      <div class="stat-info">
+        <h4>100</h4>
+        <p>Questions Each</p>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon" style="background:rgba(236,72,153,0.15);">📊</div>
+      <div class="stat-info">
+        <h4>Instant</h4>
+        <p>Result & Review</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Test List -->
+  <div class="content-area">
+    <div class="section-label">
+      <h2>📂 All Subjects</h2>
+      <span class="count">17 Tests</span>
+    </div>
+
+    <div class="test-list" id="testList">
+
+      <a href="paint-quiz.html" class="test-card" data-name="paint">
+        <div class="test-num">01</div>
+        <div class="test-icon-box">🎨</div>
+        <div class="test-details">
+          <h3>Paint</h3>
+          <p>MS Paint tools, features, and basic digital drawing concepts</p>
+        </div>
+        <div class="test-meta">
+          <span class="meta-item"><span class="meta-dot"></span>100 Ques</span>
+          <span class="meta-item">⏱ 60 min</span>
+        </div>
+        <span class="start-btn">Start ▶</span>
+      </a>
+
+      <a href="fundamental-quiz.html" class="test-card" data-name="fundamental">
+        <div class="test-num">02</div>
+        <div class="test-icon-box">💡</div>
+        <div class="test-details">
+          <h3>Fundamental</h3>
+          <p>Computer basics, hardware, software, memory units, and computing concepts</p>
+        </div>
+        <div class="test-meta">
+          <span class="meta-item"><span class="meta-dot"></span>100 Ques</span>
+          <span class="meta-item">⏱ 60 min</span>
+        </div>
+        <span class="start-btn">Start ▶</span>
+      </a>
+
+      <a href="Quiz.html" class="test-card" data-name="ms word word 2010">
+        <div class="test-num">03</div>
+        <div class="test-icon-box">📝</div>
+        <div class="test-details">
+          <h3>MS Word 2010</h3>
+          <p>Microsoft Word formatting, mail merge, macros, tables, and document features</p>
+        </div>
+        <div class="test-meta">
+          <span class="meta-item"><span class="meta-dot"></span>100 Ques</span>
+          <span class="meta-item">⏱ 60 min</span>
+        </div>
+        <span class="start-btn">Start ▶</span>
+      </a>
+
+      <a href="excel-quiz.html" class="test-card" data-name="excel ms excel">
+        <div class="test-num">04</div>
+        <div class="test-icon-box">📊</div>
+        <div class="test-details">
+          <h3>MS Excel</h3>
+          <p>Formulas, functions, pivot tables, charts, VLOOKUP, macros, and data analysis</p>
+        </div>
+        <div class="test-meta">
+          <span class="meta-item"><span class="meta-dot"></span>100 Ques</span>
+          <span class="meta-item">⏱ 60 min</span>
+        </div>
+        <span class="start-btn">Start ▶</span>
+      </a>
+
+      <a href="powerpoint-quiz.html" class="test-card" data-name="powerpoint ppt">
+        <div class="test-num">05</div>
+        <div class="test-icon-box">🎬</div>
+        <div class="test-details">
+          <h3>PowerPoint</h3>
+          <p>Slides, animations, transitions, master slides, and presentation design</p>
+        </div>
+        <div class="test-meta">
+          <span class="meta-item"><span class="meta-dot"></span>100 Ques</span>
+          <span class="meta-item">⏱ 60 min</span>
+        </div>
+        <span class="start-btn">Start ▶</span>
+      </a>
+
+      <a href="access-quiz.html" class="test-card" data-name="access ms access database">
+        <div class="test-num">06</div>
+        <div class="test-icon-box">🗄️</div>
+        <div class="test-details">
+          <h3>MS Access</h3>
+          <p>Database design, tables, queries, forms, reports, and relational concepts</p>
+        </div>
+        <div class="test-meta">
+          <span class="meta-item"><span class="meta-dot"></span>100 Ques</span>
+          <span class="meta-item">⏱ 60 min</span>
+        </div>
+        <span class="start-btn">Start ▶</span>
+      </a>
+
+      <a href="internet-quiz.html" class="test-card" data-name="internet web browser">
+        <div class="test-num">07</div>
+        <div class="test-icon-box">🌐</div>
+        <div class="test-details">
+          <h3>Internet</h3>
+          <p>Web browsers, search engines, protocols, email, social media, online safety</p>
+        </div>
+        <div class="test-meta">
+          <span class="meta-item"><span class="meta-dot"></span>100 Ques</span>
+          <span class="meta-item">⏱ 60 min</span>
+        </div>
+        <span class="start-btn">Start ▶</span>
+      </a>
+
+      <a href="email-quiz.html" class="test-card" data-name="email gmail outlook">
+        <div class="test-num">08</div>
+        <div class="test-icon-box">📧</div>
+        <div class="test-details">
+          <h3>E-Mail</h3>
+          <p>Email protocols, Gmail/Outlook features, attachments, etiquette, and security</p>
+        </div>
+        <div class="test-meta">
+          <span class="meta-item"><span class="meta-dot"></span>100 Ques</span>
+          <span class="meta-item">⏱ 60 min</span>
+        </div>
+        <span class="start-btn">Start ▶</span>
+      </a>
+
+      <a href="os-quiz.html" class="test-card" data-name="operating system os windows">
+        <div class="test-num">09</div>
+        <div class="test-icon-box">⚙️</div>
+        <div class="test-details">
+          <h3>Operating System & DOS</h3>
+          <p>Windows OS, file management, system settings, DOS commands, OS concepts</p>
+        </div>
+        <div class="test-meta">
+          <span class="meta-item"><span class="meta-dot"></span>100 Ques</span>
+          <span class="meta-item">⏱ 60 min</span>
+        </div>
+        <span class="start-btn">Start ▶</span>
+      </a>
+
+      <a href="dos-quiz.html" class="test-card" data-name="dos disk operating system command">
+        <div class="test-num">10</div>
+        <div class="test-icon-box">⌨️</div>
+        <div class="test-details">
+          <h3>DOS</h3>
+          <p>Disk Operating System commands, batch files, directory structure, CLI operations</p>
+        </div>
+        <div class="test-meta">
+          <span class="meta-item"><span class="meta-dot"></span>100 Ques</span>
+          <span class="meta-item">⏱ 60 min</span>
+        </div>
+        <span class="start-btn">Start ▶</span>
+      </a>
+
+      <a href="typing-quiz.html" class="test-card" data-name="typing keyboard speed">
+        <div class="test-num">11</div>
+        <div class="test-icon-box">⌨️</div>
+        <div class="test-details">
+          <h3>Typing</h3>
+          <p>Typing rules, finger placement, speed techniques, and keyboard shortcuts</p>
+        </div>
+        <div class="test-meta">
+          <span class="meta-item"><span class="meta-dot"></span>100 Ques</span>
+          <span class="meta-item">⏱ 60 min</span>
+        </div>
+        <span class="start-btn">Start ▶</span>
+      </a>
+
+      <a href="html-quiz.html" class="test-card" data-name="html css web">
+        <div class="test-num">12</div>
+        <div class="test-icon-box">🌐</div>
+        <div class="test-details">
+          <h3>HTML</h3>
+          <p>HTML tags, forms, tables, semantic elements, CSS basics, and web page structure</p>
+        </div>
+        <div class="test-meta">
+          <span class="meta-item"><span class="meta-dot"></span>100 Ques</span>
+          <span class="meta-item">⏱ 60 min</span>
+        </div>
+        <span class="start-btn">Start ▶</span>
+      </a>
+
+      <a href="tally-quiz.html" class="test-card" data-name="tally tally prime accounting gst">
+        <div class="test-num">13</div>
+        <div class="test-icon-box">📒</div>
+        <div class="test-details">
+          <h3>TALLY</h3>
+          <p>Tally Prime/ERP accounting, GST, inventory, vouchers, ledgers, financial reports</p>
+        </div>
+        <div class="test-meta">
+          <span class="meta-item"><span class="meta-dot"></span>100 Ques</span>
+          <span class="meta-item">⏱ 60 min</span>
+        </div>
+        <span class="start-btn">Start ▶</span>
+      </a>
+
+      <a href="photoshop-quiz.html" class="test-card" data-name="photoshop ps image editing">
+        <div class="test-num">14</div>
+        <div class="test-icon-box">🖼️</div>
+        <div class="test-details">
+          <h3>Photoshop</h3>
+          <p>Layers, tools, filters, selections, color correction, and image editing techniques</p>
+        </div>
+        <div class="test-meta">
+          <span class="meta-item"><span class="meta-dot"></span>100 Ques</span>
+          <span class="meta-item">⏱ 60 min</span>
+        </div>
+        <span class="start-btn">Start ▶</span>
+      </a>
+
+      <a href="coreldraw-quiz.html" class="test-card" data-name="coreldraw corel draw vector">
+        <div class="test-num">15</div>
+        <div class="test-icon-box">✏️</div>
+        <div class="test-details">
+          <h3>CorelDraw</h3>
+          <p>Vector graphics, shapes, bezier curves, color palettes, and print design concepts</p>
+        </div>
+        <div class="test-meta">
+          <span class="meta-item"><span class="meta-dot"></span>100 Ques</span>
+          <span class="meta-item">⏱ 60 min</span>
+        </div>
+        <span class="start-btn">Start ▶</span>
+      </a>
+
+      <a href="c-quiz.html" class="test-card" data-name="c language programming">
+        <div class="test-num">16</div>
+        <div class="test-icon-box">🔷</div>
+        <div class="test-details">
+          <h3>C Language</h3>
+          <p>Variables, loops, functions, pointers, arrays, structures, and file handling in C</p>
+        </div>
+        <div class="test-meta">
+          <span class="meta-item"><span class="meta-dot"></span>100 Ques</span>
+          <span class="meta-item">⏱ 60 min</span>
+        </div>
+        <span class="start-btn">Start ▶</span>
+      </a>
+
+      <a href="cpp-quiz.html" class="test-card" data-name="c++ cpp oop programming">
+        <div class="test-num">17</div>
+        <div class="test-icon-box">🔶</div>
+        <div class="test-details">
+          <h3>C++</h3>
+          <p>OOP concepts, classes, inheritance, polymorphism, templates, and STL in C++</p>
+        </div>
+        <div class="test-meta">
+          <span class="meta-item"><span class="meta-dot"></span>100 Ques</span>
+          <span class="meta-item">⏱ 60 min</span>
+        </div>
+        <span class="start-btn">Start ▶</span>
+      </a>
+
+    </div>
+  </div>
+
+</main>
+
+<script>
+  function toggleSidebar() {
+    document.getElementById('sidebar').classList.toggle('open');
+  }
+
+  function filterTests() {
+    const query = document.getElementById('searchInput').value.toLowerCase();
+    const cards = document.querySelectorAll('.test-card');
+    cards.forEach(card => {
+      const name = card.getAttribute('data-name');
+      const title = card.querySelector('h3').textContent.toLowerCase();
+      if (name.includes(query) || title.includes(query)) {
+        card.style.display = 'flex';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  }
+</script>
+
+</body>
+</html>
