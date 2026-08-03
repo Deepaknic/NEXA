@@ -4,2064 +4,1870 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Chapter 1 - Introduction to Tally Prime | NEXA Computer Institute</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Open+Sans:wght@300;400;500;600;700&family=Noto+Sans+Devanagari:wght@300;400;500;600;700&display=swap');
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
 :root {
-    --primary: #1a237e;
-    --secondary: #c62828;
-    --accent: #ff6f00;
-    --gold: #b8860b;
-    --text: #2c3e50;
-    --light: #f8f9fa;
-    --border: #d4af37;
+  --bg: #f7f5f0;
+  --card: #ffffff;
+  --text: #1e1e2f;
+  --text-muted: #5a5a6e;
+  --primary: #1a237e;
+  --primary-light: #e8eaf6;
+  --secondary: #c62828;
+  --secondary-light: #ffebee;
+  --accent: #e65100;
+  --accent-light: #fff3e0;
+  --gold: #b8860b;
+  --gold-light: #fff8e1;
+  --success: #2e7d32;
+  --success-light: #e8f5e9;
+  --border: #e0ddd5;
+  --shadow: 0 8px 30px rgba(0,0,0,0.06);
+  --shadow-hover: 0 12px 40px rgba(0,0,0,0.1);
+  --radius: 16px;
+  --radius-sm: 10px;
 }
-
-@page {
-    size: A4;
-    margin: 2cm 1.8cm;
-}
-
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
 body {
-    font-family: 'Open Sans', 'Noto Sans Devanagari', sans-serif;
-    color: var(--text);
-    line-height: 1.8;
-    background: #fff;
-    font-size: 11pt;
+  font-family: 'Inter', 'Noto Sans Devanagari', 'Segoe UI', system-ui, sans-serif;
+  font-size: 19px;
+  line-height: 1.85;
+  color: var(--text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
 }
-
-/* Watermark */
-.watermark {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) rotate(-45deg);
-    font-size: 120px;
-    color: rgba(26, 35, 126, 0.06);
-    font-weight: 900;
-    letter-spacing: 20px;
-    pointer-events: none;
-    z-index: 0;
-    font-family: 'Playfair Display', serif;
-    text-transform: uppercase;
+.reading-container {
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 40px 24px 80px;
 }
-
-/* Header */
-.page-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 50px;
-    background: linear-gradient(135deg, var(--primary) 0%, #283593 100%);
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 30px;
-    font-size: 9pt;
-    z-index: 100;
-    border-bottom: 3px solid var(--gold);
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
 }
-
-.page-header .institute-name {
-    font-weight: 700;
-    font-size: 11pt;
-    letter-spacing: 1px;
-    text-transform: uppercase;
+.topbar .logo-text {
+  font-weight: 800;
+  font-size: 1.15rem;
+  color: var(--primary);
+  letter-spacing: 0.5px;
 }
-
-.page-header .chapter-title {
-    font-weight: 400;
-    opacity: 0.9;
+.topbar .chapter-nav {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  font-weight: 500;
 }
-
-/* Footer */
-.page-footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: linear-gradient(135deg, var(--primary) 0%, #283593 100%);
-    color: white;
-    padding: 8px 30px;
-    font-size: 8pt;
-    z-index: 100;
-    border-top: 3px solid var(--gold);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.topbar .actions {
+  display: flex;
+  gap: 10px;
 }
-
-.page-footer .contact-info {
-    display: flex;
-    gap: 20px;
+.btn {
+  padding: 8px 18px;
+  border-radius: 50px;
+  border: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: inherit;
 }
-
-.page-footer .contact-info span {
-    display: flex;
-    align-items: center;
-    gap: 4px;
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary), #3949ab);
+  color: white;
+  box-shadow: 0 4px 12px rgba(26,35,126,0.25);
 }
-
-.page-footer .page-number {
-    font-weight: 700;
-    background: var(--gold);
-    color: var(--primary);
-    padding: 2px 10px;
-    border-radius: 12px;
-    font-size: 9pt;
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(26,35,126,0.35); }
+.btn-ghost {
+  background: transparent;
+  color: var(--text-muted);
+  border: 1.5px solid var(--border);
 }
-
-/* Content area */
-.content {
-    padding-top: 70px;
-    padding-bottom: 60px;
-    position: relative;
-    z-index: 1;
+.btn-ghost:hover { border-color: var(--primary); color: var(--primary); }
+.progress-wrap {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  z-index: 1001;
+  background: transparent;
 }
-
-/* Cover Page */
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary), var(--gold), var(--secondary));
+  width: 0%;
+  transition: width 0.1s;
+}
 .cover-page {
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    background: linear-gradient(180deg, #ffffff 0%, #f0f4ff 50%, #e8eeff 100%);
-    page-break-after: always;
-    position: relative;
-    overflow: hidden;
+  min-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: linear-gradient(180deg, #ffffff 0%, var(--bg) 100%);
+  border-radius: var(--radius);
+  padding: 60px 40px;
+  margin-bottom: 50px;
+  box-shadow: var(--shadow);
+  position: relative;
+  overflow: hidden;
 }
-
 .cover-page::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 8px;
-    background: linear-gradient(90deg, var(--primary), var(--gold), var(--secondary), var(--primary));
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 6px;
+  background: linear-gradient(90deg, var(--primary), var(--gold), var(--secondary), var(--primary));
 }
-
-.cover-page::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 8px;
-    background: linear-gradient(90deg, var(--primary), var(--gold), var(--secondary), var(--primary));
-}
-
 .cover-watermark {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) rotate(-30deg);
-    font-size: 180px;
-    color: rgba(26, 35, 126, 0.04);
-    font-weight: 900;
-    letter-spacing: 30px;
-    pointer-events: none;
-    font-family: 'Playfair Display', serif;
-    text-transform: uppercase;
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%) rotate(-25deg);
+  font-size: 140px;
+  font-weight: 900;
+  color: rgba(26,35,126,0.035);
+  letter-spacing: 20px;
+  text-transform: uppercase;
+  pointer-events: none;
+  user-select: none;
 }
-
 .cover-institute {
-    font-family: 'Playfair Display', serif;
-    font-size: 42pt;
-    font-weight: 800;
-    color: var(--primary);
-    letter-spacing: 8px;
-    margin-bottom: 10px;
-    text-transform: uppercase;
-    border-bottom: 4px double var(--gold);
-    padding-bottom: 15px;
+  font-size: 3.2rem;
+  font-weight: 800;
+  color: var(--primary);
+  letter-spacing: 6px;
+  margin-bottom: 8px;
+  text-transform: uppercase;
 }
-
 .cover-tagline {
-    font-size: 14pt;
-    color: var(--secondary);
-    font-weight: 600;
-    letter-spacing: 4px;
-    margin-bottom: 60px;
-    text-transform: uppercase;
+  font-size: 1.3rem;
+  color: var(--secondary);
+  font-weight: 700;
+  letter-spacing: 4px;
+  margin-bottom: 50px;
+  text-transform: uppercase;
 }
-
+.cover-divider {
+  width: 180px;
+  height: 4px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  margin: 20px auto 40px;
+  border-radius: 2px;
+}
 .cover-course {
-    font-size: 28pt;
-    font-weight: 700;
-    color: var(--primary);
-    margin-bottom: 15px;
-    text-transform: uppercase;
-    letter-spacing: 3px;
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--primary);
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 3px;
 }
-
 .cover-chapter {
-    font-size: 20pt;
-    color: var(--accent);
-    font-weight: 700;
-    margin-bottom: 10px;
-    text-transform: uppercase;
-    letter-spacing: 2px;
+  font-size: 1.6rem;
+  color: var(--accent);
+  font-weight: 700;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
 }
-
 .cover-chapter-title {
-    font-size: 16pt;
-    color: var(--text);
-    font-weight: 600;
-    margin-bottom: 80px;
-    font-style: italic;
+  font-size: 1.25rem;
+  color: var(--text-muted);
+  font-weight: 600;
+  margin-bottom: 60px;
+  font-style: italic;
 }
-
 .cover-details {
-    margin-top: auto;
-    padding: 30px;
-    background: rgba(26, 35, 126, 0.05);
-    border-radius: 10px;
-    border: 2px solid var(--gold);
-    max-width: 600px;
-    width: 90%;
+  background: var(--card);
+  border: 2px solid var(--gold);
+  border-radius: var(--radius);
+  padding: 35px 40px;
+  max-width: 560px;
+  width: 100%;
+  box-shadow: var(--shadow);
+  text-align: left;
 }
-
 .cover-details h3 {
-    color: var(--primary);
-    font-size: 12pt;
-    margin-bottom: 15px;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    border-bottom: 1px solid var(--gold);
-    padding-bottom: 8px;
+  color: var(--primary);
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  border-bottom: 2px solid var(--gold-light);
+  padding-bottom: 12px;
+  text-align: center;
 }
-
 .cover-details p {
-    font-size: 10pt;
-    color: var(--text);
-    margin: 6px 0;
-    line-height: 1.6;
+  font-size: 1rem;
+  margin: 10px 0;
+  line-height: 1.6;
+  color: var(--text);
 }
-
 .cover-details .label {
-    font-weight: 700;
-    color: var(--primary);
+  font-weight: 700;
+  color: var(--primary);
 }
-
-/* Section styling */
-.section {
-    margin-bottom: 40px;
-    page-break-inside: avoid;
-}
-
-.section-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 18pt;
-    font-weight: 700;
-    color: var(--primary);
-    border-left: 6px solid var(--gold);
-    padding-left: 15px;
-    margin-bottom: 8px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.section-subtitle {
-    font-size: 13pt;
-    color: var(--secondary);
-    font-weight: 600;
-    padding-left: 21px;
-    margin-bottom: 20px;
-    font-family: 'Noto Sans Devanagari', sans-serif;
-}
-
-/* Term cards */
-.term-card {
-    background: linear-gradient(135deg, #ffffff 0%, #f8f9ff 100%);
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    padding: 20px 25px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-    page-break-inside: avoid;
-    position: relative;
-    overflow: hidden;
-}
-
-.term-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 4px;
-    height: 100%;
-    background: linear-gradient(180deg, var(--primary), var(--gold));
-}
-
-.term-number {
-    display: inline-block;
-    background: var(--primary);
-    color: white;
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    text-align: center;
-    line-height: 28px;
-    font-size: 10pt;
-    font-weight: 700;
-    margin-right: 10px;
-    vertical-align: middle;
-}
-
-.term-name {
-    font-size: 13pt;
-    font-weight: 700;
-    color: var(--primary);
-    display: inline;
-    vertical-align: middle;
-}
-
-.term-name-hindi {
-    font-size: 12pt;
-    font-weight: 600;
-    color: var(--secondary);
-    margin-left: 8px;
-    font-family: 'Noto Sans Devanagari', sans-serif;
-}
-
-.term-english {
-    margin-top: 12px;
-    padding: 10px 15px;
-    background: rgba(26, 35, 126, 0.03);
-    border-radius: 6px;
-    border-left: 3px solid var(--primary);
-    font-size: 10.5pt;
-    line-height: 1.7;
-}
-
-.term-english::before {
-    content: 'EN';
-    display: inline-block;
-    background: var(--primary);
-    color: white;
-    font-size: 7pt;
-    font-weight: 700;
-    padding: 1px 6px;
-    border-radius: 3px;
-    margin-right: 8px;
-    vertical-align: middle;
-}
-
-.term-hindi {
-    margin-top: 10px;
-    padding: 10px 15px;
-    background: rgba(198, 40, 40, 0.03);
-    border-radius: 6px;
-    border-left: 3px solid var(--secondary);
-    font-size: 11pt;
-    line-height: 1.8;
-    font-family: 'Noto Sans Devanagari', sans-serif;
-}
-
-.term-hindi::before {
-    content: 'HI';
-    display: inline-block;
-    background: var(--secondary);
-    color: white;
-    font-size: 7pt;
-    font-weight: 700;
-    padding: 1px 6px;
-    border-radius: 3px;
-    margin-right: 8px;
-    vertical-align: middle;
-}
-
-.term-tally {
-    margin-top: 10px;
-    padding: 8px 15px;
-    background: linear-gradient(90deg, rgba(255,111,0,0.08), rgba(255,111,0,0.02));
-    border-radius: 6px;
-    border-left: 3px solid var(--accent);
-    font-size: 10pt;
-    font-weight: 500;
-    color: #6d4c41;
-}
-
-.term-tally::before {
-    content: 'TALLY PRIME';
-    display: inline-block;
-    background: var(--accent);
-    color: white;
-    font-size: 7pt;
-    font-weight: 700;
-    padding: 1px 6px;
-    border-radius: 3px;
-    margin-right: 8px;
-    vertical-align: middle;
-}
-
-/* Tables */
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 20px 0;
-    font-size: 10pt;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    border-radius: 8px;
-    overflow: hidden;
-}
-
-thead {
-    background: linear-gradient(135deg, var(--primary), #3949ab);
-    color: white;
-}
-
-th {
-    padding: 12px 15px;
-    text-align: left;
-    font-weight: 600;
-    text-transform: uppercase;
-    font-size: 9pt;
-    letter-spacing: 0.5px;
-}
-
-td {
-    padding: 10px 15px;
-    border-bottom: 1px solid #e8e8e8;
-}
-
-tr:nth-child(even) {
-    background: #f8f9ff;
-}
-
-tr:hover {
-    background: #e8eeff;
-}
-
-/* Info box */
-.info-box {
-    background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
-    border: 1px solid var(--accent);
-    border-radius: 8px;
-    padding: 15px 20px;
-    margin: 20px 0;
-    position: relative;
-    page-break-inside: avoid;
-}
-
-.info-box::before {
-    content: '💡';
-    position: absolute;
-    top: -12px;
-    left: 20px;
-    background: white;
-    padding: 0 8px;
-    font-size: 16pt;
-}
-
-.info-box-title {
-    font-weight: 700;
-    color: var(--accent);
-    margin-bottom: 8px;
-    font-size: 11pt;
-}
-
-/* Warning box */
-.warning-box {
-    background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
-    border: 1px solid var(--secondary);
-    border-radius: 8px;
-    padding: 15px 20px;
-    margin: 20px 0;
-    position: relative;
-    page-break-inside: avoid;
-}
-
-.warning-box::before {
-    content: '⚠️';
-    position: absolute;
-    top: -12px;
-    left: 20px;
-    background: white;
-    padding: 0 8px;
-    font-size: 16pt;
-}
-
-.warning-box-title {
-    font-weight: 700;
-    color: var(--secondary);
-    margin-bottom: 8px;
-    font-size: 11pt;
-}
-
-/* Code/Steps block */
-.steps-block {
-    background: #263238;
-    color: #aed581;
-    padding: 15px 20px;
-    border-radius: 8px;
-    margin: 15px 0;
-    font-family: 'Courier New', monospace;
-    font-size: 10pt;
-    line-height: 1.8;
-    border-left: 4px solid var(--gold);
-    page-break-inside: avoid;
-}
-
-.steps-block-hindi {
-    background: #1a237e;
-    color: #ffcc80;
-    padding: 15px 20px;
-    border-radius: 8px;
-    margin: 15px 0;
-    font-family: 'Noto Sans Devanagari', monospace;
-    font-size: 10.5pt;
-    line-height: 1.8;
-    border-left: 4px solid var(--gold);
-    page-break-inside: avoid;
-}
-
-/* Golden rules table special */
-.golden-table th {
-    background: linear-gradient(135deg, var(--gold), #daa520);
-    color: #1a1a1a;
-    text-align: center;
-    font-size: 10pt;
-}
-
-.golden-table td {
-    text-align: center;
-    font-weight: 600;
-    padding: 15px;
-}
-
-.golden-table td:first-child {
-    background: rgba(26, 35, 126, 0.05);
-    font-weight: 700;
-    color: var(--primary);
-}
-
-/* Comparison table */
-.compare-table th {
-    background: linear-gradient(135deg, #37474f, #546e7a);
-}
-
-.compare-table td:first-child {
-    font-weight: 600;
-    background: rgba(55, 71, 79, 0.05);
-}
-
-/* Ledger table */
-.ledger-table th {
-    background: linear-gradient(135deg, #2e7d32, #43a047);
-}
-
-/* Page break */
-.page-break {
-    page-break-before: always;
-}
-
-/* Summary section */
-.summary-section {
-    background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
-    border: 2px solid #4caf50;
-    border-radius: 10px;
-    padding: 25px;
-    margin-top: 30px;
-    page-break-inside: avoid;
-}
-
-.summary-section h2 {
-    color: #2e7d32;
-    font-size: 16pt;
-    margin-bottom: 15px;
-    text-align: center;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-}
-
-.summary-section ol {
-    padding-left: 25px;
-}
-
-.summary-section li {
-    margin-bottom: 10px;
-    line-height: 1.7;
-}
-
-/* Hindi text styling */
-.hindi-text {
-    font-family: 'Noto Sans Devanagari', sans-serif;
-    line-height: 1.9;
-}
-
-/* Print specific */
-@media print {
-    .page-header, .page-footer {
-        position: fixed;
-    }
-    .content {
-        padding-top: 60px;
-        padding-bottom: 50px;
-    }
-    .watermark {
-        display: block !important;
-    }
-}
-
-/* Divider */
-.divider {
-    height: 3px;
-    background: linear-gradient(90deg, transparent, var(--gold), transparent);
-    margin: 30px 0;
-    border: none;
-}
-
-/* Sub section */
-.sub-section {
-    margin: 25px 0;
-    padding: 15px 20px;
-    background: #fafafa;
-    border-radius: 8px;
-    border: 1px solid #e0e0e0;
-    page-break-inside: avoid;
-}
-
-.sub-section-title {
-    font-size: 12pt;
-    font-weight: 700;
-    color: var(--primary);
-    margin-bottom: 10px;
-    border-bottom: 2px solid var(--gold);
-    padding-bottom: 5px;
-    display: inline-block;
-}
-
-/* Types list */
-.types-list {
-    margin: 10px 0 10px 25px;
-}
-
-.types-list li {
-    margin-bottom: 8px;
-    line-height: 1.7;
-}
-
-/* Example highlight */
-.example-highlight {
-    background: linear-gradient(90deg, rgba(184,134,11,0.1), transparent);
-    padding: 8px 15px;
-    border-left: 3px solid var(--gold);
-    margin: 10px 0;
-    font-style: italic;
-    border-radius: 0 6px 6px 0;
-}
-
-/* Next chapter box */
-.next-chapter {
-    background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
-    border: 2px solid var(--primary);
-    border-radius: 10px;
-    padding: 20px;
-    margin-top: 40px;
-    text-align: center;
-    page-break-inside: avoid;
-}
-
-.next-chapter h3 {
-    color: var(--primary);
-    font-size: 14pt;
-    margin-bottom: 10px;
-}
-
-/* Back cover */
-.back-cover {
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    background: linear-gradient(180deg, #e8eeff 0%, #f0f4ff 50%, #ffffff 100%);
-    page-break-before: always;
-    position: relative;
-}
-
-.back-cover::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 8px;
-    background: linear-gradient(90deg, var(--primary), var(--gold), var(--secondary), var(--primary));
-}
-
-.back-cover::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 8px;
-    background: linear-gradient(90deg, var(--primary), var(--gold), var(--secondary), var(--primary));
-}
-
-.back-cover h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: 28pt;
-    color: var(--primary);
-    margin-bottom: 30px;
-}
-
-.back-cover .contact-card {
-    background: white;
-    border: 2px solid var(--gold);
-    border-radius: 15px;
-    padding: 40px;
-    max-width: 500px;
-    width: 90%;
-    box-shadow: 0 10px 40px rgba(26,35,126,0.1);
-}
-
-.back-cover .contact-card h3 {
-    color: var(--primary);
-    font-size: 16pt;
-    margin-bottom: 20px;
-    border-bottom: 2px solid var(--gold);
-    padding-bottom: 10px;
-}
-
-.back-cover .contact-card p {
-    margin: 12px 0;
-    font-size: 11pt;
-    color: var(--text);
-}
-
-.back-cover .contact-card .icon {
-    font-size: 14pt;
-    margin-right: 8px;
-}
-
-.back-cover .social-links {
-    margin-top: 20px;
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-}
-
-.back-cover .social-links a {
-    display: inline-block;
-    padding: 8px 20px;
-    background: var(--primary);
-    color: white;
-    text-decoration: none;
-    border-radius: 20px;
-    font-size: 9pt;
-    font-weight: 600;
-    transition: all 0.3s;
-}
-
-.back-cover .social-links a:hover {
-    background: var(--gold);
-    color: var(--primary);
-}
-
-/* Institute stamp style */
-.stamp {
-    position: absolute;
-    bottom: 60px;
-    right: 40px;
-    width: 120px;
-    height: 120px;
-    border: 3px solid var(--secondary);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    color: var(--secondary);
-    font-weight: 700;
-    font-size: 9pt;
-    transform: rotate(-15deg);
-    opacity: 0.7;
-    font-family: 'Playfair Display', serif;
-    line-height: 1.3;
-}
-
-/* Feature table */
-.feature-table th {
-    background: linear-gradient(135deg, #6a1b9a, #8e24aa);
-}
-
-/* Voucher table */
-.voucher-table th {
-    background: linear-gradient(135deg, #1565c0, #1976d2);
-}
-
-.voucher-table td:nth-child(2) {
-    font-weight: 700;
-    color: var(--primary);
-    background: rgba(21, 101, 192, 0.05);
-    text-align: center;
-}
-
-/* Ledger table special */
-.ledger-table td:nth-child(1) {
-    text-align: center;
-    font-weight: 700;
-    background: rgba(46, 125, 50, 0.05);
-    width: 40px;
-}
-
-/* TOC page */
 .toc-page {
-    page-break-after: always;
-    padding: 40px 0;
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 50px 45px;
+  margin-bottom: 50px;
+  box-shadow: var(--shadow);
 }
-
 .toc-page h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: 22pt;
-    color: var(--primary);
-    text-align: center;
-    margin-bottom: 30px;
-    text-transform: uppercase;
-    letter-spacing: 3px;
-    border-bottom: 3px double var(--gold);
-    padding-bottom: 15px;
+  font-size: 1.8rem;
+  color: var(--primary);
+  text-align: center;
+  margin-bottom: 35px;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  border-bottom: 3px double var(--gold);
+  padding-bottom: 18px;
 }
-
 .toc-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    padding: 10px 0;
-    border-bottom: 1px dotted #ccc;
-    font-size: 11pt;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 14px 0;
+  border-bottom: 1px dashed var(--border);
+  font-size: 1.1rem;
+  transition: all 0.2s;
 }
-
+.toc-item:hover {
+  padding-left: 10px;
+  color: var(--primary);
+}
 .toc-item .toc-number {
-    font-weight: 700;
-    color: var(--primary);
-    margin-right: 10px;
-    min-width: 30px;
+  font-weight: 800;
+  color: var(--primary);
+  margin-right: 12px;
+  min-width: 36px;
+  font-size: 1.15rem;
 }
-
 .toc-item .toc-title {
-    flex: 1;
+  flex: 1;
+  font-weight: 500;
 }
-
 .toc-item .toc-page-num {
-    font-weight: 700;
-    color: var(--gold);
-    min-width: 30px;
-    text-align: right;
+  font-weight: 800;
+  color: var(--gold);
+  font-size: 1.1rem;
+  min-width: 40px;
+  text-align: right;
 }
-
-/* New Feature badge */
-.new-badge {
-    display: inline-block;
-    background: linear-gradient(135deg, #ff6f00, #ff8f00);
-    color: white;
-    font-size: 7pt;
-    font-weight: 700;
-    padding: 2px 8px;
-    border-radius: 10px;
-    margin-left: 8px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    vertical-align: middle;
+.section {
+  margin-bottom: 60px;
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 45px 45px 50px;
+  box-shadow: var(--shadow);
+  transition: box-shadow 0.3s;
+}
+.section:hover {
+  box-shadow: var(--shadow-hover);
+}
+.section-title {
+  font-size: 1.9rem;
+  font-weight: 800;
+  color: var(--primary);
+  border-left: 6px solid var(--gold);
+  padding-left: 20px;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  line-height: 1.3;
+}
+.section-subtitle {
+  font-size: 1.35rem;
+  color: var(--secondary);
+  font-weight: 700;
+  padding-left: 26px;
+  margin-bottom: 30px;
+  font-family: 'Noto Sans Devanagari', sans-serif;
+}
+.term-english, .term-hindi, .term-tally {
+  padding: 22px 26px;
+  border-radius: var(--radius-sm);
+  margin: 18px 0;
+  font-size: 1.08rem;
+  line-height: 1.9;
+  position: relative;
+}
+.term-english {
+  background: var(--primary-light);
+  border-left: 5px solid var(--primary);
+}
+.term-hindi {
+  background: var(--secondary-light);
+  border-left: 5px solid var(--secondary);
+  font-family: 'Noto Sans Devanagari', sans-serif;
+  line-height: 2;
+}
+.term-tally {
+  background: var(--accent-light);
+  border-left: 5px solid var(--accent);
+  font-weight: 500;
+  color: #5d4037;
+}
+.badge {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 6px;
+  margin-right: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  vertical-align: middle;
+  color: white;
+}
+.badge-en { background: var(--primary); }
+.badge-hi { background: var(--secondary); }
+.badge-tally { background: var(--accent); }
+.term-card {
+  background: linear-gradient(135deg, #ffffff 0%, #fafbfc 100%);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 32px;
+  margin-bottom: 28px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+.term-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-hover);
+  border-color: var(--gold);
+}
+.term-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 5px; height: 100%;
+  background: linear-gradient(180deg, var(--primary), var(--gold));
+}
+.term-header {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.term-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--primary), #3949ab);
+  color: white;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  font-size: 1rem;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+.term-name {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--primary);
+}
+.term-name-hindi {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--secondary);
+  font-family: 'Noto Sans Devanagari', sans-serif;
+}
+.sub-section {
+  margin: 30px 0;
+  padding: 28px 30px;
+  background: #fafafa;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+}
+.sub-section-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 14px;
+  border-bottom: 2px solid var(--gold-light);
+  padding-bottom: 8px;
+  display: inline-block;
+}
+.types-list {
+  margin: 14px 0 10px 30px;
+}
+.types-list li {
+  margin-bottom: 12px;
+  line-height: 1.8;
+  font-size: 1.05rem;
+}
+.example-highlight {
+  background: linear-gradient(90deg, var(--gold-light), transparent);
+  padding: 16px 22px;
+  border-left: 4px solid var(--gold);
+  margin: 18px 0;
+  font-style: italic;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  font-size: 1.05rem;
+}
+.info-box, .warning-box {
+  padding: 28px 28px 28px 32px;
+  border-radius: var(--radius-sm);
+  margin: 28px 0;
+  position: relative;
+  font-size: 1.05rem;
+}
+.info-box {
+  background: linear-gradient(135deg, #fff8e1 0%, #ffecb3 100%);
+  border: 1.5px solid var(--accent);
+}
+.warning-box {
+  background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
+  border: 1.5px solid var(--secondary);
+}
+.info-box-title, .warning-box-title {
+  font-weight: 800;
+  font-size: 1.15rem;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.info-box-title { color: var(--accent); }
+.warning-box-title { color: var(--secondary); }
+.steps-block, .steps-block-hindi {
+  padding: 22px 28px;
+  border-radius: var(--radius-sm);
+  margin: 20px 0;
+  font-size: 1.05rem;
+  line-height: 2;
+  border-left: 5px solid var(--gold);
+}
+.steps-block {
+  background: #263238;
+  color: #c5e1a5;
+  font-family: 'Courier New', monospace;
+}
+.steps-block-hindi {
+  background: var(--primary);
+  color: #ffe0b2;
+  font-family: 'Noto Sans Devanagari', monospace;
+}
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 28px 0;
+  font-size: 1.02rem;
+  box-shadow: var(--shadow);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+thead {
+  background: linear-gradient(135deg, var(--primary), #3949ab);
+  color: white;
+}
+th {
+  padding: 18px 20px;
+  text-align: left;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.95rem;
+  letter-spacing: 0.5px;
+}
+td {
+  padding: 16px 20px;
+  border-bottom: 1px solid #eee;
+  background: var(--card);
+}
+tr:nth-child(even) td { background: #f8f9fa; }
+tr:hover td { background: #e8eaf6; }
+.golden-table thead {
+  background: linear-gradient(135deg, var(--gold), #daa520);
+  color: #1a1a1a;
+}
+.golden-table td {
+  text-align: center;
+  font-weight: 600;
+  padding: 18px;
+}
+.golden-table td:first-child {
+  background: rgba(26, 35, 126, 0.04);
+  font-weight: 800;
+  color: var(--primary);
+}
+.compare-table thead {
+  background: linear-gradient(135deg, #37474f, #546e7a);
+}
+.compare-table td:first-child {
+  font-weight: 700;
+  background: rgba(55, 71, 79, 0.05);
+}
+.ledger-table thead {
+  background: linear-gradient(135deg, #2e7d32, #43a047);
+}
+.ledger-table td:nth-child(1) {
+  text-align: center;
+  font-weight: 800;
+  background: rgba(46, 125, 50, 0.05);
+  width: 50px;
+  color: var(--success);
+}
+.voucher-table thead {
+  background: linear-gradient(135deg, #1565c0, #1976d2);
+}
+.voucher-table td:nth-child(2) {
+  font-weight: 800;
+  color: var(--primary);
+  background: rgba(21, 101, 192, 0.05);
+  text-align: center;
+  font-size: 1.1rem;
+}
+.summary-section {
+  background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+  border: 2px solid var(--success);
+  border-radius: var(--radius);
+  padding: 40px;
+  margin-top: 40px;
+}
+.summary-section h2 {
+  color: var(--success);
+  font-size: 1.7rem;
+  margin-bottom: 25px;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+.summary-section ol {
+  padding-left: 30px;
+}
+.summary-section li {
+  margin-bottom: 18px;
+  line-height: 1.9;
+  font-size: 1.08rem;
+}
+.next-chapter {
+  background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+  border: 2px solid var(--primary);
+  border-radius: var(--radius);
+  padding: 35px;
+  margin-top: 50px;
+  text-align: center;
+}
+.next-chapter h3 {
+  color: var(--primary);
+  font-size: 1.5rem;
+  margin-bottom: 12px;
+}
+.back-cover {
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: linear-gradient(180deg, #e8eaf6 0%, var(--bg) 50%, #ffffff 100%);
+  border-radius: var(--radius);
+  padding: 60px 40px;
+  margin-top: 50px;
+  box-shadow: var(--shadow);
+  position: relative;
+  overflow: hidden;
+}
+.back-cover::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 6px;
+  background: linear-gradient(90deg, var(--primary), var(--gold), var(--secondary), var(--primary));
+}
+.back-cover h2 {
+  font-size: 2.4rem;
+  color: var(--primary);
+  margin-bottom: 20px;
+}
+.contact-card {
+  background: var(--card);
+  border: 2px solid var(--gold);
+  border-radius: var(--radius);
+  padding: 45px;
+  max-width: 520px;
+  width: 100%;
+  box-shadow: var(--shadow);
+}
+.contact-card h3 {
+  color: var(--primary);
+  font-size: 1.3rem;
+  margin-bottom: 25px;
+  border-bottom: 2px solid var(--gold-light);
+  padding-bottom: 12px;
+}
+.contact-card p {
+  margin: 14px 0;
+  font-size: 1.1rem;
+  color: var(--text);
+}
+.social-links {
+  margin-top: 25px;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+.social-links a {
+  display: inline-block;
+  padding: 10px 24px;
+  background: var(--primary);
+  color: white;
+  text-decoration: none;
+  border-radius: 50px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  transition: all 0.3s;
+}
+.social-links a:hover {
+  background: var(--gold);
+  color: var(--primary);
+  transform: translateY(-2px);
+}
+.copyright {
+  margin-top: 40px;
+  text-align: center;
+  color: #888;
+  font-size: 0.95rem;
+}
+.copyright p { margin: 8px 0; }
+.hindi-text {
+  font-family: 'Noto Sans Devanagari', sans-serif;
+  line-height: 2;
+}
+.divider {
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  margin: 50px 0;
+  border: none;
+  border-radius: 2px;
+}
+.back-to-top {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 50px;
+  height: 50px;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 1.4rem;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(26,35,126,0.3);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.back-to-top.visible {
+  opacity: 1;
+  visibility: visible;
+}
+.back-to-top:hover {
+  background: var(--gold);
+  color: var(--primary);
+  transform: translateY(-3px);
+}
+@media print {
+  .topbar, .progress-wrap, .btn, .back-to-top { display: none !important; }
+  body { font-size: 14px; background: white; }
+  .reading-container { max-width: 100%; padding: 0; }
+  .section, .cover-page, .toc-page, .back-cover {
+    box-shadow: none;
+    border: 1px solid #ddd;
+    break-inside: avoid;
+  }
+  .cover-page { min-height: auto; page-break-after: always; }
+  .toc-page { page-break-after: always; }
+  .section { page-break-inside: avoid; margin-bottom: 30px; }
+  .term-card { break-inside: avoid; }
+  table { break-inside: avoid; }
+}
+@media (max-width: 768px) {
+  body { font-size: 17px; }
+  .reading-container { padding: 20px 16px 60px; }
+  .section { padding: 28px 22px; }
+  .cover-institute { font-size: 2.2rem; }
+  .cover-course { font-size: 1.7rem; }
+  .section-title { font-size: 1.5rem; }
+  .section-subtitle { font-size: 1.15rem; }
+  .term-card { padding: 24px 20px; }
+  .term-name { font-size: 1.15rem; }
+  .term-name-hindi { font-size: 1.1rem; }
+  th, td { padding: 12px 14px; font-size: 0.95rem; }
+  .toc-page { padding: 30px 22px; }
+  .cover-details { padding: 25px; }
 }
 </style>
 <base target="_blank">
 </head>
 <body>
 
-<!-- Watermark -->
-<div class="watermark">NEXA</div>
+<div class="progress-wrap"><div class="progress-bar" id="progressBar"></div></div>
 
-<!-- Header -->
-<div class="page-header">
-    <span class="institute-name">📚 NEXA Computer Institute</span>
-    <span class="chapter-title">Chapter 1: Introduction to Tally Prime</span>
+<div class="topbar">
+  <div class="logo-text">🎓 NEXA Institute</div>
+  <div class="chapter-nav">Chapter 1: Introduction to Tally Prime</div>
+  <div class="actions">
+    <button class="btn btn-ghost" onclick="window.print()">🖨️ Print</button>
+    <button class="btn btn-primary" onclick="window.scrollTo({top:0,behavior:'smooth'})">⬆ Top</button>
+  </div>
 </div>
 
-<!-- Footer -->
-<div class="page-footer">
-    <div class="contact-info">
-        <span>📞 7696566162</span>
-        <span>🌐 nexainstitute.co.in</span>
-        <span>▶️ @learnwithnexa</span>
-    </div>
-    <div class="page-number">Page <span class="page"></span></div>
-</div>
+<div class="reading-container">
 
-<!-- ================= COVER PAGE ================= -->
 <div class="cover-page">
-    <div class="cover-watermark">NEXA</div>
-
-    <div class="cover-institute">NEXA</div>
-    <div class="cover-tagline">Computer Institute</div>
-
-    <div style="margin: 30px 0;">
-        <div style="width: 200px; height: 3px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 0 auto;"></div>
-    </div>
-
-    <div class="cover-course">Tally Prime</div>
-    <div class="cover-chapter">Chapter 1</div>
-    <div class="cover-chapter-title">Introduction to Tally Prime<br>टैली प्राइम का परिचय</div>
-
-    <div class="stamp">NEXA<br>Computer<br>Institute</div>
-
-    <div class="cover-details">
-        <h3>📍 Contact Information / संपर्क जानकारी</h3>
-        <p><span class="label">📞 Phone:</span> 7696566162</p>
-        <p><span class="label">📍 Address:</span> NEXA Building, Near Police Station, Maudarwaja, Farrukhabad</p>
-        <p><span class="label">🌐 Website:</span> nexainstitute.co.in</p>
-        <p><span class="label">▶️ YouTube:</span> @learnwithnexa</p>
-        <p><span class="label">📧 Email:</span> nexainstitute@gmail.com</p>
-    </div>
+  <div class="cover-watermark">NEXA</div>
+  <div class="cover-institute">NEXA</div>
+  <div class="cover-tagline">Computer Institute</div>
+  <div class="cover-divider"></div>
+  <div class="cover-course">Tally Prime</div>
+  <div class="cover-chapter">Chapter 1</div>
+  <div class="cover-chapter-title">Introduction to Tally Prime<br>टैली प्राइम का परिचय</div>
+  <div class="cover-details">
+    <h3>📍 Contact Information / संपर्क जानकारी</h3>
+    <p><span class="label">📞 Phone:</span> 7696566162</p>
+    <p><span class="label">📍 Address:</span> NEXA Building, Near Police Station, Maudarwaja, Farrukhabad</p>
+    <p><span class="label">🌐 Website:</span> nexainstitute.co.in</p>
+    <p><span class="label">▶️ YouTube:</span> @learnwithnexa</p>
+    <p><span class="label">📧 Email:</span> nexainstitute@gmail.com</p>
+  </div>
 </div>
 
-<!-- ================= TABLE OF CONTENTS ================= -->
-<div class="toc-page content">
-    <h2>📑 Table of Contents / विषय सूची</h2>
-
-    <div class="toc-item">
-        <span class="toc-number">1.</span>
-        <span class="toc-title">Introduction of Tally Prime / टैली प्राइम का परिचय</span>
-        <span class="toc-page-num">03</span>
-    </div>
-    <div class="toc-item">
-        <span class="toc-number">2.</span>
-        <span class="toc-title">Terminology of Accounting / लेखांकन की शब्दावली</span>
-        <span class="toc-page-num">04</span>
-    </div>
-    <div class="toc-item">
-        <span class="toc-number">3.</span>
-        <span class="toc-title">Meaning of Accounts / खाता का अर्थ</span>
-        <span class="toc-page-num">14</span>
-    </div>
-    <div class="toc-item">
-        <span class="toc-number">4.</span>
-        <span class="toc-title">Classification of Accounts / खातों का वर्गीकरण</span>
-        <span class="toc-page-num">14</span>
-    </div>
-    <div class="toc-item">
-        <span class="toc-number">5.</span>
-        <span class="toc-title">Three Golden Rules of Accounting / खातों के तीन सुनहरे नियम</span>
-        <span class="toc-page-num">15</span>
-    </div>
-    <div class="toc-item">
-        <span class="toc-number">6.</span>
-        <span class="toc-title">Journal & Day Book / जर्नल और डे बुक</span>
-        <span class="toc-page-num">17</span>
-    </div>
-    <div class="toc-item">
-        <span class="toc-number">7.</span>
-        <span class="toc-title">Tally Prime Interface / टैली प्राइम का इंटरफेस</span>
-        <span class="toc-page-num">18</span>
-    </div>
-    <div class="toc-item">
-        <span class="toc-number">8.</span>
-        <span class="toc-title">Company Management / कंपनी प्रबंधन</span>
-        <span class="toc-page-num">19</span>
-    </div>
-    <div class="toc-item">
-        <span class="toc-number">9.</span>
-        <span class="toc-title">Accounting Vouchers / लेखा वाउचर</span>
-        <span class="toc-page-num">22</span>
-    </div>
-    <div class="toc-item">
-        <span class="toc-number">10.</span>
-        <span class="toc-title">Ledger Group List / लेजर ग्रुप लिस्ट</span>
-        <span class="toc-page-num">24</span>
-    </div>
-    <div class="toc-item">
-        <span class="toc-number">11.</span>
-        <span class="toc-title">Tally Prime vs Old Tally / मुख्य अंतर</span>
-        <span class="toc-page-num">26</span>
-    </div>
-    <div class="toc-item">
-        <span class="toc-number">12.</span>
-        <span class="toc-title">Summary / सारांश</span>
-        <span class="toc-page-num">27</span>
-    </div>
+<div class="toc-page">
+  <h2>📑 Table of Contents / विषय सूची</h2>
+  <div class="toc-item"><span><span class="toc-number">1.</span><span class="toc-title">Introduction of Tally Prime / टैली प्राइम का परिचय</span></span><span class="toc-page-num">03</span></div>
+  <div class="toc-item"><span><span class="toc-number">2.</span><span class="toc-title">Terminology of Accounting / लेखांकन की शब्दावली</span></span><span class="toc-page-num">04</span></div>
+  <div class="toc-item"><span><span class="toc-number">3.</span><span class="toc-title">Meaning of Accounts / खाता का अर्थ</span></span><span class="toc-page-num">14</span></div>
+  <div class="toc-item"><span><span class="toc-number">4.</span><span class="toc-title">Classification of Accounts / खातों का वर्गीकरण</span></span><span class="toc-page-num">14</span></div>
+  <div class="toc-item"><span><span class="toc-number">5.</span><span class="toc-title">Three Golden Rules of Accounting / खातों के तीन सुनहरे नियम</span></span><span class="toc-page-num">15</span></div>
+  <div class="toc-item"><span><span class="toc-number">6.</span><span class="toc-title">Journal & Day Book / जर्नल और डे बुक</span></span><span class="toc-page-num">17</span></div>
+  <div class="toc-item"><span><span class="toc-number">7.</span><span class="toc-title">Tally Prime Interface / टैली प्राइम का इंटरफेस</span></span><span class="toc-page-num">18</span></div>
+  <div class="toc-item"><span><span class="toc-number">8.</span><span class="toc-title">Company Management / कंपनी प्रबंधन</span></span><span class="toc-page-num">19</span></div>
+  <div class="toc-item"><span><span class="toc-number">9.</span><span class="toc-title">Accounting Vouchers / लेखा वाउचर</span></span><span class="toc-page-num">22</span></div>
+  <div class="toc-item"><span><span class="toc-number">10.</span><span class="toc-title">Ledger Group List / लेजर ग्रुप लिस्ट</span></span><span class="toc-page-num">24</span></div>
+  <div class="toc-item"><span><span class="toc-number">11.</span><span class="toc-title">Tally Prime vs Old Tally / मुख्य अंतर</span></span><span class="toc-page-num">26</span></div>
+  <div class="toc-item"><span><span class="toc-number">12.</span><span class="toc-title">Summary / सारांश</span></span><span class="toc-page-num">27</span></div>
 </div>
-
-<!-- ================= MAIN CONTENT ================= -->
-<div class="content">
 
 <!-- SECTION 1: INTRODUCTION -->
-<div class="section page-break">
-    <div class="section-title">1. Introduction of Tally Prime</div>
-    <div class="section-subtitle">टैली प्राइम का परिचय</div>
+<div class="section">
+  <div class="section-title">1. Introduction of Tally Prime</div>
+  <div class="section-subtitle">टैली प्राइम का परिचय</div>
 
-    <div class="term-english">
-        To run any business properly, it is very important to maintain it regularly. In ancient times, it was done totally manually, but nowadays it is done through Tally. Tally Prime is a very powerful and user-friendly accounting software. It is the advanced version of Tally ERP 9 with many new features.
-    </div>
+  <div class="term-english">
+    <span class="badge badge-en">EN</span>
+    To run any business properly, it is very important to maintain it regularly. In ancient times, it was done totally manually, but nowadays it is done through Tally. Tally Prime is a very powerful and user-friendly accounting software. It is the advanced version of Tally ERP 9 with many new features.
+  </div>
 
-    <div class="term-hindi hindi-text">
-        किसी भी व्यवसाय को सही तरीके से चलाने के लिए, उसे नियमित रूप से और ठीक से बनाए रखना बहुत महत्वपूर्ण है। प्राचीन समय में यह पूरी तरह से मैन्युअल रूप से किया जाता था, लेकिन अब यह टैली के माध्यम से किया जाता है। टैली प्राइम एक बहुत शक्तिशाली और यूजर-फ्रेंडली एकाउंटिंग सॉफ्टवेयर है। यह टैली ईआरपी 9 का उन्नत संस्करण है जिसमें कई नए फीचर्स हैं।
-    </div>
+  <div class="term-hindi">
+    <span class="badge badge-hi">HI</span>
+    किसी भी व्यवसाय को सही तरीके से चलाने के लिए, उसे नियमित रूप से और ठीक से बनाए रखना बहुत महत्वपूर्ण है। प्राचीन समय में यह पूरी तरह से मैन्युअल रूप से किया जाता था, लेकिन अब यह टैली के माध्यम से किया जाता है। टैली प्राइम एक बहुत शक्तिशाली और यूजर-फ्रेंडली एकाउंटिंग सॉफ्टवेयर है। यह टैली ईआरपी 9 का उन्नत संस्करण है जिसमें कई नए फीचर्स हैं।
+  </div>
 
-    <div class="info-box">
-        
-    </div>
+  <div class="info-box">
+    <div class="info-box-title">💡 Important Note / महत्वपूर्ण नोट</div>
+    <p>Tally Prime is designed to make accounting simple, fast, and accurate for every business type.</p>
+    <p class="hindi-text">टैली प्राइम हर प्रकार के व्यवसाय के लिए एकाउंटिंग को सरल, तेज़ और सटीक बनाने के लिए डिज़ाइन किया गया है।</p>
+  </div>
 
-    <h3 style="color:var(--primary); margin:20px 0 15px; font-size:12pt;">✨ New Features in Tally Prime / टैली प्राइम में नए फीचर्स</h3>
+  <h3 style="color:var(--primary); margin:30px 0 20px; font-size:1.35rem; font-weight:700;">✨ New Features in Tally Prime / टैली प्राइम में नए फीचर्स</h3>
 
-    <table class="feature-table">
-        <thead>
-            <tr>
-                <th style="width:30%;">Feature / फीचर</th>
-                <th>Description / विवरण</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><strong>Go To (Ctrl+G)</strong></td>
-                <td>Jump to any report or voucher instantly / किसी भी रिपोर्ट या वाउचर पर तुरंत जाएँ</td>
-            </tr>
-            <tr>
-                <td><strong>Multi-Tasking (Ctrl+M)</strong></td>
-                <td>Open multiple reports simultaneously / एक साथ कई रिपोर्ट खोलें</td>
-            </tr>
-            <tr>
-                <td><strong>Top Bar Navigation</strong></td>
-                <td>Easy access to company name, date, and gateway / कंपनी का नाम, तिथि, और गेटवे का आसान एक्सेस</td>
-            </tr>
-            <tr>
-                <td><strong>Browser Reports</strong></td>
-                <td>View reports in browser / रिपोर्ट्स को ब्राउज़र में देखें</td>
-            </tr>
-            <tr>
-                <td><strong>e-Invoice & e-Way Bill</strong></td>
-                <td>Direct government portal integration / सीधी सरकारी पोर्टल इंटीग्रेशन</td>
-            </tr>
-            <tr>
-                <td><strong>WhatsApp Integration</strong></td>
-                <td>Send reports and invoices via WhatsApp / व्हाट्सएप के माध्यम से रिपोर्ट और इनवॉइस भेजें</td>
-            </tr>
-            <tr>
-                <td><strong>Simplified GST</strong></td>
-                <td>Auto GST calculation and return filing / ऑटो जीएसटी कैलकुलेशन और रिटर्न फाइलिंग</td>
-            </tr>
-            <tr>
-                <td><strong>TallyPrime Server</strong></td>
-                <td>Fast and secure multi-user data access / तेज़ और सुरक्षित मल्टी-यूज़र डेटा एक्सेस</td>
-            </tr>
-            <tr>
-                <td><strong>More Details (Alt+F1)</strong></td>
-                <td>Deeper analysis in any report / किसी भी रिपोर्ट में गहन विश्लेषण</td>
-            </tr>
-            <tr>
-                <td><strong>Enhanced Security</strong></td>
-                <td>Better user access control and data encryption / बेहतर यूज़र एक्सेस कंट्रोल और डेटा एन्क्रिप्शन</td>
-            </tr>
-        </tbody>
-    </table>
+  <table class="feature-table">
+    <thead>
+      <tr>
+        <th style="width:32%;">Feature / फीचर</th>
+        <th>Description / विवरण</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>Go To (Ctrl+G)</strong></td><td>Jump to any report or voucher instantly / किसी भी रिपोर्ट या वाउचर पर तुरंत जाएँ</td></tr>
+      <tr><td><strong>Multi-Tasking (Ctrl+M)</strong></td><td>Open multiple reports simultaneously / एक साथ कई रिपोर्ट खोलें</td></tr>
+      <tr><td><strong>Top Bar Navigation</strong></td><td>Easy access to company name, date, and gateway / कंपनी का नाम, तिथि, और गेटवे का आसान एक्सेस</td></tr>
+      <tr><td><strong>Browser Reports</strong></td><td>View reports in browser / रिपोर्ट्स को ब्राउज़र में देखें</td></tr>
+      <tr><td><strong>e-Invoice & e-Way Bill</strong></td><td>Direct government portal integration / सीधी सरकारी पोर्टल इंटीग्रेशन</td></tr>
+      <tr><td><strong>WhatsApp Integration</strong></td><td>Send reports and invoices via WhatsApp / व्हाट्सएप के माध्यम से रिपोर्ट और इनवॉइस भेजें</td></tr>
+      <tr><td><strong>Simplified GST</strong></td><td>Auto GST calculation and return filing / ऑटो जीएसटी कैलकुलेशन और रिटर्न फाइलिंग</td></tr>
+      <tr><td><strong>TallyPrime Server</strong></td><td>Fast and secure multi-user data access / तेज़ और सुरक्षित मल्टी-यूज़र डेटा एक्सेस</td></tr>
+      <tr><td><strong>More Details (Alt+F1)</strong></td><td>Deeper analysis in any report / किसी भी रिपोर्ट में गहन विश्लेषण</td></tr>
+      <tr><td><strong>Enhanced Security</strong></td><td>Better user access control and data encryption / बेहतर यूज़र एक्सेस कंट्रोल और डेटा एन्क्रिप्शन</td></tr>
+    </tbody>
+  </table>
 </div>
 
 <hr class="divider">
 
 <!-- SECTION 2: TERMINOLOGY -->
-<div class="section page-break">
-    <div class="section-title">2. Terminology of Accounting</div>
-    <div class="section-subtitle">लेखांकन की शब्दावली</div>
+<div class="section">
+  <div class="section-title">2. Terminology of Accounting</div>
+  <div class="section-subtitle">लेखांकन की शब्दावली</div>
 
-    <p style="margin-bottom:20px; font-size:10.5pt;">The following are the important terms used in accounting and Tally Prime:</p>
-    <p class="hindi-text" style="margin-bottom:25px; font-size:10.5pt;">निम्नलिखित लेखांकन और टैली प्राइम में उपयोग किए जाने वाले महत्वपूर्ण शब्द हैं:</p>
+  <p style="margin-bottom:24px; font-size:1.1rem;">The following are the important terms used in accounting and Tally Prime:</p>
+  <p class="hindi-text" style="margin-bottom:30px; font-size:1.1rem;">निम्नलिखित लेखांकन और टैली प्राइम में उपयोग किए जाने वाले महत्वपूर्ण शब्द हैं:</p>
 
-    <!-- TERM 1: TRADE -->
-    <div class="term-card">
-        <span class="term-number">1</span>
-        <span class="term-name">Trade</span>
-        <span class="term-name-hindi">(व्यापार)</span>
-        <div class="term-english">For earning profit, the sale and purchase of goods is called trade.</div>
-        <div class="term-hindi hindi-text">लाभ कमाने के लिए माल की बिक्री और खरीद को व्यापार कहा जाता है।</div>
-        <div class="term-tally">In Tally Prime, Sales (F8) and Purchase (F9) vouchers are used to record trade transactions.</div>
+  <!-- TERM 1: TRADE -->
+  <div class="term-card">
+    <div class="term-header">
+      <span class="term-number">1</span>
+      <span class="term-name">Trade</span>
+      <span class="term-name-hindi">(व्यापार)</span>
     </div>
+    <div class="term-english"><span class="badge badge-en">EN</span>For earning profit, the sale and purchase of goods is called trade.</div>
+    <div class="term-hindi"><span class="badge badge-hi">HI</span>लाभ कमाने के लिए माल की बिक्री और खरीद को व्यापार कहा जाता है।</div>
+    <div class="term-tally"><span class="badge badge-tally">TALLY</span>In Tally Prime, Sales (F8) and Purchase (F9) vouchers are used to record trade transactions.</div>
+  </div>
 
-    <!-- TERM 2: PROFESSION -->
-    <div class="term-card">
-        <span class="term-number">2</span>
-        <span class="term-name">Profession</span>
-        <span class="term-name-hindi">(पेशा)</span>
-        <div class="term-english">Any work which is done for earning profit and needs training before starting is called a profession. Examples: Doctors, Lawyers, Engineers, Chartered Accountants.</div>
-        <div class="term-hindi hindi-text">कोई भी काम जो लाभ कमाने के लिए किया जाता हो और उसे शुरू करने के लिए प्रशिक्षण की आवश्यकता हो, उसे पेशा (प्रोफेशन) कहा जाता है। उदाहरण: डॉक्टर, वकील, इंजीनियर, चार्टर्ड अकाउंटेंट।</div>
+  <!-- TERM 2: PROFESSION -->
+  <div class="term-card">
+    <div class="term-header">
+      <span class="term-number">2</span>
+      <span class="term-name">Profession</span>
+      <span class="term-name-hindi">(पेशा)</span>
     </div>
+    <div class="term-english"><span class="badge badge-en">EN</span>Any work which is done for earning profit and needs training before starting is called a profession. Examples: Doctors, Lawyers, Engineers, Chartered Accountants.</div>
+    <div class="term-hindi"><span class="badge badge-hi">HI</span>कोई भी काम जो लाभ कमाने के लिए किया जाता हो और उसे शुरू करने के लिए प्रशिक्षण की आवश्यकता हो, उसे पेशा (प्रोफेशन) कहा जाता है। उदाहरण: डॉक्टर, वकील, इंजीनियर, चार्टर्ड अकाउंटेंट।</div>
+  </div>
 
-    <!-- TERM 3: BUSINESS -->
-    <div class="term-card">
-        <span class="term-number">3</span>
-        <span class="term-name">Business</span>
-        <span class="term-name-hindi">(व्यवसाय)</span>
-        <div class="term-english">Any work which is done for earning profit is called business. It includes production, sales and purchases of goods and services, banking, insurance, and transportation, etc.</div>
-        <div class="term-hindi hindi-text">कोई भी काम जो लाभ कमाने के लिए किया जाता है उसे व्यवसाय कहा जाता है। यह एक काम है जिसमें वस्तुओं और सेवाओं का उत्पादन, बिक्री और खरीद, बैंक, बीमा और परिवहन आदि शामिल हैं।</div>
+  <!-- TERM 3: BUSINESS -->
+  <div class="term-card">
+    <div class="term-header">
+      <span class="term-number">3</span>
+      <span class="term-name">Business</span>
+      <span class="term-name-hindi">(व्यवसाय)</span>
     </div>
+    <div class="term-english"><span class="badge badge-en">EN</span>Any work which is done for earning profit is called business. It includes production, sales and purchases of goods and services, banking, insurance, and transportation, etc.</div>
+    <div class="term-hindi"><span class="badge badge-hi">HI</span>कोई भी काम जो लाभ कमाने के लिए किया जाता है उसे व्यवसाय कहा जाता है। यह एक काम है जिसमें वस्तुओं और सेवाओं का उत्पादन, बिक्री और खरीद, बैंक, बीमा और परिवहन आदि शामिल हैं।</div>
+  </div>
 
-    <!-- TERM 4: OWNER -->
-    <div class="term-card">
-        <span class="term-number">4</span>
-        <span class="term-name">Owner</span>
-        <span class="term-name-hindi">(मालिक)</span>
-        <div class="term-english">Those people who invest necessary money in business, regulate business, bear the risk of business, and take responsibility for profit and loss are called the owners of the business.</div>
-        <div class="term-hindi hindi-text">वे व्यक्ति जो व्यवसाय में आवश्यक धन का निवेश करते हैं, व्यवसाय को विनियमित करते हैं, व्यवसाय का जोखिम उठाते हैं और लाभ और हानि की जिम्मेदारी लेते हैं, उन्हें व्यवसाय का मालिक कहा जाता है।</div>
-        <div style="margin-top:10px; padding:10px 15px; background:#f5f5f5; border-radius:6px;">
-            <strong>Types / प्रकार:</strong>
-            <ul class="types-list">
-                <li><strong>Proprietor (एकल मालिक):</strong> If the owner is only one person. / यदि मालिक एक ही व्यक्ति है तो उसे प्रोप्राइटर कहा जाता है।</li>
-                <li><strong>Partners (भागीदार):</strong> If the owners are two or more persons. / यदि व्यवसाय के मालिक दो या अधिक व्यक्ति हैं, तो उन्हें भागीदार (पार्टनर) कहा जाता है।</li>
-                <li><strong>Shareholders (शेयरधारक):</strong> A person who owns at least one share of a company. / यदि कोई व्यक्ति कंपनी का कम से कम एक शेयर रखता है, तो वह उस कंपनी का शेयरधारक माना जाता है।</li>
-            </ul>
-        </div>
+  <!-- TERM 4: OWNER -->
+  <div class="term-card">
+    <div class="term-header">
+      <span class="term-number">4</span>
+      <span class="term-name">Owner</span>
+      <span class="term-name-hindi">(मालिक)</span>
     </div>
+    <div class="term-english"><span class="badge badge-en">EN</span>Those people who invest necessary money in business, regulate business, bear the risk of business, and take responsibility for profit and loss are called the owners of the business.</div>
+    <div class="term-hindi"><span class="badge badge-hi">HI</span>वे व्यक्ति जो व्यवसाय में आवश्यक धन का निवेश करते हैं, व्यवसाय को विनियमित करते हैं, व्यवसाय का जोखिम उठाते हैं और लाभ और हानि की जिम्मेदारी लेते हैं, उन्हें व्यवसाय का मालिक कहा जाता है।</div>
+    <div style="margin-top:16px; padding:18px 22px; background:#f5f5f5; border-radius:var(--radius-sm); border:1px solid var(--border);">
+      <strong style="color:var(--primary); font-size:1.1rem;">Types / प्रकार:</strong>
+      <ul class="types-list">
+        <li><strong>Proprietor (एकल मालिक):</strong> If the owner is only one person. / यदि मालिक एक ही व्यक्ति है तो उसे प्रोप्राइटर कहा जाता है।</li>
+        <li><strong>Partners (भागीदार):</strong> If the owners are two or more persons. / यदि व्यवसाय के मालिक दो या अधिक व्यक्ति हैं, तो उन्हें भागीदार (पार्टनर) कहा जाता है।</li>
+        <li><strong>Shareholders (शेयरधारक):</strong> A person who owns at least one share of a company. / यदि कोई व्यक्ति कंपनी का कम से कम एक शेयर रखता है, तो वह उस कंपनी का शेयरधारक माना जाता है।</li>
+      </ul>
+    </div>
+  </div>
 
-    <!-- TERM 5: CAPITAL -->
-    <div class="term-card">
-        <span class="term-number">5</span>
-        <span class="term-name">Capital</span>
-        <span class="term-name-hindi">(पूँजी)</span>
-        <div class="term-english">The money, goods, and assets invested by the owner in the business is called the capital of that company.</div>
-        <div class="term-hindi hindi-text">व्यवसाय का मालिक जो धन, माल और संपत्ति व्यवसाय में निवेश करता है, उसे उस कंपनी की पूंजी कहा जाता है।</div>
-        <div class="term-tally">In Tally Prime, Capital Account is created under the <strong>Capital Account</strong> group.</div>
+  <!-- TERM 5: CAPITAL -->
+  <div class="term-card">
+    <div class="term-header">
+      <span class="term-number">5</span>
+      <span class="term-name">Capital</span>
+      <span class="term-name-hindi">(पूँजी)</span>
     </div>
+    <div class="term-english"><span class="badge badge-en">EN</span>The money, goods, and assets invested by the owner in the business is called the capital of that company.</div>
+    <div class="term-hindi"><span class="badge badge-hi">HI</span>व्यवसाय का मालिक जो धन, माल और संपत्ति व्यवसाय में निवेश करता है, उसे उस कंपनी की पूंजी कहा जाता है।</div>
+    <div class="term-tally"><span class="badge badge-tally">TALLY</span>In Tally Prime, Capital Account is created under the <strong>Capital Account</strong> group.</div>
+  </div>
 
-    <!-- TERM 6: DRAWINGS -->
-    <div class="term-card">
-        <span class="term-number">6</span>
-        <span class="term-name">Drawings</span>
-        <span class="term-name-hindi">(आहरण / निकालना)</span>
-        <div class="term-english">The money, goods, and assets taken out of the business by the owner for personal use are called drawings.</div>
-        <div class="term-hindi hindi-text">व्यवसाय का मालिक व्यक्तिगत उपयोगों के लिए जो पैसा, माल और संपत्ति व्यापार से बाहर ले जाता है, उसे ड्रॉइंग (आहरण) कहा जाता है।</div>
-        <div class="term-tally">In Tally Prime, Drawings Account is created under the <strong>Capital Account</strong> group.</div>
+  <!-- TERM 6: DRAWINGS -->
+  <div class="term-card">
+    <div class="term-header">
+      <span class="term-number">6</span>
+      <span class="term-name">Drawings</span>
+      <span class="term-name-hindi">(आहरण / निकालना)</span>
     </div>
+    <div class="term-english"><span class="badge badge-en">EN</span>The money, goods, and assets taken out of the business by the owner for personal use are called drawings.</div>
+    <div class="term-hindi"><span class="badge badge-hi">HI</span>व्यवसाय का मालिक व्यक्तिगत उपयोगों के लिए जो पैसा, माल और संपत्ति व्यापार से बाहर ले जाता है, उसे ड्रॉइंग (आहरण) कहा जाता है।</div>
+    <div class="term-tally"><span class="badge badge-tally">TALLY</span>In Tally Prime, Drawings Account is created under the <strong>Capital Account</strong> group.</div>
+  </div>
 
-    <!-- TERM 7: GOODS -->
-    <div class="term-card">
-        <span class="term-number">7</span>
-        <span class="term-name">Goods</span>
-        <span class="term-name-hindi">(माल / सामग्री)</span>
-        <div class="term-english">The things which are sold and purchased in business are called goods. Raw material, semi-finished materials, and finished materials are also called goods.</div>
-        <div class="term-hindi hindi-text">व्यापार में जो चीजें बेची और खरीदी जाती हैं, उन्हें माल (सामान) कहा जाता है। कच्चा माल, अर्द्ध-तैयार माल और तैयार सामग्री को भी माल कहा जाता है।</div>
+  <!-- TERM 7: GOODS -->
+  <div class="term-card">
+    <div class="term-header">
+      <span class="term-number">7</span>
+      <span class="term-name">Goods</span>
+      <span class="term-name-hindi">(माल / सामग्री)</span>
     </div>
+    <div class="term-english"><span class="badge badge-en">EN</span>The things which are sold and purchased in business are called goods. Raw material, semi-finished materials, and finished materials are also called goods.</div>
+    <div class="term-hindi"><span class="badge badge-hi">HI</span>व्यापार में जो चीजें बेची और खरीदी जाती हैं, उन्हें माल (सामान) कहा जाता है। कच्चा माल, अर्द्ध-तैयार माल और तैयार सामग्री को भी माल कहा जाता है।</div>
+  </div>
 
-    <!-- TERM 8: PURCHASE -->
-    <div class="term-card">
-        <span class="term-number">8</span>
-        <span class="term-name">Purchase</span>
-        <span class="term-name-hindi">(खरीद)</span>
-        <div class="term-english">The goods which are bought in business for the purpose of sales are called purchase.</div>
-        <div class="term-hindi hindi-text">व्यापार में बिक्री के लिए जो माल खरीदा जाता है उसे खरीद (पर्चेज) कहा जाता है।</div>
-        <div style="margin-top:10px; padding:10px 15px; background:#f5f5f5; border-radius:6px;">
-            <strong>Types / प्रकार:</strong>
-            <ul class="types-list">
-                <li><strong>Cash Purchase (नकद खरीद):</strong> Goods bought with cash. / जिन वस्तुओं को नकद के साथ खरीदा जाता है, उन्हें नकद खरीद कहा जाता है।</li>
-                <li><strong>Credit Purchase (उधार खरीद):</strong> Goods bought on credit. / जिन वस्तुओं को उधार पर खरीदा जाता है, उन्हें क्रेडिट खरीद कहा जाता है।</li>
-            </ul>
-        </div>
-        <div class="term-tally">In Tally Prime, press <strong>F9</strong> for Purchase Voucher.</div>
+  <!-- TERM 8: PURCHASE -->
+  <div class="term-card">
+    <div class="term-header">
+      <span class="term-number">8</span>
+      <span class="term-name">Purchase</span>
+      <span class="term-name-hindi">(खरीद)</span>
     </div>
+    <div class="term-english"><span class="badge badge-en">EN</span>The goods which are bought in business for the purpose of sales are called purchase.</div>
+    <div class="term-hindi"><span class="badge badge-hi">HI</span>व्यापार में बिक्री के लिए जो माल खरीदा जाता है उसे खरीद (पर्चेज) कहा जाता है।</div>
+    <div style="margin-top:16px; padding:18px 22px; background:#f5f5f5; border-radius:var(--radius-sm); border:1px solid var(--border);">
+      <strong style="color:var(--primary); font-size:1.1rem;">Types / प्रकार:</strong>
+      <ul class="types-list">
+        <li><strong>Cash Purchase (नकद खरीद):</strong> Goods bought with cash. / जिन वस्तुओं को नकद के साथ खरीदा जाता है, उन्हें नकद खरीद कहा जाता है।</li>
+        <li><strong>Credit Purchase (उधार खरीद):</strong> Goods bought on credit. / जिन वस्तुओं को उधार पर खरीदा जाता है, उन्हें क्रेडिट खरीद कहा जाता है।</li>
+      </ul>
+    </div>
+    <div class="term-tally"><span class="badge badge-tally">TALLY</span>In Tally Prime, press <strong>F9</strong> for Purchase Voucher.</div>
+  </div>
 
-    <!-- TERM 9: SALES -->
-    <div class="term-card">
-        <span class="term-number">9</span>
-        <span class="term-name">Sales</span>
-        <span class="term-name-hindi">(बिक्री)</span>
-        <div class="term-english">The goods which are sold in business are called sales.</div>
-        <div class="term-hindi hindi-text">व्यापार में जो सामान बेचा जाता है उसे बिक्री (सेल्स) कहते हैं।</div>
-        <div style="margin-top:10px; padding:10px 15px; background:#f5f5f5; border-radius:6px;">
-            <strong>Types / प्रकार:</strong>
-            <ul class="types-list">
-                <li><strong>Cash Sales (नकद बिक्री):</strong> Goods sold with cash. / जिन वस्तुओं को नकद के साथ बेचा जाता है, उन्हें नकद बिक्री कहा जाता है।</li>
-                <li><strong>Credit Sales (उधार बिक्री):</strong> Goods sold on credit. / जिन वस्तुओं को उधार पर बेचा जाता है, उन्हें क्रेडिट बिक्री कहा जाता है।</li>
-                <li><strong>Turnover (टर्नओवर):</strong> Total of cash and credit sales. / नकद और उधार बिक्री का कुल योग टर्नओवर कहलाता है।</li>
-            </ul>
-        </div>
-        <div class="term-tally">In Tally Prime, press <strong>F8</strong> for Sales Voucher.</div>
+  <!-- TERM 9: SALES -->
+  <div class="term-card">
+    <div class="term-header">
+      <span class="term-number">9</span>
+      <span class="term-name">Sales</span>
+      <span class="term-name-hindi">(बिक्री)</span>
     </div>
+    <div class="term-english"><span class="badge badge-en">EN</span>The goods which are sold in business are called sales.</div>
+    <div class="term-hindi"><span class="badge badge-hi">HI</span>व्यापार में जो सामान बेचा जाता है उसे बिक्री (सेल्स) कहते हैं।</div>
+    <div style="margin-top:16px; padding:18px 22px; background:#f5f5f5; border-radius:var(--radius-sm); border:1px solid var(--border);">
+      <strong style="color:var(--primary); font-size:1.1rem;">Types / प्रकार:</strong>
+      <ul class="types-list">
+        <li><strong>Cash Sales (नकद बिक्री):</strong> Goods sold with cash. / जिन वस्तुओं को नकद के साथ बेचा जाता है, उन्हें नकद बिक्री कहा जाता है।</li>
+        <li><strong>Credit Sales (उधार बिक्री):</strong> Goods sold on credit. / जिन वस्तुओं को उधार पर बेचा जाता है, उन्हें क्रेडिट बिक्री कहा जाता है।</li>
+        <li><strong>Turnover (टर्नओवर):</strong> Total of cash and credit sales. / नकद और उधार बिक्री का कुल योग टर्नओवर कहलाता है।</li>
+      </ul>
+    </div>
+    <div class="term-tally"><span class="badge badge-tally">TALLY</span>In Tally Prime, press <strong>F8</strong> for Sales Voucher.</div>
+  </div>
 
-    <!-- TERM 10: PURCHASE RETURN -->
-    <div class="term-card">
-        <span class="term-number">10</span>
-        <span class="term-name">Purchase Return</span>
-        <span class="term-name-hindi">(खरीद वापसी)</span>
-        <div class="term-english">Sometimes, some part of goods or full goods are returned to suppliers due to any reason. This is called purchase return.</div>
-        <div class="term-hindi hindi-text">कभी-कभी किसी कारण से माल का कुछ हिस्सा या पूरा माल आपूर्तिकर्ताओं को वापस कर दिया जाता है, जिसे खरीद वापसी (पर्चेज रिटर्न) कहा जाता है।</div>
-        <div class="term-tally">In Tally Prime, use <strong>Ctrl+F9 (Debit Note)</strong> or Purchase Return voucher.</div>
+  <!-- TERM 10: PURCHASE RETURN -->
+  <div class="term-card">
+    <div class="term-header">
+      <span class="term-number">10</span>
+      <span class="term-name">Purchase Return</span>
+      <span class="term-name-hindi">(खरीद वापसी)</span>
     </div>
+    <div class="term-english"><span class="badge badge-en">EN</span>Sometimes, some part of goods or full goods are returned to suppliers due to any reason. This is called purchase return.</div>
+    <div class="term-hindi"><span class="badge badge-hi">HI</span>कभी-कभी किसी कारण से माल का कुछ हिस्सा या पूरा माल आपूर्तिकर्ताओं को वापस कर दिया जाता है, जिसे खरीद वापसी (पर्चेज रिटर्न) कहा जाता है।</div>
+    <div class="term-tally"><span class="badge badge-tally">TALLY</span>In Tally Prime, use <strong>Ctrl+F9 (Debit Note)</strong> or Purchase Return voucher.</div>
+  </div>
 
-    <!-- TERM 11: SALES RETURN -->
-    <div class="term-card">
-        <span class="term-number">11</span>
-        <span class="term-name">Sales Return</span>
-        <span class="term-name-hindi">(बिक्री वापसी)</span>
-        <div class="term-english">Sometimes, some part of goods or full goods are returned by the customer due to any reason. This is called sales return.</div>
-        <div class="term-hindi hindi-text">कभी-कभी किसी कारण से माल का कुछ हिस्सा या पूरा माल ग्राहक द्वारा वापस कर दिया जाता है, जिसे बिक्री वापसी (सेल्स रिटर्न) कहा जाता है।</div>
-        <div class="term-tally">In Tally Prime, use <strong>Ctrl+F8 (Credit Note)</strong> or Sales Return voucher.</div>
+  <!-- TERM 11: SALES RETURN -->
+  <div class="term-card">
+    <div class="term-header">
+      <span class="term-number">11</span>
+      <span class="term-name">Sales Return</span>
+      <span class="term-name-hindi">(बिक्री वापसी)</span>
     </div>
+    <div class="term-english"><span class="badge badge-en">EN</span>Sometimes, some part of goods or full goods are returned by the customer due to any reason. This is called sales return.</div>
+    <div class="term-hindi"><span class="badge badge-hi">HI</span>कभी-कभी किसी कारण से माल का कुछ हिस्सा या पूरा माल ग्राहक द्वारा वापस कर दिया जाता है, जिसे बिक्री वापसी (सेल्स रिटर्न) कहा जाता है।</div>
+    <div class="term-tally"><span class="badge badge-tally">TALLY</span>In Tally Prime, use <strong>Ctrl+F8 (Credit Note)</strong> or Sales Return voucher.</div>
+  </div>
 
-    <!-- TERM 12: STOCK -->
-    <div class="term-card">
-        <span class="term-number">12</span>
-        <span class="term-name">Stock</span>
-        <span class="term-name-hindi">(भण्डार)</span>
-        <div class="term-english">In any business, the current status of goods is called stock.</div>
-        <div class="term-hindi hindi-text">किसी भी व्यापार में माल की वर्तमान स्थिति को स्टॉक (भण्डार) कहा जाता है।</div>
-        <div style="margin-top:10px; padding:10px 15px; background:#f5f5f5; border-radius:6px;">
-            <strong>Types / प्रकार:</strong>
-            <ul class="types-list">
-                <li><strong>Closing Stock (अंतिम भण्डार):</strong> The remaining unsold goods at the end of the year. / वर्ष के अंत में शेष अबिक्रीत माल को क्लोजिंग स्टॉक कहा जाता है।</li>
-                <li><strong>Opening Stock (आरंभिक भण्डार):</strong> The remaining unsold goods carried forward to the next year. / जो बचे हुए अबिक्रीत माल अगले वर्ष में ले जाए जाते हैं, उन्हें ओपनिंग स्टॉक कहा जाता है।</li>
-            </ul>
-        </div>
-        <div class="term-tally">In Tally Prime: Gateway > Display > Inventory Books > Stock Summary (OR press <strong>Ctrl+G</strong> and type "Stock Summary")</div>
+  <!-- TERM 12: STOCK -->
+  <div class="term-card">
+    <div class="term-header">
+      <span class="term-number">12</span>
+      <span class="term-name">Stock</span>
+      <span class="term-name-hindi">(भण्डार)</span>
     </div>
+    <div class="term-english"><span class="badge badge-en">EN</span>In any business, the current status of goods is called stock.</div>
+    <div class="term-hindi"><span class="badge badge-hi">HI</span>किसी भी व्यापार में माल की वर्तमान स्थिति को स्टॉक (भण्डार) कहा जाता है।</div>
+    <div style="margin-top:16px; padding:18px 22px; background:#f5f5f5; border-radius:var(--radius-sm); border:1px solid var(--border);">
+      <strong style="color:var(--primary); font-size:1.1rem;">Types / प्रकार:</strong>
+      <ul class="types-list">
+        <li><strong>Closing Stock (अंतिम भण्डार):</strong> The remaining unsold goods at the end of the year. / वर्ष के अंत में शेष अबिक्रीत माल को क्लोजिंग स्टॉक कहा जाता है।</li>
+        <li><strong>Opening Stock (आरंभिक भण्डार):</strong> The remaining unsold goods carried forward to the next year. / जो बचे हुए अबिक्रीत माल अगले वर्ष में ले जाए जाते हैं, उन्हें ओपनिंग स्टॉक कहा जाता है।</li>
+      </ul>
+    </div>
+    <div class="term-tally"><span class="badge badge-tally">TALLY</span>In Tally Prime: Gateway > Display > Inventory Books > Stock Summary (OR press <strong>Ctrl+G</strong> and type "Stock Summary")</div>
+  </div>
 
-    <!-- TERM 13: CREDITORS -->
-    <div class="term-card">
-        <span class="term-number">13</span>
-        <span class="term-name">Creditors</span>
-        <span class="term-name-hindi">(लेनदार)</span>
-        <div class="term-english">A creditor is a person, bank, or other enterprise that has lent money or extended credit to another party. The party to whom the credit has been granted is the debtor.</div>
-        <div class="term-hindi hindi-text">लेनदार एक व्यक्ति, बैंक या अन्य उद्यम होता है, जिसने किसी अन्य पार्टी को पैसा या उधार दिया है। जिस पार्टी को उधार दिया गया है वह कर्जदार (डेटर) है।</div>
-        <div class="term-tally">In Tally Prime, created under the <strong>Sundry Creditors</strong> group.</div>
+  <!-- TERM 13: CREDITORS -->
+  <div class="term-card">
+    <div class="term-header">
+      <span class="term-number">13</span>
+      <span class="term-name">Creditors</span>
+      <span class="term-name-hindi">(लेनदार)</span>
     </div>
+    <div class="term-english"><span class="badge badge-en">EN</span>A creditor is a person, bank, or other enterprise that has lent money or extended credit to another party. The party to whom the credit has been granted is the debtor.</div>
+    <div class="term-hindi"><span class="badge badge-hi">HI</span>लेनदार एक व्यक्ति, बैंक या अन्य उद्यम होता है, जिसने किसी अन्य पार्टी को पैसा या उधार दिया है। जिस पार्टी को उधार दिया गया है वह कर्जदार (डेटर) है।</div>
+    <div class="term-tally"><span class="badge badge-tally">TALLY</span>In Tally Prime, created under the <strong>Sundry Creditors</strong> group.</div>
+  </div>
 
-    <!-- TERM 14: DEBTORS -->
-    <div class="term-card">
-        <span class="term-number">14</span>
-        <span class="term-name">Debtors</span>
-        <span class="term-name-hindi">(ऋणी)</span>
-        <div class="term-english">The customer to whom goods are sold on credit is called a debtor.</div>
-        <div class="term-hindi hindi-text">जिस ग्राहक को उधार पर माल बेचा जाता है उसे ऋणी (डेटर / कर्जदार) कहा जाता है।</div>
-        <div class="term-tally">In Tally Prime, created under the <strong>Sundry Debtors</strong> group.</div>
+  <!-- TERM 14: DEBTORS -->
+  <div class="term-card">
+    <div class="term-header">
+      <span class="term-number">14</span>
+      <span class="term-name">Debtors</span>
+      <span class="term-name-hindi">(ऋणी)</span>
     </div>
+    <div class="term-english"><span class="badge badge-en">EN</span>The customer to whom goods are sold on credit is called a debtor.</div>
+    <div class="term-hindi"><span class="badge badge-hi">HI</span>जिस ग्राहक को उधार पर माल बेचा जाता है उसे ऋणी (डेटर / कर्जदार) कहा जाता है।</div>
+    <div class="term-tally"><span class="badge badge-tally">TALLY</span>In Tally Prime, created under the <strong>Sundry Debtors</strong> group.</div>
+  </div>
 
-    <!-- TERM 15: LIABILITIES -->
-    <div class="term-card">
-        <span class="term-number">15</span>
-        <span class="term-name">Liabilities</span>
-        <span class="term-name-hindi">(उत्तरदायित्व / देयताएँ / ऋण)</span>
-        <div class="term-english">Liabilities are legally binding obligations that are payable to another person or entity. There are mainly two types of liabilities.</div>
-        <div class="term-hindi hindi-text">देयताएं कानूनी रूप से बाध्यकारी दायित्व हैं जो किसी अन्य व्यक्ति या संस्था को देय (वापस करनी) हैं। मुख्य रूप से दो प्रकार की देनदारियां हैं।</div>
-        <div style="margin-top:10px; padding:10px 15px; background:#f5f5f5; border-radius:6px;">
-            <strong>Types / प्रकार:</strong>
-            <ul class="types-list">
-                <li><strong>Long Term / Fixed Liabilities (दीर्घकालिक / निश्चित देयताएँ):</strong> All liabilities that are to be repaid after more than one year. / सभी देयताएं जो एक वर्ष से अधिक समय के बाद चुकानी होती हैं, उन्हें दीर्घकालिक देनदारियां कहा जाता है।</li>
-                <li><strong>Short Term / Current Liabilities (अल्पकालिक / वर्तमान देनदारियां):</strong> All liabilities that have to be paid within a year or shortly. / सभी देयताएं जिन्हें एक वर्ष के भीतर या शीघ्र ही भुगतान करना होता है, उन्हें अल्पकालिक देनदारियां कहा जाता है।</li>
-            </ul>
-        </div>
+  <!-- TERM 15: LIABILITIES -->
+  <div class="term-card">
+    <div class="term-header">
+      <span class="term-number">15</span>
+      <span class="term-name">Liabilities</span>
+      <span class="term-name-hindi">(उत्तरदायित्व / देयताएँ / ऋण)</span>
     </div>
+    <div class="term-english"><span class="badge badge-en">EN</span>Liabilities are legally binding obligations that are payable to another person or entity. There are mainly two types of liabilities.</div>
+    <div class="term-hindi"><span class="badge badge-hi">HI</span>देयताएं कानूनी रूप से बाध्यकारी दायित्व हैं जो किसी अन्य व्यक्ति या संस्था को देय (वापस करनी) हैं। मुख्य रूप से दो प्रकार की देनदारियां हैं।</div>
+    <div style="margin-top:16px; padding:18px 22px; background:#f5f5f5; border-radius:var(--radius-sm); border:1px solid var(--border);">
+      <strong style="color:var(--primary); font-size:1.1rem;">Types / प्रकार:</strong>
+      <ul class="types-list">
+        <li><strong>Long Term / Fixed Liabilities (दीर्घकालिक / निश्चित देयताएँ):</strong> All liabilities that are to be repaid after more than one year. / सभी देयताएं जो एक वर्ष से अधिक समय के बाद चुकानी होती हैं, उन्हें दीर्घकालिक देनदारियां कहा जाता है।</li>
+        <li><strong>Short Term / Current Liabilities (अल्पकालिक / वर्तमान देनदारियां):</strong> All liabilities that have to be paid within a year or shortly. / सभी देयताएं जिन्हें एक वर्ष के भीतर या शीघ्र ही भुगतान करना होता है, उन्हें अल्पकालिक देनदारियां कहा जाता है।</li>
+      </ul>
+    </div>
+  </div>
 
-    <!-- TERM 16: ASSETS -->
-    <div class="term-card">
-        <span class="term-number">16</span>
-        <span class="term-name">Assets</span>
-        <span class="term-name-hindi">(संपत्ति)</span>
-        <div class="term-english">All important things which help to maintain a business properly are called assets. These are mainly of two types.</div>
-        <div class="term-hindi hindi-text">सभी महत्वपूर्ण चीजें जो किसी व्यवसाय को ठीक से बनाए रखने में मदद करती हैं, उन्हें संपत्ति (एसेट्स) कहा जाता है। मुख्य रूप से दो प्रकार की संपत्ति हैं।</div>
-        <div style="margin-top:10px; padding:10px 15px; background:#f5f5f5; border-radius:6px;">
-            <strong>Types / प्रकार:</strong>
-            <ul class="types-list">
-                <li><strong>Fixed Assets (अचल संपत्तियां):</strong> All assets which are purchased for regulating business, not for sale. Examples: Building, Car, Furniture, Computer, Machinery, Land. / सभी संपत्तियां जो बिक्री के लिए नहीं, व्यवसाय को विनियमित करने के लिए खरीदी जाती हैं, अचल संपत्तियां कहलाती हैं।</li>
-                <li><strong>Current Assets (वर्तमान संपत्ति):</strong> All assets which do not remain in business permanently, like cash, cash in bank, stock, debtors, and all things which can be easily converted into cash. / सभी संपत्तियां जो व्यवसाय में स्थायी रूप से नहीं रहती हैं जैसे नकदी, बैंक में नकदी, स्टॉक, देनदार और वे सभी चीजें जो नकदी में आसानी से परिवर्तित हो जाती हैं।</li>
-            </ul>
-        </div>
+  <!-- TERM 16: ASSETS -->
+  <div class="term-card">
+    <div class="term-header">
+      <span class="term-number">16</span>
+      <span class="term-name">Assets</span>
+      <span class="term-name-hindi">(संपत्ति)</span>
     </div>
+    <div class="term-english"><span class="badge badge-en">EN</span>All important things which help to maintain a business properly are called assets. These are mainly of two types.</div>
+    <div class="term-hindi"><span class="badge badge-hi">HI</span>सभी महत्वपूर्ण चीजें जो किसी व्यवसाय को ठीक से बनाए रखने में मदद करती हैं, उन्हें संपत्ति (एसेट्स) कहा जाता है। मुख्य रूप से दो प्रकार की संपत्ति हैं।</div>
+    <div style="margin-top:16px; padding:18px 22px; background:#f5f5f5; border-radius:var(--radius-sm); border:1px solid var(--border);">
+      <strong style="color:var(--primary); font-size:1.1rem;">Types / प्रकार:</strong>
+      <ul class="types-list">
+        <li><strong>Fixed Assets (अचल संपत्तियां):</strong> All assets which are purchased for regulating business, not for sale. Examples: Building, Car, Furniture, Computer, Machinery, Land. / सभी संपत्तियां जो बिक्री के लिए नहीं, व्यवसाय को विनियमित करने के लिए खरीदी जाती हैं, अचल संपत्तियां कहलाती हैं।</li>
+        <li><strong>Current Assets (वर्तमान संपत्ति):</strong> All assets which do not remain in business permanently, like cash, cash in bank, stock, debtors, and all things which can be easily converted into cash. / सभी संपत्तियां जो व्यवसाय में स्थायी रूप से नहीं रहती हैं जैसे नकदी, बैंक में नकदी, स्टॉक, देनदार और वे सभी चीजें जो नकदी में आसानी से परिवर्तित हो जाती हैं।</li>
+      </ul>
+    </div>
+  </div>
 
-    <!-- TERM 17: EXPENSES -->
-    <div class="term-card">
-        <span class="term-number">17</span>
-        <span class="term-name">Expenses</span>
-        <span class="term-name-hindi">(व्यय / खर्च)</span>
-        <div class="term-english">All money spent in the production, manufacturing, and selling of goods is called expenses. There are mainly two types of expenses.</div>
-        <div class="term-hindi hindi-text">धन जो उत्पादन, निर्माण और माल बेचने में उपयोग किया जाता है, उसे व्यय (खर्च) कहा जाता है। मुख्य रूप से दो तरह के खर्च होते हैं।</div>
-        <div style="margin-top:10px; padding:10px 15px; background:#f5f5f5; border-radius:6px;">
-            <strong>Types / प्रकार:</strong>
-            <ul class="types-list">
-                <li><strong>Direct Expenses (प्रत्यक्ष खर्च):</strong> All expenses which are done by a businessman at the time of purchasing or production of goods. Examples: Raw material, Semi-finished goods, Finished goods, Wages, Transportation charges, Factory rent, etc. / सभी खर्च जो किसी व्यवसायी द्वारा माल की खरीद या उत्पादन के समय किए जाते हैं।</li>
-                <li><strong>Indirect Expenses (अप्रत्यक्ष खर्च):</strong> Expenses which belong to office expenses and selling of goods. Examples: Advertisement, Commission, Rent, Salary, Electricity bill, Discount, Interest, Bad Debts, Depreciation. / व्यय जो कार्यालय के खर्च और माल की बिक्री से संबंधित हैं।</li>
-            </ul>
-        </div>
+  <!-- TERM 17: EXPENSES -->
+  <div class="term-card">
+    <div class="term-header">
+      <span class="term-number">17</span>
+      <span class="term-name">Expenses</span>
+      <span class="term-name-hindi">(व्यय / खर्च)</span>
     </div>
+    <div class="term-english"><span class="badge badge-en">EN</span>All money spent in the production, manufacturing, and selling of goods is called expenses. There are mainly two types of expenses.</div>
+    <div class="term-hindi"><span class="badge badge-hi">HI</span>धन जो उत्पादन, निर्माण और माल बेचने में उपयोग किया जाता है, उसे व्यय (खर्च) कहा जाता है। मुख्य रूप से दो तरह के खर्च होते हैं।</div>
+    <div style="margin-top:16px; padding:18px 22px; background:#f5f5f5; border-radius:var(--radius-sm); border:1px solid var(--border);">
+      <strong style="color:var(--primary); font-size:1.1rem;">Types / प्रकार:</strong>
+      <ul class="types-list">
+        <li><strong>Direct Expenses (प्रत्यक्ष खर्च):</strong> All expenses which are done by a businessman at the time of purchasing or production of goods. Examples: Raw material, Semi-finished goods, Finished goods, Wages, Transportation charges, Factory rent, etc. / सभी खर्च जो किसी व्यवसायी द्वारा माल की खरीद या उत्पादन के समय किए जाते हैं।</li>
+        <li><strong>Indirect Expenses (अप्रत्यक्ष खर्च):</strong> Expenses which belong to office expenses and selling of goods. Examples: Advertisement, Commission, Rent, Salary, Electricity bill, Discount, Interest, Bad Debts, Depreciation. / व्यय जो कार्यालय के खर्च और माल की बिक्री से संबंधित हैं।</li>
+      </ul>
+    </div>
+  </div>
 
-    <!-- TERM 18: REVENUE -->
-    <div class="term-card">
-        <span class="term-number">18</span>
-        <span class="term-name">Revenue</span>
-        <span class="term-name-hindi">(राजस्व)</span>
-        <div class="term-english">Whatever we receive after selling goods or services in the market is called revenue.</div>
-        <div class="term-hindi hindi-text">बाजार में वस्तुओं या सेवाओं को बेचने के बाद हमें जो कुछ भी प्राप्त होता है उसे राजस्व कहा जाता है।</div>
+  <!-- TERM 18: REVENUE -->
+  <div class="term-card">
+    <div class="term-header">
+      <span class="term-number">18</span>
+      <span class="term-name">Revenue</span>
+      <span class="term-name-hindi">(राजस्व)</span>
     </div>
+    <div class="term-english"><span class="badge badge-en">EN</span>Whatever we receive after selling goods or services in the market is called revenue.</div>
+    <div class="term-hindi"><span class="badge badge-hi">HI</span>बाजार में वस्तुओं या सेवाओं को बेचने के बाद हमें जो कुछ भी प्राप्त होता है उसे राजस्व कहा जाता है।</div>
+  </div>
 
-    <!-- TERM 19: INCOME -->
-    <div class="term-card">
-        <span class="term-number">19</span>
-        <span class="term-name">Income</span>
-        <span class="term-name-hindi">(आय)</span>
-        <div class="term-english">The remaining part of revenue which is left after deducting expenses is called income. There are mainly two types of income.</div>
-        <div class="term-hindi hindi-text">राजस्व का वह शेष भाग जो व्यय में कटौती के बाद बचा रहता है, आय कहलाता है। मुख्य रूप से दो प्रकार की आय होती है।</div>
-        <div style="margin-top:10px; padding:10px 15px; background:#f5f5f5; border-radius:6px;">
-            <strong>Types / प्रकार:</strong>
-            <ul class="types-list">
-                <li><strong>Direct Income (प्रत्यक्ष आय):</strong> Direct income is that income which is received through the main business. / प्रत्यक्ष आय वह आय है जो मुख्य व्यवसाय के माध्यम से हमें प्राप्त होती है।</li>
-                <li><strong>Indirect Income (अप्रत्यक्ष आय):</strong> Indirect income is that income which is received from sources other than the main business. Examples: Interest Received, Rent Received, Commission Received, Dividend. / अप्रत्यक्ष आय वह आय है जो मुख्य व्यवसाय को छोड़कर किसी अन्य स्रोत से हमें प्राप्त होती है।</li>
-            </ul>
-        </div>
+  <!-- TERM 19: INCOME -->
+  <div class="term-card">
+    <div class="term-header">
+      <span class="term-number">19</span>
+      <span class="term-name">Income</span>
+      <span class="term-name-hindi">(आय)</span>
     </div>
+    <div class="term-english"><span class="badge badge-en">EN</span>The remaining part of revenue which is left after deducting expenses is called income. There are mainly two types of income.</div>
+    <div class="term-hindi"><span class="badge badge-hi">HI</span>राजस्व का वह शेष भाग जो व्यय में कटौती के बाद बचा रहता है, आय कहलाता है। मुख्य रूप से दो प्रकार की आय होती है।</div>
+    <div style="margin-top:16px; padding:18px 22px; background:#f5f5f5; border-radius:var(--radius-sm); border:1px solid var(--border);">
+      <strong style="color:var(--primary); font-size:1.1rem;">Types / प्रकार:</strong>
+      <ul class="types-list">
+        <li><strong>Direct Income (प्रत्यक्ष आय):</strong> Direct income is that income which is received through the main business. / प्रत्यक्ष आय वह आय है जो मुख्य व्यवसाय के माध्यम से हमें प्राप्त होती है।</li>
+        <li><strong>Indirect Income (अप्रत्यक्ष आय):</strong> Indirect income is that income which is received from sources other than the main business. Examples: Interest Received, Rent Received, Commission Received, Dividend. / अप्रत्यक्ष आय वह आय है जो मुख्य व्यवसाय को छोड़कर किसी अन्य स्रोत से हमें प्राप्त होती है।</li>
+      </ul>
+    </div>
+  </div>
 
-    <!-- TERM 20: DISCOUNT -->
-    <div class="term-card">
-        <span class="term-number">20</span>
-        <span class="term-name">Discount</span>
-        <span class="term-name-hindi">(छूट)</span>
-        <div class="term-english">Relaxation in MRP which is given to the customer by the businessman is called discount. There are mainly two types of discount.</div>
-        <div class="term-hindi hindi-text">एमआरपी में छूट जो कि व्यवसायी द्वारा ग्राहक को दी जाती है, छूट कहलाती है। मुख्य रूप से दो प्रकार की छूट है।</div>
-        <div style="margin-top:10px; padding:10px 15px; background:#f5f5f5; border-radius:6px;">
-            <strong>Types / प्रकार:</strong>
-            <ul class="types-list">
-                <li><strong>Trade Discount (व्यापार छूट):</strong> When a businessman reduces some amount from the MRP on the bill of goods, it is called trade discount. / जब व्यवसायी माल के बिल पर एमआरपी से कुछ कम पैसा लेता है, उसे व्यापार छूट कहा जाता है।</li>
-                <li><strong>Cash Discount (नकद छूट):</strong> In business, every businessman has to pay cash against the bill within a limited period, and if he pays before time, he receives a discount. This is called cash discount. / व्यवसाय में प्रत्येक व्यवसायी को सीमित अवधि में बिल के विरुद्ध नकद भुगतान करना पड़ता है और यदि वह समय से पहले भुगतान करता है तो उसे छूट प्राप्त होती है, इसे नकद छूट कहा जाता है।</li>
-            </ul>
-        </div>
-        <div class="term-tally">Trade discount is adjusted directly in the item rate. Cash discount is recorded using Discount Allowed/Received ledgers.</div>
+  <!-- TERM 20: DISCOUNT -->
+  <div class="term-card">
+    <div class="term-header">
+      <span class="term-number">20</span>
+      <span class="term-name">Discount</span>
+      <span class="term-name-hindi">(छूट)</span>
     </div>
+    <div class="term-english"><span class="badge badge-en">EN</span>Relaxation in MRP which is given to the customer by the businessman is called discount. There are mainly two types of discount.</div>
+    <div class="term-hindi"><span class="badge badge-hi">HI</span>एमआरपी में छूट जो कि व्यवसायी द्वारा ग्राहक को दी जाती है, छूट कहलाती है। मुख्य रूप से दो प्रकार की छूट है।</div>
+    <div style="margin-top:16px; padding:18px 22px; background:#f5f5f5; border-radius:var(--radius-sm); border:1px solid var(--border);">
+      <strong style="color:var(--primary); font-size:1.1rem;">Types / प्रकार:</strong>
+      <ul class="types-list">
+        <li><strong>Trade Discount (व्यापार छूट):</strong> When a businessman reduces some amount from the MRP on the bill of goods, it is called trade discount. / जब व्यवसायी माल के बिल पर एमआरपी से कुछ कम पैसा लेता है, उसे व्यापार छूट कहा जाता है।</li>
+        <li><strong>Cash Discount (नकद छूट):</strong> In business, every businessman has to pay cash against the bill within a limited period, and if he pays before time, he receives a discount. This is called cash discount. / व्यवसाय में प्रत्येक व्यवसायी को सीमित अवधि में बिल के विरुद्ध नकद भुगतान करना पड़ता है और यदि वह समय से पहले भुगतान करता है तो उसे छूट प्राप्त होती है, इसे नकद छूट कहा जाता है।</li>
+      </ul>
+    </div>
+    <div class="term-tally"><span class="badge badge-tally">TALLY</span>Trade discount is adjusted directly in the item rate. Cash discount is recorded using Discount Allowed/Received ledgers.</div>
+  </div>
 
-    <!-- TERM 21: BAD DEBTS -->
-    <div class="term-card">
-        <span class="term-number">21</span>
-        <span class="term-name">Bad Debts</span>
-        <span class="term-name-hindi">(बुरा ऋण / खराब ऋण)</span>
-        <div class="term-english">There is no guarantee that a businessman will get all the money against billing. That part of money which cannot be received by a businessman is called bad debts.</div>
-        <div class="term-hindi hindi-text">इस बात की कोई गारंटी नहीं है कि किसी व्यवसायी को बिलिंग का सारा पैसा मिलता है। पैसे का वह हिस्सा जो किसी व्यवसायी को प्राप्त नहीं हो सका है उसे बुरा ऋण (बैड डेट्स) कहा जाता है।</div>
-        <div class="term-tally">In Tally Prime, Bad Debts account is created under the <strong>Indirect Expenses</strong> group.</div>
+  <!-- TERM 21: BAD DEBTS -->
+  <div class="term-card">
+    <div class="term-header">
+      <span class="term-number">21</span>
+      <span class="term-name">Bad Debts</span>
+      <span class="term-name-hindi">(बुरा ऋण / खराब ऋण)</span>
     </div>
+    <div class="term-english"><span class="badge badge-en">EN</span>There is no guarantee that a businessman will get all the money against billing. That part of money which cannot be received by a businessman is called bad debts.</div>
+    <div class="term-hindi"><span class="badge badge-hi">HI</span>इस बात की कोई गारंटी नहीं है कि किसी व्यवसायी को बिलिंग का सारा पैसा मिलता है। पैसे का वह हिस्सा जो किसी व्यवसायी को प्राप्त नहीं हो सका है उसे बुरा ऋण (बैड डेट्स) कहा जाता है।</div>
+    <div class="term-tally"><span class="badge badge-tally">TALLY</span>In Tally Prime, Bad Debts account is created under the <strong>Indirect Expenses</strong> group.</div>
+  </div>
 
-    <!-- TERM 22: TRANSACTIONS -->
-    <div class="term-card">
-        <span class="term-number">22</span>
-        <span class="term-name">Transactions</span>
-        <span class="term-name-hindi">(लेन-देन)</span>
-        <div class="term-english">The process of taking and receiving goods in business is called transactions. This may be in cash or credit. If it occurs with cash, it is called a cash transaction. If it occurs without cash, it is called a credit transaction.</div>
-        <div class="term-hindi hindi-text">व्यापार में माल लेने और प्राप्त करने की प्रक्रिया को लेनदेन कहा जाता है। यह नकद या उधार में हो सकता है। अगर यह नकदी के साथ होता है तो नकद लेनदेन कहा जाता है, अगर यह गैर-नकद के साथ होता है तो इसे क्रेडिट लेनदेन कहा जाता है।</div>
+  <!-- TERM 22: TRANSACTIONS -->
+  <div class="term-card">
+    <div class="term-header">
+      <span class="term-number">22</span>
+      <span class="term-name">Transactions</span>
+      <span class="term-name-hindi">(लेन-देन)</span>
     </div>
+    <div class="term-english"><span class="badge badge-en">EN</span>The process of taking and receiving goods in business is called transactions. This may be in cash or credit. If it occurs with cash, it is called a cash transaction. If it occurs without cash, it is called a credit transaction.</div>
+    <div class="term-hindi"><span class="badge badge-hi">HI</span>व्यापार में माल लेने और प्राप्त करने की प्रक्रिया को लेनदेन कहा जाता है। यह नकद या उधार में हो सकता है। अगर यह नकदी के साथ होता है तो नकद लेनदेन कहा जाता है, अगर यह गैर-नकद के साथ होता है तो इसे क्रेडिट लेनदेन कहा जाता है।</div>
+  </div>
 
-    <!-- TERM 23: VOUCHER -->
-    <div class="term-card">
-        <span class="term-number">23</span>
-        <span class="term-name">Voucher</span>
-        <span class="term-name-hindi">(रसीद / वाउचर)</span>
-        <div class="term-english">Transactions and activities which have to be completed, and after completion of a transaction, one document as proof is received or given, is called a voucher.</div>
-        <div class="term-hindi hindi-text">लेन-देन की गतिविधियाँ जिन्हें पूरा किया जाना है, और लेनदेन के पूरा होने के बाद प्रमाण के रूप में एक दस्तावेज़ दिया जाता है या प्राप्त होता है, जो कि वाउचर (रसीद) कहलाता है।</div>
-        <div style="margin-top:10px; padding:10px 15px; background:#f5f5f5; border-radius:6px;">
-            <strong>Examples / उदाहरण:</strong>
-            <ul class="types-list">
-                <li>For credit sales or purchase, a bill is needed. / उधार बिक्री या खरीद के लिए बिल की जरूरत होती है।</li>
-                <li>For money transactions, a receipt from the bank is needed. / पैसों के लेन-देन के लिए बैंक की रसीद की जरूरत होती है।</li>
-                <li>For depositing money in the bank, a deposit receipt is needed. / बैंक में पैसे जमा करने के लिए जमा रसीद की जरूरत होती है।</li>
-                <li>For withdrawing money, a cheque is needed. / पैसे निकालने के लिए चेक आदि की जरूरत होती है।</li>
-            </ul>
-        </div>
-        <div class="term-tally">In Tally Prime, all vouchers are accessed from Gateway > Vouchers OR press <strong>Ctrl+G</strong> and type the voucher name.</div>
+  <!-- TERM 23: VOUCHER -->
+  <div class="term-card">
+    <div class="term-header">
+      <span class="term-number">23</span>
+      <span class="term-name">Voucher</span>
+      <span class="term-name-hindi">(रसीद / वाउचर)</span>
     </div>
+    <div class="term-english"><span class="badge badge-en">EN</span>Transactions and activities which have to be completed, and after completion of a transaction, one document as proof is received or given, is called a voucher.</div>
+    <div class="term-hindi"><span class="badge badge-hi">HI</span>लेन-देन की गतिविधियाँ जिन्हें पूरा किया जाना है, और लेनदेन के पूरा होने के बाद प्रमाण के रूप में एक दस्तावेज़ दिया जाता है या प्राप्त होता है, जो कि वाउचर (रसीद) कहलाता है।</div>
+    <div style="margin-top:16px; padding:18px 22px; background:#f5f5f5; border-radius:var(--radius-sm); border:1px solid var(--border);">
+      <strong style="color:var(--primary); font-size:1.1rem;">Examples / उदाहरण:</strong>
+      <ul class="types-list">
+        <li>For credit sales or purchase, a bill is needed. / उधार बिक्री या खरीद के लिए बिल की जरूरत होती है।</li>
+        <li>For money transactions, a receipt from the bank is needed. / पैसों के लेन-देन के लिए बैंक की रसीद की जरूरत होती है।</li>
+        <li>For depositing money in the bank, a deposit receipt is needed. / बैंक में पैसे जमा करने के लिए जमा रसीद की जरूरत होती है।</li>
+        <li>For withdrawing money, a cheque is needed. / पैसे निकालने के लिए चेक आदि की जरूरत होती है।</li>
+      </ul>
+    </div>
+    <div class="term-tally"><span class="badge badge-tally">TALLY</span>In Tally Prime, all vouchers are accessed from Gateway > Vouchers OR press <strong>Ctrl+G</strong> and type the voucher name.</div>
+  </div>
 
-    <!-- TERM 24: LEDGER -->
-    <div class="term-card">
-        <span class="term-number">24</span>
-        <span class="term-name">Ledger</span>
-        <span class="term-name-hindi">(खाता / बही / लेजर)</span>
-        <div class="term-english">A ledger is the actual account head to identify your transactions and is used in all accounting vouchers. Without a ledger, you cannot record any transaction. Examples: Purchase, Payments, Sales, Receipts, and other account heads are ledger accounts.</div>
-        <div class="term-hindi hindi-text">एक लेजर (खाताधारक / बही खाता) आपके लेनदेन की पहचान करने और सभी लेखांकन वाउचर में उपयोग किए जाने वाला वास्तविक खाता प्रमुख है। आप एक लेजर (खाता बही) के बिना किसी भी लेनदेन को रिकॉर्ड नहीं कर सकते।</div>
-        <div class="term-tally">In Tally Prime: Gateway > Masters > Create > Ledger (OR press <strong>Alt+C</strong> in any voucher to create on the fly).</div>
+  <!-- TERM 24: LEDGER -->
+  <div class="term-card">
+    <div class="term-header">
+      <span class="term-number">24</span>
+      <span class="term-name">Ledger</span>
+      <span class="term-name-hindi">(खाता / बही / लेजर)</span>
     </div>
+    <div class="term-english"><span class="badge badge-en">EN</span>A ledger is the actual account head to identify your transactions and is used in all accounting vouchers. Without a ledger, you cannot record any transaction. Examples: Purchase, Payments, Sales, Receipts, and other account heads are ledger accounts.</div>
+    <div class="term-hindi"><span class="badge badge-hi">HI</span>एक लेजर (खाताधारक / बही खाता) आपके लेनदेन की पहचान करने और सभी लेखांकन वाउचर में उपयोग किए जाने वाला वास्तविक खाता प्रमुख है। आप एक लेजर (खाता बही) के बिना किसी भी लेनदेन को रिकॉर्ड नहीं कर सकते।</div>
+    <div class="term-tally"><span class="badge badge-tally">TALLY</span>In Tally Prime: Gateway > Masters > Create > Ledger (OR press <strong>Alt+C</strong> in any voucher to create on the fly).</div>
+  </div>
 </div>
 
 <hr class="divider">
 
 <!-- SECTION 3: MEANING OF ACCOUNTS -->
-<div class="section page-break">
-    <div class="section-title">3. Meaning of Accounts</div>
-    <div class="section-subtitle">खाता / लेखा का अर्थ</div>
+<div class="section">
+  <div class="section-title">3. Meaning of Accounts</div>
+  <div class="section-subtitle">खाता / लेखा का अर्थ</div>
 
-    <div class="term-english">All the activities related to business — for example, any firm, profit, loss, sale, purchase, etc. — recorded in a book in sequence and date-wise is called accounts. It is maintained on the basis of sequence and date.</div>
+  <div class="term-english"><span class="badge badge-en">EN</span>All the activities related to business — for example, any firm, profit, loss, sale, purchase, etc. — recorded in a book in sequence and date-wise is called accounts. It is maintained on the basis of sequence and date.</div>
 
-    <div class="term-hindi hindi-text">व्यवसाय से संबंधित सभी गतिविधियाँ जैसे लाभ, हानि, बिक्री, खरीद इत्यादि जिस खाता बुक में दर्ज की जाती हैं, उस व्यवसाय का अकाउंट (खाता / लेखा) कहलाता है। यह क्रम और तिथि के आधार पर होती है।</div>
+  <div class="term-hindi"><span class="badge badge-hi">HI</span>व्यवसाय से संबंधित सभी गतिविधियाँ जैसे लाभ, हानि, बिक्री, खरीद इत्यादि जिस खाता बुक में दर्ज की जाती हैं, उस व्यवसाय का अकाउंट (खाता / लेखा) कहलाता है। यह क्रम और तिथि के आधार पर होती है।</div>
 
-    <h3 style="color:var(--primary); margin:20px 0 15px; font-size:12pt;">Ledger Format (खाते का प्रारूप)</h3>
+  <h3 style="color:var(--primary); margin:28px 0 18px; font-size:1.3rem; font-weight:700;">Ledger Format (खाते का प्रारूप)</h3>
 
-    <table>
-        <thead>
-            <tr>
-                <th style="width:50%; text-align:center;">Dr (Debit Record) / डेबिट (निकासी)</th>
-                <th style="width:50%; text-align:center;">Cr (Credit Record) / क्रेडिट (जमा)</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td style="text-align:center;">Date / Particulars / Amount<br>तिथि / विवरण / राशि</td>
-                <td style="text-align:center;">Date / Particulars / Amount<br>तिथि / विवरण / राशि</td>
-            </tr>
-        </tbody>
-    </table>
+  <table>
+    <thead>
+      <tr>
+        <th style="width:50%; text-align:center;">Dr (Debit Record) / डेबिट (निकासी)</th>
+        <th style="width:50%; text-align:center;">Cr (Credit Record) / क्रेडिट (जमा)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="text-align:center;">Date / Particulars / Amount<br>तिथि / विवरण / राशि</td>
+        <td style="text-align:center;">Date / Particulars / Amount<br>तिथि / विवरण / राशि</td>
+      </tr>
+    </tbody>
+  </table>
 
-    <div class="example-highlight">
-        <strong>Example Ledger / उदाहरण खाता:</strong> Satguru Traders<br>
-        <em>All transactions of Satguru Traders are recorded in this ledger with debit and credit sides.</em><br>
-        <em class="hindi-text">सतगुरु ट्रेडर्स के सभी लेनदेन इस लेजर में डेबिट और क्रेडिट साइड के साथ रिकॉर्ड किए जाते हैं।</em>
-    </div>
+  <div class="example-highlight">
+    <strong>Example Ledger / उदाहरण खाता:</strong> Satguru Traders<br>
+    <em>All transactions of Satguru Traders are recorded in this ledger with debit and credit sides.</em><br>
+    <em class="hindi-text">सतगुरु ट्रेडर्स के सभी लेनदेन इस लेजर में डेबिट और क्रेडिट साइड के साथ रिकॉर्ड किए जाते हैं।</em>
+  </div>
 </div>
 
 <hr class="divider">
 
 <!-- SECTION 4: CLASSIFICATION OF ACCOUNTS -->
-<div class="section page-break">
-    <div class="section-title">4. Classification of Accounts</div>
-    <div class="section-subtitle">खातों का वर्गीकरण</div>
+<div class="section">
+  <div class="section-title">4. Classification of Accounts</div>
+  <div class="section-subtitle">खातों का वर्गीकरण</div>
 
-    <div class="term-english">There are mainly three types of accounts in accounting.</div>
-    <div class="term-hindi hindi-text">मुख्य रूप से तीन प्रकार के खाते होते हैं।</div>
+  <div class="term-english"><span class="badge badge-en">EN</span>There are mainly three types of accounts in accounting.</div>
+  <div class="term-hindi"><span class="badge badge-hi">HI</span>मुख्य रूप से तीन प्रकार के खाते होते हैं।</div>
 
-    <div class="sub-section">
-        <div class="sub-section-title">1. Personal Account (व्यक्तिगत खाता)</div>
-        <div class="term-english">An account related to any firm name, person name, capital name, bank name, etc. is called a personal account.</div>
-        <div class="term-hindi hindi-text">किसी फर्म का नाम, व्यक्ति का नाम, पूंजी का नाम, बैंक का नाम आदि से संबंधित खाता व्यक्तिगत खाता कहलाता है।</div>
-        <div class="example-highlight">
-            <strong>Examples / उदाहरण:</strong> Ram A/c, Shyam A/c, SBI Bank A/c, Capital A/c, Loan from Mohan A/c.
-        </div>
+  <div class="sub-section">
+    <div class="sub-section-title">1. Personal Account (व्यक्तिगत खाता)</div>
+    <div class="term-english"><span class="badge badge-en">EN</span>An account related to any firm name, person name, capital name, bank name, etc. is called a personal account.</div>
+    <div class="term-hindi"><span class="badge badge-hi">HI</span>किसी फर्म का नाम, व्यक्ति का नाम, पूंजी का नाम, बैंक का नाम आदि से संबंधित खाता व्यक्तिगत खाता कहलाता है।</div>
+    <div class="example-highlight">
+      <strong>Examples / उदाहरण:</strong> Ram A/c, Shyam A/c, SBI Bank A/c, Capital A/c, Loan from Mohan A/c.
     </div>
+  </div>
 
-    <div class="sub-section">
-        <div class="sub-section-title">2. Real Account (वास्तविक खाता)</div>
-        <div class="term-english">An account which belongs to cash or assets of the company is called a real account.</div>
-        <div class="term-hindi hindi-text">वह खाता जो कंपनी के नकद या संपत्ति से संबंधित होता है, उसे वास्तविक खाता कहा जाता है।</div>
-        <div class="example-highlight">
-            <strong>Examples / उदाहरण:</strong> Cash A/c, Building A/c, Furniture A/c, Machinery A/c, Stock A/c.
-        </div>
+  <div class="sub-section">
+    <div class="sub-section-title">2. Real Account (वास्तविक खाता)</div>
+    <div class="term-english"><span class="badge badge-en">EN</span>An account which belongs to cash or assets of the company is called a real account.</div>
+    <div class="term-hindi"><span class="badge badge-hi">HI</span>वह खाता जो कंपनी के नकद या संपत्ति से संबंधित होता है, उसे वास्तविक खाता कहा जाता है।</div>
+    <div class="example-highlight">
+      <strong>Examples / उदाहरण:</strong> Cash A/c, Building A/c, Furniture A/c, Machinery A/c, Stock A/c.
     </div>
+  </div>
 
-    <div class="sub-section">
-        <div class="sub-section-title">3. Nominal Account (अवास्तविक खाता)</div>
-        <div class="term-english">An account which belongs to expenses, loss, income, and profit of the company is called a nominal account.</div>
-        <div class="term-hindi hindi-text">वह खाता जो कंपनी के खर्च, हानि, आय, और लाभ के अंतर्गत आता है, अवास्तविक खाता (नॉमिनल अकाउंट) कहलाता है।</div>
-        <div class="example-highlight">
-            <strong>Examples / उदाहरण:</strong> Salary A/c, Rent A/c, Commission A/c, Discount A/c, Bad Debts A/c, Sales A/c, Purchase A/c.
-        </div>
+  <div class="sub-section">
+    <div class="sub-section-title">3. Nominal Account (अवास्तविक खाता)</div>
+    <div class="term-english"><span class="badge badge-en">EN</span>An account which belongs to expenses, loss, income, and profit of the company is called a nominal account.</div>
+    <div class="term-hindi"><span class="badge badge-hi">HI</span>वह खाता जो कंपनी के खर्च, हानि, आय, और लाभ के अंतर्गत आता है, अवास्तविक खाता (नॉमिनल अकाउंट) कहलाता है।</div>
+    <div class="example-highlight">
+      <strong>Examples / उदाहरण:</strong> Salary A/c, Rent A/c, Commission A/c, Discount A/c, Bad Debts A/c, Sales A/c, Purchase A/c.
     </div>
+  </div>
 </div>
 
 <hr class="divider">
 
 <!-- SECTION 5: THREE GOLDEN RULES -->
-<div class="section page-break">
-    <div class="section-title">5. Three Golden Rules of Accounting</div>
-    <div class="section-subtitle">खातों के तीन सुनहरे नियम</div>
+<div class="section">
+  <div class="section-title">5. Three Golden Rules of Accounting</div>
+  <div class="section-subtitle">खातों के तीन सुनहरे नियम</div>
 
-    <table class="golden-table">
-        <thead>
-            <tr>
-                <th style="width:25%;">Account Type<br>खाते का प्रकार</th>
-                <th style="width:37.5%;">Debit Rule<br>डेबिट नियम</th>
-                <th style="width:37.5%;">Credit Rule<br>क्रेडिट नियम</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><strong>Personal A/c</strong><br>(व्यक्तिगत खाता)</td>
-                <td><strong>Debit The Receiver</strong><br>(पाने वाले को डेबिट करो)</td>
-                <td><strong>Credit The Giver</strong><br>(देने वाले को क्रेडिट करो)</td>
-            </tr>
-            <tr>
-                <td><strong>Real A/c</strong><br>(वास्तविक खाता)</td>
-                <td><strong>Debit What Comes In</strong><br>(जो आये उसे डेबिट करो)</td>
-                <td><strong>Credit What Goes Out</strong><br>(जो जाये उसे क्रेडिट करो)</td>
-            </tr>
-            <tr>
-                <td><strong>Nominal A/c</strong><br>(अवास्तविक खाता)</td>
-                <td><strong>Debit All Expenses & Losses</strong><br>(सभी खर्च और हानि को डेबिट करो)</td>
-                <td><strong>Credit All Incomes & Gains</strong><br>(सभी आमदनी और लाभ को क्रेडिट करो)</td>
-            </tr>
-        </tbody>
-    </table>
+  <table class="golden-table">
+    <thead>
+      <tr>
+        <th style="width:25%;">Account Type<br>खाते का प्रकार</th>
+        <th style="width:37.5%;">Debit Rule<br>डेबिट नियम</th>
+        <th style="width:37.5%;">Credit Rule<br>क्रेडिट नियम</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Personal A/c</strong><br>(व्यक्तिगत खाता)</td>
+        <td><strong>Debit The Receiver</strong><br>(पाने वाले को डेबिट करो)</td>
+        <td><strong>Credit The Giver</strong><br>(देने वाले को क्रेडिट करो)</td>
+      </tr>
+      <tr>
+        <td><strong>Real A/c</strong><br>(वास्तविक खाता)</td>
+        <td><strong>Debit What Comes In</strong><br>(जो आये उसे डेबिट करो)</td>
+        <td><strong>Credit What Goes Out</strong><br>(जो जाये उसे क्रेडिट करो)</td>
+      </tr>
+      <tr>
+        <td><strong>Nominal A/c</strong><br>(अवास्तविक खाता)</td>
+        <td><strong>Debit All Expenses & Losses</strong><br>(सभी खर्च और हानि को डेबिट करो)</td>
+        <td><strong>Credit All Incomes & Gains</strong><br>(सभी आमदनी और लाभ को क्रेडिट करो)</td>
+      </tr>
+    </tbody>
+  </table>
 
-    <div class="sub-section">
-        <div class="sub-section-title">Rule of Personal Account (व्यक्तिगत खाते का नियम)</div>
-        <div class="term-english"><strong>Debit The Receiver:</strong> The person who receives something is called the Receiver, and he is debited.<br><strong>Credit The Giver:</strong> The person who gives something is called the Giver, and he is credited.</div>
-        <div class="term-hindi hindi-text"><strong>डेबिट द रिसीवर (पाने वाले को):</strong> जो व्यक्ति कुछ प्राप्त करता है उसे रिसीवर कहा जाता है और उसे डेबिट में रखा जाता है।<br><strong>क्रेडिट द गिवर (देने वाले को):</strong> जो व्यक्ति कुछ देता है, उसे गिवर कहा जाता है और उसे क्रेडिट में रखा जाता है।</div>
-        <div class="example-highlight">
-            <strong>Example / उदाहरण:</strong><br>
-            • Rs.1000 given to Mohan. Mohan is receiving, so <strong>Mohan A/c will be debited.</strong> / मोहन को 1000 रुपया दिया गया, वह रिसीवर हुआ, इसलिए <strong>मोहन के खाते को डेबिट</strong> किया जाएगा।<br>
-            • Rs.1000 received from Sohan. Sohan is giving, so <strong>Sohan A/c will be credited.</strong> / सोहन से 1000 रुपया प्राप्त हुआ, वह गिवर हुआ, इसलिए <strong>सोहन के खाते को क्रेडिट</strong> किया जाएगा।
-        </div>
+  <div class="sub-section">
+    <div class="sub-section-title">Rule of Personal Account (व्यक्तिगत खाते का नियम)</div>
+    <div class="term-english"><span class="badge badge-en">EN</span><strong>Debit The Receiver:</strong> The person who receives something is called the Receiver, and he is debited.<br><strong>Credit The Giver:</strong> The person who gives something is called the Giver, and he is credited.</div>
+    <div class="term-hindi"><span class="badge badge-hi">HI</span><strong>डेबिट द रिसीवर (पाने वाले को):</strong> जो व्यक्ति कुछ प्राप्त करता है उसे रिसीवर कहा जाता है और उसे डेबिट में रखा जाता है।<br><strong>क्रेडिट द गिवर (देने वाले को):</strong> जो व्यक्ति कुछ देता है, उसे गिवर कहा जाता है और उसे क्रेडिट में रखा जाता है।</div>
+    <div class="example-highlight">
+      <strong>Example / उदाहरण:</strong><br>
+      • Rs.1000 given to Mohan. Mohan is receiving, so <strong>Mohan A/c will be debited.</strong> / मोहन को 1000 रुपया दिया गया, वह रिसीवर हुआ, इसलिए <strong>मोहन के खाते को डेबिट</strong> किया जाएगा।<br>
+      • Rs.1000 received from Sohan. Sohan is giving, so <strong>Sohan A/c will be credited.</strong> / सोहन से 1000 रुपया प्राप्त हुआ, वह गिवर हुआ, इसलिए <strong>सोहन के खाते को क्रेडिट</strong> किया जाएगा।
     </div>
+  </div>
 
-    <div class="sub-section">
-        <div class="sub-section-title">Rule of Real Account (वास्तविक खाते का नियम)</div>
-        <div class="term-english"><strong>Debit What Comes In:</strong> Things that come into the business are debited.<br><strong>Credit What Goes Out:</strong> Things that go out of the business are credited.</div>
-        <div class="term-hindi hindi-text"><strong>डेबिट व्हाट कम्स इन (जो आये उसे):</strong> व्यवसाय में जो वस्तुएँ आती हैं उन्हें डेबिट में रखा जाता है।<br><strong>क्रेडिट व्हाट गोज आउट (जो जाये उसे):</strong> व्यवसाय से जो वस्तुएँ जाती हैं उन्हें क्रेडिट में रखा जाता है।</div>
-        <div class="example-highlight">
-            <strong>Example / उदाहरण:</strong><br>
-            • Rs.1000 received from Mohan. Cash is coming in, so <strong>Cash A/c will be debited.</strong> / मोहन से 1000 रुपये प्राप्त हुए, एक 1000 रुपया आ रहा है, इसलिए <strong>कैश अकाउंट को डेबिट</strong> किया जाएगा।<br>
-            • A watch sold to Sohan. The watch is going out, so <strong>Watch A/c will be credited.</strong> / सोहन के हाथ घड़ी बेची गयी, घड़ी जा रही है, इसलिए <strong>घड़ी के खाते को क्रेडिट</strong> किया जाएगा।
-        </div>
+  <div class="sub-section">
+    <div class="sub-section-title">Rule of Real Account (वास्तविक खाते का नियम)</div>
+    <div class="term-english"><span class="badge badge-en">EN</span><strong>Debit What Comes In:</strong> Things that come into the business are debited.<br><strong>Credit What Goes Out:</strong> Things that go out of the business are credited.</div>
+    <div class="term-hindi"><span class="badge badge-hi">HI</span><strong>डेबिट व्हाट कम्स इन (जो आये उसे):</strong> व्यवसाय में जो वस्तुएँ आती हैं उन्हें डेबिट में रखा जाता है।<br><strong>क्रेडिट व्हाट गोज आउट (जो जाये उसे):</strong> व्यवसाय से जो वस्तुएँ जाती हैं उन्हें क्रेडिट में रखा जाता है।</div>
+    <div class="example-highlight">
+      <strong>Example / उदाहरण:</strong><br>
+      • Rs.1000 received from Mohan. Cash is coming in, so <strong>Cash A/c will be debited.</strong> / मोहन से 1000 रुपये प्राप्त हुए, एक 1000 रुपया आ रहा है, इसलिए <strong>कैश अकाउंट को डेबिट</strong> किया जाएगा।<br>
+      • A watch sold to Sohan. The watch is going out, so <strong>Watch A/c will be credited.</strong> / सोहन के हाथ घड़ी बेची गयी, घड़ी जा रही है, इसलिए <strong>घड़ी के खाते को क्रेडिट</strong> किया जाएगा।
     </div>
+  </div>
 
-    <div class="sub-section">
-        <div class="sub-section-title">Rule of Nominal Account (अवास्तविक खाते का नियम)</div>
-        <div class="term-english"><strong>Debit All Expenses and Losses:</strong> All expenses occurring in the business are debited.<br><strong>Credit All Incomes and Gains:</strong> All income earned is credited.</div>
-        <div class="term-hindi hindi-text"><strong>डेबिट ऑल एक्सपेंसेस एंड लॉसेस (सभी खर्च और हानियां):</strong> व्यवसाय में जो खर्च होता है उसके नाम को डेबिट किया जाता है।<br><strong>क्रेडिट ऑल इनकम्स एंड गेन्स (सभी आमदनी और लाभ):</strong> इसी प्रकार जो आमदनी होती है उसके नाम को क्रेडिट किया जाता है।</div>
-        <div class="example-highlight">
-            <strong>Example / उदाहरण:</strong><br>
-            • Salary paid -> Expense -> <strong>Salary A/c Debited</strong> / वेतन दिया गया -> खर्च -> <strong>वेतन खाता डेबिट</strong><br>
-            • Interest received -> Income -> <strong>Interest A/c Credited</strong> / ब्याज प्राप्त हुआ -> आमदनी -> <strong>ब्याज खाता क्रेडिट</strong>
-        </div>
+  <div class="sub-section">
+    <div class="sub-section-title">Rule of Nominal Account (अवास्तविक खाते का नियम)</div>
+    <div class="term-english"><span class="badge badge-en">EN</span><strong>Debit All Expenses and Losses:</strong> All expenses occurring in the business are debited.<br><strong>Credit All Incomes and Gains:</strong> All income earned is credited.</div>
+    <div class="term-hindi"><span class="badge badge-hi">HI</span><strong>डेबिट ऑल एक्सपेंसेस एंड लॉसेस (सभी खर्च और हानियां):</strong> व्यवसाय में जो खर्च होता है उसके नाम को डेबिट किया जाता है।<br><strong>क्रेडिट ऑल इनकम्स एंड गेन्स (सभी आमदनी और लाभ):</strong> इसी प्रकार जो आमदनी होती है उसके नाम को क्रेडिट किया जाता है।</div>
+    <div class="example-highlight">
+      <strong>Example / उदाहरण:</strong><br>
+      • Salary paid -> Expense -> <strong>Salary A/c Debited</strong> / वेतन दिया गया -> खर्च -> <strong>वेतन खाता डेबिट</strong><br>
+      • Interest received -> Income -> <strong>Interest A/c Credited</strong> / ब्याज प्राप्त हुआ -> आमदनी -> <strong>ब्याज खाता क्रेडिट</strong>
     </div>
+  </div>
 </div>
 
 <hr class="divider">
 
 <!-- SECTION 6: JOURNAL & DAY BOOK -->
-<div class="section page-break">
-    <div class="section-title">6. Journal & Day Book</div>
-    <div class="section-subtitle">जर्नल और डे बुक</div>
+<div class="section">
+  <div class="section-title">6. Journal & Day Book</div>
+  <div class="section-subtitle">जर्नल और डे बुक</div>
 
-    <div class="sub-section">
-        <div class="sub-section-title">Journal (हिसाब रखने वाली पत्रिका)</div>
-        <div class="term-english">A journal is a register in which an accountant records daily journal transactions. It is in the form of total-wise and particulars form.</div>
-        <div class="term-hindi hindi-text">जर्नल एक रजिस्टर है जिसमें अकाउंटेंट दैनिक जर्नल लेनदेन रिकॉर्ड करता है। यह कुल ज्ञान और विवरण के रूप में होती है।</div>
+  <div class="sub-section">
+    <div class="sub-section-title">Journal (हिसाब रखने वाली पत्रिका)</div>
+    <div class="term-english"><span class="badge badge-en">EN</span>A journal is a register in which an accountant records daily journal transactions. It is in the form of total-wise and particulars form.</div>
+    <div class="term-hindi"><span class="badge badge-hi">HI</span>जर्नल एक रजिस्टर है जिसमें अकाउंटेंट दैनिक जर्नल लेनदेन रिकॉर्ड करता है। यह कुल ज्ञान और विवरण के रूप में होती है।</div>
+  </div>
+
+  <div class="sub-section">
+    <div class="sub-section-title">Day Book in Tally Prime (टैली प्राइम में डे बुक)</div>
+    <div class="term-english"><span class="badge badge-en">EN</span>Day Book works in Tally Prime as a journal in manual accounting. Alteration is also done through Day Book.</div>
+    <div class="term-hindi"><span class="badge badge-hi">HI</span>डे बुक टैली प्राइम में मैनुअल अकाउंटिंग के जर्नल के रूप में काम करती है। डे बुक के माध्यम से परिवर्तन भी किया जाता है।</div>
+
+    <h4 style="color:var(--primary); margin:20px 0 12px; font-size:1.15rem; font-weight:700;">How to View Day Book / डे बुक देखने के तरीके:</h4>
+
+    <div class="steps-block">
+      Method 1 - Traditional Way:<br>
+      Gateway of Tally > Display > Day Book
+    </div>
+    <div class="steps-block-hindi">
+      तरीका 1 - पारंपरिक तरीका:<br>
+      गेटवे ऑफ टैली > डिस्प्ले > डे बुक
     </div>
 
-    <div class="sub-section">
-        <div class="sub-section-title">Day Book in Tally Prime (टैली प्राइम में डे बुक)</div>
-        <div class="term-english">Day Book works in Tally Prime as a journal in manual accounting. Alteration is also done through Day Book.</div>
-        <div class="term-hindi hindi-text">डे बुक टैली प्राइम में मैनुअल अकाउंटिंग के जर्नल के रूप में काम करती है। डे बुक के माध्यम से परिवर्तन भी किया जाता है।</div>
-
-        <h4 style="color:var(--primary); margin:15px 0 10px; font-size:11pt;">How to View Day Book / डे बुक देखने के तरीके:</h4>
-
-        <div class="steps-block">
-            Method 1 - Traditional Way:<br>
-            Gateway of Tally > Display > Day Book
-        </div>
-        <div class="steps-block-hindi hindi-text">
-            तरीका 1 - पारंपरिक तरीका:<br>
-            गेटवे ऑफ टैली > डिस्प्ले > डे बुक
-        </div>
-
-        <div class="steps-block">
-            Method 2 - Go To (Fastest):<br>
-            Ctrl+G (Go To) > Type "Day Book" > Press Enter
-        </div>
-        <div class="steps-block-hindi hindi-text">
-            तरीका 2 - गो टू (सबसे तेज़):<br>
-            Ctrl+G (गो टू) > "Day Book" टाइप करें > एंटर दबाएँ
-        </div>
-
-        <h4 style="color:var(--primary); margin:15px 0 10px; font-size:11pt;">Important Shortcut Keys / महत्वपूर्ण शॉर्टकट कुंजियाँ:</h4>
-
-        <table>
-            <thead>
-                <tr>
-                    <th>Key / कुंजी</th>
-                    <th>Function / कार्य</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr><td><strong>F2</strong></td><td>To display entries of a particular date / विशेष तिथि की एंट्री दिखाने के लिए</td></tr>
-                <tr><td><strong>Alt+F2</strong></td><td>To display entries of a specific period / विशेष अवधि की एंट्री दिखाने के लिए</td></tr>
-                <tr><td><strong>Alt+F1</strong></td><td>To display details of all transactions / सभी लेनदेन का विवरण दिखाने के लिए</td></tr>
-                <tr><td><strong>Enter</strong></td><td>To view details of any entry / किसी भी एंट्री का विवरण देखने के लिए</td></tr>
-                <tr><td><strong>Alt+Enter</strong></td><td>To alter an entry / किसी एंट्री में बदलाव करने के लिए</td></tr>
-                <tr><td><strong>Ctrl+Enter</strong></td><td>To modify a voucher / वाउचर में संशोधन करने के लिए</td></tr>
-            </tbody>
-        </table>
+    <div class="steps-block">
+      Method 2 - Go To (Fastest):<br>
+      Ctrl+G (Go To) > Type "Day Book" > Press Enter
     </div>
+    <div class="steps-block-hindi">
+      तरीका 2 - गो टू (सबसे तेज़):<br>
+      Ctrl+G (गो टू) > "Day Book" टाइप करें > एंटर दबाएँ
+    </div>
+
+    <h4 style="color:var(--primary); margin:20px 0 12px; font-size:1.15rem; font-weight:700;">Important Shortcut Keys / महत्वपूर्ण शॉर्टकट कुंजियाँ:</h4>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Key / कुंजी</th>
+          <th>Function / कार्य</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>F2</strong></td><td>To display entries of a particular date / विशेष तिथि की एंट्री दिखाने के लिए</td></tr>
+        <tr><td><strong>Alt+F2</strong></td><td>To display entries of a specific period / विशेष अवधि की एंट्री दिखाने के लिए</td></tr>
+        <tr><td><strong>Alt+F1</strong></td><td>To display details of all transactions / सभी लेनदेन का विवरण दिखाने के लिए</td></tr>
+        <tr><td><strong>Enter</strong></td><td>To view details of any entry / किसी भी एंट्री का विवरण देखने के लिए</td></tr>
+        <tr><td><strong>Alt+Enter</strong></td><td>To alter an entry / किसी एंट्री में बदलाव करने के लिए</td></tr>
+        <tr><td><strong>Ctrl+Enter</strong></td><td>To modify a voucher / वाउचर में संशोधन करने के लिए</td></tr>
+      </tbody>
+    </table>
+  </div>
 </div>
 
 <hr class="divider">
 
 <!-- SECTION 7: TALLY PRIME INTERFACE -->
-<div class="section page-break">
-    <div class="section-title">7. Tally Prime Interface</div>
-    <div class="section-subtitle">टैली प्राइम का इंटरफेस</div>
+<div class="section">
+  <div class="section-title">7. Tally Prime Interface</div>
+  <div class="section-subtitle">टैली प्राइम का इंटरफेस</div>
 
-    <div class="term-english">Tally Prime has a completely different and modern interface compared to the old Tally ERP 9. The new interface is designed for better user experience and faster navigation.</div>
-    <div class="term-hindi hindi-text">टैली प्राइम में पुराने टैली ईआरपी 9 से बिल्कुल अलग और आधुनिक इंटरफेस है। नया इंटरफेस बेहतर यूजर एक्सपीरियंस और तेज़ नेविगेशन के लिए डिज़ाइन किया गया है।</div>
+  <div class="term-english"><span class="badge badge-en">EN</span>Tally Prime has a completely different and modern interface compared to the old Tally ERP 9. The new interface is designed for better user experience and faster navigation.</div>
+  <div class="term-hindi"><span class="badge badge-hi">HI</span>टैली प्राइम में पुराने टैली ईआरपी 9 से बिल्कुल अलग और आधुनिक इंटरफेस है। नया इंटरफेस बेहतर यूजर एक्सपीरियंस और तेज़ नेविगेशन के लिए डिज़ाइन किया गया है।</div>
 
-    <div class="sub-section">
-        <div class="sub-section-title">New Look of Tally Prime / टैली प्राइम का नया रूप</div>
-        <ol class="types-list">
-            <li><strong>Top Bar / टॉप बार:</strong> Company Name, Current Date, and quick access to Gateway. / कंपनी का नाम, वर्तमान तिथि, और गेटवे का क्विक एक्सेस।</li>
-            <li><strong>Left Panel / बायाँ पैनल:</strong> "Go To" button and frequently used options. / "गो टू" बटन और अक्सर उपयोग किए जाने वाले विकल्प।</li>
-            <li><strong>Right Panel / दायाँ पैनल:</strong> Calculator and other tools. / कैलकुलेटर और अन्य टूल्स।</li>
-            <li><strong>Bottom Bar / निचला बार:</strong> Shortcut key hints. / शॉर्टकट कुंजियों के संकेत।</li>
-            <li><strong>Middle Area / मध्य क्षेत्र:</strong> Main working area. / मुख्य कार्य क्षेत्र।</li>
-        </ol>
-    </div>
+  <div class="sub-section">
+    <div class="sub-section-title">New Look of Tally Prime / टैली प्राइम का नया रूप</div>
+    <ol class="types-list">
+      <li><strong>Top Bar / टॉप बार:</strong> Company Name, Current Date, and quick access to Gateway. / कंपनी का नाम, वर्तमान तिथि, और गेटवे का क्विक एक्सेस।</li>
+      <li><strong>Left Panel / बायाँ पैनल:</strong> "Go To" button and frequently used options. / "गो टू" बटन और अक्सर उपयोग किए जाने वाले विकल्प।</li>
+      <li><strong>Right Panel / दायाँ पैनल:</strong> Calculator and other tools. / कैलकुलेटर और अन्य टूल्स।</li>
+      <li><strong>Bottom Bar / निचला बार:</strong> Shortcut key hints. / शॉर्टकट कुंजियों के संकेत।</li>
+      <li><strong>Middle Area / मध्य क्षेत्र:</strong> Main working area. / मुख्य कार्य क्षेत्र।</li>
+    </ol>
+  </div>
 
-    <h4 style="color:var(--primary); margin:15px 0 10px; font-size:11pt;">Universal Shortcuts in Tally Prime / टैली प्राइम में सार्वभौमिक शॉर्टकट:</h4>
+  <h4 style="color:var(--primary); margin:20px 0 12px; font-size:1.15rem; font-weight:700;">Universal Shortcuts in Tally Prime / टैली प्राइम में सार्वभौमिक शॉर्टकट:</h4>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Shortcut / शॉर्टकट</th>
-                <th>Function / कार्य</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr><td><strong>Ctrl+G</strong></td><td><strong>Go To</strong> - Jump to any screen instantly / किसी भी स्क्रीन पर तुरंत जाएँ</td></tr>
-            <tr><td><strong>Ctrl+M</strong></td><td><strong>Multi-Tasking</strong> - Switch between multiple reports / कई रिपोर्ट्स के बीच स्विच करें</td></tr>
-            <tr><td><strong>Ctrl+N</strong></td><td><strong>Calculator</strong> - Open calculator / कैलकुलेटर खोलें</td></tr>
-            <tr><td><strong>Ctrl+Q</strong></td><td><strong>Quit</strong> - Exit Tally Prime / टैली प्राइम से बाहर निकलें</td></tr>
-            <tr><td><strong>Alt+F1</strong></td><td><strong>More Details</strong> - View details in a report / रिपोर्ट में विवरण देखें</td></tr>
-            <tr><td><strong>F1</strong></td><td><strong>Help</strong> - Context-sensitive help / संदर्भ-संवेदनशील सहायता</td></tr>
-            <tr><td><strong>F12</strong></td><td><strong>Configure</strong> - Settings for the current screen / वर्तमान स्क्रीन की सेटिंग्स</td></tr>
-            <tr><td><strong>F11</strong></td><td><strong>Features</strong> - Enable/disable company features / कंपनी के फीचर्स चालू/बंद करें</td></tr>
-        </tbody>
-    </table>
+  <table>
+    <thead>
+      <tr>
+        <th>Shortcut / शॉर्टकट</th>
+        <th>Function / कार्य</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>Ctrl+G</strong></td><td><strong>Go To</strong> - Jump to any screen instantly / किसी भी स्क्रीन पर तुरंत जाएँ</td></tr>
+      <tr><td><strong>Ctrl+M</strong></td><td><strong>Multi-Tasking</strong> - Switch between multiple reports / कई रिपोर्ट्स के बीच स्विच करें</td></tr>
+      <tr><td><strong>Ctrl+N</strong></td><td><strong>Calculator</strong> - Open calculator / कैलकुलेटर खोलें</td></tr>
+      <tr><td><strong>Ctrl+Q</strong></td><td><strong>Quit</strong> - Exit Tally Prime / टैली प्राइम से बाहर निकलें</td></tr>
+      <tr><td><strong>Alt+F1</strong></td><td><strong>More Details</strong> - View details in a report / रिपोर्ट में विवरण देखें</td></tr>
+      <tr><td><strong>F1</strong></td><td><strong>Help</strong> - Context-sensitive help / संदर्भ-संवेदनशील सहायता</td></tr>
+      <tr><td><strong>F12</strong></td><td><strong>Configure</strong> - Settings for the current screen / वर्तमान स्क्रीन की सेटिंग्स</td></tr>
+      <tr><td><strong>F11</strong></td><td><strong>Features</strong> - Enable/disable company features / कंपनी के फीचर्स चालू/बंद करें</td></tr>
+    </tbody>
+  </table>
 </div>
 
 <hr class="divider">
 
 <!-- SECTION 8: COMPANY MANAGEMENT -->
-<div class="section page-break">
-    <div class="section-title">8. Company Management in Tally Prime</div>
-    <div class="section-subtitle">टैली प्राइम में कंपनी प्रबंधन</div>
+<div class="section">
+  <div class="section-title">8. Company Management in Tally Prime</div>
+  <div class="section-subtitle">टैली प्राइम में कंपनी प्रबंधन</div>
 
-    <div class="sub-section">
-        <div class="sub-section-title">How to Start Tally Prime / टैली प्राइम कैसे शुरू करें</div>
-        <div class="term-english">Method 1: Double-click the Tally Prime icon on the Desktop.<br>Method 2: Start Menu > All Programs > Tally Prime > Tally Prime.</div>
-        <div class="term-hindi hindi-text">तरीका 1: डेस्कटॉप पर टैली प्राइम आइकन पर डबल-क्लिक करें।<br>तरीका 2: स्टार्ट मेन्यू > ऑल प्रोग्राम्स > टैली प्राइम > टैली प्राइम।</div>
+  <div class="sub-section">
+    <div class="sub-section-title">How to Start Tally Prime / टैली प्राइम कैसे शुरू करें</div>
+    <div class="term-english"><span class="badge badge-en">EN</span>Method 1: Double-click the Tally Prime icon on the Desktop.<br>Method 2: Start Menu > All Programs > Tally Prime > Tally Prime.</div>
+    <div class="term-hindi"><span class="badge badge-hi">HI</span>तरीका 1: डेस्कटॉप पर टैली प्राइम आइकन पर डबल-क्लिक करें।<br>तरीका 2: स्टार्ट मेन्यू > ऑल प्रोग्राम्स > टैली प्राइम > टैली प्राइम।</div>
+  </div>
+
+  <div class="sub-section">
+    <div class="sub-section-title">How to Create a Company / टैली प्राइम में कंपनी कैसे बनाएँ</div>
+    <div class="steps-block">
+      Method 1:<br>
+      Gateway of Tally > Alt+K (Create Company)
+    </div>
+    <div class="steps-block-hindi">
+      तरीका 1:<br>
+      गेटवे ऑफ टैली > Alt+K (क्रिएट कंपनी)
+    </div>
+    <div class="steps-block">
+      Method 2:<br>
+      F3 (Company) > Create Company (Alt+K)
+    </div>
+    <div class="steps-block-hindi">
+      तरीका 2:<br>
+      F3 (कंपनी) > क्रिएट कंपनी (Alt+K)
     </div>
 
-    <div class="sub-section">
-        <div class="sub-section-title">How to Create a Company / टैली प्राइम में कंपनी कैसे बनाएँ</div>
-        <div class="steps-block">
-            Method 1:<br>
-            Gateway of Tally > Alt+K (Create Company)
-        </div>
-        <div class="steps-block-hindi hindi-text">
-            तरीका 1:<br>
-            गेटवे ऑफ टैली > Alt+K (क्रिएट कंपनी)
-        </div>
-        <div class="steps-block">
-            Method 2:<br>
-            F3 (Company) > Create Company (Alt+K)
-        </div>
-        <div class="steps-block-hindi hindi-text">
-            तरीका 2:<br>
-            F3 (कंपनी) > क्रिएट कंपनी (Alt+K)
-        </div>
+    <h4 style="color:var(--primary); margin:20px 0 12px; font-size:1.15rem; font-weight:700;">Fields to Fill / भरने वाले फील्ड्स:</h4>
 
-        <h4 style="color:var(--primary); margin:15px 0 10px; font-size:11pt;">Fields to Fill / भरने वाले फील्ड्स:</h4>
+    <table>
+      <thead>
+        <tr>
+          <th>Field / फील्ड</th>
+          <th>Description / विवरण</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Name</strong></td><td>Company ka naam / कंपनी का नाम</td></tr>
+        <tr><td><strong>Mailing Name</strong></td><td>Name on invoices/letters / इनवॉइस/पत्रों पर दिखने वाला नाम</td></tr>
+        <tr><td><strong>Address</strong></td><td>Company ka address / कंपनी का पता</td></tr>
+        <tr><td><strong>Country</strong></td><td>India (auto-select) / भारत (ऑटो-सिलेक्ट)</td></tr>
+        <tr><td><strong>State</strong></td><td>State select karein / राज्य चुनें</td></tr>
+        <tr><td><strong>Pin Code</strong></td><td>PIN code / पिन कोड</td></tr>
+        <tr><td><strong>Telephone</strong></td><td>Phone number / फोन नंबर</td></tr>
+        <tr><td><strong>Mobile</strong></td><td>Mobile number / मोबाइल नंबर</td></tr>
+        <tr><td><strong>Email</strong></td><td>Email ID / ईमेल आईडी</td></tr>
+        <tr><td><strong>Currency Symbol</strong></td><td>Rs. (Indian Rupees) / रु. (भारतीय रुपये)</td></tr>
+        <tr><td><strong>Maintain</strong></td><td>Accounts Only / Accounts with Inventory / केवल अकाउंट्स / इन्वेंट्री के साथ अकाउंट्स</td></tr>
+        <tr><td><strong>Financial Year From</strong></td><td>1-Apr-2026 / 1-अप्रैल-2026</td></tr>
+        <tr><td><strong>Books Beginning From</strong></td><td>1-Apr-2026 / 1-अप्रैल-2026</td></tr>
+        <tr><td><strong>Tally Vault Password</strong></td><td>(Optional) For security / (वैकल्पिक) सुरक्षा के लिए</td></tr>
+      </tbody>
+    </table>
 
-        <table>
-            <thead>
-                <tr>
-                    <th>Field / फील्ड</th>
-                    <th>Description / विवरण</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr><td><strong>Name</strong></td><td>Company ka naam / कंपनी का नाम</td></tr>
-                <tr><td><strong>Mailing Name</strong></td><td>Name on invoices/letters / इनवॉइस/पत्रों पर दिखने वाला नाम</td></tr>
-                <tr><td><strong>Address</strong></td><td>Company ka address / कंपनी का पता</td></tr>
-                <tr><td><strong>Country</strong></td><td>India (auto-select) / भारत (ऑटो-सिलेक्ट)</td></tr>
-                <tr><td><strong>State</strong></td><td>State select karein / राज्य चुनें</td></tr>
-                <tr><td><strong>Pin Code</strong></td><td>PIN code / पिन कोड</td></tr>
-                <tr><td><strong>Telephone</strong></td><td>Phone number / फोन नंबर</td></tr>
-                <tr><td><strong>Mobile</strong></td><td>Mobile number / मोबाइल नंबर</td></tr>
-                <tr><td><strong>Email</strong></td><td>Email ID / ईमेल आईडी</td></tr>
-                <tr><td><strong>Currency Symbol</strong></td><td>Rs. (Indian Rupees) / रु. (भारतीय रुपये)</td></tr>
-                <tr><td><strong>Maintain</strong></td><td>Accounts Only / Accounts with Inventory / केवल अकाउंट्स / इन्वेंट्री के साथ अकाउंट्स</td></tr>
-                <tr><td><strong>Financial Year From</strong></td><td>1-Apr-2026 / 1-अप्रैल-2026</td></tr>
-                <tr><td><strong>Books Beginning From</strong></td><td>1-Apr-2026 / 1-अप्रैल-2026</td></tr>
-                <tr><td><strong>Tally Vault Password</strong></td><td>(Optional) For security / (वैकल्पिक) सुरक्षा के लिए</td></tr>
-            </tbody>
-        </table>
-
-        <div class="info-box">
-            <div class="info-box-title">Tally Prime Tip / टैली प्राइम टिप</div>
-            <p>During company creation, you can also add <strong>GST Details</strong>, <strong>Bank Details</strong>, and <strong>Personnel Details</strong>.</p>
-            <p class="hindi-text">कंपनी क्रिएशन के समय ही आप <strong>जीएसटी विवरण</strong>, <strong>बैंक विवरण</strong>, और <strong>कर्मियों का विवरण</strong> भी जोड़ सकते हैं।</p>
-        </div>
+    <div class="info-box">
+      <div class="info-box-title">💡 Tally Prime Tip / टैली प्राइम टिप</div>
+      <p>During company creation, you can also add <strong>GST Details</strong>, <strong>Bank Details</strong>, and <strong>Personnel Details</strong>.</p>
+      <p class="hindi-text">कंपनी क्रिएशन के समय ही आप <strong>जीएसटी विवरण</strong>, <strong>बैंक विवरण</strong>, और <strong>कर्मियों का विवरण</strong> भी जोड़ सकते हैं।</p>
     </div>
+  </div>
 
-    <div class="sub-section">
-        <div class="sub-section-title">How to Open Company / कंपनी कैसे खोलें</div>
-        <div class="steps-block">
-            Gateway of Tally > Alt+O (Select Company)<br>
-            OR<br>
-            F3 > Select Company (Alt+O) > Select Company > Press Enter
-        </div>
-        <div class="steps-block-hindi hindi-text">
-            गेटवे ऑफ टैली > Alt+O (सिलेक्ट कंपनी)<br>
-            या<br>
-            F3 > सिलेक्ट कंपनी (Alt+O) > कंपनी चुनें > एंटर दबाएँ
-        </div>
+  <div class="sub-section">
+    <div class="sub-section-title">How to Open Company / कंपनी कैसे खोलें</div>
+    <div class="steps-block">
+      Gateway of Tally > Alt+O (Select Company)<br>
+      OR<br>
+      F3 > Select Company (Alt+O) > Select Company > Press Enter
     </div>
+    <div class="steps-block-hindi">
+      गेटवे ऑफ टैली > Alt+O (सिलेक्ट कंपनी)<br>
+      या<br>
+      F3 > सिलेक्ट कंपनी (Alt+O) > कंपनी चुनें > एंटर दबाएँ
+    </div>
+  </div>
 
-    <div class="sub-section">
-        <div class="sub-section-title">How to Shut a Company / कंपनी कैसे बंद करें</div>
-        <div class="steps-block">
-            Alt+F3 (Company Info) > Shut Company > Select Company > Press Enter
-        </div>
-        <div class="steps-block-hindi hindi-text">
-            Alt+F3 (कंपनी जानकारी) > शट कंपनी > कंपनी चुनें > एंटर दबाएँ
-        </div>
+  <div class="sub-section">
+    <div class="sub-section-title">How to Shut a Company / कंपनी कैसे बंद करें</div>
+    <div class="steps-block">
+      Alt+F3 (Company Info) > Shut Company > Select Company > Press Enter
     </div>
+    <div class="steps-block-hindi">
+      Alt+F3 (कंपनी जानकारी) > शट कंपनी > कंपनी चुनें > एंटर दबाएँ
+    </div>
+  </div>
 
-    <div class="sub-section">
-        <div class="sub-section-title">How to Alter a Company / कंपनी में बदलाव कैसे करें</div>
-        <div class="steps-block">
-            Alt+F3 (Company Info) > Alter > Select Company > Press Enter<br>
-            Make changes > Ctrl+A (Accept)
-        </div>
-        <div class="steps-block-hindi hindi-text">
-            Alt+F3 (कंपनी जानकारी) > अल्टर > कंपनी चुनें > एंटर दबाएँ<br>
-            बदलाव करें > Ctrl+A (एक्सेप्ट)
-        </div>
+  <div class="sub-section">
+    <div class="sub-section-title">How to Alter a Company / कंपनी में बदलाव कैसे करें</div>
+    <div class="steps-block">
+      Alt+F3 (Company Info) > Alter > Select Company > Press Enter<br>
+      Make changes > Ctrl+A (Accept)
     </div>
+    <div class="steps-block-hindi">
+      Alt+F3 (कंपनी जानकारी) > अल्टर > कंपनी चुनें > एंटर दबाएँ<br>
+      बदलाव करें > Ctrl+A (एक्सेप्ट)
+    </div>
+  </div>
 
-    <div class="sub-section">
-        <div class="sub-section-title">How to Delete a Company / कंपनी कैसे डिलीट करें</div>
-        <div class="steps-block">
-            Alt+F3 (Company Info) > Alter > Select Company > Alt+D (Delete) > Press Enter twice
-        </div>
-        <div class="steps-block-hindi hindi-text">
-            Alt+F3 (कंपनी जानकारी) > अल्टर > कंपनी चुनें > Alt+D (डिलीट) > दो बार एंटर दबाएँ
-        </div>
-        <div class="warning-box">
-            <div class="warning-box-title">Warning / चेतावनी</div>
-            <p>Deleting a company will <strong>permanently delete all data</strong>. Always take a backup first!</p>
-            <p class="hindi-text">कंपनी डिलीट करने से सारा डेटा <strong>स्थायी रूप से डिलीट</strong> हो जाएगा। पहले बैकअप जरूर लें!</p>
-        </div>
+  <div class="sub-section">
+    <div class="sub-section-title">How to Delete a Company / कंपनी कैसे डिलीट करें</div>
+    <div class="steps-block">
+      Alt+F3 (Company Info) > Alter > Select Company > Alt+D (Delete) > Press Enter twice
     </div>
+    <div class="steps-block-hindi">
+      Alt+F3 (कंपनी जानकारी) > अल्टर > कंपनी चुनें > Alt+D (डिलीट) > दो बार एंटर दबाएँ
+    </div>
+    <div class="warning-box">
+      <div class="warning-box-title">⚠️ Warning / चेतावनी</div>
+      <p>Deleting a company will <strong>permanently delete all data</strong>. Always take a backup first!</p>
+      <p class="hindi-text">कंपनी डिलीट करने से सारा डेटा <strong>स्थायी रूप से डिलीट</strong> हो जाएगा। पहले बैकअप जरूर लें!</p>
+    </div>
+  </div>
 
-    <div class="sub-section">
-        <div class="sub-section-title">How to Quit Tally Prime / टैली प्राइम से बाहर कैसे जाएँ</div>
-        <div class="term-english">Method 1: Press Esc key until the Yes/No dialog box appears, then press Enter.<br>Method 2: Press <strong>Ctrl+Q</strong> for direct quit.</div>
-        <div class="term-hindi hindi-text">तरीका 1: Esc कुंजी तब तक दबाएँ जब तक Yes/No डायलॉग बॉक्स न आ जाए, फिर Enter दबाएँ।<br>तरीका 2: सीधे बाहर निकलने के लिए <strong>Ctrl+Q</strong> दबाएँ।</div>
-    </div>
+  <div class="sub-section">
+    <div class="sub-section-title">How to Quit Tally Prime / टैली प्राइम से बाहर कैसे जाएँ</div>
+    <div class="term-english"><span class="badge badge-en">EN</span>Method 1: Press Esc key until the Yes/No dialog box appears, then press Enter.<br>Method 2: Press <strong>Ctrl+Q</strong> for direct quit.</div>
+    <div class="term-hindi"><span class="badge badge-hi">HI</span>तरीका 1: Esc कुंजी तब तक दबाएँ जब तक Yes/No डायलॉग बॉक्स न आ जाए, फिर Enter दबाएँ।<br>तरीका 2: सीधे बाहर निकलने के लिए <strong>Ctrl+Q</strong> दबाएँ।</div>
+  </div>
 </div>
 
 <hr class="divider">
 
 <!-- SECTION 9: ACCOUNTING VOUCHERS -->
-<div class="section page-break">
-    <div class="section-title">9. Accounting Vouchers in Tally Prime</div>
-    <div class="section-subtitle">टैली प्राइम में लेखा वाउचर</div>
+<div class="section">
+  <div class="section-title">9. Accounting Vouchers in Tally Prime</div>
+  <div class="section-subtitle">टैली प्राइम में लेखा वाउचर</div>
 
-    <div class="term-english">Tally Prime is pre-programmed with a variety of accounting vouchers. Depending on the nature of your business, these can be created in Invoice mode or Voucher mode. Each is designed to perform a different job.</div>
-    <div class="term-hindi hindi-text">टैली प्राइम को विभिन्न प्रकार के लेखांकन वाउचर के साथ प्रोग्राम किया गया है। आपके व्यवसाय की प्रकृति के आधार पर, इन्हें इनवॉइस मोड या वाउचर मोड में बनाया जा सकता है। प्रत्येक को एक अलग कार्य करने के लिए डिज़ाइन किया गया है।</div>
+  <div class="term-english"><span class="badge badge-en">EN</span>Tally Prime is pre-programmed with a variety of accounting vouchers. Depending on the nature of your business, these can be created in Invoice mode or Voucher mode. Each is designed to perform a different job.</div>
+  <div class="term-hindi"><span class="badge badge-hi">HI</span>टैली प्राइम को विभिन्न प्रकार के लेखांकन वाउचर के साथ प्रोग्राम किया गया है। आपके व्यवसाय की प्रकृति के आधार पर, इन्हें इनवॉइस मोड या वाउचर मोड में बनाया जा सकता है। प्रत्येक को एक अलग कार्य करने के लिए डिज़ाइन किया गया है।</div>
 
-    <h4 style="color:var(--primary); margin:20px 0 15px; font-size:11pt;">Standard Accounting Vouchers & Shortcuts / मानक लेखाकरण वाउचर और शॉर्टकट:</h4>
+  <h4 style="color:var(--primary); margin:28px 0 18px; font-size:1.15rem; font-weight:700;">Standard Accounting Vouchers & Shortcuts / मानक लेखाकरण वाउचर और शॉर्टकट:</h4>
 
-    <table class="voucher-table">
-        <thead>
-            <tr>
-                <th>Voucher Name / वाउचर का नाम</th>
-                <th>Shortcut / शॉर्टकट</th>
-                <th>Use / उपयोग</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr><td><strong>Contra Voucher</strong></td><td>F4</td><td>Cash and Bank transactions / नकद और बैंक के बीच लेनदेन</td></tr>
-            <tr><td><strong>Payment Voucher</strong></td><td>F5</td><td>Payment from Cash/Bank / नकद/बैंक से भुगतान</td></tr>
-            <tr><td><strong>Receipt Voucher</strong></td><td>F6</td><td>Receiving money in Cash/Bank / नकद/बैंक में पैसे प्राप्त करना</td></tr>
-            <tr><td><strong>Journal Voucher</strong></td><td>F7</td><td>Adjusting entries, accruals / एडजस्टिंग एंट्रीज, एक्रुअल्स</td></tr>
-            <tr><td><strong>Sales Voucher / Invoice</strong></td><td>F8</td><td>Selling goods/services / सामान/सेवाएँ बेचना</td></tr>
-            <tr><td><strong>Credit Note Voucher</strong></td><td>Ctrl+F8</td><td>Sales Return or discount allowed / बिक्री वापसी या छूट</td></tr>
-            <tr><td><strong>Purchase Voucher</strong></td><td>F9</td><td>Buying goods/services / सामान/सेवाएँ खरीदना</td></tr>
-            <tr><td><strong>Debit Note Voucher</strong></td><td>Ctrl+F9</td><td>Purchase Return or discount received / खरीद वापसी या छूट</td></tr>
-            <tr><td><strong>Reversing Journal</strong></td><td>F10</td><td>Reversing entries / रिवर्सिंग एंट्रीज</td></tr>
-            <tr><td><strong>Memo Voucher</strong></td><td>Ctrl+F10</td><td>Non-accounting entries / गैर-लेखांकन एंट्रीज</td></tr>
-        </tbody>
-    </table>
+  <table class="voucher-table">
+    <thead>
+      <tr>
+        <th>Voucher Name / वाउचर का नाम</th>
+        <th>Shortcut / शॉर्टकट</th>
+        <th>Use / उपयोग</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>Contra Voucher</strong></td><td>F4</td><td>Cash and Bank transactions / नकद और बैंक के बीच लेनदेन</td></tr>
+      <tr><td><strong>Payment Voucher</strong></td><td>F5</td><td>Payment from Cash/Bank / नकद/बैंक से भुगतान</td></tr>
+      <tr><td><strong>Receipt Voucher</strong></td><td>F6</td><td>Receiving money in Cash/Bank / नकद/बैंक में पैसे प्राप्त करना</td></tr>
+      <tr><td><strong>Journal Voucher</strong></td><td>F7</td><td>Adjusting entries, accruals / एडजस्टिंग एंट्रीज, एक्रुअल्स</td></tr>
+      <tr><td><strong>Sales Voucher / Invoice</strong></td><td>F8</td><td>Selling goods/services / सामान/सेवाएँ बेचना</td></tr>
+      <tr><td><strong>Credit Note Voucher</strong></td><td>Ctrl+F8</td><td>Sales Return or discount allowed / बिक्री वापसी या छूट</td></tr>
+      <tr><td><strong>Purchase Voucher</strong></td><td>F9</td><td>Buying goods/services / सामान/सेवाएँ खरीदना</td></tr>
+      <tr><td><strong>Debit Note Voucher</strong></td><td>Ctrl+F9</td><td>Purchase Return or discount received / खरीद वापसी या छूट</td></tr>
+      <tr><td><strong>Reversing Journal</strong></td><td>F10</td><td>Reversing entries / रिवर्सिंग एंट्रीज</td></tr>
+      <tr><td><strong>Memo Voucher</strong></td><td>Ctrl+F10</td><td>Non-accounting entries / गैर-लेखांकन एंट्रीज</td></tr>
+    </tbody>
+  </table>
 
-    <div class="sub-section">
-        <div class="sub-section-title">How to Enter Receipt Voucher / रसीद वाउचर कैसे दर्ज करें</div>
-        <div class="steps-block">
-            Gateway of Tally > Vouchers > Press F6 (Receipt)<br>
-            OR<br>
-            Ctrl+G > Type "Receipt" > Press Enter
-        </div>
-        <div class="steps-block-hindi hindi-text">
-            गेटवे ऑफ टैली > वाउचर > F6 दबाएँ (रसीद)<br>
-            या<br>
-            Ctrl+G > "रसीद" टाइप करें > एंटर दबाएँ
-        </div>
-
-        <h4 style="color:var(--primary); margin:15px 0 10px; font-size:11pt;">Steps / चरण:</h4>
-        <ol class="types-list">
-            <li>Open your company / अपनी कंपनी खोलें</li>
-            <li>Press <strong>F6</strong> for Receipt Voucher / <strong>F6</strong> दबाएँ (रसीद वाउचर के लिए)</li>
-            <li>Select date (press <strong>F2</strong> to change date) / तिथि चुनें (<strong>F2</strong> से तिथि बदल सकते हैं)</li>
-            <li>On the Debit side, select <strong>Cash</strong> or <strong>Bank Account</strong> / डेबिट साइड में <strong>कैश</strong> या <strong>बैंक अकाउंट</strong> चुनें</li>
-            <li>On the Credit side, select the ledger of the party from whom money is received / क्रेडिट साइड में उस पार्टी का लेजर चुनें जिससे पैसे मिले हैं</li>
-            <li>Enter the amount / राशि दर्ज करें</li>
-            <li>Write narration / नैरेशन लिखें</li>
-            <li>Press <strong>Ctrl+A</strong> to Accept / <strong>Ctrl+A</strong> दबाकर एक्सेप्ट करें</li>
-        </ol>
-
-        <div class="info-box">
-            <div class="info-box-title">Note / नोट</div>
-            <p>Press <strong>Alt+F2</strong> to display the list of vouchers for a particular period.</p>
-            <p class="hindi-text">विशेष अवधि के वाउचर की सूची दिखाने के लिए <strong>Alt+F2</strong> दबाएँ।</p>
-        </div>
+  <div class="sub-section">
+    <div class="sub-section-title">How to Enter Receipt Voucher / रसीद वाउचर कैसे दर्ज करें</div>
+    <div class="steps-block">
+      Gateway of Tally > Vouchers > Press F6 (Receipt)<br>
+      OR<br>
+      Ctrl+G > Type "Receipt" > Press Enter
     </div>
+    <div class="steps-block-hindi">
+      गेटवे ऑफ टैली > वाउचर > F6 दबाएँ (रसीद)<br>
+      या<br>
+      Ctrl+G > "रसीद" टाइप करें > एंटर दबाएँ
+    </div>
+
+    <h4 style="color:var(--primary); margin:20px 0 12px; font-size:1.15rem; font-weight:700;">Steps / चरण:</h4>
+    <ol class="types-list">
+      <li>Open your company / अपनी कंपनी खोलें</li>
+      <li>Press <strong>F6</strong> for Receipt Voucher / <strong>F6</strong> दबाएँ (रसीद वाउचर के लिए)</li>
+      <li>Select date (press <strong>F2</strong> to change date) / तिथि चुनें (<strong>F2</strong> से तिथि बदल सकते हैं)</li>
+      <li>On the Debit side, select <strong>Cash</strong> or <strong>Bank Account</strong> / डेबिट साइड में <strong>कैश</strong> या <strong>बैंक अकाउंट</strong> चुनें</li>
+      <li>On the Credit side, select the ledger of the party from whom money is received / क्रेडिट साइड में उस पार्टी का लेजर चुनें जिससे पैसे मिले हैं</li>
+      <li>Enter the amount / राशि दर्ज करें</li>
+      <li>Write narration / नैरेशन लिखें</li>
+      <li>Press <strong>Ctrl+A</strong> to Accept / <strong>Ctrl+A</strong> दबाकर एक्सेप्ट करें</li>
+    </ol>
+
+    <div class="info-box">
+      <div class="info-box-title">💡 Note / नोट</div>
+      <p>Press <strong>Alt+F2</strong> to display the list of vouchers for a particular period.</p>
+      <p class="hindi-text">विशेष अवधि के वाउचर की सूची दिखाने के लिए <strong>Alt+F2</strong> दबाएँ।</p>
+    </div>
+  </div>
 </div>
 
 <hr class="divider">
 
 <!-- SECTION 10: LEDGER GROUP LIST -->
-<div class="section page-break">
-    <div class="section-title">10. Ledger Group List for Tally Prime</div>
-    <div class="section-subtitle">टैली प्राइम के लिए लेजर ग्रुप लिस्ट</div>
+<div class="section">
+  <div class="section-title">10. Ledger Group List for Tally Prime</div>
+  <div class="section-subtitle">टैली प्राइम के लिए लेजर ग्रुप लिस्ट</div>
 
-    <div class="term-english">When creating the following ledgers in Tally Prime, place them under these groups:</div>
-    <div class="term-hindi hindi-text">टैली प्राइम में नीचे दिए गए लेजर बनाते समय उन्हें इन ग्रुप्स के अंतर्गत रखें:</div>
+  <div class="term-english"><span class="badge badge-en">EN</span>When creating the following ledgers in Tally Prime, place them under these groups:</div>
+  <div class="term-hindi"><span class="badge badge-hi">HI</span>टैली प्राइम में नीचे दिए गए लेजर बनाते समय उन्हें इन ग्रुप्स के अंतर्गत रखें:</div>
 
-    <table class="ledger-table">
-        <thead>
-            <tr>
-                <th style="width:40px;">S.N.</th>
-                <th>Ledger Name / लेजर का नाम</th>
-                <th>Under Group / ग्रुप</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr><td>1</td><td>All Tax A/c / सभी कर</td><td>Duties & Taxes A/c / कर और शुल्क</td></tr>
-            <tr><td>2</td><td>Building A/c / बिल्डिंग</td><td>Fixed Assets / अचल संपत्ति</td></tr>
-            <tr><td>3</td><td>Cash A/c / कैश</td><td>Cash in Hand / हाथ में नकदी</td></tr>
-            <tr><td>4</td><td>Cash Discount Received / प्राप्त नकद छूट</td><td>Indirect Income / अप्रत्यक्ष आय</td></tr>
-            <tr><td>5</td><td>Cash Discount to Customer / ग्राहक को नकद छूट</td><td>Indirect Expenses / अप्रत्यक्ष खर्च</td></tr>
-            <tr><td>6</td><td>Cash Purchase A/c / नकद खरीद</td><td>Purchase A/c / खरीद खाता</td></tr>
-            <tr><td>7</td><td>Cash Sales A/c / नकद बिक्री</td><td>Sales A/c / बिक्री खाता</td></tr>
-            <tr><td>8</td><td>Computer A/c / कंप्यूटर</td><td>Fixed Assets / अचल संपत्ति</td></tr>
-            <tr><td>9</td><td>Credit Purchase A/c / उधार खरीद</td><td>Purchase A/c / खरीद खाता</td></tr>
-            <tr><td>10</td><td>Credit Sales A/c / उधार बिक्री</td><td>Sales A/c / बिक्री खाता</td></tr>
-            <tr><td>11</td><td>Customer Name / ग्राहक का नाम</td><td>Sundry Debtors / सनड्री डेटर्स</td></tr>
-            <tr><td>12</td><td>Drawing A/c / आहरण</td><td>Capital A/c / पूंजी खाता</td></tr>
-            <tr><td>13</td><td>Electricity Bill A/c / बिजली बिल</td><td>Indirect Expenses / अप्रत्यक्ष खर्च</td></tr>
-            <tr><td>14</td><td>Fees Received / प्राप्त फीस</td><td>Direct Incomes / प्रत्यक्ष आय</td></tr>
-            <tr><td>15</td><td>Furniture A/c / फर्नीचर</td><td>Fixed Assets / अचल संपत्ति</td></tr>
-            <tr><td>16</td><td>Interest Paid A/c / दिया गया ब्याज</td><td>Indirect Expenses / अप्रत्यक्ष खर्च</td></tr>
-            <tr><td>17</td><td>Interest Received A/c / प्राप्त ब्याज</td><td>Indirect Incomes / अप्रत्यक्ष आय</td></tr>
-            <tr><td>18</td><td>Land A/c / जमीन</td><td>Fixed Assets / अचल संपत्ति</td></tr>
-            <tr><td>19</td><td>Loan A/c / ऋण</td><td>Loans (Liabilities) / ऋण (देयताएँ)</td></tr>
-            <tr><td>20</td><td>Loan From Bank / बैंक से ऋण</td><td>Secured Loans A/c / सुरक्षित ऋण</td></tr>
-            <tr><td>21</td><td>Loan from Person / व्यक्ति से ऋण</td><td>Unsecured Loans A/c / असुरक्षित ऋण</td></tr>
-            <tr><td>22</td><td>Machinery A/c / मशीनरी</td><td>Fixed Assets / अचल संपत्ति</td></tr>
-            <tr><td>23</td><td>Office Expenses A/c / कार्यालय खर्च</td><td>Indirect Expenses / अप्रत्यक्ष खर्च</td></tr>
-            <tr><td>24</td><td>Purchase A/c / खरीद</td><td>Purchase A/c / खरीद खाता</td></tr>
-            <tr><td>25</td><td>Purchase Return A/c / खरीद वापसी</td><td>Purchase A/c / खरीद खाता</td></tr>
-            <tr><td>26</td><td>Rent A/c / किराया</td><td>Indirect Expenses / अप्रत्यक्ष खर्च</td></tr>
-            <tr><td>27</td><td>Rent Payable A/c / देय किराया</td><td>Current Liabilities / वर्तमान देयताएँ</td></tr>
-            <tr><td>28</td><td>Salary A/c / वेतन</td><td>Indirect Expenses / अप्रत्यक्ष खर्च</td></tr>
-            <tr><td>29</td><td>Sales A/c / बिक्री</td><td>Sales A/c / बिक्री खाता</td></tr>
-            <tr><td>30</td><td>Sales Return A/c / बिक्री वापसी</td><td>Sales A/c / बिक्री खाता</td></tr>
-            <tr><td>31</td><td>GST / Sales Tax / बिक्री कर</td><td>Duties & Taxes A/c / कर और शुल्क</td></tr>
-            <tr><td>32</td><td>SBI Bank A/c / कोई भी बैंक</td><td>Bank A/c / बैंक खाता</td></tr>
-            <tr><td>33</td><td>Supplier Name / आपूर्तिकर्ता का नाम</td><td>Sundry Creditors / सनड्री क्रेडिटर्स</td></tr>
-            <tr><td>34</td><td>Trade Discount on Purchase / खरीद पर व्यापार छूट</td><td>Purchase A/c / खरीद खाता</td></tr>
-            <tr><td>35</td><td>Trade Discount on Sales / बिक्री पर व्यापार छूट</td><td>Sales A/c / बिक्री खाता</td></tr>
-            <tr><td>36</td><td>Wages A/c / मजदूरी</td><td>Direct Expenses / प्रत्यक्ष खर्च</td></tr>
-        </tbody>
-    </table>
+  <table class="ledger-table">
+    <thead>
+      <tr>
+        <th style="width:50px;">S.N.</th>
+        <th>Ledger Name / लेजर का नाम</th>
+        <th>Under Group / ग्रुप</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>1</td><td>All Tax A/c / सभी कर</td><td>Duties & Taxes A/c / कर और शुल्क</td></tr>
+      <tr><td>2</td><td>Building A/c / बिल्डिंग</td><td>Fixed Assets / अचल संपत्ति</td></tr>
+      <tr><td>3</td><td>Cash A/c / कैश</td><td>Cash in Hand / हाथ में नकदी</td></tr>
+      <tr><td>4</td><td>Cash Discount Received / प्राप्त नकद छूट</td><td>Indirect Income / अप्रत्यक्ष आय</td></tr>
+      <tr><td>5</td><td>Cash Discount to Customer / ग्राहक को नकद छूट</td><td>Indirect Expenses / अप्रत्यक्ष खर्च</td></tr>
+      <tr><td>6</td><td>Cash Purchase A/c / नकद खरीद</td><td>Purchase A/c / खरीद खाता</td></tr>
+      <tr><td>7</td><td>Cash Sales A/c / नकद बिक्री</td><td>Sales A/c / बिक्री खाता</td></tr>
+      <tr><td>8</td><td>Computer A/c / कंप्यूटर</td><td>Fixed Assets / अचल संपत्ति</td></tr>
+      <tr><td>9</td><td>Credit Purchase A/c / उधार खरीद</td><td>Purchase A/c / खरीद खाता</td></tr>
+      <tr><td>10</td><td>Credit Sales A/c / उधार बिक्री</td><td>Sales A/c / बिक्री खाता</td></tr>
+      <tr><td>11</td><td>Customer Name / ग्राहक का नाम</td><td>Sundry Debtors / सनड्री डेटर्स</td></tr>
+      <tr><td>12</td><td>Drawing A/c / आहरण</td><td>Capital A/c / पूंजी खाता</td></tr>
+      <tr><td>13</td><td>Electricity Bill A/c / बिजली बिल</td><td>Indirect Expenses / अप्रत्यक्ष खर्च</td></tr>
+      <tr><td>14</td><td>Fees Received / प्राप्त फीस</td><td>Direct Incomes / प्रत्यक्ष आय</td></tr>
+      <tr><td>15</td><td>Furniture A/c / फर्नीचर</td><td>Fixed Assets / अचल संपत्ति</td></tr>
+      <tr><td>16</td><td>Interest Paid A/c / दिया गया ब्याज</td><td>Indirect Expenses / अप्रत्यक्ष खर्च</td></tr>
+      <tr><td>17</td><td>Interest Received A/c / प्राप्त ब्याज</td><td>Indirect Incomes / अप्रत्यक्ष आय</td></tr>
+      <tr><td>18</td><td>Land A/c / जमीन</td><td>Fixed Assets / अचल संपत्ति</td></tr>
+      <tr><td>19</td><td>Loan A/c / ऋण</td><td>Loans (Liabilities) / ऋण (देयताएँ)</td></tr>
+      <tr><td>20</td><td>Loan From Bank / बैंक से ऋण</td><td>Secured Loans A/c / सुरक्षित ऋण</td></tr>
+      <tr><td>21</td><td>Loan from Person / व्यक्ति से ऋण</td><td>Unsecured Loans A/c / असुरक्षित ऋण</td></tr>
+      <tr><td>22</td><td>Machinery A/c / मशीनरी</td><td>Fixed Assets / अचल संपत्ति</td></tr>
+      <tr><td>23</td><td>Office Expenses A/c / कार्यालय खर्च</td><td>Indirect Expenses / अप्रत्यक्ष खर्च</td></tr>
+      <tr><td>24</td><td>Purchase A/c / खरीद</td><td>Purchase A/c / खरीद खाता</td></tr>
+      <tr><td>25</td><td>Purchase Return A/c / खरीद वापसी</td><td>Purchase A/c / खरीद खाता</td></tr>
+      <tr><td>26</td><td>Rent A/c / किराया</td><td>Indirect Expenses / अप्रत्यक्ष खर्च</td></tr>
+      <tr><td>27</td><td>Rent Payable A/c / देय किराया</td><td>Current Liabilities / वर्तमान देयताएँ</td></tr>
+      <tr><td>28</td><td>Salary A/c / वेतन</td><td>Indirect Expenses / अप्रत्यक्ष खर्च</td></tr>
+      <tr><td>29</td><td>Sales A/c / बिक्री</td><td>Sales A/c / बिक्री खाता</td></tr>
+      <tr><td>30</td><td>Sales Return A/c / बिक्री वापसी</td><td>Sales A/c / बिक्री खाता</td></tr>
+      <tr><td>31</td><td>GST / Sales Tax / बिक्री कर</td><td>Duties & Taxes A/c / कर और शुल्क</td></tr>
+      <tr><td>32</td><td>SBI Bank A/c / कोई भी बैंक</td><td>Bank A/c / बैंक खाता</td></tr>
+      <tr><td>33</td><td>Supplier Name / आपूर्तिकर्ता का नाम</td><td>Sundry Creditors / सनड्री क्रेडिटर्स</td></tr>
+      <tr><td>34</td><td>Trade Discount on Purchase / खरीद पर व्यापार छूट</td><td>Purchase A/c / खरीद खाता</td></tr>
+      <tr><td>35</td><td>Trade Discount on Sales / बिक्री पर व्यापार छूट</td><td>Sales A/c / बिक्री खाता</td></tr>
+      <tr><td>36</td><td>Wages A/c / मजदूरी</td><td>Direct Expenses / प्रत्यक्ष खर्च</td></tr>
+    </tbody>
+  </table>
 
-    <div class="sub-section">
-        <div class="sub-section-title">How to Create a Ledger / लेजर कैसे बनाएँ</div>
-        <div class="steps-block">
-            Gateway of Tally > Masters > Create > Ledger<br>
-            OR<br>
-            In any voucher, press Alt+C (Create Ledger on the fly)
-        </div>
-        <div class="steps-block-hindi hindi-text">
-            गेटवे ऑफ टैली > मास्टर्स > क्रिएट > लेजर<br>
-            या<br>
-            किसी भी वाउचर में Alt+C दबाएँ (तुरंत लेजर बनाएँ)
-        </div>
+  <div class="sub-section">
+    <div class="sub-section-title">How to Create a Ledger / लेजर कैसे बनाएँ</div>
+    <div class="steps-block">
+      Gateway of Tally > Masters > Create > Ledger<br>
+      OR<br>
+      In any voucher, press Alt+C (Create Ledger on the fly)
     </div>
-
-    <div class="sub-section">
-        <div class="sub-section-title">Important Groups in Tally Prime / महत्वपूर्ण ग्रुप</div>
-        <div class="term-english">
-            <strong>Assets:</strong> Fixed Assets, Current Assets, Cash in Hand, Bank Accounts, Sundry Debtors, Stock in Hand<br>
-            <strong>Liabilities:</strong> Capital Account, Current Liabilities, Sundry Creditors, Loans, Duties & Taxes<br>
-            <strong>Income:</strong> Direct Incomes, Indirect Incomes, Sales Accounts<br>
-            <strong>Expenses:</strong> Direct Expenses, Indirect Expenses, Purchase Accounts
-        </div>
-        <div class="term-hindi hindi-text">
-            <strong>संपत्ति:</strong> अचल संपत्ति, चालू संपत्ति, हाथ में नकदी, बैंक खाते, सनड्री डेटर्स, स्टॉक इन हैंड<br>
-            <strong>देयताएँ:</strong> पूंजी खाता, चालू देयताएँ, सनड्री क्रेडिटर्स, ऋण, कर और शुल्क<br>
-            <strong>आय:</strong> प्रत्यक्ष आय, अप्रत्यक्ष आय, बिक्री खाते<br>
-            <strong>खर्च:</strong> प्रत्यक्ष खर्च, अप्रत्यक्ष खर्च, खरीद खाते
-        </div>
+    <div class="steps-block-hindi">
+      गेटवे ऑफ टैली > मास्टर्स > क्रिएट > लेजर<br>
+      या<br>
+      किसी भी वाउचर में Alt+C दबाएँ (तुरंत लेजर बनाएँ)
     </div>
+  </div>
+
+  <div class="sub-section">
+    <div class="sub-section-title">Important Groups in Tally Prime / महत्वपूर्ण ग्रुप</div>
+    <div class="term-english">
+      <strong>Assets:</strong> Fixed Assets, Current Assets, Cash in Hand, Bank Accounts, Sundry Debtors, Stock in Hand<br>
+      <strong>Liabilities:</strong> Capital Account, Current Liabilities, Sundry Creditors, Loans, Duties & Taxes<br>
+      <strong>Income:</strong> Direct Incomes, Indirect Incomes, Sales Accounts<br>
+      <strong>Expenses:</strong> Direct Expenses, Indirect Expenses, Purchase Accounts
+    </div>
+    <div class="term-hindi">
+      <strong>संपत्ति:</strong> अचल संपत्ति, चालू संपत्ति, हाथ में नकदी, बैंक खाते, सनड्री डेटर्स, स्टॉक इन हैंड<br>
+      <strong>देयताएँ:</strong> पूंजी खाता, चालू देयताएँ, सनड्री क्रेडिटर्स, ऋण, कर और शुल्क<br>
+      <strong>आय:</strong> प्रत्यक्ष आय, अप्रत्यक्ष आय, बिक्री खाते<br>
+      <strong>खर्च:</strong> प्रत्यक्ष खर्च, अप्रत्यक्ष खर्च, खरीद खाते
+    </div>
+  </div>
 </div>
 
 <hr class="divider">
 
 <!-- SECTION 11: COMPARISON -->
-<div class="section page-break">
-    <div class="section-title">11. Tally Prime vs Old Tally - Key Differences</div>
-    <div class="section-subtitle">टैली प्राइम बनाम पुराना टैली - मुख्य अंतर</div>
+<div class="section">
+  <div class="section-title">11. Tally Prime vs Old Tally - Key Differences</div>
+  <div class="section-subtitle">टैली प्राइम बनाम पुराना टैली - मुख्य अंतर</div>
 
-    <table class="compare-table">
-        <thead>
-            <tr>
-                <th style="width:25%;">Feature / फीचर</th>
-                <th style="width:37.5%;">Old Tally (ERP 9) / पुराना टैली</th>
-                <th style="width:37.5%;">Tally Prime / टैली प्राइम</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><strong>Navigation / नेविगेशन</strong></td>
-                <td>Menu based / मेन्यू आधारित</td>
-                <td>Go To (Ctrl+G) + Menu / गो टू + मेन्यू</td>
-            </tr>
-            <tr>
-                <td><strong>Multi-tasking / मल्टी-टास्किंग</strong></td>
-                <td>Not available / उपलब्ध नहीं</td>
-                <td>Ctrl+M / Ctrl+M</td>
-            </tr>
-            <tr>
-                <td><strong>Interface / इंटरफेस</strong></td>
-                <td>Traditional / पारंपरिक</td>
-                <td>Modern Top Bar / आधुनिक टॉप बार</td>
-            </tr>
-            <tr>
-                <td><strong>GST / जीएसटी</strong></td>
-                <td>Manual setup / मैनुअल सेटअप</td>
-                <td>Auto-configured / ऑटो-कॉन्फ़िगर्ड</td>
-            </tr>
-            <tr>
-                <td><strong>e-Invoice / ई-इनवॉइस</strong></td>
-                <td>External tool / बाहरी टूल</td>
-                <td>Built-in / अंतर्निहित</td>
-            </tr>
-            <tr>
-                <td><strong>Browser View / ब्राउज़र व्यू</strong></td>
-                <td>Not available / उपलब्ध नहीं</td>
-                <td>Built-in Browser Reports / अंतर्निहित</td>
-            </tr>
-            <tr>
-                <td><strong>WhatsApp / व्हाट्सएप</strong></td>
-                <td>Not available / उपलब्ध नहीं</td>
-                <td>Direct Integration / सीधा इंटीग्रेशन</td>
-            </tr>
-            <tr>
-                <td><strong>Calculator / कैलकुलेटर</strong></td>
-                <td>Separate / अलग</td>
-                <td>Built-in (Ctrl+N) / अंतर्निहित</td>
-            </tr>
-            <tr>
-                <td><strong>Help / सहायता</strong></td>
-                <td>F1 / F1</td>
-                <td>Enhanced Context Help / उन्नत संदर्भ सहायता</td>
-            </tr>
-            <tr>
-                <td><strong>Security / सुरक्षा</strong></td>
-                <td>Basic / बेसिक</td>
-                <td>Advanced Tally Vault / उन्नत टैली वॉल्ट</td>
-            </tr>
-        </tbody>
-    </table>
+  <table class="compare-table">
+    <thead>
+      <tr>
+        <th style="width:25%;">Feature / फीचर</th>
+        <th style="width:37.5%;">Old Tally (ERP 9) / पुराना टैली</th>
+        <th style="width:37.5%;">Tally Prime / टैली प्राइम</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Navigation / नेविगेशन</strong></td>
+        <td>Menu based / मेन्यू आधारित</td>
+        <td>Go To (Ctrl+G) + Menu / गो टू + मेन्यू</td>
+      </tr>
+      <tr>
+        <td><strong>Multi-tasking / मल्टी-टास्किंग</strong></td>
+        <td>Not available / उपलब्ध नहीं</td>
+        <td>Ctrl+M / Ctrl+M</td>
+      </tr>
+      <tr>
+        <td><strong>Interface / इंटरफेस</strong></td>
+        <td>Traditional / पारंपरिक</td>
+        <td>Modern Top Bar / आधुनिक टॉप बार</td>
+      </tr>
+      <tr>
+        <td><strong>GST / जीएसटी</strong></td>
+        <td>Manual setup / मैनुअल सेटअप</td>
+        <td>Auto-configured / ऑटो-कॉन्फ़िगर्ड</td>
+      </tr>
+      <tr>
+        <td><strong>e-Invoice / ई-इनवॉइस</strong></td>
+        <td>External tool / बाहरी टूल</td>
+        <td>Built-in / अंतर्निहित</td>
+      </tr>
+      <tr>
+        <td><strong>Browser View / ब्राउज़र व्यू</strong></td>
+        <td>Not available / उपलब्ध नहीं</td>
+        <td>Built-in Browser Reports / अंतर्निहित</td>
+      </tr>
+      <tr>
+        <td><strong>WhatsApp / व्हाट्सएप</strong></td>
+        <td>Not available / उपलब्ध नहीं</td>
+        <td>Direct Integration / सीधा इंटीग्रेशन</td>
+      </tr>
+      <tr>
+        <td><strong>Calculator / कैलकुलेटर</strong></td>
+        <td>Separate / अलग</td>
+        <td>Built-in (Ctrl+N) / अंतर्निहित</td>
+      </tr>
+      <tr>
+        <td><strong>Help / सहायता</strong></td>
+        <td>F1 / F1</td>
+        <td>Enhanced Context Help / उन्नत संदर्भ सहायता</td>
+      </tr>
+      <tr>
+        <td><strong>Security / सुरक्षा</strong></td>
+        <td>Basic / बेसिक</td>
+        <td>Advanced Tally Vault / उन्नत टैली वॉल्ट</td>
+      </tr>
+    </tbody>
+  </table>
 </div>
 
 <hr class="divider">
 
 <!-- SECTION 12: SUMMARY -->
-<div class="section page-break">
-    <div class="section-title">12. Summary / सारांश</div>
-    <div class="section-subtitle">अध्याय का सारांश</div>
+<div class="section">
+  <div class="section-title">12. Summary / सारांश</div>
+  <div class="section-subtitle">अध्याय का सारांश</div>
 
-    <div class="summary-section">
-        <h2>📝 Key Points / मुख्य बिंदु</h2>
+  <div class="summary-section">
+    <h2>📝 Key Points / मुख्य बिंदु</h2>
 
-        <ol>
-            <li>
-                <strong>English:</strong> <strong>Tally Prime</strong> is the advanced version of Tally ERP 9 with features like <strong>Go To, Multi-Tasking, e-Invoice,</strong> and a <strong>Modern Interface</strong>.<br>
-                <strong class="hindi-text">हिंदी:</strong> <strong class="hindi-text">टैली प्राइम</strong> <span class="hindi-text">टैली ईआरपी 9 का उन्नत संस्करण है जिसमें</span> <strong class="hindi-text">गो टू, मल्टी-टास्किंग, ई-इनवॉइस,</strong> <span class="hindi-text">और</span> <strong class="hindi-text">आधुनिक इंटरफेस</strong> <span class="hindi-text">जैसे फीचर्स हैं।</span>
-            </li>
-            <li>
-                <strong>English:</strong> The <strong>3 Golden Rules</strong> of accounting always remain the same: Personal, Real, and Nominal.<br>
-                <strong class="hindi-text">हिंदी:</strong> <span class="hindi-text">लेखांकन के</span> <strong class="hindi-text">3 सुनहरे नियम</strong> <span class="hindi-text">हमेशा एक ही रहते हैं: व्यक्तिगत, वास्तविक, और अवास्तविक।</span>
-            </li>
-            <li>
-                <strong>English:</strong> <strong>Company Management</strong> has new shortcuts: <strong>Alt+K</strong> (Create), <strong>Alt+O</strong> (Select), <strong>Alt+F3</strong> (Company Menu).<br>
-                <strong class="hindi-text">हिंदी:</strong> <strong class="hindi-text">कंपनी प्रबंधन</strong> <span class="hindi-text">के लिए नए शॉर्टकट हैं:</span> <strong>Alt+K</strong> <span class="hindi-text">(बनाएँ),</span> <strong>Alt+O</strong> <span class="hindi-text">(चुनें),</span> <strong>Alt+F3</strong> <span class="hindi-text">(कंपनी मेन्यू)।</span>
-            </li>
-            <li>
-                <strong>English:</strong> <strong>Voucher</strong> shortcuts are mostly the same, but the interface is now modern.<br>
-                <strong class="hindi-text">हिंदी:</strong> <strong class="hindi-text">वाउचर</strong> <span class="hindi-text">के शॉर्टकट ज्यादातर वही हैं लेकिन इंटरफेस आधुनिक हो गया है।</span>
-            </li>
-            <li>
-                <strong>English:</strong> <strong>Day Book</strong> can now be directly accessed using <strong>Ctrl+G</strong>.<br>
-                <strong class="hindi-text">हिंदी:</strong> <strong class="hindi-text">डे बुक</strong> <span class="hindi-text">अब</span> <strong>Ctrl+G</strong> <span class="hindi-text">से सीधे एक्सेस की जा सकती है।</span>
-            </li>
-            <li>
-                <strong>English:</strong> <strong>Ledger creation</strong> can now also be done on-the-fly inside a voucher using <strong>Alt+C</strong>.<br>
-                <strong class="hindi-text">हिंदी:</strong> <strong class="hindi-text">लेजर बनाना</strong> <span class="hindi-text">अब वाउचर के अंदर से भी</span> <strong>Alt+C</strong> <span class="hindi-text">से तुरंत किया जा सकता है।</span>
-            </li>
-        </ol>
-    </div>
+    <ol>
+      <li>
+        <strong>English:</strong> <strong>Tally Prime</strong> is the advanced version of Tally ERP 9 with features like <strong>Go To, Multi-Tasking, e-Invoice,</strong> and a <strong>Modern Interface</strong>.<br>
+        <strong class="hindi-text">हिंदी:</strong> <strong class="hindi-text">टैली प्राइम</strong> <span class="hindi-text">टैली ईआरपी 9 का उन्नत संस्करण है जिसमें</span> <strong class="hindi-text">गो टू, मल्टी-टास्किंग, ई-इनवॉइस,</strong> <span class="hindi-text">और</span> <strong class="hindi-text">आधुनिक इंटरफेस</strong> <span class="hindi-text">जैसे फीचर्स हैं।</span>
+      </li>
+      <li>
+        <strong>English:</strong> The <strong>3 Golden Rules</strong> of accounting always remain the same: Personal, Real, and Nominal.<br>
+        <strong class="hindi-text">हिंदी:</strong> <span class="hindi-text">लेखांकन के</span> <strong class="hindi-text">3 सुनहरे नियम</strong> <span class="hindi-text">हमेशा एक ही रहते हैं: व्यक्तिगत, वास्तविक, और अवास्तविक।</span>
+      </li>
+      <li>
+        <strong>English:</strong> <strong>Company Management</strong> has new shortcuts: <strong>Alt+K</strong> (Create), <strong>Alt+O</strong> (Select), <strong>Alt+F3</strong> (Company Menu).<br>
+        <strong class="hindi-text">हिंदी:</strong> <strong class="hindi-text">कंपनी प्रबंधन</strong> <span class="hindi-text">के लिए नए शॉर्टकट हैं:</span> <strong>Alt+K</strong> <span class="hindi-text">(बनाएँ),</span> <strong>Alt+O</strong> <span class="hindi-text">(चुनें),</span> <strong>Alt+F3</strong> <span class="hindi-text">(कंपनी मेन्यू)।</span>
+      </li>
+      <li>
+        <strong>English:</strong> <strong>Voucher</strong> shortcuts are mostly the same, but the interface is now modern.<br>
+        <strong class="hindi-text">हिंदी:</strong> <strong class="hindi-text">वाउचर</strong> <span class="hindi-text">के शॉर्टकट ज्यादातर वही हैं लेकिन इंटरफेस आधुनिक हो गया है।</span>
+      </li>
+      <li>
+        <strong>English:</strong> <strong>Day Book</strong> can now be directly accessed using <strong>Ctrl+G</strong>.<br>
+        <strong class="hindi-text">हिंदी:</strong> <strong class="hindi-text">डे बुक</strong> <span class="hindi-text">अब</span> <strong>Ctrl+G</strong> <span class="hindi-text">से सीधे एक्सेस की जा सकती है।</span>
+      </li>
+      <li>
+        <strong>English:</strong> <strong>Ledger creation</strong> can now also be done on-the-fly inside a voucher using <strong>Alt+C</strong>.<br>
+        <strong class="hindi-text">हिंदी:</strong> <strong class="hindi-text">लेजर बनाना</strong> <span class="hindi-text">अब वाउचर के अंदर से भी</span> <strong>Alt+C</strong> <span class="hindi-text">से तुरंत किया जा सकता है।</span>
+      </li>
+    </ol>
+  </div>
 
-    <div class="next-chapter">
-        <h3>🎯 Next Chapter / अगला अध्याय</h3>
-        
-    </div>
+  <div class="next-chapter">
+    <h3>🎯 Next Chapter / अगला अध्याय</h3>
+    <p style="color:var(--text-muted); margin-top:10px;">Stay tuned for Chapter 2!</p>
+  </div>
 </div>
 
-</div><!-- end content -->
+</div><!-- end reading-container -->
 
 <!-- ================= BACK COVER ================= -->
+<div class="reading-container">
 <div class="back-cover">
-    <div class="cover-watermark">NEXA</div>
+  <div class="cover-watermark">NEXA</div>
 
-    <h2>📚 NEXA Computer Institute</h2>
-    <p style="color:var(--secondary); font-weight:600; margin-bottom:30px; letter-spacing:3px; text-transform:uppercase;">Empowering Future Professionals</p>
+  <h2>📚 NEXA Computer Institute</h2>
+  <p style="color:var(--secondary); font-weight:700; margin-bottom:30px; letter-spacing:3px; text-transform:uppercase;">Empowering Future Professionals</p>
 
-    <div class="contact-card">
-        <h3>📍 Contact Information / संपर्क जानकारी</h3>
-        <p><span style="font-size:14pt;">📞</span> <strong>Phone:</strong> 7696566162</p>
-        <p><span style="font-size:14pt;">📍</span> <strong>Address:</strong> NEXA Building, Near Police Station, Maudarwaja, Farrukhabad</p>
-        <p><span style="font-size:14pt;">🌐</span> <strong>Website:</strong> nexainstitute.co.in</p>
-        <p><span style="font-size:14pt;">▶️</span> <strong>YouTube:</strong> @learnwithnexa</p>
-        <p><span style="font-size:14pt;">📧</span> <strong>Email:</strong> nexainstitute@gmail.com</p>
+  <div class="contact-card">
+    <h3>📍 Contact Information / संपर्क जानकारी</h3>
+    <p><span style="font-size:1.2rem;">📞</span> <strong>Phone:</strong> 7696566162</p>
+    <p><span style="font-size:1.2rem;">📍</span> <strong>Address:</strong> NEXA Building, Near Police Station, Maudarwaja, Farrukhabad</p>
+    <p><span style="font-size:1.2rem;">🌐</span> <strong>Website:</strong> nexainstitute.co.in</p>
+    <p><span style="font-size:1.2rem;">▶️</span> <strong>YouTube:</strong> @learnwithnexa</p>
+    <p><span style="font-size:1.2rem;">📧</span> <strong>Email:</strong> info@nexainstitute.co.in</p>
 
-        <div class="social-links">
-            <a href="https://nexainstitute.co.in" target="_blank">🌐 Website</a>
-            <a href="https://youtube.com/@learnwithnexa" target="_blank">▶️ YouTube</a>
-        </div>
+    <div class="social-links">
+      <a href="https://nexainstitute.co.in" target="_blank">🌐 Website</a>
+      <a href="https://youtube.com/@learnwithnexa" target="_blank">▶️ YouTube</a>
     </div>
+  </div>
 
-    <div style="margin-top:40px; text-align:center; color:#999; font-size:9pt;">
-        <p>© 2026 NEXA Computer Institute. All Rights Reserved.</p>
-        <p class="hindi-text">© 2026 नेक्सा कंप्यूटर इंस्टीट्यूट। सर्वाधिकार सुरक्षित।</p>
-        <p style="margin-top:10px; font-style:italic;">This study material is exclusively for NEXA Computer Institute students.</p>
-        <p class="hindi-text" style="font-style:italic;">यह अध्ययन सामग्री केवल नेक्सा कंप्यूटर इंस्टीट्यूट के छात्रों के लिए है।</p>
-    </div>
-
-    <div class="stamp">NEXA<br>Computer<br>Institute</div>
+  <div class="copyright">
+    <p>© 2026 NEXA Computer Institute. All Rights Reserved.</p>
+    <p class="hindi-text">© 2026 नेक्सा कंप्यूटर इंस्टीट्यूट। सर्वाधिकार सुरक्षित।</p>
+    <p style="margin-top:10px; font-style:italic;">This study material is exclusively for NEXA Computer Institute students.</p>
+    <p class="hindi-text" style="font-style:italic;">यह अध्ययन सामग्री केवल नेक्सा कंप्यूटर इंस्टीट्यूट के छात्रों के लिए है।</p>
+  </div>
+</div>
 </div>
 
+<!-- Back to Top Button -->
+<button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">⬆</button>
+
 <script>
-// Auto page numbering
-window.onload = function() {
-    var pages = document.querySelectorAll('.page');
-    for (var i = 0; i < pages.length; i++) {
-        pages[i].textContent = i + 1;
-    }
+// Progress Bar
+window.onscroll = function() {
+  var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+  var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  var scrolled = (winScroll / height) * 100;
+  document.getElementById("progressBar").style.width = scrolled + "%";
+
+  // Back to top button
+  var btn = document.getElementById("backToTop");
+  if (winScroll > 500) {
+    btn.classList.add("visible");
+  } else {
+    btn.classList.remove("visible");
+  }
 };
 </script>
 
