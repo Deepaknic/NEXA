@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Topic Detail | NEXA Computer Institute</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary: #6366f1; --primary-dark: #4f46e5; --secondary: #f59e0b; --accent: #10b981;
+  --danger: #ef4444; --dark: #0f172a; --darker: #020617;
+  --card-bg: rgba(30, 41, 59, 0.6); --glass: rgba(255, 255, 255, 0.05);
+  --text: #e2e8f0; --text-muted: #94a3b8;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Poppins', sans-serif; background: var(--darker); color: var(--text); overflow-x: hidden; min-height: 100vh; }
+
+.navbar {
+  position: sticky; top: 0; left: 0; width: 100%; padding: 1rem 5%;
+  display: flex; justify-content: space-between; align-items: center; z-index: 999;
+  background: rgba(2, 6, 23, 0.95); backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--glass);
+}
+.logo {
+  font-family: 'Orbitron', sans-serif; font-size: 1.5rem; font-weight: 800;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  letter-spacing: 2px; display: flex; align-items: center; gap: 0.5rem; text-decoration: none;
+}
+.logo-icon {
+  width: 38px; height: 38px; background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  border-radius: 10px; display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem; -webkit-text-fill-color: white; color: white;
+}
+.back-btn {
+  color: var(--text-muted); text-decoration: none; font-weight: 500; font-size: 0.9rem;
+  display: inline-flex; align-items: center; gap: 0.4rem; transition: color 0.3s;
+  padding: 0.5rem 1rem; border: 1px solid var(--glass); border-radius: 50px;
+}
+.back-btn:hover { color: var(--primary); border-color: var(--primary); }
+
+.content-section { padding: 3rem 5% 5rem; max-width: 850px; margin: 0 auto; position: relative; z-index: 1; }
+
+.topic-header {
+  display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem;
+  padding-bottom: 1.5rem; border-bottom: 1px solid var(--glass);
+}
+.topic-header-icon {
+  width: 60px; height: 60px; border-radius: 16px;
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  display: flex; align-items: center; justify-content: center; font-size: 1.8rem;
+  box-shadow: 0 8px 25px rgba(99, 102, 241, 0.3);
+}
+.topic-header h1 {
+  font-family: 'Orbitron', sans-serif; font-size: clamp(1.3rem, 3vw, 1.8rem); font-weight: 700;
+  background: linear-gradient(135deg, #fff 0%, var(--primary) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.topic-header span {
+  display: block; font-size: 0.8rem; color: var(--text-muted); font-family: 'Poppins', sans-serif;
+  margin-top: 0.2rem; -webkit-text-fill-color: var(--text-muted);
+}
+
+.article-content {
+  line-height: 1.9; color: var(--text-muted); font-size: 0.97rem;
+}
+.article-content h2 {
+  font-family: 'Orbitron', sans-serif; color: #fff; font-size: 1.3rem;
+  margin: 2rem 0 1rem; padding-bottom: 0.5rem;
+  border-bottom: 2px solid rgba(99,102,241,0.2);
+}
+.article-content h3 {
+  color: var(--secondary); font-size: 1.05rem; margin: 1.5rem 0 0.7rem;
+  display: flex; align-items: center; gap: 0.5rem;
+}
+.article-content p { margin-bottom: 1rem; color: var(--text-muted); }
+.article-content ul, .article-content ol { margin: 0.8rem 0 1.2rem 1.5rem; }
+.article-content li { margin-bottom: 0.5rem; }
+.article-content strong { color: var(--text); }
+
+.tip-box {
+  background: linear-gradient(135deg, rgba(99,102,241,0.1), rgba(245,158,11,0.05));
+  border-left: 4px solid var(--primary); border-radius: 0 12px 12px 0;
+  padding: 1.2rem 1.5rem; margin: 1.5rem 0; font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.data-table {
+  width: 100%; border-collapse: collapse; margin: 1.2rem 0;
+  background: var(--card-bg); border-radius: 12px; overflow: hidden;
+  border: 1px solid var(--glass);
+}
+.data-table th {
+  background: rgba(99,102,241,0.15); color: var(--primary);
+  font-weight: 600; text-align: left; padding: 0.9rem 1.2rem; font-size: 0.85rem;
+}
+.data-table td {
+  padding: 0.8rem 1.2rem; border-top: 1px solid var(--glass);
+  font-size: 0.88rem;
+}
+.data-table tr:hover td { background: rgba(99,102,241,0.05); }
+
+.topic-nav {
+  display: flex; justify-content: space-between; margin-top: 3rem;
+  padding-top: 2rem; border-top: 1px solid var(--glass); gap: 1rem;
+}
+.topic-nav a {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.8rem 1.4rem; background: var(--card-bg); border: 1px solid var(--glass);
+  border-radius: 12px; color: var(--text-muted); text-decoration: none;
+  font-size: 0.9rem; transition: all 0.3s;
+}
+.topic-nav a:hover {
+  border-color: var(--primary); color: var(--primary); transform: translateY(-2px);
+}
+
+.not-found {
+  text-align: center; padding: 4rem 2rem;
+}
+.not-found h2 {
+  font-family: 'Orbitron', sans-serif; font-size: 1.5rem; color: var(--danger); margin-bottom: 1rem;
+}
+
+@media (max-width: 600px) {
+  .topic-header { flex-direction: column; text-align: center; }
+  .topic-nav { flex-direction: column; }
+  .topic-nav a { justify-content: center; }
+  .data-table { font-size: 0.8rem; }
+  .data-table th, .data-table td { padding: 0.6rem 0.8rem; }
+}
+</style>
+<base target="_blank">
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="index.html" class="logo">
+    <div class="logo-icon">🎓</div>
+    NEXA <span style="color:var(--secondary); -webkit-text-fill-color:var(--secondary);">Institute</span>
+  </a>
+  <a href="tally-course.html" class="back-btn">← सभी टॉपिक्स</a>
+</nav>
+
+<section class="content-section" id="content-area">
+  <div class="not-found">
+    <h2>⏳ Loading...</h2>
+    <p>Content load ho raha hai. Agar yeh message dikhai de toh URL check karein.</p>
+  </div>
+</section>
+
+<script>
+(function() {
+  const CORRECT_PASSWORD = "NEXA2026";
+  const AUTH_KEY = "nexa_tally_auth";
+
+  if (sessionStorage.getItem(AUTH_KEY) !== "true") {
+    const modal = document.createElement('div');
+    modal.id = 'pwd-gate';
+    modal.innerHTML = `
+      <div style="position:fixed; inset:0; background:rgba(2,6,23,0.97); z-index:99999; display:flex; align-items:center; justify-content:center; font-family:'Poppins',sans-serif;">
+        <div style="background:linear-gradient(145deg, rgba(99,102,241,0.15), rgba(30,41,59,0.9)); border:1px solid rgba(99,102,241,0.3); border-radius:24px; padding:2.5rem; max-width:420px; width:90%; text-align:center; box-shadow:0 25px 80px rgba(99,102,241,0.25);">
+          <div style="width:70px; height:70px; background:linear-gradient(135deg, #6366f1, #4f46e5); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 1.2rem; font-size:1.8rem;">🔒</div>
+          <h2 style="font-family:'Orbitron',sans-serif; color:#fff; margin-bottom:0.5rem; font-size:1.4rem;">Student Access Only</h2>
+          <p style="color:#94a3b8; font-size:0.9rem; margin-bottom:1.5rem;">Sirf NEXA center ke students ke liye. Password enter karein.</p>
+          <input type="password" id="pwd-input" placeholder="Password" style="width:100%; padding:0.9rem 1.2rem; border-radius:12px; border:1px solid rgba(99,102,241,0.3); background:rgba(255,255,255,0.05); color:#fff; font-size:1rem; margin-bottom:1rem; outline:none; font-family:'Poppins',sans-serif;">
+          <p id="pwd-error" style="color:#ef4444; font-size:0.8rem; margin-bottom:1rem; display:none;">❌ Galat password! Sirf NEXA students allowed.</p>
+          <button onclick="checkPwd()" style="width:100%; padding:0.9rem; border-radius:12px; border:none; background:linear-gradient(135deg, #6366f1, #4f46e5); color:#fff; font-weight:600; font-size:1rem; cursor:pointer; font-family:'Poppins',sans-serif;">🔓 Access Content</button>
+          <p style="color:#64748b; font-size:0.75rem; margin-top:1rem;">Password bhool gaye? Institute mein contact karein.</p>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(modal);
+    document.body.style.overflow = 'hidden';
+    setTimeout(() => document.getElementById('pwd-input').focus(), 100);
+    document.getElementById('pwd-input').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') checkPwd();
+    });
+    window.checkPwd = function() {
+      const val = document.getElementById('pwd-input').value.trim();
+      if (val === CORRECT_PASSWORD) {
+        sessionStorage.setItem(AUTH_KEY, "true");
+        document.getElementById('pwd-gate').remove();
+        document.body.style.overflow = '';
+      } else {
+        document.getElementById('pwd-error').style.display = 'block';
+        document.getElementById('pwd-input').value = '';
+        document.getElementById('pwd-input').focus();
+      }
+    };
+  }
+})();
+</script>
+
+<script>
+const TOPICS = {
+"intro": {"title": "1. INTRODUCTION", "icon": "📘", "next": "purchase", "prev": null},
+"purchase": {"title": "2. PURCHASE VOUCHER", "icon": "🛒", "next": "sales", "prev": "intro"},
+"sales": {"title": "3. SALES VOUCHER", "icon": "💰", "next": "receipt", "prev": "purchase"},
+"receipt": {"title": "4. RECEIPT VOUCHER ENTRY", "icon": "🧾", "next": "payment", "prev": "sales"},
+"payment": {"title": "5. PAYMENT VOUCHER", "icon": "💳", "next": "contra", "prev": "receipt"},
+"contra": {"title": "6. CONTRA VOUCHER", "icon": "🏦", "next": "debit-note", "prev": "payment"},
+"debit-note": {"title": "7. DEBIT NOTE VOUCHER", "icon": "📉", "next": "credit-note", "prev": "contra"},
+"credit-note": {"title": "8. CREDIT NOTE VOUCHER", "icon": "📈", "next": "memo", "prev": "debit-note"},
+"memo": {"title": "9. MEMORANDUM VOUCHER", "icon": "📝", "next": "reversing", "prev": "credit-note"},
+"reversing": {"title": "10. REVERSING JOURNAL VOUCHER", "icon": "🔄", "next": "payroll-updates", "prev": "memo"},
+"payroll-updates": {"title": "11. PAYROLL UPDATES", "icon": "⚙️", "next": "payroll", "prev": "reversing"},
+"payroll": {"title": "11. PAYROLL", "icon": "👷", "next": "gst", "prev": "payroll-updates"},
+"gst": {"title": "12. GST 1", "icon": "🧮", "next": null, "prev": "payroll"}
+};
+
+const TOPIC_CONTENT = {
+"intro": `<h2>Tally Prime — Shuruwat</h2>
+<p>Tally Prime Bharat ka sabse popular accounting software hai. Is chapter mein hum Tally Prime ki basic navigation aur setup seekhenge.</p>
+<h3>🎯 Learning Objectives</h3>
+<ul>
+  <li>Tally Prime kya hai aur kyun use karte hain</li>
+  <li>Company creation ka sahi tarika</li>
+  <li>Ledger, Group aur Voucher ki pehchaan</li>
+  <li>Gateway of Tally navigation</li>
+</ul>
+<h3>📝 Step-by-Step: Company Create Karna</h3>
+<ol>
+  <li><strong>Tally Prime open karein</strong> → Alt+F3 (Company Info)</li>
+  <li><strong>Create Company</strong> select karein</li>
+  <li>Company name, address, financial year, currency symbol bharein</li>
+  <li>Security settings configure karein (optional)</li>
+  <li><strong>Accept</strong> karein (Ctrl+A)</li>
+</ol>
+<div class="tip-box">
+  <strong>💡 Pro Tip:</strong> Hamesha company ka backup lein. Gateway of Tally → F3 (Company Info) → Backup.
+</div>
+<h3>📂 Important Shortcuts</h3>
+<table class="data-table">
+  <tr><th>Shortcut</th><th>Kaam</th></tr>
+  <tr><td>Alt+F2</td><td>Period (Date range change)</td></tr>
+  <tr><td>Alt+F3</td><td>Company Info</td></tr>
+  <tr><td>Ctrl+A</td><td>Accept / Save</td></tr>
+  <tr><td>Ctrl+C</td><td>Create (new master)</td></tr>
+  <tr><td>Esc</td><td>Back / Cancel</td></tr>
+</table>`,
+
+"purchase": `<h2>Purchase Voucher — Samaan Kharidna</h2>
+<p>Jab bhi aap koi samaan supplier se kharidte hain, usko record karne ke liye Purchase Voucher use hota hai.</p>
+<h3>🎯 Key Concepts</h3>
+<ul>
+  <li><strong>Purchase Order:</strong> Samaan mangwane ka order</li>
+  <li><strong>Goods Receipt Note (GRN):</strong> Samaan aane ka record</li>
+  <li><strong>Purchase Invoice:</strong> Supplier ka bill</li>
+  <li><strong>Input GST:</strong> Aapke dwara pay kiya GST (ITC claim kar sakte hain)</li>
+</ul>
+<h3>📝 Purchase Voucher Entry Steps</h3>
+<ol>
+  <li>Gateway of Tally → <strong>Vouchers</strong> → <strong>F9 (Purchase)</strong></li>
+  <li>Party Account (Supplier) select karein</li>
+  <li>Purchase Ledger select karein</li>
+  <li>Item details bharein — Name, Quantity, Rate, Amount</li>
+  <li>GST applicable hai to <strong>CGST + SGST</strong> ya <strong>IGST</strong> select karein</li>
+  <li>Amount verify karein aur <strong>Ctrl+A</strong> se save karein</li>
+</ol>
+<div class="tip-box">
+  <strong>💡 Pro Tip:</strong> Hamesha supplier ka GST number verify karein. Galat GST se ITC claim reject ho sakta hai.
+</div>`,
+
+"sales": `<h2>Sales Voucher — Samaan Bechna</h2>
+<p>Sales Voucher tab use hota hai jab aap koi samaan ya service customer ko bechte hain. Ye business ki income ko record karta hai.</p>
+<h3>🎯 Types of Sales</h3>
+<ul>
+  <li><strong>Cash Sales:</strong> Turant payment wali sale</li>
+  <li><strong>Credit Sales:</strong> Baad mein payment wali sale (Debtor banta hai)</li>
+  <li><strong>Inter-state Sales:</strong> Dusre state mein bechna (IGST lagta hai)</li>
+  <li><strong>Intra-state Sales:</strong> Apne state mein bechna (CGST+SGST lagta hai)</li>
+</ul>
+<h3>📝 Sales Voucher Entry Steps</h3>
+<ol>
+  <li>Gateway of Tally → <strong>Vouchers</strong> → <strong>F8 (Sales)</strong></li>
+  <li>Party Account (Customer) select karein — Cash sale ke liye Cash ledger</li>
+  <li>Sales Ledger select karein</li>
+  <li>Item details bharein — Stock item, Quantity, Rate</li>
+  <li>Tax auto-calculate hoga agar GST configured hai</li>
+  <li>Narration likhein aur save karein</li>
+</ol>
+<div class="tip-box">
+  <strong>💡 Pro Tip:</strong> Sales voucher mein hamesha correct stock item select karein. Galat item se inventory mismatch ho sakta hai.
+</div>`,
+
+"receipt": `<h2>Receipt Voucher — Paisa Aana</h2>
+<p>Jab customer aapko payment karta hai (cash ya bank), usko record karne ke liye Receipt Voucher use kiya jata hai.</p>
+<h3>🎯 When to Use</h3>
+<ul>
+  <li>Customer se cash milna</li>
+  <li>Bank mein cheque deposit hona</li>
+  <li>Online payment receive hona (UPI, NEFT, RTGS)</li>
+  <li>Advance payment lena</li>
+</ul>
+<h3>📝 Receipt Voucher Entry Steps</h3>
+<ol>
+  <li>Gateway of Tally → <strong>Vouchers</strong> → <strong>F6 (Receipt)</strong></li>
+  <li><strong>Cr (Credit):</strong> Party Account (jisne payment diya)</li>
+  <li><strong>Dr (Debit):</strong> Cash ya Bank Account (jisme paisa aaya)</li>
+  <li>Amount enter karein</li>
+  <li>Mode of payment select karein — Cash / Cheque / Online</li>
+  <li>Reference number (cheque/UTR) bharein</li>
+  <li>Narration likhein aur save karein</li>
+</ol>
+<div class="tip-box">
+  <strong>💡 Pro Tip:</strong> Agar advance receipt hai to "Advance Receipt" naam se alag voucher type bana lein. Isse tracking aasan hoti hai.
+</div>`,
+
+"payment": `<h2>Payment Voucher — Paisa Dena</h2>
+<p>Jab aap kisi supplier ko, employee ko ya kisi bhi expense ke liye payment karte hain, usko Payment Voucher mein record kiya jata hai.</p>
+<h3>🎯 Common Uses</h3>
+<ul>
+  <li>Supplier ko payment karna</li>
+  <li>Salary disbursement</li>
+  <li>Rent, electricity, phone bill payment</li>
+  <li>Loan EMI payment</li>
+</ul>
+<h3>📝 Payment Voucher Entry Steps</h3>
+<ol>
+  <li>Gateway of Tally → <strong>Vouchers</strong> → <strong>F5 (Payment)</strong></li>
+  <li><strong>Dr (Debit):</strong> Party Account ya Expense Ledger (jisko payment de rahe hain)</li>
+  <li><strong>Cr (Credit):</strong> Cash ya Bank Account (jisme se paisa ja raha hai)</li>
+  <li>Amount enter karein</li>
+  <li>TDS applicable hai to deduct karein</li>
+  <li>Narration likhein aur save karein</li>
+</ol>
+<div class="tip-box">
+  <strong>💡 Pro Tip:</strong> Payment voucher mein hamesha bill reference number likhein. Baad mein reconciliation aasan hoti hai.
+</div>`,
+
+"contra": `<h2>Contra Voucher — Cash ↔ Bank</h2>
+<p>Contra Voucher sirf tab use hota hai jab transaction <strong>cash aur bank ke beech</strong> ho. Kisi third party ko payment nahi, sirf apne accounts ke beech movement.</p>
+<h3>🎯 Allowed Transactions</h3>
+<ul>
+  <li>Cash ko Bank mein deposit karna</li>
+  <li>Bank se Cash nikalna (Withdrawal)</li>
+  <li>Ek Bank se dusre Bank mein transfer</li>
+</ul>
+<h3>🚫 Not Allowed</h3>
+<ul>
+  <li>Supplier ko payment (Payment Voucher use karein)</li>
+  <li>Customer se receipt (Receipt Voucher use karein)</li>
+</ul>
+<h3>📝 Contra Voucher Entry Steps</h3>
+<ol>
+  <li>Gateway of Tally → <strong>Vouchers</strong> → <strong>F4 (Contra)</strong></li>
+  <li><strong>Dr:</strong> Jisme paisa aa raha hai (Cash ya Bank)</li>
+  <li><strong>Cr:</strong> Jisme se paisa ja raha hai (Cash ya Bank)</li>
+  <li>Amount enter karein</li>
+  <li>Instrument details bharein (cheque number, date)</li>
+  <li>Save karein</li>
+</ol>
+<div class="tip-box">
+  <strong>💡 Pro Tip:</strong> Bank statement se match karne ke liye hamesha cheque number aur date sahi likhein.
+</div>`,
+
+"debit-note": `<h2>Debit Note Voucher — Purchase Return</h2>
+<p>Debit Note tab diya jata hai jab aapne supplier se koi samaan kharida aur wapas kar diya (defective ya extra quantity ki wajah se).</p>
+<h3>🎯 When to Use</h3>
+<ul>
+  <li>Purchase return (samaan wapas)</li>
+  <li>Rate difference claim karna</li>
+  <li>Discount ya rebate lena supplier se</li>
+  <li>Extra payment ka adjustment</li>
+</ul>
+<h3>📝 Debit Note Entry Steps</h3>
+<ol>
+  <li>Gateway of Tally → <strong>Vouchers</strong> → <strong>Alt+F9 (Debit Note)</strong></li>
+  <li>Party (Supplier) select karein</li>
+  <li>Purchase Returns ledger select karein</li>
+  <li>Item details ya amount enter karein</li>
+  <li>GST reverse charge check karein</li>
+  <li>Original invoice reference bharein</li>
+  <li>Save karein</li>
+</ol>
+<div class="tip-box">
+  <strong>💡 Pro Tip:</strong> Debit Note se aapka Input Tax Credit (ITC) adjust hota hai. Hamesha original bill ke saath link karein.
+</div>`,
+
+"credit-note": `<h2>Credit Note Voucher — Sales Return</h2>
+<p>Credit Note tab diya jata hai jab aapka customer samaan wapas karta hai. Isse aapki sales kam hoti hai aur stock wapas aata hai.</p>
+<h3>🎯 When to Use</h3>
+<ul>
+  <li>Sales return (customer ne samaan wapas kiya)</li>
+  <li>Rate difference customer ko dena</li>
+  <li>Trade discount adjust karna</li>
+  <li>Damaged goods return</li>
+</ul>
+<h3>📝 Credit Note Entry Steps</h3>
+<ol>
+  <li>Gateway of Tally → <strong>Vouchers</strong> → <strong>Ctrl+F8 (Credit Note)</strong></li>
+  <li>Party (Customer) select karein</li>
+  <li>Sales Returns ledger select karein</li>
+  <li>Item details enter karein — stock auto-increase hoga</li>
+  <li>GST liability adjust hogi automatically</li>
+  <li>Original invoice reference bharein</li>
+  <li>Save karein</li>
+</ol>
+<div class="tip-box">
+  <strong>💡 Pro Tip:</strong> Credit Note banate waqt "Against Invoice" option use karein taaki original bill se auto-link ho jaye.
+</div>`,
+
+"memo": `<h2>Memorandum Voucher — Temporary Entry</h2>
+<p>Memorandum Voucher (Memos) wo entries hain jo sirf record ke liye hoti hain — inka financial account pe koi asar nahi hota. Baad mein inko real voucher mein convert kiya jata hai.</p>
+<h3>🎯 Common Uses</h3>
+<ul>
+  <li>Post-dated cheque receipt</li>
+  <li>Loan sanction letter record karna</li>
+  <li>Pending approval entries</li>
+  <li>Reversing entries ki reminder</li>
+  <li>Goods on approval (sale confirm nahi hui)</li>
+</ul>
+<h3>📝 Memo Voucher Entry Steps</h3>
+<ol>
+  <li>Gateway of Tally → <strong>Vouchers</strong> → <strong>Ctrl+F10 (Memorandum)</strong></li>
+  <li>Party aur ledger select karein</li>
+  <li>Amount enter karein</li>
+  <li>Clear narration likhein ki ye entry kyun temporary hai</li>
+  <li>Save karein</li>
+</ol>
+<h3>🔄 Convert to Real Voucher</h3>
+<ol>
+  <li>Display → Day Book mein Memo Voucher dhoondhein</li>
+  <li>Entry select karein → <strong>Alt+C</strong> (Convert to Real)</li>
+  <li>Real voucher type select karein (Sales/Purchase/etc.)</li>
+</ol>
+<div class="tip-box">
+  <strong>💡 Pro Tip:</strong> Memo voucher ko pending work ki tarah treat karein. Har hafte check karein ki koi pending memo real voucher mein convert karna baki hai.
+</div>`,
+
+"reversing": `<h2>Reversing Journal Voucher — Corrections</h2>
+<p>Reversing Journal tab use hota hai jab koi entry galat ho gayi ho ya adjustment karna ho jo next period mein automatically reverse ho jaye.</p>
+<h3>🎯 When to Use</h3>
+<ul>
+  <li>Accrual entries (jaise salary payable)</li>
+  <li>Prepaid expenses adjust karna</li>
+  <li>Closing stock adjustment</li>
+  <li>Depreciation provision</li>
+  <li>Month-end adjustments jo next month reverse honi chahiye</li>
+</ul>
+<h3>📝 Reversing Journal Steps</h3>
+<ol>
+  <li>Gateway of Tally → <strong>Vouchers</strong> → <strong>F7 (Journal)</strong></li>
+  <li>Reversing Journal enable karein: F12 (Configure) → <strong>Use Reversing Journals = Yes</strong></li>
+  <li>Effective date enter karein (jis date se entry valid hai)</li>
+  <li>Debit aur Credit ledger select karein</li>
+  <li>Reversal date set karein (jis date entry reverse hogi)</li>
+  <li>Save karein</li>
+</ol>
+<div class="tip-box">
+  <strong>💡 Pro Tip:</strong> Reversing Journals financial reports ko accurate banate hain. Month-end closing ke time zaroor use karein.
+</div>`,
+
+"payroll-updates": `<h2>Payroll Updates — Latest Changes</h2>
+<p>Is section mein Tally Prime ke latest payroll features aur government ke naye rules ke baare mein jaanenge.</p>
+<h3>🆕 New Features in Tally Prime</h3>
+<ul>
+  <li>Auto-calculation of PF, ESI, PT (Professional Tax)</li>
+  <li>Multiple pay structure support</li>
+  <li>Statutory compliance auto-update</li>
+  <li>Employee self-service portal integration</li>
+</ul>
+<h3>📋 Statutory Updates 2026</h3>
+<ul>
+  <li><strong>EPFO:</strong> UAN generation mandatory for new employees</li>
+  <li><strong>ESI:</strong> Wage ceiling update — ₹21,000 se ₹25,000 proposed</li>
+  <li><strong>Gratuity:</strong> Digital signature integration</li>
+  <li><strong>Form 16:</strong> New TDS sections added</li>
+</ul>
+<h3>📝 Update Apply Karna</h3>
+<ol>
+  <li>Gateway of Tally → <strong>F1 (Help)</strong> → <strong>Update</strong></li>
+  <li>Latest release download karein</li>
+  <li>Payroll statutory masters update karein</li>
+  <li>Employee records verify karein</li>
+</ol>`,
+
+"payroll": `<h2>Payroll — Salary Processing</h2>
+<p>Tally Prime mein complete payroll management kar sakte hain — employee master se lekar salary slip generation tak.</p>
+<h3>🎯 Payroll Setup</h3>
+<ol>
+  <li><strong>Enable Payroll:</strong> F11 (Features) → Accounting Features → <strong>Maintain Payroll = Yes</strong></li>
+  <li><strong>Employee Group:</strong> Categories banaein — Staff, Workers, Managers</li>
+  <li><strong>Employee Master:</strong> F5 (Payroll Info) → Employees → Create</li>
+  <li><strong>Pay Heads:</strong> Basic, DA, HRA, Conveyance, PF, ESI, PT, TDS</li>
+  <li><strong>Salary Details:</strong> Har employee ka pay structure define karein</li>
+</ol>
+<h3>📝 Monthly Salary Processing</h3>
+<ol>
+  <li>Gateway of Tally → <strong>Payroll Vouchers</strong> → <strong>Attendance</strong> (mark karein)</li>
+  <li><strong>Payroll Auto Fill</strong> se salary calculate karein</li>
+  <li><strong>Pay Slip</strong> generate karein</li>
+  <li><strong>Payment Advice</strong> bank ke liye banayein</li>
+  <li><strong>PF/ESI Challan</strong> generate karein</li>
+</ol>
+<div class="tip-box">
+  <strong>💡 Pro Tip:</strong> Hamesha attendance voucher pehle fill karein. Uske bina auto-calculation sahi nahi hoga.
+</div>`,
+
+"gst": `<h2>GST 1 — Fundamentals</h2>
+<p>Goods and Services Tax (GST) Bharat ka unified tax system hai. Is chapter mein GST ke basics aur Tally mein GST setup seekhenge.</p>
+<h3>🎯 GST Types</h3>
+<table class="data-table">
+  <tr><th>Tax</th><th>When Applied</th><th>Who Gets Credit</th></tr>
+  <tr><td>CGST</td><td>Same state sale</td><td>Buyer (Input Tax Credit)</td></tr>
+  <tr><td>SGST</td><td>Same state sale</td><td>Buyer (Input Tax Credit)</td></tr>
+  <tr><td>IGST</td><td>Inter-state sale</td><td>Buyer (Input Tax Credit)</td></tr>
+  <tr><td>UTGST</td><td>Union Territory</td><td>Buyer</td></tr>
+</table>
+<h3>📝 GST Setup in Tally</h3>
+<ol>
+  <li>F11 (Features) → <strong>Enable GST = Yes</strong></li>
+  <li>GST Details mein company ka GSTIN bharein</li>
+  <li>State aur registration type select karein</li>
+  <li>Tax ledgers banaein: CGST, SGST, IGST</li>
+  <li>Stock items aur parties mein GST rate define karein</li>
+</ol>
+<h3>📋 GSTR Returns</h3>
+<ul>
+  <li><strong>GSTR-1:</strong> Outward supplies (monthly/quarterly)</li>
+  <li><strong>GSTR-3B:</strong> Summary return (monthly)</li>
+  <li><strong>GSTR-9:</strong> Annual return</li>
+</ul>
+<div class="tip-box">
+  <strong>💡 Pro Tip:</strong> GST rates hamesha latest notification ke hisaab se update karein. Tally mein F12 → GST Details → Update kar sakte hain.
+</div>`
+};
+
+function renderTopic() {
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get('id');
+  const container = document.getElementById('content-area');
+
+  if (!id || !TOPICS[id]) {
+    container.innerHTML = `
+      <div class="not-found">
+        <h2>❌ Topic Not Found</h2>
+        <p>Ye topic abhi available nahi hai. <a href="tally-course.html" style="color:var(--primary)">Sabhi topics dekhein</a>.</p>
+      </div>
+    `;
+    return;
+  }
+
+  const t = TOPICS[id];
+  const content = TOPIC_CONTENT[id] || '<p>Content jaldi update kiya jayega.</p>';
+
+  let navHtml = '<div class="topic-nav">';
+  if (t.prev) {
+    navHtml += `<a href="topic.html?id=${t.prev}">← Previous Topic</a>`;
+  } else {
+    navHtml += '<span></span>';
+  }
+  if (t.next) {
+    navHtml += `<a href="topic.html?id=${t.next}">Next Topic →</a>`;
+  } else {
+    navHtml += '<span></span>';
+  }
+  navHtml += '</div>';
+
+  container.innerHTML = `
+    <div class="topic-header">
+      <div class="topic-header-icon">${t.icon}</div>
+      <div>
+        <h1>${t.title}</h1>
+        <span>Tally Prime + GST Course • NEXA Computer Institute</span>
+      </div>
+    </div>
+    <div class="article-content">
+      ${content}
+    </div>
+    ${navHtml}
+  `;
+
+  document.title = t.title + ' | NEXA Computer Institute';
+}
+
+renderTopic();
+</script>
+
+</body>
+</html>
