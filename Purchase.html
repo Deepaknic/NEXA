@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 2 - Purchase Voucher | NEXA Computer Institute</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f7f5f0; --card: #ffffff; --text: #1e1e2f; --text-muted: #5a5a6e;
+  --primary: #1a237e; --primary-light: #e8eaf6; --secondary: #c62828; --secondary-light: #ffebee;
+  --accent: #e65100; --accent-light: #fff3e0; --gold: #b8860b; --gold-light: #fff8e1;
+  --success: #2e7d32; --success-light: #e8f5e9; --border: #e0ddd5;
+  --shadow: 0 8px 30px rgba(0,0,0,0.06); --shadow-hover: 0 12px 40px rgba(0,0,0,0.1);
+  --radius: 16px; --radius-sm: 10px;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Inter', 'Noto Sans Devanagari', 'Segoe UI', system-ui, sans-serif; font-size: 19px; line-height: 1.85; color: var(--text); background: var(--bg); -webkit-font-smoothing: antialiased; }
+.reading-container { max-width: 920px; margin: 0 auto; padding: 40px 24px 80px; }
+.topbar { position: sticky; top: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); padding: 14px 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+.topbar .logo-text { font-weight: 800; font-size: 1.15rem; color: var(--primary); letter-spacing: 0.5px; }
+.topbar .chapter-nav { font-size: 0.95rem; color: var(--text-muted); font-weight: 500; }
+.topbar .actions { display: flex; gap: 10px; }
+.btn { padding: 8px 18px; border-radius: 50px; border: none; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; font-family: inherit; }
+.btn-primary { background: linear-gradient(135deg, var(--primary), #3949ab); color: white; box-shadow: 0 4px 12px rgba(26,35,126,0.25); }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(26,35,126,0.35); }
+.btn-ghost { background: transparent; color: var(--text-muted); border: 1.5px solid var(--border); }
+.btn-ghost:hover { border-color: var(--primary); color: var(--primary); }
+.progress-wrap { position: fixed; top: 0; left: 0; width: 100%; height: 4px; z-index: 1001; background: transparent; }
+.progress-bar { height: 100%; background: linear-gradient(90deg, var(--primary), var(--gold), var(--secondary)); width: 0%; transition: width 0.1s; }
+.cover-page { min-height: 90vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; background: linear-gradient(180deg, #ffffff 0%, var(--bg) 100%); border-radius: var(--radius); padding: 60px 40px; margin-bottom: 50px; box-shadow: var(--shadow); position: relative; overflow: hidden; }
+.cover-page::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 6px; background: linear-gradient(90deg, var(--primary), var(--gold), var(--secondary), var(--primary)); }
+.cover-watermark { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-25deg); font-size: 140px; font-weight: 900; color: rgba(26,35,126,0.035); letter-spacing: 20px; text-transform: uppercase; pointer-events: none; user-select: none; }
+.cover-institute { font-size: 3.2rem; font-weight: 800; color: var(--primary); letter-spacing: 6px; margin-bottom: 8px; text-transform: uppercase; }
+.cover-tagline { font-size: 1.3rem; color: var(--secondary); font-weight: 700; letter-spacing: 4px; margin-bottom: 50px; text-transform: uppercase; }
+.cover-divider { width: 180px; height: 4px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 20px auto 40px; border-radius: 2px; }
+.cover-course { font-size: 2.2rem; font-weight: 800; color: var(--primary); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 3px; }
+.cover-chapter { font-size: 1.6rem; color: var(--accent); font-weight: 700; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 2px; }
+.cover-chapter-title { font-size: 1.25rem; color: var(--text-muted); font-weight: 600; margin-bottom: 60px; font-style: italic; }
+.cover-details { background: var(--card); border: 2px solid var(--gold); border-radius: var(--radius); padding: 35px 40px; max-width: 560px; width: 100%; box-shadow: var(--shadow); text-align: left; }
+.cover-details h3 { color: var(--primary); font-size: 1.1rem; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px; border-bottom: 2px solid var(--gold-light); padding-bottom: 12px; text-align: center; }
+.cover-details p { font-size: 1rem; margin: 10px 0; line-height: 1.6; color: var(--text); }
+.cover-details .label { font-weight: 700; color: var(--primary); }
+.toc-page { background: var(--card); border-radius: var(--radius); padding: 50px 45px; margin-bottom: 50px; box-shadow: var(--shadow); }
+.toc-page h2 { font-size: 1.8rem; color: var(--primary); text-align: center; margin-bottom: 35px; text-transform: uppercase; letter-spacing: 3px; border-bottom: 3px double var(--gold); padding-bottom: 18px; }
+.toc-item { display: flex; justify-content: space-between; align-items: baseline; padding: 14px 0; border-bottom: 1px dashed var(--border); font-size: 1.1rem; transition: all 0.2s; }
+.toc-item:hover { padding-left: 10px; color: var(--primary); }
+.toc-item .toc-number { font-weight: 800; color: var(--primary); margin-right: 12px; min-width: 36px; font-size: 1.15rem; }
+.toc-item .toc-title { flex: 1; font-weight: 500; }
+.toc-item .toc-page-num { font-weight: 800; color: var(--gold); font-size: 1.1rem; min-width: 40px; text-align: right; }
+.section { margin-bottom: 60px; background: var(--card); border-radius: var(--radius); padding: 45px 45px 50px; box-shadow: var(--shadow); transition: box-shadow 0.3s; }
+.section:hover { box-shadow: var(--shadow-hover); }
+.section-title { font-size: 1.9rem; font-weight: 800; color: var(--primary); border-left: 6px solid var(--gold); padding-left: 20px; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; line-height: 1.3; }
+.section-subtitle { font-size: 1.35rem; color: var(--secondary); font-weight: 700; padding-left: 26px; margin-bottom: 30px; font-family: 'Noto Sans Devanagari', sans-serif; }
+.term-english, .term-hindi, .term-tally { padding: 22px 26px; border-radius: var(--radius-sm); margin: 18px 0; font-size: 1.08rem; line-height: 1.9; position: relative; }
+.term-english { background: var(--primary-light); border-left: 5px solid var(--primary); }
+.term-hindi { background: var(--secondary-light); border-left: 5px solid var(--secondary); font-family: 'Noto Sans Devanagari', sans-serif; line-height: 2; }
+.term-tally { background: var(--accent-light); border-left: 5px solid var(--accent); font-weight: 500; color: #5d4037; }
+.badge { display: inline-block; font-size: 0.72rem; font-weight: 800; padding: 4px 10px; border-radius: 6px; margin-right: 10px; text-transform: uppercase; letter-spacing: 1px; vertical-align: middle; color: white; }
+.badge-en { background: var(--primary); }
+.badge-hi { background: var(--secondary); }
+.badge-tally { background: var(--accent); }
+.term-card { background: linear-gradient(135deg, #ffffff 0%, #fafbfc 100%); border: 1.5px solid var(--border); border-radius: var(--radius); padding: 32px; margin-bottom: 28px; box-shadow: 0 2px 12px rgba(0,0,0,0.04); transition: all 0.3s ease; position: relative; overflow: hidden; }
+.term-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-hover); border-color: var(--gold); }
+.term-card::before { content: ''; position: absolute; top: 0; left: 0; width: 5px; height: 100%; background: linear-gradient(180deg, var(--primary), var(--gold)); }
+.term-header { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 8px; }
+.term-number { display: inline-flex; align-items: center; justify-content: center; background: linear-gradient(135deg, var(--primary), #3949ab); color: white; width: 38px; height: 38px; border-radius: 50%; font-size: 1rem; font-weight: 800; flex-shrink: 0; }
+.term-name { font-size: 1.35rem; font-weight: 800; color: var(--primary); }
+.term-name-hindi { font-size: 1.25rem; font-weight: 700; color: var(--secondary); font-family: 'Noto Sans Devanagari', sans-serif; }
+.sub-section { margin: 30px 0; padding: 28px 30px; background: #fafafa; border-radius: var(--radius-sm); border: 1px solid var(--border); }
+.sub-section-title { font-size: 1.3rem; font-weight: 700; color: var(--primary); margin-bottom: 14px; border-bottom: 2px solid var(--gold-light); padding-bottom: 8px; display: inline-block; }
+.types-list { margin: 14px 0 10px 30px; }
+.types-list li { margin-bottom: 12px; line-height: 1.8; font-size: 1.05rem; }
+.example-highlight { background: linear-gradient(90deg, var(--gold-light), transparent); padding: 16px 22px; border-left: 4px solid var(--gold); margin: 18px 0; font-style: italic; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-size: 1.05rem; }
+.info-box, .warning-box { padding: 28px 28px 28px 32px; border-radius: var(--radius-sm); margin: 28px 0; position: relative; font-size: 1.05rem; }
+.info-box { background: linear-gradient(135deg, #fff8e1 0%, #ffecb3 100%); border: 1.5px solid var(--accent); }
+.warning-box { background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%); border: 1.5px solid var(--secondary); }
+.info-box-title, .warning-box-title { font-weight: 800; font-size: 1.15rem; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+.info-box-title { color: var(--accent); }
+.warning-box-title { color: var(--secondary); }
+.steps-block, .steps-block-hindi { padding: 22px 28px; border-radius: var(--radius-sm); margin: 20px 0; font-size: 1.05rem; line-height: 2; border-left: 5px solid var(--gold); }
+.steps-block { background: #263238; color: #c5e1a5; font-family: 'Courier New', monospace; }
+.steps-block-hindi { background: var(--primary); color: #ffe0b2; font-family: 'Noto Sans Devanagari', monospace; }
+table { width: 100%; border-collapse: separate; border-spacing: 0; margin: 28px 0; font-size: 1.02rem; box-shadow: var(--shadow); border-radius: var(--radius-sm); overflow: hidden; }
+thead { background: linear-gradient(135deg, var(--primary), #3949ab); color: white; }
+th { padding: 18px 20px; text-align: left; font-weight: 700; text-transform: uppercase; font-size: 0.95rem; letter-spacing: 0.5px; }
+td { padding: 16px 20px; border-bottom: 1px solid #eee; background: var(--card); }
+tr:nth-child(even) td { background: #f8f9fa; }
+tr:hover td { background: #e8eaf6; }
+.golden-table thead { background: linear-gradient(135deg, var(--gold), #daa520); color: #1a1a1a; }
+.golden-table td { text-align: center; font-weight: 600; padding: 18px; }
+.golden-table td:first-child { background: rgba(26, 35, 126, 0.04); font-weight: 800; color: var(--primary); }
+.ledger-table thead { background: linear-gradient(135deg, #2e7d32, #43a047); }
+.ledger-table td:nth-child(1) { text-align: center; font-weight: 800; background: rgba(46, 125, 50, 0.05); width: 50px; color: var(--success); }
+.voucher-table thead { background: linear-gradient(135deg, #1565c0, #1976d2); }
+.voucher-table td:nth-child(2) { font-weight: 800; color: var(--primary); background: rgba(21, 101, 192, 0.05); text-align: center; font-size: 1.1rem; }
+.summary-section { background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); border: 2px solid var(--success); border-radius: var(--radius); padding: 40px; margin-top: 40px; }
+.summary-section h2 { color: var(--success); font-size: 1.7rem; margin-bottom: 25px; text-align: center; text-transform: uppercase; letter-spacing: 2px; }
+.summary-section ol { padding-left: 30px; }
+.summary-section li { margin-bottom: 18px; line-height: 1.9; font-size: 1.08rem; }
+.next-chapter { background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); border: 2px solid var(--primary); border-radius: var(--radius); padding: 35px; margin-top: 50px; text-align: center; }
+.next-chapter h3 { color: var(--primary); font-size: 1.5rem; margin-bottom: 12px; }
+.back-cover { min-height: 80vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; background: linear-gradient(180deg, #e8eaf6 0%, var(--bg) 50%, #ffffff 100%); border-radius: var(--radius); padding: 60px 40px; margin-top: 50px; box-shadow: var(--shadow); position: relative; overflow: hidden; }
+.back-cover::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 6px; background: linear-gradient(90deg, var(--primary), var(--gold), var(--secondary), var(--primary)); }
+.back-cover h2 { font-size: 2.4rem; color: var(--primary); margin-bottom: 20px; }
+.contact-card { background: var(--card); border: 2px solid var(--gold); border-radius: var(--radius); padding: 45px; max-width: 520px; width: 100%; box-shadow: var(--shadow); }
+.contact-card h3 { color: var(--primary); font-size: 1.3rem; margin-bottom: 25px; border-bottom: 2px solid var(--gold-light); padding-bottom: 12px; }
+.contact-card p { margin: 14px 0; font-size: 1.1rem; color: var(--text); }
+.copyright { margin-top: 40px; text-align: center; color: #888; font-size: 0.95rem; }
+.copyright p { margin: 8px 0; }
+.hindi-text { font-family: 'Noto Sans Devanagari', sans-serif; line-height: 2; }
+.divider { height: 3px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 50px 0; border: none; border-radius: 2px; }
+.back-to-top { position: fixed; bottom: 30px; right: 30px; width: 50px; height: 50px; background: var(--primary); color: white; border: none; border-radius: 50%; font-size: 1.4rem; cursor: pointer; box-shadow: 0 4px 15px rgba(26,35,126,0.3); opacity: 0; visibility: hidden; transition: all 0.3s; z-index: 999; display: flex; align-items: center; justify-content: center; }
+.back-to-top.visible { opacity: 1; visibility: visible; }
+.back-to-top:hover { background: var(--gold); color: var(--primary); transform: translateY(-3px); }
+@media print { .topbar, .progress-wrap, .btn, .back-to-top { display: none !important; } body { font-size: 14px; background: white; } .reading-container { max-width: 100%; padding: 0; } .section, .cover-page, .toc-page, .back-cover { box-shadow: none; border: 1px solid #ddd; break-inside: avoid; } .cover-page { min-height: auto; page-break-after: always; } .toc-page { page-break-after: always; } .section { page-break-inside: avoid; margin-bottom: 30px; } .term-card { break-inside: avoid; } table { break-inside: avoid; } }
+@media (max-width: 768px) { body { font-size: 17px; } .reading-container { padding: 20px 16px 60px; } .section { padding: 28px 22px; } .cover-institute { font-size: 2.2rem; } .cover-course { font-size: 1.7rem; } .section-title { font-size: 1.5rem; } .section-subtitle { font-size: 1.15rem; } .term-card { padding: 24px 20px; } .term-name { font-size: 1.15rem; } .term-name-hindi { font-size: 1.1rem; } th, td { padding: 12px 14px; font-size: 0.95rem; } .toc-page { padding: 30px 22px; } .cover-details { padding: 25px; } }
+</style>
+<base target="_blank">
+</head>
+<body>
+
+<div class="progress-wrap"><div class="progress-bar" id="progressBar"></div></div>
+
+<div class="topbar">
+  <div class="logo-text">🎓 NEXA Computer Institute</div>
+  <div class="chapter-nav">Chapter 2: Purchase Voucher & Inventory</div>
+  <div class="actions">
+    <button class="btn btn-ghost" onclick="window.print()">🖨️ Print</button>
+    <button class="btn btn-primary" onclick="window.scrollTo({top:0,behavior:'smooth'})">⬆ Top</button>
+  </div>
+</div>
+
+<div class="reading-container">
+
+<div class="cover-page">
+  <div class="cover-watermark">NEXA</div>
+  <div class="cover-institute">NEXA</div>
+  <div class="cover-tagline">Computer Institute</div>
+  <div class="cover-divider"></div>
+  <div class="cover-course">Tally Prime</div>
+  <div class="cover-chapter">Chapter 2</div>
+  <div class="cover-chapter-title">Purchase Voucher & Inventory<br>खरीद वाउचर और इन्वेंट्री प्रबंधन</div>
+  <div class="cover-details">
+    <h3>📍 Contact Information / संपर्क जानकारी</h3>
+    <p><span class="label">📞 Phone:</span> 7696566162</p>
+    <p><span class="label">📍 Address:</span> NEXA Building, Near Police Station, Maudarwaja, Farrukhabad</p>
+    <p><span class="label">🌐 Website:</span> nexainstitute.co.in</p>
+  </div>
+</div>
+
+<div class="toc-page">
+  <h2>📑 Table of Contents / विषय सूची</h2>
+  <div class="toc-item"><span><span class="toc-number">1.</span><span class="toc-title">Introduction to Purchase Voucher / खरीद वाउचर का परिचय</span></span><span class="toc-page-num">03</span></div>
+  <div class="toc-item"><span><span class="toc-number">2.</span><span class="toc-title">Ledger Creation / लेजर निर्माण</span></span><span class="toc-page-num">04</span></div>
+  <div class="toc-item"><span><span class="toc-number">3.</span><span class="toc-title">Inventory Setup / इन्वेंट्री सेटअप</span></span><span class="toc-page-num">05</span></div>
+  <div class="toc-item"><span><span class="toc-number">4.</span><span class="toc-title">Godown Management / गोडाउन प्रबंधन</span></span><span class="toc-page-num">07</span></div>
+  <div class="toc-item"><span><span class="toc-number">5.</span><span class="toc-title">Voucher Entry / वाउचर प्रविष्टि</span></span><span class="toc-page-num">08</span></div>
+  <div class="toc-item"><span><span class="toc-number">6.</span><span class="toc-title">Purchase Invoice Mode / खरीद इनवॉइस मोड</span></span><span class="toc-page-num">09</span></div>
+  <div class="toc-item"><span><span class="toc-number">7.</span><span class="toc-title">Journal Entries / जर्नल प्रविष्टियाँ</span></span><span class="toc-page-num">10</span></div>
+  <div class="toc-item"><span><span class="toc-number">8.</span><span class="toc-title">Do It Yourself / स्वयं करें</span></span><span class="toc-page-num">11</span></div>
+  <div class="toc-item"><span><span class="toc-number">9.</span><span class="toc-title">Reports & Summary / रिपोर्ट और सारांश</span></span><span class="toc-page-num">12</span></div>
+</div>
+
+<div class="section">
+  <div class="section-title">1. Introduction to Purchase Voucher</div>
+  <div class="section-subtitle">खरीद वाउचर का परिचय</div>
+  <div class="term-english"><span class="badge badge-en">EN</span>Purchase voucher is used when you purchase goods from any party and get an invoice against cash or credit purchase. Tally Prime provides the facility to create purchase and credit purchase entries from the Purchase Voucher.</div>
+  <div class="term-hindi"><span class="badge badge-hi">HI</span>खरीद वाउचर का उपयोग तब किया जाता है जब आप किसी पार्टी से सामान खरीदते हैं और नकद या उधार खरीद के खिलाफ चालान प्राप्त करते हैं। टैली प्राइम खरीद वाउचर से खरीद और क्रेडिट खरीद प्रविष्टियाँ बनाने की सुविधा देता है।</div>
+  <div class="term-tally"><span class="badge badge-tally">TALLY</span><strong>Shortcut:</strong> Press <strong>F9</strong> from Gateway of Tally to open Purchase Voucher. Use <strong>Ctrl+V</strong> to toggle between Voucher Mode and Invoice Mode.</div>
+  <div class="info-box">
+    <div class="info-box-title">💡 Dr/Cr Configuration</div>
+    <p>Tally Prime by default uses <strong>Dr/Cr</strong> format. If your screen shows <strong>To/By</strong>, press <strong>F12: Configure</strong> and set <em>"Use Cr/Dr instead of To/By during entry"</em> to Yes.</p>
+    <p class="hindi-text">टैली प्राइम बाय डिफॉल्ट <strong>Dr/Cr</strong> फॉर्मेट का उपयोग करता है। यदि आपकी स्क्रीन पर <strong>To/By</strong> दिखाई देता है, तो <strong>F12: Configure</strong> दबाएँ और <em>"Use Cr/Dr instead of To/By during entry"</em> को Yes सेट करें।</p>
+  </div>
+</div>
+
+<hr class="divider">
+
+<div class="section">
+  <div class="section-title">2. Ledger Creation</div>
+  <div class="section-subtitle">लेजर निर्माण</div>
+  <div class="term-tally"><span class="badge badge-tally">TALLY</span><strong>Path:</strong> Gateway of Tally → Masters → Create → Ledger (OR press <strong>Alt+C</strong> inside any voucher to create on-the-fly)</div>
+  <div class="sub-section">
+    <div class="sub-section-title">Purchase Ledger</div>
+    <table class="ledger-table">
+      <thead><tr><th>Field</th><th>Value</th></tr></thead>
+      <tbody>
+        <tr><td>Name</td><td>Purchase</td></tr>
+        <tr><td>Under</td><td>Purchase Account</td></tr>
+        <tr><td>Inventory values are affected</td><td>Yes</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="sub-section">
+    <div class="sub-section-title">Supplier Ledger (Example: Arshul)</div>
+    <table class="ledger-table">
+      <thead><tr><th>Field</th><th>Value</th></tr></thead>
+      <tbody>
+        <tr><td>Name</td><td>Arshul</td></tr>
+        <tr><td>Under</td><td>Sundry Creditors</td></tr>
+        <tr><td>Maintain Balance Bill-by-bill</td><td>Yes</td></tr>
+        <tr><td>Inventory values are affected</td><td>No</td></tr>
+      </tbody>
+    </table>
+    <div class="steps-block-hindi">इसी प्रक्रिया का पालन करके Kalpana, Vivek, Karishma, Arti, Kokila आदि के लेजर बनाएँ।</div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<div class="section">
+  <div class="section-title">3. Inventory Setup</div>
+  <div class="section-subtitle">इन्वेंट्री सेटअप</div>
+  <div class="term-english"><span class="badge badge-en">EN</span>Inventory is the array of finished goods or goods used in production held by a company. It is classified as a current asset on the balance sheet.</div>
+  <div class="term-hindi"><span class="badge badge-hi">HI</span>इन्वेंट्री एक कंपनी द्वारा उत्पादन में उपयोग किए गए तैयार माल या माल की सरणी है। इसे बैलेंस शीट पर चालू संपत्ति के रूप में वर्गीकृत किया जाता है।</div>
+  
+  <div class="sub-section">
+    <div class="sub-section-title">A. Stock Groups / स्टॉक समूह</div>
+    <div class="term-tally"><span class="badge badge-tally">TALLY</span>Gateway → Inventory Info → Stock Groups → Single Stock Group → Create</div>
+    <table>
+      <thead><tr><th>Sr.No</th><th>Name</th><th>Under</th><th>Quantities added</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Oil</td><td>Primary</td><td>Yes</td></tr>
+        <tr><td>2</td><td>Spices</td><td>Primary</td><td>Yes</td></tr>
+        <tr><td>3</td><td>Rice</td><td>Primary</td><td>Yes</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="sub-section">
+    <div class="sub-section-title">B. Units of Measure / माप की इकाइयाँ</div>
+    <div class="term-tally"><span class="badge badge-tally">TALLY</span>Gateway → Inventory Info → Unit of Measure → Create</div>
+    <table>
+      <thead><tr><th>Type</th><th>Symbol</th><th>Formal Name</th><th>Decimal Places</th></tr></thead>
+      <tbody>
+        <tr><td>Simple</td><td>KGS</td><td>Kilogram</td><td>3</td></tr>
+        <tr><td>Simple</td><td>LIT</td><td>Liters</td><td>3</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="sub-section">
+    <div class="sub-section-title">C. Stock Items / स्टॉक आइटम</div>
+    <div class="term-tally"><span class="badge badge-tally">TALLY</span>Gateway → Inventory Info → Stock Items → Create (Single)</div>
+    <table>
+      <thead><tr><th>Sr.No</th><th>Name</th><th>Under</th><th>Units</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Basmati Rice</td><td>Rice</td><td>KGS</td></tr>
+        <tr><td>2</td><td>Soya Bean Oil</td><td>Oil</td><td>LIT</td></tr>
+        <tr><td>3</td><td>Mustard Oil</td><td>Oil</td><td>LIT</td></tr>
+        <tr><td>4</td><td>Red Chili Powder</td><td>Spices</td><td>KGS</td></tr>
+        <tr><td>5</td><td>Coconut Oil</td><td>Oil</td><td>LIT</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<hr class="divider">
+
+<div class="section">
+  <div class="section-title">4. Godown Management</div>
+  <div class="section-subtitle">गोडाउन प्रबंधन</div>
+  <div class="term-english"><span class="badge badge-en">EN</span>A Godown is a place where stock items are stored. In Tally Prime, you must enable this feature before creating godowns.</div>
+  <div class="term-hindi"><span class="badge badge-hi">HI</span>गोडाउन एक जगह है जहाँ स्टॉक आइटम संग्रहीत किए जाते हैं। टैली प्राइम में गोडाउन बनाने से पहले इस सुविधा को सक्षम करना होगा।</div>
+  
+  <div class="info-box">
+    <div class="info-box-title">⚙️ Enable Godown Feature</div>
+    <p><strong>F11 (Features) → F2 (Inventory Features) → Set "Maintain Multiple Godowns" to Yes</strong></p>
+    <p class="hindi-text"><strong>F11 (फीचर्स) → F2 (इन्वेंट्री फीचर्स) → "Maintain Multiple Godowns" को Yes सेट करें</strong></p>
+  </div>
+
+  <div class="sub-section">
+    <div class="sub-section-title">Create Godowns / गोडाउन बनाना</div>
+    <div class="term-tally"><span class="badge badge-tally">TALLY</span>Gateway → Inventory Info → Godowns → Create</div>
+    <table>
+      <thead><tr><th>Name</th><th>Address</th><th>Under</th></tr></thead>
+      <tbody>
+        <tr><td>Godown 1</td><td>Maudarwaja</td><td>Primary</td></tr>
+        <tr><td>Godown 2</td><td>Ganga nagar</td><td>Primary</td></tr>
+        <tr><td>Fathegarh Location</td><td>-</td><td>Main Location</td></tr>
+        <tr><td>Godown 3</td><td>Civil line</td><td>Fathegarh Location</td></tr>
+        <tr><td>Godown 4</td><td>Army Cant.</td><td>Fathegarh Location</td></tr>
+        <tr><td>Godown 5</td><td>Kotwali(Fbd)</td><td>Primary</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<hr class="divider">
+
+<div class="section">
+  <div class="section-title">5. Voucher Entry</div>
+  <div class="section-subtitle">वाउचर प्रविष्टि</div>
+  <div class="term-tally"><span class="badge badge-tally">TALLY</span><strong>Path:</strong> Gateway → Vouchers → Press <strong>F9</strong> (Purchase) → Press <strong>Ctrl+V</strong> to change to Invoice Mode.</div>
+  
+  <div class="sub-section">
+    <div class="sub-section-title">Example Entries / उदाहरण प्रविष्टियाँ</div>
+    <table>
+      <thead><tr><th>Sr.</th><th>Particulars</th><th>Amount</th><th>Date</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Purchased goods from Arshul</td><td>40,000</td><td>01/06/2016</td></tr>
+        <tr><td>2</td><td>Purchased goods from Kalpana</td><td>11,000</td><td>02/06/2016</td></tr>
+        <tr><td>3</td><td>Purchased goods with Cash</td><td>18,000</td><td>03/06/2016</td></tr>
+        <tr><td>4</td><td>Bought goods from Vivek</td><td>12,000</td><td>04/06/2016</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="info-box">
+    <div class="info-box-title">💡 Tally Prime Tip</div>
+    <p>Press <strong>Alt+C</strong> to create a new ledger directly from the voucher screen without going back to Gateway.</p>
+    <p class="hindi-text">वाउचर स्क्रीन से ही नया लेजर बनाने के लिए <strong>Alt+C</strong> दबाएँ, गेटवे पर वापस जाने की आवश्यकता नहीं है।</p>
+  </div>
+</div>
+
+<hr class="divider">
+
+<div class="section">
+  <div class="section-title">6. Purchase Invoice Mode</div>
+  <div class="section-subtitle">खरीद इनवॉइस मोड</div>
+  <div class="term-english"><span class="badge badge-en">EN</span>In Invoice Mode, you can enter item-wise details including Quantity, Rate, and Godown allocation. This is useful for inventory tracking.</div>
+  <div class="term-hindi"><span class="badge badge-hi">HI</span>इनवॉइस मोड में आप मात्रा, दर और गोडाउन आवंटन सहित आइटम-वार विवरण दर्ज कर सकते हैं। यह इन्वेंट्री ट्रैकिंग के लिए उपयोगी है।</div>
+
+  <div class="sub-section">
+    <div class="sub-section-title">Invoice 1: Arshul (01/06/2016)</div>
+    <table>
+      <thead><tr><th>Item</th><th>Qty</th><th>Rate</th><th>Per</th><th>Amount</th><th>Godown</th></tr></thead>
+      <tbody><tr><td>Basmati Rice</td><td>800</td><td>50</td><td>KG</td><td>40,000</td><td>Godown 4</td></tr></tbody>
+    </table>
+  </div>
+  <div class="sub-section">
+    <div class="sub-section-title">Invoice 2: Kalpana (02/06/2016)</div>
+    <table>
+      <thead><tr><th>Item</th><th>Qty</th><th>Rate</th><th>Per</th><th>Amount</th><th>Godown</th></tr></thead>
+      <tbody><tr><td>Soya Bean Oil</td><td>100</td><td>110</td><td>LIT</td><td>11,000</td><td>Godown 1</td></tr></tbody>
+    </table>
+  </div>
+  <div class="sub-section">
+    <div class="sub-section-title">Invoice 3: Cash (03/06/2016)</div>
+    <table>
+      <thead><tr><th>Item</th><th>Qty</th><th>Rate</th><th>Per</th><th>Amount</th><th>Godown</th></tr></thead>
+      <tbody><tr><td>Mustard Oil</td><td>200</td><td>90</td><td>LIT</td><td>18,000</td><td>Godown 2</td></tr></tbody>
+    </table>
+  </div>
+  <div class="sub-section">
+    <div class="sub-section-title">Invoice 4: Vivek (04/06/2016)</div>
+    <table>
+      <thead><tr><th>Item</th><th>Qty</th><th>Rate</th><th>Per</th><th>Amount</th><th>Godown</th></tr></thead>
+      <tbody><tr><td>Red Chili Powder</td><td>100</td><td>120</td><td>KG</td><td>12,000</td><td>Godown 5</td></tr></tbody>
+    </table>
+  </div>
+</div>
+
+<hr class="divider">
+
+<div class="section">
+  <div class="section-title">7. Journal Entries</div>
+  <div class="section-subtitle">जर्नल प्रविष्टियाँ</div>
+  <table>
+    <thead><tr><th>Date</th><th>Particulars</th><th>Debit</th><th>Credit</th></tr></thead>
+    <tbody>
+      <tr><td>01/06/2016</td><td>Purchase A/c Dr<br>To Arshul<br>(Goods on Credit)</td><td>40,000</td><td>40,000</td></tr>
+      <tr><td>02/06/2016</td><td>Purchase A/c Dr<br>To Kalpana<br>(Goods on Credit)</td><td>11,000</td><td>11,000</td></tr>
+      <tr><td>03/06/2016</td><td>Purchase A/c Dr<br>To Cash<br>(Goods with Cash)</td><td>18,000</td><td>18,000</td></tr>
+      <tr><td>04/06/2016</td><td>Purchase A/c Dr<br>To Vivek<br>(Goods on Credit)</td><td>12,000</td><td>12,000</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<hr class="divider">
+
+<div class="section">
+  <div class="section-title">8. Do It Yourself</div>
+  <div class="section-subtitle">यह स्वयं करें</div>
+  <table>
+    <thead><tr><th>Sr.</th><th>Particulars</th><th>Amount</th><th>Date</th></tr></thead>
+    <tbody>
+      <tr><td>5</td><td>Purchased goods from Karishma</td><td>10,000</td><td>05/06/2016</td></tr>
+      <tr><td>6</td><td>Purchased goods with Cash</td><td>5,000</td><td>06/06/2016</td></tr>
+      <tr><td>7</td><td>Purchased goods with Cash</td><td>9,000</td><td>07/06/2016</td></tr>
+      <tr><td>8</td><td>Purchased goods from Arti</td><td>5,000</td><td>08/06/2016</td></tr>
+      <tr><td>9</td><td>Purchased goods from Kokila</td><td>12,000</td><td>09/06/2016</td></tr>
+      <tr><td>10</td><td>Purchased goods with Cash</td><td>5,000</td><td>10/06/2016</td></tr>
+    </tbody>
+  </table>
+  <div class="example-highlight"><strong>Total Purchase:</strong> ₹1,27,000 | <strong>Cash Purchase:</strong> ₹37,000</div>
+</div>
+
+<hr class="divider">
+
+<div class="section">
+  <div class="section-title">9. Reports & Summary</div>
+  <div class="section-subtitle">रिपोर्ट और सारांश</div>
+  <table>
+    <thead><tr><th>Report</th><th>Tally Prime Path</th></tr></thead>
+    <tbody>
+      <tr><td>Day Book</td><td>Gateway → Display → Day Book (OR Ctrl+G → "Day Book")</td></tr>
+      <tr><td>Purchase Register</td><td>Gateway → Display → Account Books → Purchase Register</td></tr>
+      <tr><td>Godown Summary</td><td>Gateway → Display → Statements of Inventory → Godowns</td></tr>
+      <tr><td>Stock Query</td><td>Gateway → Display → Statements of Inventory → Stock Query</td></tr>
+      <tr><td>Sundry Creditors</td><td>Gateway → Display → Statements of Accounts → Outstandings → Group → Sundry Creditors</td></tr>
+    </tbody>
+  </table>
+  <div class="summary-section">
+    <h2>📝 Key Points / मुख्य बिंदु</h2>
+    <ol>
+      <li><strong>Purchase Voucher [F9]:</strong> Used for cash and credit purchases. Use <strong>Ctrl+V</strong> to switch to Invoice Mode for item-wise entry.</li>
+      <li><strong>Inventory:</strong> Create Stock Groups → Units of Measure → Stock Items before entering purchase invoices.</li>
+      <li><strong>Godown:</strong> Enable from <strong>F11 → F2</strong> (Inventory Features). Allocate items to godowns during voucher entry.</li>
+      <li><strong>On-the-fly:</strong> Press <strong>Alt+C</strong> in any field to create ledgers, stock items, or godowns instantly.</li>
+    </ol>
+  </div>
+  <div class="next-chapter">
+    <h3>🎯 Next Chapter / अगला अध्याय</h3>
+    <p style="color:var(--text-muted); margin-top:10px;">Chapter 3: Sales Voucher & Invoicing</p>
+  </div>
+</div>
+
+</div>
+
+<div class="reading-container">
+<div class="back-cover">
+  <div class="cover-watermark">NEXA</div>
+  <h2>📚 NEXA Computer Institute</h2>
+  <p style="color:var(--secondary); font-weight:700; margin-bottom:30px; letter-spacing:3px; text-transform:uppercase;">Empowering Future Professionals</p>
+  <div class="contact-card">
+    <h3>📍 Contact Information / संपर्क जानकारी</h3>
+    <p>📞 <strong>Phone:</strong> 7696566162</p>
+    <p>📍 <strong>Address:</strong> NEXA Building, Near Police Station, Maudarwaja, Farrukhabad</p>
+    <p>🌐 <strong>Website:</strong> nexainstitute.co.in</p>
+    <p>▶️ <strong>YouTube:</strong> @learnwithnexa</p>
+  </div>
+  <div class="copyright">
+    <p>© 2026 NEXA Computer Institute. All Rights Reserved.</p>
+    <p class="hindi-text">© 2026 नेक्सा कंप्यूटर इंस्टीट्यूट। सर्वाधिकार सुरक्षित।</p>
+  </div>
+</div>
+</div>
+
+<button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">⬆</button>
+<script>
+window.onscroll = function() {
+  var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+  var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  var scrolled = (winScroll / height) * 100;
+  document.getElementById("progressBar").style.width = scrolled + "%";
+  var btn = document.getElementById("backToTop");
+  if (winScroll > 500) { btn.classList.add("visible"); } else { btn.classList.remove("visible"); }
+};
+</script>
+</body>
+</html>
