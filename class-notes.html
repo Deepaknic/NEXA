@@ -142,29 +142,30 @@ body { font-family: 'Poppins', sans-serif; background: var(--darker); color: var
 .icon-purple { background: linear-gradient(135deg, #8b5cf6, #7c3aed); }
 .icon-blue { background: linear-gradient(135deg, #0ea5e9, #0284c7); }
 .icon-gray { background: linear-gradient(135deg, #64748b, #475569); }
+.icon-orange { background: linear-gradient(135deg, #f97316, #ea580c); }
 
 .topic-info { flex: 1; }
 .topic-info h3 { font-size: 1.05rem; font-weight: 600; margin-bottom: 3px; color: var(--text); }
 .topic-info p { font-size: 0.8rem; color: var(--text-muted); line-height: 1.4; }
 .topic-meta { display: flex; align-items: center; gap: 10px; }
-.pdf-count { background: rgba(99,102,241,0.15); color: var(--primary); padding: 4px 12px; border-radius: 50px; font-size: 0.75rem; font-weight: 600; }
+.file-count { background: rgba(99,102,241,0.15); color: var(--primary); padding: 4px 12px; border-radius: 50px; font-size: 0.75rem; font-weight: 600; }
 .dl-count { background: rgba(16,185,129,0.15); color: var(--accent); padding: 4px 12px; border-radius: 50px; font-size: 0.75rem; font-weight: 600; display: flex; align-items: center; gap: 4px; }
 .chevron { font-size: 1.1rem; color: var(--text-muted); transition: transform 0.3s ease; }
 .topic-card.active .chevron { transform: rotate(180deg); color: var(--secondary); }
 
-.pdf-list { max-height: 0; overflow: hidden; transition: max-height 0.5s cubic-bezier(0.4,0,0.2,1); background: rgba(15,23,42,0.5); }
-.topic-card.active .pdf-list { max-height: 900px; }
-.pdf-list-inner { padding: 8px 26px 22px; }
-.pdf-item {
+.file-list { max-height: 0; overflow: hidden; transition: max-height 0.5s cubic-bezier(0.4,0,0.2,1); background: rgba(15,23,42,0.5); }
+.topic-card.active .file-list { max-height: 900px; }
+.file-list-inner { padding: 8px 26px 22px; }
+.file-item {
   display: flex; align-items: center; gap: 14px; padding: 12px 16px;
   background: rgba(30,41,59,0.8); border: 1px solid var(--glass); border-radius: 12px;
   margin-bottom: 8px; transition: all 0.3s ease;
 }
-.pdf-item:hover { border-color: var(--primary); background: rgba(51,65,85,0.9); transform: translateX(5px); }
-.pdf-icon { width: 38px; height: 38px; background: linear-gradient(135deg, #ef4444, #b91c1c); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
-.pdf-details { flex: 1; }
-.pdf-details h4 { font-size: 0.9rem; font-weight: 500; margin-bottom: 2px; color: var(--text); }
-.pdf-details span { font-size: 0.72rem; color: var(--text-muted); }
+.file-item:hover { border-color: var(--primary); background: rgba(51,65,85,0.9); transform: translateX(5px); }
+.file-icon { width: 38px; height: 38px; background: linear-gradient(135deg, #d946ef, #a21caf); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+.file-details { flex: 1; }
+.file-details h4 { font-size: 0.9rem; font-weight: 500; margin-bottom: 2px; color: var(--text); }
+.file-details span { font-size: 0.72rem; color: var(--text-muted); }
 .download-btn {
   background: linear-gradient(135deg, var(--primary), var(--primary-dark)); border: none; color: white;
   padding: 9px 18px; border-radius: 10px; font-family: 'Poppins', sans-serif; font-weight: 600;
@@ -248,7 +249,7 @@ body { font-family: 'Poppins', sans-serif; background: var(--darker); color: var
   .mobile-menu-btn { display: block; }
   .notes-header h1 { font-size: 1.8rem; }
   .topic-header { padding: 16px 18px; }
-  .pdf-list-inner { padding: 8px 18px 18px; }
+  .file-list-inner { padding: 8px 18px 18px; }
   .notes-stats { gap: 1rem; }
   .notes-stat-number { font-size: 1.6rem; }
   .admin-row { flex-direction: column; align-items: stretch; }
@@ -264,12 +265,12 @@ body { font-family: 'Poppins', sans-serif; background: var(--darker); color: var
 <div class="announcement-bar">
   <div class="announcement-content">
     <span>🎓 NEXA Computer Institute — फर्रुखाबाद</span>
-    <span>📚 Class Notes — Password Protected PDFs</span>
-    <span>🔐 हर PDF अलग पासवर्ड से सुरक्षित</span>
+    <span>📊 Class Notes — Password Protected PPTX Files</span>
+    <span>🔐 हर फाइल अलग पासवर्ड से सुरक्षित</span>
     <span>📞 कॉल / व्हाट्सएप: 7696566162</span>
     <span>🎓 NEXA Computer Institute — फर्रुखाबाद</span>
-    <span>📚 Class Notes — Password Protected PDFs</span>
-    <span>🔐 हर PDF अलग पासवर्ड से सुरक्षित</span>
+    <span>📊 Class Notes — Password Protected PPTX Files</span>
+    <span>🔐 हर फाइल अलग पासवर्ड से सुरक्षित</span>
     <span>📞 कॉल / व्हाट्सएप: 7696566162</span>
   </div>
 </div>
@@ -301,7 +302,7 @@ body { font-family: 'Poppins', sans-serif; background: var(--darker); color: var
 <div class="notes-header">
   <div class="notes-badge">📚 NEXA Students Only</div>
   <h1>Class Notes</h1>
-  <p>Password Protected Study Material — टॉपिक पर क्लिक करें, पासवर्ड डालें और PDF डाउनलोड करें</p>
+  <p>Password Protected PowerPoint Files — टॉपिक पर क्लिक करें, पासवर्ड डालें और PPTX डाउनलोड करें</p>
 </div>
 
 <div class="notes-stats">
@@ -315,7 +316,7 @@ body { font-family: 'Poppins', sans-serif; background: var(--darker); color: var
   </div>
   <div class="notes-stat-item">
     <div class="notes-stat-number" style="color:var(--accent);">9</div>
-    <div class="notes-stat-label">PDFs</div>
+    <div class="notes-stat-label">PPTX Files</div>
   </div>
   <div class="notes-stat-item">
     <div class="notes-stat-number" style="color:var(--primary);">🔒</div>
@@ -334,7 +335,7 @@ body { font-family: 'Poppins', sans-serif; background: var(--darker); color: var
 <div class="topics-wrap" id="topicsContainer"></div>
 
 <div class="notes-footer">
-  🔐 सभी PDF पासवर्ड प्रोटेक्टेड हैं। पासवर्ड के लिए अपने इंस्ट्रक्टर से संपर्क करें।<br>
+  🔐 सभी PowerPoint Files पासवर्ड प्रोटेक्टेड हैं। पासवर्ड के लिए अपने इंस्ट्रक्टर से संपर्क करें।<br>
   कुल डाउनलोड्स: <span id="footerDownloads" style="color:var(--secondary);font-weight:600;">0</span> &nbsp;|&nbsp;
   <a href="index.html">← वापस होम पेज</a> &nbsp;|&nbsp;
   Made with ❤ for NEXA Students
@@ -345,7 +346,7 @@ body { font-family: 'Poppins', sans-serif; background: var(--darker); color: var
     <div class="lock-icon" id="modalIcon">🔒</div>
     <div class="success-check" id="successIcon">✓</div>
     <h2 id="modalTitle">पासवर्ड डालें</h2>
-    <p id="modalDesc">यह PDF पासवर्ड प्रोटेक्टेड है।</p>
+    <p id="modalDesc">यह PowerPoint File पासवर्ड प्रोटेक्टेड है।</p>
     <input type="password" class="pwd-input" id="passwordInput" placeholder="••••••" onkeypress="if(event.key==='Enter')verifyPassword()">
     <div class="error-msg" id="errorMsg">❌ गलत पासवर्ड! फिर से कोशिश करें।</div>
     <div class="modal-actions">
@@ -403,9 +404,6 @@ for (let i = 0; i < 25; i++) {
 const GITHUB_BASE = "https://raw.githubusercontent.com/Deepaknic/NEXA/main/class-notes/";
 const ADMIN_PASSWORD = "nexaadmin";
 
-// ==========================================
-// ✅ ACTUAL PDF FILE NAMES (as uploaded)
-// ==========================================
 const DEFAULT_PASSWORDS = {
   "excel-intro": "nexaexcel1",
   "excel-ex1": "nexaexcel2",
@@ -450,57 +448,57 @@ function updateTotal() {
 }
 
 // ==========================================
-// ✅ TOPICS WITH EXACT PDF FILE NAMES
+// ✅ TOPICS WITH EXACT PPTX FILE NAMES
 // ==========================================
 const topics = [
   {
     id: "excel2010",
     title: "MS Excel 2010",
-    desc: "Complete Excel Course — Introduction + 8 Exercises with 100+ Q&A",
-    icon: "📊", iconClass: "icon-green", pdfCount: 9, isNew: true,
-    pdfs: [
-      { name: "📖 Introduction to Excel 2010", size: "—", pages: "—", file: "Introduction to Excel 2010.pdf", subId: "excel-intro" },
-      { name: "📝 Exercise 1 — Basic Operations & Math Functions", size: "—", pages: "—", file: "Exercise 1.pdf", subId: "excel-ex1" },
-      { name: "📝 Exercise 2 — Logical, Text & Conditional Formatting", size: "—", pages: "—", file: "Exercise 2.pdf", subId: "excel-ex2" },
-      { name: "📝 Exercise 3 — Merge, Formatting & Data Validation", size: "—", pages: "—", file: "Exercise 3.pdf", subId: "excel-ex3" },
-      { name: "📝 Exercise 4 — Advanced Mathematical Functions", size: "—", pages: "—", file: "Exercise 4.pdf", subId: "excel-ex4" },
-      { name: "📝 Exercise 5 — Data Tools, Shortcuts & Data Cleaning", size: "—", pages: "—", file: "Exercise 5.pdf", subId: "excel-ex5" },
-      { name: "📝 Exercise 6 — Charts, Graphs & Print Setup", size: "—", pages: "—", file: "Exercise 6.pdf", subId: "excel-ex6" },
-      { name: "📝 Exercise 7 — Pivot Tables, Protection & Advanced Formatting", size: "—", pages: "—", file: "Exercise 7.pdf", subId: "excel-ex7" },
-      { name: "📝 Exercise 8 — Definitions & Important Concepts", size: "—", pages: "—", file: "Exercise 8.pdf", subId: "excel-ex8" }
+    desc: "Complete Excel Course — Introduction + 8 Exercises with 100+ Q&A (PowerPoint)",
+    icon: "📊", iconClass: "icon-green", fileCount: 9, isNew: true,
+    files: [
+      { name: "📖 Introduction to Excel 2010", size: "—", pages: "—", file: "📖 Introduction to Excel 2010.pptx", subId: "excel-intro" },
+      { name: "📝 Exercise 1 — Basic Operations & Math Functions", size: "—", pages: "—", file: "📝 Exercise 1.pptx", subId: "excel-ex1" },
+      { name: "📝 Exercise 2 — Logical, Text & Conditional Formatting", size: "—", pages: "—", file: "📝 Exercise 2.pptx", subId: "excel-ex2" },
+      { name: "📝 Exercise 3 — Merge, Formatting & Data Validation", size: "—", pages: "—", file: "📝 Exercise 3.pptx", subId: "excel-ex3" },
+      { name: "📝 Exercise 4 — Advanced Mathematical Functions", size: "—", pages: "—", file: "📝 Exercise 4.pptx", subId: "excel-ex4" },
+      { name: "📝 Exercise 5 — Data Tools, Shortcuts & Data Cleaning", size: "—", pages: "—", file: "📝 Exercise 5.pptx", subId: "excel-ex5" },
+      { name: "📝 Exercise 6 — Charts, Graphs & Print Setup", size: "—", pages: "—", file: "📝 Exercise 6.pptx", subId: "excel-ex6" },
+      { name: "📝 Exercise 7 — Pivot Tables, Protection & Advanced Formatting", size: "—", pages: "—", file: "📝 Exercise 7.pptx", subId: "excel-ex7" },
+      { name: "📝 Exercise 8 — Definitions & Important Concepts", size: "—", pages: "—", file: "📝 Exercise 8.pptx", subId: "excel-ex8" }
     ]
   },
   {
     id: "fundamental",
     title: "Fundamental of Computer",
     desc: "Computer Basics, Hardware, Software, OS, Memory, Input/Output Devices — Coming Soon",
-    icon: "💻", iconClass: "icon-gray", pdfCount: 0, isNew: false, comingSoon: true,
-    pdfs: []
+    icon: "💻", iconClass: "icon-gray", fileCount: 0, isNew: false, comingSoon: true,
+    files: []
   },
   {
     id: "word2010",
     title: "MS Word 2010",
     desc: "Word Interface, Formatting, Tables, Mail Merge, Headers/Footers — Coming Soon",
-    icon: "📝", iconClass: "icon-gray", pdfCount: 0, isNew: false, comingSoon: true,
-    pdfs: []
+    icon: "📝", iconClass: "icon-gray", fileCount: 0, isNew: false, comingSoon: true,
+    files: []
   },
   {
     id: "ppt2010",
     title: "MS PowerPoint 2010",
     desc: "Slides, Animations, Transitions, Master Slide, Presenter View — Coming Soon",
-    icon: "🎨", iconClass: "icon-gray", pdfCount: 0, isNew: false, comingSoon: true,
-    pdfs: []
+    icon: "🎨", iconClass: "icon-gray", fileCount: 0, isNew: false, comingSoon: true,
+    files: []
   },
   {
     id: "internet",
     title: "Internet & Email",
     desc: "Internet Basics, Browsers, Search Engines, Email, Social Media — Coming Soon",
-    icon: "🌐", iconClass: "icon-gray", pdfCount: 0, isNew: false, comingSoon: true,
-    pdfs: []
+    icon: "🌐", iconClass: "icon-gray", fileCount: 0, isNew: false, comingSoon: true,
+    files: []
   }
 ];
 
-let curPdfUrl = "", curPdfName = "", curTopicId = "";
+let curFileUrl = "", curFileName = "", curTopicId = "";
 
 function renderTopics() {
   const container = document.getElementById('topicsContainer');
@@ -509,15 +507,15 @@ function renderTopics() {
     const nb = topic.isNew ? '<span class="new-badge">NEW</span>' : '';
     const meta = topic.comingSoon
       ? '<span class="coming-soon-badge">⏳ Coming Soon</span>'
-      : `<span class="pdf-count">${topic.pdfCount} PDF</span><span class="dl-count">⬇ ${dl}</span>`;
+      : `<span class="file-count">${topic.fileCount} PPTX</span><span class="dl-count">⬇ ${dl}</span>`;
 
-    const pdfList = topic.comingSoon ? '' : `<div class="pdf-list"><div class="pdf-list-inner">
-      ${topic.pdfs.map(pdf => {
-        const sid = pdf.subId || topic.id;
-        return `<div class="pdf-item">
-          <div class="pdf-icon">📄</div>
-          <div class="pdf-details"><h4>${pdf.name}</h4><span>📦 ${pdf.size} &nbsp;|&nbsp; 📑 ${pdf.pages}</span></div>
-          <button class="download-btn" onclick="event.stopPropagation(); openModal('${sid}','${GITHUB_BASE}${encodeURIComponent(pdf.file)}','${pdf.name}')">🔒 Download</button>
+    const fileList = topic.comingSoon ? '' : `<div class="file-list"><div class="file-list-inner">
+      ${topic.files.map(f => {
+        const sid = f.subId || topic.id;
+        return `<div class="file-item">
+          <div class="file-icon">📊</div>
+          <div class="file-details"><h4>${f.name}</h4><span>🖥️ PowerPoint Presentation</span></div>
+          <button class="download-btn" onclick="event.stopPropagation(); openModal('${sid}','${GITHUB_BASE}${encodeURIComponent(f.file)}','${f.name}')">🔒 Download</button>
         </div>`;
       }).join('')}
     </div></div>`;
@@ -530,7 +528,7 @@ function renderTopics() {
           <div class="topic-info"><h3>${topic.title}</h3><p>${topic.desc}</p></div>
           <div class="topic-meta">${meta}<span class="chevron">▼</span></div>
         </div>
-        ${pdfList}
+        ${fileList}
       </div>`;
   }).join('');
   if (document.getElementById('searchInput').value.trim()) filterTopics();
@@ -554,7 +552,7 @@ function filterTopics() {
 }
 
 function openModal(tid, url, name) {
-  curTopicId = tid; curPdfUrl = url; curPdfName = name;
+  curTopicId = tid; curFileUrl = url; curFileName = name;
   document.getElementById('passwordModal').classList.add('show');
   document.getElementById('passwordInput').value = '';
   document.getElementById('passwordInput').classList.remove('error');
@@ -582,7 +580,7 @@ function verifyPassword() {
     btn.textContent = 'डाउनलोडिंग...';
     incDl(curTopicId);
     setTimeout(() => {
-      const a = document.createElement('a'); a.href = curPdfUrl; a.download = curPdfName + '.pdf'; a.target = '_blank';
+      const a = document.createElement('a'); a.href = curFileUrl; a.download = curFileName; a.target = '_blank';
       document.body.appendChild(a); a.click(); document.body.removeChild(a);
       setTimeout(closeModal, 1200);
     }, 600);
@@ -605,12 +603,12 @@ function renderAdminList() {
   const passwords = getPasswords();
   const list = document.getElementById('adminPasswordList');
   const items = [];
-  topics.forEach(t => { if(!t.comingSoon) t.pdfs.forEach(p => items.push({ label: `${t.title} — ${p.name.replace(/^[^ ]+ /, '')}`, id: p.subId || t.id })); });
+  topics.forEach(t => { if(!t.comingSoon) t.files.forEach(f => items.push({ label: `${t.title} — ${f.name.replace(/^[^ ]+ /, '')}`, id: f.subId || t.id })); });
   list.innerHTML = items.map(it => `<div class="admin-row"><label>🔑 ${it.label}</label><input type="text" id="pwd-${it.id}" value="${passwords[it.id] || DEFAULT_PASSWORDS[it.id]}"></div>`).join('');
 }
 function saveAdminPasswords() {
   const passwords = getPasswords();
-  topics.forEach(t => { if(!t.comingSoon) t.pdfs.forEach(p => { const sid = p.subId || t.id; const inp = document.getElementById(`pwd-${sid}`); if (inp && inp.value.trim()) passwords[sid] = inp.value.trim(); }); });
+  topics.forEach(t => { if(!t.comingSoon) t.files.forEach(f => { const sid = f.subId || t.id; const inp = document.getElementById(`pwd-${sid}`); if (inp && inp.value.trim()) passwords[sid] = inp.value.trim(); }); });
   savePasswords(passwords); alert('✅ सभी पासवर्ड सेव हो गए!'); closeAdmin();
 }
 function resetAdminPasswords() {
