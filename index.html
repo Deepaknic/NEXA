@@ -274,6 +274,7 @@ body { font-family: 'Poppins', sans-serif; background: var(--darker); color: var
 </style>
 <base target="_blank">
 <base target="_blank">
+<base target="_blank">
 </head>
 <body>
 
@@ -328,6 +329,7 @@ body { font-family: 'Poppins', sans-serif; background: var(--darker); color: var
     <li><a href="#calendar">परीक्षा कैलेंडर</a></li>
     <li><a href="#why-us">क्यों NEXA?</a></li>
     <li><a href="#contact">संपर्क करें</a></li>
+        <li><a href="#class-notes">📚 Class Notes</a></li>
     <li><a href="https://deepaknic.github.io/NEXA/Quiz.html" target="_blank" class="mcq-btn">📝 MCQ टेस्ट</a></li>
     <li><a href="https://wa.me/917696566162" target="_blank" class="admission-btn">🎓 एडमिशन</a></li>
   </ul>
@@ -685,6 +687,764 @@ body { font-family: 'Poppins', sans-serif; background: var(--darker); color: var
   </div>
 </section>
 
+<!-- CLASS NOTES -->
+<section class="section" id="class-notes" style="padding-top: 6rem;">
+  <div class="section-header reveal">
+    <div class="section-tag">📚 स्टडी मटेरियल</div>
+    <h2 class="section-title">Class Notes</h2>
+    <p class="section-subtitle">NEXA Students के लिए पासवर्ड प्रोटेक्टेड PDF नोट्स। टॉपिक पर क्लिक करें, पासवर्ड डालें और डाउनलोड करें।</p>
+  </div>
+
+  <!-- Search Bar -->
+  <div style="max-width: 600px; margin: 0 auto 30px; position: relative; z-index: 1;">
+    <input type="text" id="notesSearch" placeholder="🔍 टॉपिक खोजें... (Excel, Word, Tally, etc.)" 
+      style="width: 100%; padding: 14px 50px 14px 20px; background: rgba(30,41,59,0.6); backdrop-filter: blur(10px); 
+      border: 2px solid rgba(255,255,255,0.05); border-radius: 16px; color: #e2e8f0; font-family: 'Poppins', sans-serif; 
+      font-size: 0.95rem; transition: all 0.3s ease;"
+      oninput="filterNotesTopics()" onfocus="this.style.borderColor='#6366f1'" onblur="this.style.borderColor='rgba(255,255,255,0.05)'">
+    <span style="position: absolute; right: 18px; top: 50%; transform: translateY(-50%); font-size: 1.1rem; color: #94a3b8; pointer-events: none;">🔍</span>
+  </div>
+  <div id="searchResultsText" style="text-align: center; color: #94a3b8; font-size: 0.85rem; margin-bottom: 20px; min-height: 20px;"></div>
+
+  <!-- Stats Bar for Notes -->
+  <div class="stats-bar" style="padding: 1.5rem 5%; margin-bottom: 2rem;">
+    <div class="stat-item reveal">
+      <div class="stat-number" id="notesTotalTopics" style="font-size: 1.8rem;">5</div>
+      <div class="stat-label">विषय</div>
+    </div>
+    <div class="stat-item reveal">
+      <div class="stat-number" id="notesTotalDownloads" style="font-size: 1.8rem; color: #f59e0b;">0</div>
+      <div class="stat-label">डाउनलोड्स</div>
+    </div>
+    <div class="stat-item reveal">
+      <div class="stat-number" style="font-size: 1.8rem; color: #10b981;">🔒</div>
+      <div class="stat-label">सुरक्षित</div>
+    </div>
+  </div>
+
+  <!-- Admin Trigger -->
+  <div onclick="openNotesAdmin()" title="Admin Panel" 
+    style="position: absolute; top: 20px; right: 20px; width: 40px; height: 40px; border-radius: 10px; 
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #94a3b8; 
+    display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1.1rem; 
+    transition: all 0.3s; z-index: 10;"
+    onmouseover="this.style.background='rgba(245,158,11,0.2)'; this.style.borderColor='#f59e0b'; this.style.color='#f59e0b';"
+    onmouseout="this.style.background='rgba(255,255,255,0.05)'; this.style.borderColor='rgba(255,255,255,0.1)'; this.style.color='#94a3b8';">
+    ⚙️
+  </div>
+
+  <!-- Topics Container -->
+  <div class="content-area" id="notesTopicsContainer" style="max-width: 900px; margin: 0 auto; position: relative; z-index: 1;"></div>
+
+  <div style="text-align: center; padding: 25px 20px; color: #94a3b8; font-size: 0.8rem; position: relative; z-index: 1;">
+    🔐 सभी PDF पासवर्ड प्रोटेक्टेड हैं। पासवर्ड के लिए अपने इंस्ट्रक्टर से संपर्क करें।<br>
+    कुल डाउनलोड्स: <span id="footerNotesDownloads" style="color: #f59e0b; font-weight: 600;">0</span> &nbsp;|&nbsp; Made with <span style="color: #f59e0b;">❤</span> for NEXA Students
+  </div>
+</section>
+
+<!-- Password Modal -->
+<div id="notesPasswordModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; 
+  background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); align-items: center; justify-content: center; 
+  z-index: 1000; animation: fadeIn 0.3s ease;">
+  <div style="background: linear-gradient(145deg, #1e293b, #0f172a); border: 1px solid rgba(255,255,255,0.05); 
+    border-radius: 24px; padding: 35px; width: 90%; max-width: 400px; text-align: center; 
+    box-shadow: 0 25px 50px rgba(0,0,0,0.5); animation: slideUp 0.4s cubic-bezier(0.4,0,0.2,1); position: relative; overflow: hidden;">
+    <div style="position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, #6366f1, #f59e0b, #10b981);"></div>
+    <div id="notesModalIcon" style="width: 65px; height: 65px; background: linear-gradient(135deg, #f59e0b, #d97706); 
+      border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; 
+      margin: 0 auto 18px; box-shadow: 0 10px 30px rgba(245,158,11,0.3);">🔒</div>
+    <div id="notesSuccessIcon" style="width: 55px; height: 55px; background: linear-gradient(135deg, #10b981, #059669); 
+      border-radius: 50%; display: none; align-items: center; justify-content: center; font-size: 1.6rem; 
+      margin: 0 auto 12px; animation: popIn 0.5s cubic-bezier(0.4,0,0.2,1);">✓</div>
+    <h2 id="notesModalTitle" style="font-size: 1.3rem; margin-bottom: 6px; font-family: 'Orbitron', sans-serif;">पासवर्ड डालें</h2>
+    <p id="notesModalDesc" style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 22px;">यह PDF पासवर्ड प्रोटेक्टेड है।</p>
+    <input type="password" id="notesPasswordInput" placeholder="••••••" 
+      style="width: 100%; padding: 12px 16px; background: rgba(15,23,42,0.8); border: 2px solid rgba(255,255,255,0.05); 
+      border-radius: 12px; color: #e2e8f0; font-family: 'Poppins', sans-serif; font-size: 0.95rem; 
+      text-align: center; letter-spacing: 3px; margin-bottom: 12px; transition: all 0.3s ease;"
+      onfocus="this.style.borderColor='#6366f1'; this.style.boxShadow='0 0 20px rgba(99,102,241,0.2)';"
+      onblur="this.style.borderColor='rgba(255,255,255,0.05)'; this.style.boxShadow='none';"
+      onkeypress="if(event.key==='Enter')verifyNotesPassword()">
+    <div id="notesErrorMsg" style="color: #ef4444; font-size: 0.78rem; margin-bottom: 14px; display: none;">❌ गलत पासवर्ड! फिर से कोशिश करें।</div>
+    <div style="display: flex; gap: 10px;">
+      <button onclick="closeNotesModal()" 
+        style="flex: 1; padding: 11px; border-radius: 12px; font-family: 'Poppins', sans-serif; font-weight: 600; 
+        font-size: 0.85rem; cursor: pointer; transition: all 0.3s ease; border: none; background: transparent; 
+        color: #94a3b8; border: 1px solid rgba(255,255,255,0.05) !important;"
+        onmouseover="this.style.background='#334155'; this.style.color='#e2e8f0';"
+        onmouseout="this.style.background='transparent'; this.style.color='#94a3b8';">रद्द करें</button>
+      <button onclick="verifyNotesPassword()" id="notesUnlockBtn"
+        style="flex: 1; padding: 11px; border-radius: 12px; font-family: 'Poppins', sans-serif; font-weight: 600; 
+        font-size: 0.85rem; cursor: pointer; transition: all 0.3s ease; border: none; 
+        background: linear-gradient(135deg, #6366f1, #4f46e5); color: white;"
+        onmouseover="this.style.boxShadow='0 8px 25px rgba(99,102,241,0.4)'; this.style.transform='translateY(-2px)';"
+        onmouseout="this.style.boxShadow='none'; this.style.transform='none';">अनलॉक & डाउनलोड</button>
+    </div>
+  </div>
+</div>
+
+<!-- Admin Panel -->
+<div id="notesAdminPanel" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; 
+  background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); z-index: 2000; align-items: center; justify-content: center;">
+  <div style="background: linear-gradient(145deg, #1e1b4b, #0f172a); border: 1px solid rgba(255,255,255,0.05); 
+    border-radius: 24px; padding: 35px; width: 90%; max-width: 520px; max-height: 85vh; overflow-y: auto; 
+    box-shadow: 0 25px 60px rgba(0,0,0,0.6); animation: slideUp 0.4s ease; position: relative;">
+    <div onclick="closeNotesAdmin()" 
+      style="position: absolute; top: 15px; right: 15px; width: 36px; height: 36px; border-radius: 10px; 
+      background: rgba(239,68,68,0.15); border: 1px solid rgba(239,68,68,0.3); color: #ef4444; 
+      display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1.2rem; 
+      transition: all 0.3s;"
+      onmouseover="this.style.background='rgba(239,68,68,0.3)';">✕</div>
+
+    <div id="notesAdminLoginScreen">
+      <div style="width: 65px; height: 65px; background: linear-gradient(135deg, #f59e0b, #d97706); 
+        border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; 
+        margin: 0 auto 15px; box-shadow: 0 10px 30px rgba(245,158,11,0.3);">🔐</div>
+      <h2 style="font-size: 1.4rem; margin-bottom: 5px; font-family: 'Orbitron', sans-serif; text-align: center;">Admin Login</h2>
+      <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 25px; text-align: center;">टॉपिक पासवर्ड मैनेज करने के लिए लॉगिन करें</p>
+      <div style="text-align: center;">
+        <input type="password" id="notesAdminPasswordInput" placeholder="Admin Password" 
+          style="width: 100%; padding: 14px; background: rgba(15,23,42,0.8); border: 2px solid rgba(255,255,255,0.05); 
+          border-radius: 12px; color: #e2e8f0; font-family: 'Poppins', sans-serif; font-size: 1rem; 
+          text-align: center; margin-bottom: 15px;"
+          onkeypress="if(event.key==='Enter')checkNotesAdminLogin()">
+        <button onclick="checkNotesAdminLogin()" 
+          style="width: 100%; padding: 12px; border-radius: 12px; font-family: 'Poppins', sans-serif; 
+          font-weight: 600; font-size: 0.9rem; cursor: pointer; border: none; 
+          background: linear-gradient(135deg, #6366f1, #4f46e5); color: white;"
+          onmouseover="this.style.boxShadow='0 8px 25px rgba(99,102,241,0.4)';"
+          onmouseout="this.style.boxShadow='none';">लॉगिन</button>
+      </div>
+      <div id="notesAdminErrorMsg" style="color: #ef4444; font-size: 0.8rem; margin-top: 10px; text-align: center; display: none;">❌ गलत एडमिन पासवर्ड!</div>
+    </div>
+
+    <div id="notesAdminDashboard" style="display: none;">
+      <h2 style="font-size: 1.4rem; margin-bottom: 5px; font-family: 'Orbitron', sans-serif;">⚙️ Admin Panel</h2>
+      <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 25px;">हर टॉपिक का पासवर्ड बदलें। स्टूडेंट्स को नया पासवर्ड दें।</p>
+      <div id="notesAdminPasswordList"></div>
+      <div style="display: flex; gap: 10px; margin-top: 20px;">
+        <button onclick="saveNotesAdminPasswords()" 
+          style="flex: 1; padding: 12px; border-radius: 12px; font-family: 'Poppins', sans-serif; font-weight: 600; 
+          font-size: 0.9rem; cursor: pointer; border: none; background: linear-gradient(135deg, #10b981, #059669); color: white;">💾 सेव करें</button>
+        <button onclick="resetNotesAdminPasswords()" 
+          style="flex: 1; padding: 12px; border-radius: 12px; font-family: 'Poppins', sans-serif; font-weight: 600; 
+          font-size: 0.9rem; cursor: pointer; border: none; background: linear-gradient(135deg, #ef4444, #b91c1c); color: white;">🔄 रीसेट</button>
+      </div>
+      <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.05);">
+        <p style="font-size: 0.8rem; color: #94a3b8;">
+          💡 पासवर्ड ब्राउज़र में सेव होते हैं। ब्राउज़र डेटा क्लियर करने से रीसेट होंगे।<br>
+          🔑 डिफ़ॉल्ट Admin Password: <span style="color: #f59e0b;">nexaadmin</span>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+  @keyframes popIn { 0% { transform: scale(0); } 80% { transform: scale(1.1); } 100% { transform: scale(1); } }
+  @keyframes shake { 0%,100% { transform: translateX(0); } 20% { transform: translateX(-10px); } 40% { transform: translateX(10px); } 60% { transform: translateX(-10px); } 80% { transform: translateX(10px); } }
+  @keyframes pulseBadge { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.85; transform: scale(1.05); } }
+
+  .notes-topic-card {
+    background: rgba(30, 41, 59, 0.6);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 20px;
+    margin-bottom: 14px;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
+    cursor: pointer;
+    position: relative;
+    backdrop-filter: blur(10px);
+  }
+  .notes-topic-card:hover {
+    border-color: #6366f1;
+    transform: translateX(6px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3), 0 0 20px rgba(99,102,241,0.1);
+  }
+  .notes-topic-card.active {
+    border-color: #f59e0b;
+    box-shadow: 0 0 30px rgba(245,158,11,0.15);
+  }
+  .notes-topic-card.hidden-topic { display: none !important; }
+
+  .notes-new-badge {
+    position: absolute;
+    top: 12px;
+    right: 50px;
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: white;
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 50px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    animation: pulseBadge 2s infinite;
+    z-index: 2;
+  }
+
+  .notes-topic-header {
+    display: flex;
+    align-items: center;
+    padding: 20px 26px;
+    gap: 16px;
+  }
+  .notes-topic-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+  }
+  .notes-topic-card:hover .notes-topic-icon { transform: scale(1.1) rotate(-5deg); }
+  .notes-icon-green { background: linear-gradient(135deg, #22c55e, #16a34a); }
+  .notes-icon-red { background: linear-gradient(135deg, #ef4444, #dc2626); }
+  .notes-icon-amber { background: linear-gradient(135deg, #f59e0b, #d97706); }
+  .notes-icon-purple { background: linear-gradient(135deg, #8b5cf6, #7c3aed); }
+  .notes-icon-blue { background: linear-gradient(135deg, #0ea5e9, #0284c7); }
+
+  .notes-topic-info { flex: 1; }
+  .notes-topic-info h3 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 3px;
+    color: #e2e8f0;
+    font-family: 'Poppins', sans-serif;
+  }
+  .notes-topic-info p {
+    font-size: 0.8rem;
+    color: #94a3b8;
+    line-height: 1.4;
+  }
+  .notes-topic-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .notes-pdf-count {
+    background: rgba(99,102,241,0.15);
+    color: #6366f1;
+    padding: 4px 12px;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+  .notes-dl-count {
+    background: rgba(16,185,129,0.15);
+    color: #10b981;
+    padding: 4px 12px;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .notes-chevron {
+    font-size: 1.1rem;
+    color: #94a3b8;
+    transition: transform 0.3s ease;
+  }
+  .notes-topic-card.active .notes-chevron {
+    transform: rotate(180deg);
+    color: #f59e0b;
+  }
+
+  .notes-pdf-list {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s cubic-bezier(0.4,0,0.2,1);
+    background: rgba(15,23,42,0.5);
+  }
+  .notes-topic-card.active .notes-pdf-list { max-height: 900px; }
+
+  .notes-pdf-list-inner { padding: 8px 26px 22px; }
+  .notes-pdf-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 16px;
+    background: rgba(30,41,59,0.8);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 12px;
+    margin-bottom: 8px;
+    transition: all 0.3s ease;
+  }
+  .notes-pdf-item:hover {
+    border-color: #6366f1;
+    background: rgba(51,65,85,0.9);
+    transform: translateX(5px);
+  }
+  .notes-pdf-icon {
+    width: 38px;
+    height: 38px;
+    background: linear-gradient(135deg, #ef4444, #b91c1c);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+  .notes-pdf-details { flex: 1; }
+  .notes-pdf-details h4 {
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 2px;
+    color: #e2e8f0;
+    font-family: 'Poppins', sans-serif;
+  }
+  .notes-pdf-details span {
+    font-size: 0.72rem;
+    color: #94a3b8;
+  }
+  .notes-download-btn {
+    background: linear-gradient(135deg, #6366f1, #4f46e5);
+    border: none;
+    color: white;
+    padding: 9px 18px;
+    border-radius: 10px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+  }
+  .notes-download-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 25px rgba(99,102,241,0.4);
+  }
+
+  .notes-no-results {
+    text-align: center;
+    padding: 40px 20px;
+    color: #94a3b8;
+  }
+  .notes-no-results-icon { font-size: 3rem; margin-bottom: 10px; }
+
+  .notes-admin-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+    padding: 12px 16px;
+    background: rgba(30,41,59,0.6);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 12px;
+  }
+  .notes-admin-row label {
+    flex: 1;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #e2e8f0;
+  }
+  .notes-admin-row input {
+    width: 140px;
+    padding: 8px 12px;
+    background: rgba(15,23,42,0.8);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 8px;
+    color: #e2e8f0;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.85rem;
+    text-align: center;
+  }
+  .notes-admin-row input:focus {
+    outline: none;
+    border-color: #6366f1;
+  }
+
+  .password-input.error { border-color: #ef4444 !important; animation: shake 0.5s ease; }
+
+  @media (max-width: 600px) {
+    .notes-topic-header { padding: 16px 18px; }
+    .notes-pdf-list-inner { padding: 8px 18px 18px; }
+    .notes-admin-row { flex-direction: column; align-items: stretch; }
+    .notes-admin-row input { width: 100%; }
+  }
+</style>
+
+<script>
+  // ===== CLASS NOTES CONFIGURATION =====
+  const NOTES_GITHUB_BASE = "https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO/main/class-notes/";
+  const NOTES_ADMIN_PASSWORD = "nexaadmin";
+
+  const NOTES_DEFAULT_PASSWORDS = {
+    "fundamental": "nexafund1",
+    "word2010": "nexaword2",
+    "excel-intro": "nexaexcel1",
+    "excel-ex1": "nexaexcel2",
+    "excel-ex2": "nexaexcel3",
+    "excel-ex3": "nexaexcel4",
+    "excel-ex4": "nexaexcel5",
+    "excel-ex5": "nexaexcel6",
+    "excel-ex6": "nexaexcel7",
+    "excel-ex7": "nexaexcel8",
+    "excel-ex8": "nexaexcel9",
+    "ppt2010": "nexappt3",
+    "internet": "nexanet4"
+  };
+
+  function notesGetPasswords() {
+    const saved = localStorage.getItem('nexa_notes_passwords_v2');
+    return saved ? JSON.parse(saved) : { ...NOTES_DEFAULT_PASSWORDS };
+  }
+  function notesSavePasswords(passwords) {
+    localStorage.setItem('nexa_notes_passwords_v2', JSON.stringify(passwords));
+  }
+  function notesGetDownloadCount(topicId) {
+    const counts = JSON.parse(localStorage.getItem('nexa_notes_downloads_v2') || '{}');
+    return counts[topicId] || 0;
+  }
+  function notesIncrementDownload(topicId) {
+    const counts = JSON.parse(localStorage.getItem('nexa_notes_downloads_v2') || '{}');
+    counts[topicId] = (counts[topicId] || 0) + 1;
+    localStorage.setItem('nexa_notes_downloads_v2', JSON.stringify(counts));
+    notesUpdateTotalDownloads();
+    notesRenderTopics();
+  }
+  function notesGetTotalDownloads() {
+    const counts = JSON.parse(localStorage.getItem('nexa_notes_downloads_v2') || '{}');
+    return Object.values(counts).reduce((a, b) => a + b, 0);
+  }
+  function notesUpdateTotalDownloads() {
+    const total = notesGetTotalDownloads();
+    document.getElementById('notesTotalDownloads').textContent = total;
+    document.getElementById('footerNotesDownloads').textContent = total;
+  }
+
+  const notesTopics = [
+    {
+      id: "fundamental",
+      title: "Fundamental of Computer",
+      desc: "Computer Basics, Hardware, Software, Operating System, Memory, Input/Output Devices",
+      icon: "💻",
+      iconClass: "notes-icon-blue",
+      pdfCount: 1,
+      isNew: false,
+      pdfs: [
+        { name: "Fundamental of Computer - Complete Notes", size: "3.2 MB", pages: "25 pages", file: "fundamental-computer.pdf" }
+      ]
+    },
+    {
+      id: "word2010",
+      title: "MS Word 2010",
+      desc: "Word Interface, Formatting, Tables, Mail Merge, Headers/Footers, Templates & Shortcuts",
+      icon: "📝",
+      iconClass: "notes-icon-blue",
+      pdfCount: 1,
+      isNew: false,
+      pdfs: [
+        { name: "MS Word 2010 - Complete Guide", size: "2.8 MB", pages: "20 pages", file: "ms-word-2010.pdf" }
+      ]
+    },
+    {
+      id: "excel2010",
+      title: "MS Excel 2010",
+      desc: "Complete Excel 2010 Course - Introduction + 8 Exercises with 100+ Questions & Answers",
+      icon: "📊",
+      iconClass: "notes-icon-green",
+      pdfCount: 9,
+      isNew: true,
+      pdfs: [
+        { name: "📖 Introduction to Excel 2010", size: "2.4 MB", pages: "15 pages", file: "intro-excel-2010.pdf", subId: "excel-intro" },
+        { name: "📝 Exercise 1 - Basic Operations & Math Functions (Q1-Q15)", size: "1.8 MB", pages: "12 pages", file: "exercise-1-basic-math.pdf", subId: "excel-ex1" },
+        { name: "📝 Exercise 2 - Logical, Text & Conditional Formatting (Q1-Q12)", size: "2.1 MB", pages: "14 pages", file: "exercise-2-logical-text.pdf", subId: "excel-ex2" },
+        { name: "📝 Exercise 3 - Merge, Formatting & Data Validation (Q1-Q11)", size: "1.9 MB", pages: "13 pages", file: "exercise-3-formatting.pdf", subId: "excel-ex3" },
+        { name: "📝 Exercise 4 - Advanced Mathematical Functions (Q1-Q10)", size: "1.7 MB", pages: "11 pages", file: "exercise-4-advanced-math.pdf", subId: "excel-ex4" },
+        { name: "📝 Exercise 5 - Data Tools & Data Cleaning (Q1-Q15)", size: "2.3 MB", pages: "16 pages", file: "exercise-5-data-tools.pdf", subId: "excel-ex5" },
+        { name: "📝 Exercise 6 - Charts, Graphs & Print Setup (Q1-Q12)", size: "2.5 MB", pages: "17 pages", file: "exercise-6-charts.pdf", subId: "excel-ex6" },
+        { name: "📝 Exercise 7 - Pivot Tables & Protection (Q1-Q12)", size: "2.2 MB", pages: "15 pages", file: "exercise-7-pivot-tables.pdf", subId: "excel-ex7" },
+        { name: "📝 Exercise 8 - Definitions & Important Concepts (Q1-Q9)", size: "1.6 MB", pages: "10 pages", file: "exercise-8-definitions.pdf", subId: "excel-ex8" }
+      ]
+    },
+    {
+      id: "ppt2010",
+      title: "MS PowerPoint 2010",
+      desc: "Slides, Animations, Transitions, Master Slide, Presenter View & Design Themes",
+      icon: "🎨",
+      iconClass: "notes-icon-amber",
+      pdfCount: 1,
+      isNew: false,
+      pdfs: [
+        { name: "MS PowerPoint 2010 - Complete Guide", size: "2.5 MB", pages: "18 pages", file: "ms-ppt-2010.pdf" }
+      ]
+    },
+    {
+      id: "internet",
+      title: "Internet & Email",
+      desc: "Internet Basics, Browsers, Search Engines, Email, Social Media & Online Safety",
+      icon: "🌐",
+      iconClass: "notes-icon-purple",
+      pdfCount: 1,
+      isNew: false,
+      pdfs: [
+        { name: "Internet & Email - Complete Notes", size: "2.0 MB", pages: "15 pages", file: "internet-email.pdf" }
+      ]
+    }
+  ];
+
+  let notesCurrentPdfUrl = "";
+  let notesCurrentPdfName = "";
+  let notesCurrentTopicId = "";
+
+  function notesRenderTopics() {
+    const container = document.getElementById('notesTopicsContainer');
+    const passwords = notesGetPasswords();
+
+    container.innerHTML = notesTopics.map((topic, index) => {
+      const dlCount = notesGetDownloadCount(topic.id);
+      const newBadge = topic.isNew ? `<span class="notes-new-badge">NEW</span>` : '';
+
+      return `
+        <div class="notes-topic-card" id="notes-topic-${index}" data-search="${(topic.title + ' ' + topic.desc).toLowerCase()}" onclick="notesToggleTopic(${index})">
+          ${newBadge}
+          <div class="notes-topic-header">
+            <div class="notes-topic-icon ${topic.iconClass}">${topic.icon}</div>
+            <div class="notes-topic-info">
+              <h3>${topic.title}</h3>
+              <p>${topic.desc}</p>
+            </div>
+            <div class="notes-topic-meta">
+              <span class="notes-pdf-count">${topic.pdfCount} PDF</span>
+              <span class="notes-dl-count">⬇ ${dlCount}</span>
+              <span class="notes-chevron">▼</span>
+            </div>
+          </div>
+          <div class="notes-pdf-list">
+            <div class="notes-pdf-list-inner">
+              ${topic.pdfs.map((pdf) => {
+                const subId = pdf.subId || topic.id;
+                return `
+                <div class="notes-pdf-item">
+                  <div class="notes-pdf-icon">📄</div>
+                  <div class="notes-pdf-details">
+                    <h4>${pdf.name}</h4>
+                    <span>📦 ${pdf.size} &nbsp;|&nbsp; 📑 ${pdf.pages}</span>
+                  </div>
+                  <button class="notes-download-btn" onclick="event.stopPropagation(); notesOpenPasswordModal('${subId}', '${NOTES_GITHUB_BASE}${pdf.file}', '${pdf.name}')">
+                    🔒 Download
+                  </button>
+                </div>
+                `;
+              }).join('')}
+            </div>
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    const searchVal = document.getElementById('notesSearch').value.toLowerCase().trim();
+    if (searchVal) notesFilterTopics();
+  }
+
+  function notesFilterTopics() {
+    const query = document.getElementById('notesSearch').value.toLowerCase().trim();
+    const cards = document.querySelectorAll('.notes-topic-card');
+    let visible = 0;
+
+    cards.forEach(card => {
+      const searchData = card.getAttribute('data-search');
+      if (!query || searchData.includes(query)) {
+        card.classList.remove('hidden-topic');
+        visible++;
+      } else {
+        card.classList.add('hidden-topic');
+      }
+    });
+
+    const resultsEl = document.getElementById('searchResultsText');
+    if (query) {
+      resultsEl.textContent = visible > 0 ? `"${query}" के लिए ${visible} टॉपिक मिले` : `"${query}" के लिए कोई टॉपिक नहीं मिला`;
+    } else {
+      resultsEl.textContent = '';
+    }
+
+    const container = document.getElementById('notesTopicsContainer');
+    const existing = container.querySelector('.notes-no-results');
+    if (existing) existing.remove();
+
+    if (visible === 0 && query) {
+      container.innerHTML += `
+        <div class="notes-no-results">
+          <div class="notes-no-results-icon">🔍</div>
+          <p>"${query}" के लिए कोई टॉपिक नहीं मिला</p>
+          <p style="font-size:0.8rem;margin-top:5px;">Excel, Word, Tally, Internet जैसे शब्द आज़माएँ</p>
+        </div>
+      `;
+    }
+  }
+
+  function notesToggleTopic(index) {
+    const card = document.getElementById(`notes-topic-${index}`);
+    const isActive = card.classList.contains('active');
+    document.querySelectorAll('.notes-topic-card').forEach(c => c.classList.remove('active'));
+    if (!isActive) card.classList.add('active');
+  }
+
+  // Password Modal
+  function notesOpenPasswordModal(topicId, url, name) {
+    notesCurrentTopicId = topicId;
+    notesCurrentPdfUrl = url;
+    notesCurrentPdfName = name;
+
+    const passwords = notesGetPasswords();
+    const correctPwd = passwords[topicId] || NOTES_DEFAULT_PASSWORDS[topicId];
+
+    document.getElementById('notesPasswordModal').style.display = 'flex';
+    document.getElementById('notesPasswordInput').value = '';
+    document.getElementById('notesPasswordInput').classList.remove('error');
+    document.getElementById('notesErrorMsg').style.display = 'none';
+    document.getElementById('notesModalIcon').style.display = 'flex';
+    document.getElementById('notesSuccessIcon').style.display = 'none';
+    document.getElementById('notesModalTitle').textContent = 'पासवर्ड डालें';
+    document.getElementById('notesModalDesc').textContent = `Unlock: ${name}`;
+    document.getElementById('notesUnlockBtn').textContent = 'अनलॉक & डाउनलोड';
+    setTimeout(() => document.getElementById('notesPasswordInput').focus(), 100);
+  }
+
+  function closeNotesModal() {
+    document.getElementById('notesPasswordModal').style.display = 'none';
+  }
+
+  function verifyNotesPassword() {
+    const input = document.getElementById('notesPasswordInput');
+    const errorMsg = document.getElementById('notesErrorMsg');
+    const btn = document.getElementById('notesUnlockBtn');
+    const passwords = notesGetPasswords();
+    const correctPassword = passwords[notesCurrentTopicId] || NOTES_DEFAULT_PASSWORDS[notesCurrentTopicId];
+
+    if (input.value === correctPassword) {
+      input.classList.remove('error');
+      errorMsg.style.display = 'none';
+      document.getElementById('notesModalIcon').style.display = 'none';
+      document.getElementById('notesSuccessIcon').style.display = 'flex';
+      document.getElementById('notesModalTitle').textContent = 'Access Granted!';
+      document.getElementById('notesModalDesc').textContent = 'आपका डाउनलोड शुरू हो रहा है...';
+      btn.textContent = 'डाउनलोडिंग...';
+
+      notesIncrementDownload(notesCurrentTopicId);
+
+      setTimeout(() => {
+        const a = document.createElement('a');
+        a.href = notesCurrentPdfUrl;
+        a.download = notesCurrentPdfName + '.pdf';
+        a.target = '_blank';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        setTimeout(() => closeNotesModal(), 1200);
+      }, 600);
+    } else {
+      input.classList.add('error');
+      errorMsg.style.display = 'block';
+      input.value = '';
+      input.focus();
+    }
+  }
+
+  document.getElementById('notesPasswordModal').addEventListener('click', function(e) {
+    if (e.target === this) closeNotesModal();
+  });
+
+  // Admin Panel
+  function openNotesAdmin() {
+    document.getElementById('notesAdminPanel').style.display = 'flex';
+    document.getElementById('notesAdminLoginScreen').style.display = 'block';
+    document.getElementById('notesAdminDashboard').style.display = 'none';
+    document.getElementById('notesAdminPasswordInput').value = '';
+    document.getElementById('notesAdminErrorMsg').style.display = 'none';
+    setTimeout(() => document.getElementById('notesAdminPasswordInput').focus(), 100);
+  }
+
+  function closeNotesAdmin() {
+    document.getElementById('notesAdminPanel').style.display = 'none';
+  }
+
+  function checkNotesAdminLogin() {
+    const input = document.getElementById('notesAdminPasswordInput');
+    const error = document.getElementById('notesAdminErrorMsg');
+
+    if (input.value === NOTES_ADMIN_PASSWORD) {
+      error.style.display = 'none';
+      document.getElementById('notesAdminLoginScreen').style.display = 'none';
+      document.getElementById('notesAdminDashboard').style.display = 'block';
+      notesRenderAdminPasswordList();
+    } else {
+      error.style.display = 'block';
+      input.value = '';
+      input.focus();
+    }
+  }
+
+  function notesRenderAdminPasswordList() {
+    const passwords = notesGetPasswords();
+    const list = document.getElementById('notesAdminPasswordList');
+
+    const allItems = [];
+    notesTopics.forEach(topic => {
+      topic.pdfs.forEach(pdf => {
+        const subId = pdf.subId || topic.id;
+        allItems.push({
+          label: `${topic.title} — ${pdf.name.replace(/^[^ ]+ /, '')}`,
+          id: subId
+        });
+      });
+    });
+
+    list.innerHTML = allItems.map(item => `
+      <div class="notes-admin-row">
+        <label>🔑 ${item.label}</label>
+        <input type="text" id="notes-pwd-${item.id}" value="${passwords[item.id] || NOTES_DEFAULT_PASSWORDS[item.id]}" placeholder="Password">
+      </div>
+    `).join('');
+  }
+
+  function saveNotesAdminPasswords() {
+    const passwords = notesGetPasswords();
+    notesTopics.forEach(topic => {
+      topic.pdfs.forEach(pdf => {
+        const subId = pdf.subId || topic.id;
+        const input = document.getElementById(`notes-pwd-${subId}`);
+        if (input && input.value.trim()) {
+          passwords[subId] = input.value.trim();
+        }
+      });
+    });
+    notesSavePasswords(passwords);
+    alert('✅ सभी पासवर्ड सेव हो गए!');
+    closeNotesAdmin();
+  }
+
+  function resetNotesAdminPasswords() {
+    if (confirm('क्या आप सुनिश्चित हैं? सभी पासवर्ड डिफ़ॉल्ट पर रीसेट हो जाएँगे।')) {
+      localStorage.removeItem('nexa_notes_passwords_v2');
+      notesRenderAdminPasswordList();
+      alert('🔄 पासवर्ड डिफ़ॉल्ट पर रीसेट हो गए!');
+    }
+  }
+
+  document.getElementById('notesAdminPanel').addEventListener('click', function(e) {
+    if (e.target === this) closeNotesAdmin();
+  });
+
+  // Initialize
+  notesUpdateTotalDownloads();
+  notesRenderTopics();
+</script>
+
+
+
 <!-- CTA -->
 <section class="cta-section" id="contact">
   <div class="cta-box reveal">
@@ -735,7 +1495,7 @@ body { font-family: 'Poppins', sans-serif; background: var(--darker); color: var
     <div class="footer-column">
       <h4>संसाधन</h4>
       <ul>
-        <li><a href="#">PDF नोट्स</a></li>
+        <li><a href="#class-notes">📚 Class Notes</a></li>
         <li><a href="https://deepaknic.github.io/NEXA/Quiz.html" target="_blank">ऑनलाइन टेस्ट</a></li>
         <li><a href="#">गैलरी</a></li>
         <li><a href="#">सर्टिफिकेट वेरिफाई</a></li>
