@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Class Notes | NEXA Computer Institute — Password Protected PDFs</title>
+<title>Class Notes | NEXA Computer Institute</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -15,24 +15,20 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { font-family: 'Poppins', sans-serif; background: var(--darker); color: var(--text); overflow-x: hidden; min-height: 100vh; }
 
-/* Particles */
 .bg-particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; overflow: hidden; }
 .particle { position: absolute; border-radius: 50%; background: var(--primary); opacity: 0.1; animation: floatUp linear infinite; }
 @keyframes floatUp { 0%{transform:translateY(100vh) scale(0);opacity:0} 10%{opacity:0.1} 90%{opacity:0.1} 100%{transform:translateY(-10vh) scale(1);opacity:0} }
 
-/* Announcement Bar */
 .announcement-bar {
   background: linear-gradient(90deg, var(--primary-dark), var(--primary), var(--secondary));
   background-size: 200% 100%; animation: gradientMove 5s ease infinite;
-  color: #fff; padding: 0.6rem 0; overflow: hidden; white-space: nowrap;
-  position: relative; z-index: 1001;
+  color: #fff; padding: 0.6rem 0; overflow: hidden; white-space: nowrap; position: relative; z-index: 1001;
 }
 @keyframes gradientMove { 0%,100%{background-position:0% 50%} 50%{background-position:100% 50%} }
 .announcement-content { display: inline-block; animation: scroll-left 20s linear infinite; font-size: 0.85rem; font-weight: 600; }
 .announcement-content span { margin: 0 3rem; display: inline-flex; align-items: center; gap: 0.5rem; }
 @keyframes scroll-left { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
 
-/* Top Bar */
 .top-bar {
   background: var(--dark); border-bottom: 1px solid var(--glass); padding: 0.5rem 5%;
   display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;
@@ -41,7 +37,6 @@ body { font-family: 'Poppins', sans-serif; background: var(--darker); color: var
 .top-bar a { color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 0.4rem; transition: color 0.3s; }
 .top-bar a:hover { color: var(--primary); }
 
-/* Navbar */
 .navbar {
   position: sticky; top: 0; left: 0; width: 100%; padding: 1rem 5%;
   display: flex; justify-content: space-between; align-items: center; z-index: 999;
@@ -79,7 +74,6 @@ body { font-family: 'Poppins', sans-serif; background: var(--darker); color: var
 
 .mobile-menu-btn { display: none; background: none; border: none; color: var(--text); font-size: 1.5rem; cursor: pointer; }
 
-/* Header Section */
 .notes-header {
   text-align: center; padding: 3rem 5% 2rem; position: relative; z-index: 1;
 }
@@ -97,7 +91,6 @@ body { font-family: 'Poppins', sans-serif; background: var(--darker); color: var
 }
 .notes-header p { color: var(--text-muted); font-size: 1rem; max-width: 600px; margin: 0 auto; }
 
-/* Stats */
 .notes-stats {
   display: flex; justify-content: center; gap: 2rem; padding: 1.5rem 5%; flex-wrap: wrap;
   position: relative; z-index: 1;
@@ -108,7 +101,6 @@ body { font-family: 'Poppins', sans-serif; background: var(--darker); color: var
 .notes-stat-number { font-family: 'Orbitron', sans-serif; font-size: 2rem; font-weight: 700; color: var(--secondary); }
 .notes-stat-label { color: var(--text-muted); font-size: 0.8rem; margin-top: 0.3rem; }
 
-/* Search */
 .search-wrap { max-width: 600px; margin: 0 auto 1.5rem; padding: 0 5%; position: relative; z-index: 1; }
 .search-box {
   width: 100%; padding: 14px 50px 14px 20px; background: var(--card-bg); backdrop-filter: blur(10px);
@@ -120,7 +112,6 @@ body { font-family: 'Poppins', sans-serif; background: var(--darker); color: var
 .search-icon { position: absolute; right: calc(5% + 18px); top: 50%; transform: translateY(-50%); font-size: 1.1rem; color: var(--text-muted); pointer-events: none; }
 .search-results { text-align: center; color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1rem; min-height: 20px; position: relative; z-index: 1; }
 
-/* Topic Cards */
 .topics-wrap { max-width: 900px; margin: 0 auto; padding: 0 5% 2rem; position: relative; z-index: 1; }
 .topic-card {
   background: var(--card-bg); border: 1px solid var(--glass); border-radius: 20px;
@@ -150,6 +141,7 @@ body { font-family: 'Poppins', sans-serif; background: var(--darker); color: var
 .icon-amber { background: linear-gradient(135deg, #f59e0b, #d97706); }
 .icon-purple { background: linear-gradient(135deg, #8b5cf6, #7c3aed); }
 .icon-blue { background: linear-gradient(135deg, #0ea5e9, #0284c7); }
+.icon-gray { background: linear-gradient(135deg, #64748b, #475569); }
 
 .topic-info { flex: 1; }
 .topic-info h3 { font-size: 1.05rem; font-weight: 600; margin-bottom: 3px; color: var(--text); }
@@ -183,7 +175,11 @@ body { font-family: 'Poppins', sans-serif; background: var(--darker); color: var
 .no-results { text-align: center; padding: 40px 20px; color: var(--text-muted); }
 .no-results-icon { font-size: 3rem; margin-bottom: 10px; }
 
-/* Password Modal */
+.coming-soon-badge {
+  background: rgba(100,116,139,0.2); color: #94a3b8; padding: 4px 12px; border-radius: 50px;
+  font-size: 0.75rem; font-weight: 600; border: 1px solid rgba(100,116,139,0.3);
+}
+
 .modal-overlay {
   display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
   background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); align-items: center; justify-content: center;
@@ -218,7 +214,6 @@ body { font-family: 'Poppins', sans-serif; background: var(--darker); color: var
 .btn-unlock { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; }
 .btn-unlock:hover { box-shadow: 0 8px 25px rgba(99,102,241,0.4); transform: translateY(-2px); }
 
-/* Admin Panel */
 .admin-panel { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); z-index: 2000; align-items: center; justify-content: center; }
 .admin-panel.show { display: flex; }
 .admin-box { background: linear-gradient(145deg, #1e1b4b, #0f172a); border: 1px solid var(--glass); border-radius: 24px; padding: 35px; width: 90%; max-width: 520px; max-height: 85vh; overflow-y: auto; box-shadow: 0 25px 60px rgba(0,0,0,0.6); animation: slideUp 0.4s ease; position: relative; }
@@ -238,15 +233,12 @@ body { font-family: 'Poppins', sans-serif; background: var(--darker); color: var
 .btn-reset { background: linear-gradient(135deg, var(--danger), #b91c1c); color: white; }
 .btn-reset:hover { box-shadow: 0 8px 25px rgba(239,68,68,0.3); transform: translateY(-2px); }
 
-/* Admin Trigger */
 .admin-trigger { position: fixed; top: 80px; right: 20px; width: 40px; height: 40px; border-radius: 10px; background: rgba(255,255,255,0.05); border: 1px solid var(--glass); color: var(--text-muted); display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1.1rem; transition: all 0.3s; z-index: 998; }
 .admin-trigger:hover { background: rgba(245,158,11,0.2); border-color: var(--secondary); color: var(--secondary); }
 
-/* Footer */
 .notes-footer { text-align: center; padding: 2rem 5%; color: var(--text-muted); font-size: 0.8rem; position: relative; z-index: 1; border-top: 1px solid var(--glass); }
 .notes-footer a { color: var(--secondary); text-decoration: none; }
 
-/* WhatsApp Float */
 .whatsapp-float { position: fixed; bottom: 25px; right: 25px; width: 58px; height: 58px; background: var(--whatsapp); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; text-decoration: none; box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4); z-index: 9999; transition: all 0.3s ease; animation: waPulse 2s infinite; }
 .whatsapp-float:hover { transform: scale(1.1) translateY(-4px); box-shadow: 0 8px 30px rgba(37, 211, 102, 0.6); }
 @keyframes waPulse { 0%{box-shadow:0 0 0 0 rgba(37,211,102,0.7)} 70%{box-shadow:0 0 0 18px rgba(37,211,102,0)} 100%{box-shadow:0 0 0 0 rgba(37,211,102,0)} }
@@ -269,7 +261,6 @@ body { font-family: 'Poppins', sans-serif; background: var(--darker); color: var
 
 <div class="bg-particles" id="particles"></div>
 
-<!-- Announcement -->
 <div class="announcement-bar">
   <div class="announcement-content">
     <span>🎓 NEXA Computer Institute — फर्रुखाबाद</span>
@@ -283,7 +274,6 @@ body { font-family: 'Poppins', sans-serif; background: var(--darker); color: var
   </div>
 </div>
 
-<!-- Top Bar -->
 <div class="top-bar">
   <div style="display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap;">
     <a href="tel:+917696566162">📞 7696566162</a>
@@ -292,7 +282,6 @@ body { font-family: 'Poppins', sans-serif; background: var(--darker); color: var
   <span>📍 बहादुरगंज तराई, फर्रुखाबाद, UP</span>
 </div>
 
-<!-- Navbar -->
 <nav class="navbar">
   <a href="index.html" class="logo">
     <div class="logo-icon">🎓</div>
@@ -309,14 +298,12 @@ body { font-family: 'Poppins', sans-serif; background: var(--darker); color: var
   <button class="mobile-menu-btn" onclick="alert('Mobile menu coming soon!')">☰</button>
 </nav>
 
-<!-- Header -->
 <div class="notes-header">
   <div class="notes-badge">📚 NEXA Students Only</div>
   <h1>Class Notes</h1>
   <p>Password Protected Study Material — टॉपिक पर क्लिक करें, पासवर्ड डालें और PDF डाउनलोड करें</p>
 </div>
 
-<!-- Stats -->
 <div class="notes-stats">
   <div class="notes-stat-item">
     <div class="notes-stat-number" id="totalTopics">5</div>
@@ -327,7 +314,7 @@ body { font-family: 'Poppins', sans-serif; background: var(--darker); color: var
     <div class="notes-stat-label">डाउनलोड्स</div>
   </div>
   <div class="notes-stat-item">
-    <div class="notes-stat-number" style="color:var(--accent);">13</div>
+    <div class="notes-stat-number" style="color:var(--accent);">9</div>
     <div class="notes-stat-label">PDFs</div>
   </div>
   <div class="notes-stat-item">
@@ -336,20 +323,16 @@ body { font-family: 'Poppins', sans-serif; background: var(--darker); color: var
   </div>
 </div>
 
-<!-- Search -->
 <div class="search-wrap" style="position:relative;">
   <input type="text" class="search-box" id="searchInput" placeholder="🔍 टॉपिक खोजें... (Excel, Word, Tally, etc.)" oninput="filterTopics()">
   <span class="search-icon">🔍</span>
 </div>
 <div class="search-results" id="searchResults"></div>
 
-<!-- Admin Trigger -->
 <div class="admin-trigger" onclick="openAdmin()" title="Admin Panel">⚙️</div>
 
-<!-- Topics -->
 <div class="topics-wrap" id="topicsContainer"></div>
 
-<!-- Footer -->
 <div class="notes-footer">
   🔐 सभी PDF पासवर्ड प्रोटेक्टेड हैं। पासवर्ड के लिए अपने इंस्ट्रक्टर से संपर्क करें।<br>
   कुल डाउनलोड्स: <span id="footerDownloads" style="color:var(--secondary);font-weight:600;">0</span> &nbsp;|&nbsp;
@@ -357,7 +340,6 @@ body { font-family: 'Poppins', sans-serif; background: var(--darker); color: var
   Made with ❤ for NEXA Students
 </div>
 
-<!-- Password Modal -->
 <div class="modal-overlay" id="passwordModal">
   <div class="modal-box">
     <div class="lock-icon" id="modalIcon">🔒</div>
@@ -373,7 +355,6 @@ body { font-family: 'Poppins', sans-serif; background: var(--darker); color: var
   </div>
 </div>
 
-<!-- Admin Panel -->
 <div class="admin-panel" id="adminPanel">
   <div class="admin-box">
     <div class="admin-close" onclick="closeAdmin()">✕</div>
@@ -405,11 +386,9 @@ body { font-family: 'Poppins', sans-serif; background: var(--darker); color: var
   </div>
 </div>
 
-<!-- WhatsApp -->
 <a href="https://wa.me/917696566162" target="_blank" class="whatsapp-float">💬</a>
 
 <script>
-// Particles
 const particlesContainer = document.getElementById('particles');
 for (let i = 0; i < 25; i++) {
   const p = document.createElement('div'); p.className = 'particle';
@@ -421,13 +400,13 @@ for (let i = 0; i < 25; i++) {
   particlesContainer.appendChild(p);
 }
 
-// ===== CONFIG =====
 const GITHUB_BASE = "https://raw.githubusercontent.com/Deepaknic/NEXA/main/class-notes/";
 const ADMIN_PASSWORD = "nexaadmin";
 
+// ==========================================
+// ✅ ACTUAL PDF FILE NAMES (as uploaded)
+// ==========================================
 const DEFAULT_PASSWORDS = {
-  "fundamental": "nexafund1",
-  "word2010": "nexaword2",
   "excel-intro": "nexaexcel1",
   "excel-ex1": "nexaexcel2",
   "excel-ex2": "nexaexcel3",
@@ -437,6 +416,8 @@ const DEFAULT_PASSWORDS = {
   "excel-ex6": "nexaexcel7",
   "excel-ex7": "nexaexcel8",
   "excel-ex8": "nexaexcel9",
+  "fundamental": "nexafund1",
+  "word2010": "nexaword2",
   "ppt2010": "nexappt3",
   "internet": "nexanet4"
 };
@@ -468,51 +449,54 @@ function updateTotal() {
   document.getElementById('footerDownloads').textContent = t;
 }
 
+// ==========================================
+// ✅ TOPICS WITH EXACT PDF FILE NAMES
+// ==========================================
 const topics = [
+  {
+    id: "excel2010",
+    title: "MS Excel 2010",
+    desc: "Complete Excel Course — Introduction + 8 Exercises with 100+ Q&A",
+    icon: "📊", iconClass: "icon-green", pdfCount: 9, isNew: true,
+    pdfs: [
+      { name: "📖 Introduction to Excel 2010", size: "—", pages: "—", file: "Introduction to Excel 2010.pdf", subId: "excel-intro" },
+      { name: "📝 Exercise 1 — Basic Operations & Math Functions", size: "—", pages: "—", file: "Exercise 1.pdf", subId: "excel-ex1" },
+      { name: "📝 Exercise 2 — Logical, Text & Conditional Formatting", size: "—", pages: "—", file: "Exercise 2.pdf", subId: "excel-ex2" },
+      { name: "📝 Exercise 3 — Merge, Formatting & Data Validation", size: "—", pages: "—", file: "Exercise 3.pdf", subId: "excel-ex3" },
+      { name: "📝 Exercise 4 — Advanced Mathematical Functions", size: "—", pages: "—", file: "Exercise 4.pdf", subId: "excel-ex4" },
+      { name: "📝 Exercise 5 — Data Tools, Shortcuts & Data Cleaning", size: "—", pages: "—", file: "Exercise 5.pdf", subId: "excel-ex5" },
+      { name: "📝 Exercise 6 — Charts, Graphs & Print Setup", size: "—", pages: "—", file: "Exercise 6.pdf", subId: "excel-ex6" },
+      { name: "📝 Exercise 7 — Pivot Tables, Protection & Advanced Formatting", size: "—", pages: "—", file: "Exercise 7.pdf", subId: "excel-ex7" },
+      { name: "📝 Exercise 8 — Definitions & Important Concepts", size: "—", pages: "—", file: "Exercise 8.pdf", subId: "excel-ex8" }
+    ]
+  },
   {
     id: "fundamental",
     title: "Fundamental of Computer",
-    desc: "Computer Basics, Hardware, Software, OS, Memory, Input/Output Devices",
-    icon: "💻", iconClass: "icon-blue", pdfCount: 1, isNew: false,
-    pdfs: [{ name: "Fundamental of Computer — Complete Notes", size: "3.2 MB", pages: "25 pages", file: "fundamental-computer.pdf" }]
+    desc: "Computer Basics, Hardware, Software, OS, Memory, Input/Output Devices — Coming Soon",
+    icon: "💻", iconClass: "icon-gray", pdfCount: 0, isNew: false, comingSoon: true,
+    pdfs: []
   },
   {
     id: "word2010",
     title: "MS Word 2010",
-    desc: "Word Interface, Formatting, Tables, Mail Merge, Headers/Footers, Templates",
-    icon: "📝", iconClass: "icon-blue", pdfCount: 1, isNew: false,
-    pdfs: [{ name: "MS Word 2010 — Complete Guide", size: "2.8 MB", pages: "20 pages", file: "ms-word-2010.pdf" }]
-  },
-  {
-    id: "excel2010",
-    title: "MS Excel 2010",
-    desc: "Complete Excel Course — Intro + 8 Exercises with 100+ Q&A",
-    icon: "📊", iconClass: "icon-green", pdfCount: 9, isNew: true,
-    pdfs: [
-      { name: "📖 Introduction to Excel 2010", size: "2.4 MB", pages: "15 pages", file: "intro-excel-2010.pdf", subId: "excel-intro" },
-      { name: "📝 Exercise 1 — Basic Operations & Math (Q1-Q15)", size: "1.8 MB", pages: "12 pages", file: "exercise-1-basic-math.pdf", subId: "excel-ex1" },
-      { name: "📝 Exercise 2 — Logical, Text & Conditional Formatting (Q1-Q12)", size: "2.1 MB", pages: "14 pages", file: "exercise-2-logical-text.pdf", subId: "excel-ex2" },
-      { name: "📝 Exercise 3 — Merge, Formatting & Data Validation (Q1-Q11)", size: "1.9 MB", pages: "13 pages", file: "exercise-3-formatting.pdf", subId: "excel-ex3" },
-      { name: "📝 Exercise 4 — Advanced Mathematical Functions (Q1-Q10)", size: "1.7 MB", pages: "11 pages", file: "exercise-4-advanced-math.pdf", subId: "excel-ex4" },
-      { name: "📝 Exercise 5 — Data Tools & Data Cleaning (Q1-Q15)", size: "2.3 MB", pages: "16 pages", file: "exercise-5-data-tools.pdf", subId: "excel-ex5" },
-      { name: "📝 Exercise 6 — Charts, Graphs & Print Setup (Q1-Q12)", size: "2.5 MB", pages: "17 pages", file: "exercise-6-charts.pdf", subId: "excel-ex6" },
-      { name: "📝 Exercise 7 — Pivot Tables & Protection (Q1-Q12)", size: "2.2 MB", pages: "15 pages", file: "exercise-7-pivot-tables.pdf", subId: "excel-ex7" },
-      { name: "📝 Exercise 8 — Definitions & Concepts (Q1-Q9)", size: "1.6 MB", pages: "10 pages", file: "exercise-8-definitions.pdf", subId: "excel-ex8" }
-    ]
+    desc: "Word Interface, Formatting, Tables, Mail Merge, Headers/Footers — Coming Soon",
+    icon: "📝", iconClass: "icon-gray", pdfCount: 0, isNew: false, comingSoon: true,
+    pdfs: []
   },
   {
     id: "ppt2010",
     title: "MS PowerPoint 2010",
-    desc: "Slides, Animations, Transitions, Master Slide, Presenter View",
-    icon: "🎨", iconClass: "icon-amber", pdfCount: 1, isNew: false,
-    pdfs: [{ name: "MS PowerPoint 2010 — Complete Guide", size: "2.5 MB", pages: "18 pages", file: "ms-ppt-2010.pdf" }]
+    desc: "Slides, Animations, Transitions, Master Slide, Presenter View — Coming Soon",
+    icon: "🎨", iconClass: "icon-gray", pdfCount: 0, isNew: false, comingSoon: true,
+    pdfs: []
   },
   {
     id: "internet",
     title: "Internet & Email",
-    desc: "Internet Basics, Browsers, Search Engines, Email, Social Media",
-    icon: "🌐", iconClass: "icon-purple", pdfCount: 1, isNew: false,
-    pdfs: [{ name: "Internet & Email — Complete Notes", size: "2.0 MB", pages: "15 pages", file: "internet-email.pdf" }]
+    desc: "Internet Basics, Browsers, Search Engines, Email, Social Media — Coming Soon",
+    icon: "🌐", iconClass: "icon-gray", pdfCount: 0, isNew: false, comingSoon: true,
+    pdfs: []
   }
 ];
 
@@ -520,32 +504,33 @@ let curPdfUrl = "", curPdfName = "", curTopicId = "";
 
 function renderTopics() {
   const container = document.getElementById('topicsContainer');
-  const passwords = getPasswords();
   container.innerHTML = topics.map((topic, i) => {
     const dl = getDlCount(topic.id);
     const nb = topic.isNew ? '<span class="new-badge">NEW</span>' : '';
+    const meta = topic.comingSoon
+      ? '<span class="coming-soon-badge">⏳ Coming Soon</span>'
+      : `<span class="pdf-count">${topic.pdfCount} PDF</span><span class="dl-count">⬇ ${dl}</span>`;
+
+    const pdfList = topic.comingSoon ? '' : `<div class="pdf-list"><div class="pdf-list-inner">
+      ${topic.pdfs.map(pdf => {
+        const sid = pdf.subId || topic.id;
+        return `<div class="pdf-item">
+          <div class="pdf-icon">📄</div>
+          <div class="pdf-details"><h4>${pdf.name}</h4><span>📦 ${pdf.size} &nbsp;|&nbsp; 📑 ${pdf.pages}</span></div>
+          <button class="download-btn" onclick="event.stopPropagation(); openModal('${sid}','${GITHUB_BASE}${encodeURIComponent(pdf.file)}','${pdf.name}')">🔒 Download</button>
+        </div>`;
+      }).join('')}
+    </div></div>`;
+
     return `
       <div class="topic-card" id="topic-${i}" data-search="${(topic.title+' '+topic.desc).toLowerCase()}" onclick="toggleTopic(${i})">
         ${nb}
         <div class="topic-header">
           <div class="topic-icon ${topic.iconClass}">${topic.icon}</div>
           <div class="topic-info"><h3>${topic.title}</h3><p>${topic.desc}</p></div>
-          <div class="topic-meta">
-            <span class="pdf-count">${topic.pdfCount} PDF</span>
-            <span class="dl-count">⬇ ${dl}</span>
-            <span class="chevron">▼</span>
-          </div>
+          <div class="topic-meta">${meta}<span class="chevron">▼</span></div>
         </div>
-        <div class="pdf-list"><div class="pdf-list-inner">
-          ${topic.pdfs.map(pdf => {
-            const sid = pdf.subId || topic.id;
-            return `<div class="pdf-item">
-              <div class="pdf-icon">📄</div>
-              <div class="pdf-details"><h4>${pdf.name}</h4><span>📦 ${pdf.size} &nbsp;|&nbsp; 📑 ${pdf.pages}</span></div>
-              <button class="download-btn" onclick="event.stopPropagation(); openModal('${sid}','${GITHUB_BASE}${pdf.file}','${pdf.name}')">🔒 Download</button>
-            </div>`;
-          }).join('')}
-        </div></div>
+        ${pdfList}
       </div>`;
   }).join('');
   if (document.getElementById('searchInput').value.trim()) filterTopics();
@@ -568,7 +553,6 @@ function filterTopics() {
   document.getElementById('searchResults').textContent = q ? (v ? `"${q}" के लिए ${v} टॉपिक मिले` : `"${q}" के लिए कुछ नहीं मिला`) : '';
 }
 
-// Modal
 function openModal(tid, url, name) {
   curTopicId = tid; curPdfUrl = url; curPdfName = name;
   document.getElementById('passwordModal').classList.add('show');
@@ -608,7 +592,6 @@ function verifyPassword() {
 }
 document.getElementById('passwordModal').addEventListener('click', e => { if (e.target === e.currentTarget) closeModal(); });
 
-// Admin
 function openAdmin() { document.getElementById('adminPanel').classList.add('show'); document.getElementById('adminLoginScreen').style.display = 'block'; document.getElementById('adminDashboard').style.display = 'none'; document.getElementById('adminPasswordInput').value = ''; document.getElementById('adminErrorMsg').classList.remove('show'); setTimeout(() => document.getElementById('adminPasswordInput').focus(), 100); }
 function closeAdmin() { document.getElementById('adminPanel').classList.remove('show'); }
 function checkAdminLogin() {
@@ -622,12 +605,12 @@ function renderAdminList() {
   const passwords = getPasswords();
   const list = document.getElementById('adminPasswordList');
   const items = [];
-  topics.forEach(t => t.pdfs.forEach(p => items.push({ label: `${t.title} — ${p.name.replace(/^[^ ]+ /, '')}`, id: p.subId || t.id })));
+  topics.forEach(t => { if(!t.comingSoon) t.pdfs.forEach(p => items.push({ label: `${t.title} — ${p.name.replace(/^[^ ]+ /, '')}`, id: p.subId || t.id })); });
   list.innerHTML = items.map(it => `<div class="admin-row"><label>🔑 ${it.label}</label><input type="text" id="pwd-${it.id}" value="${passwords[it.id] || DEFAULT_PASSWORDS[it.id]}"></div>`).join('');
 }
 function saveAdminPasswords() {
   const passwords = getPasswords();
-  topics.forEach(t => t.pdfs.forEach(p => { const sid = p.subId || t.id; const inp = document.getElementById(`pwd-${sid}`); if (inp && inp.value.trim()) passwords[sid] = inp.value.trim(); }));
+  topics.forEach(t => { if(!t.comingSoon) t.pdfs.forEach(p => { const sid = p.subId || t.id; const inp = document.getElementById(`pwd-${sid}`); if (inp && inp.value.trim()) passwords[sid] = inp.value.trim(); }); });
   savePasswords(passwords); alert('✅ सभी पासवर्ड सेव हो गए!'); closeAdmin();
 }
 function resetAdminPasswords() {
@@ -637,7 +620,6 @@ function resetAdminPasswords() {
 }
 document.getElementById('adminPanel').addEventListener('click', e => { if (e.target === e.currentTarget) closeAdmin(); });
 
-// Init
 updateTotal();
 renderTopics();
 </script>
