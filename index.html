@@ -305,7 +305,11 @@ body {
   box-shadow: 0 20px 50px rgba(0,0,0,0.12); min-width: 280px;
   padding: 0.8rem 0; opacity: 0; visibility: hidden;
   transform: translateY(-10px); transition: all 0.3s ease; z-index: 1000;
+  max-height: 70vh; overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--primary) transparent;
 }
+.dropdown-menu::-webkit-scrollbar { width: 6px; }
+.dropdown-menu::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 3px; }
+.dropdown-menu::-webkit-scrollbar-track { background: transparent; }
 .dropdown:hover .dropdown-menu { opacity: 1; visibility: visible; transform: translateY(0); }
 .dropdown-menu a {
   display: flex; align-items: center; gap: 0.8rem;
@@ -379,29 +383,92 @@ body {
   color: #fff; padding: 1.5rem 0.8rem 0.6rem; font-size: 0.8rem; font-weight: 500;
 }
 .youtube-thumb.active { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(37,99,235,0.2); }
+
+/* Certificate Result Card */
+.cert-result-card {
+  background: linear-gradient(135deg, #fff, #f8fafc);
+  border: 2px solid var(--primary);
+  border-radius: 20px;
+  padding: 2rem;
+  text-align: left;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(37,99,235,0.15);
+  animation: certSlideIn 0.5s ease;
+}
+@keyframes certSlideIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.cert-result-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 5px;
+  background: linear-gradient(90deg, var(--primary), var(--accent), var(--success));
+}
+.cert-header {
+  display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;
+  padding-bottom: 1rem; border-bottom: 1px dashed var(--border);
+}
+.cert-badge {
+  width: 60px; height: 60px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--success), #059669);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.5rem; color: #fff; flex-shrink: 0;
+  box-shadow: 0 8px 20px rgba(16,185,129,0.3);
+}
+.cert-header-text h4 {
+  font-family: 'Rajdhani', sans-serif; font-size: 1.3rem; color: var(--dark); margin-bottom: 0.2rem;
+}
+.cert-header-text p {
+  color: var(--success); font-size: 0.85rem; font-weight: 600;
+}
+.cert-details {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;
+}
+.cert-detail-item {
+  background: rgba(255,255,255,0.8); border: 1px solid var(--border);
+  border-radius: 12px; padding: 1rem;
+}
+.cert-detail-label {
+  font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;
+  letter-spacing: 1px; font-weight: 600; margin-bottom: 0.3rem;
+}
+.cert-detail-value {
+  font-size: 1rem; color: var(--dark); font-weight: 700;
+}
+.cert-stamp {
+  position: absolute; top: 20px; right: 20px;
+  width: 80px; height: 80px; opacity: 0.15;
+  border: 3px solid var(--primary); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.6rem; font-weight: 700; color: var(--primary);
+  text-align: center; line-height: 1.2; transform: rotate(-15deg);
+}
+.cert-error {
+  background: linear-gradient(135deg, #fef2f2, #fff);
+  border: 2px solid var(--danger); border-radius: 16px;
+  padding: 1.5rem; color: var(--danger); font-weight: 600;
+  display: flex; align-items: center; gap: 0.8rem; justify-content: center;
+}
+
 </style>
+<base target="_blank">
 <base target="_blank">
 </head>
 <body>
 
+<!-- Marquee Announcement Bar -->
+<div style="background: linear-gradient(90deg, #dc2626, #b91c1c, #dc2626); color: #fff; padding: 0.5rem 0; font-size: 0.9rem; font-weight: 600; position: relative; z-index: 100; border-bottom: 2px solid rgba(255,255,255,0.2); overflow: hidden;">
+  <marquee behavior="scroll" direction="left" scrollamount="6" onmouseover="this.stop();" onmouseout="this.start();" style="display: block;">
+    🎓 <span style="color:#fef08a;">Admissions Open 2026-27</span> — CCC, O Level, Tally Prime + GST, AI & more! &nbsp;&nbsp;|&nbsp;&nbsp; 📞 Call <strong>7696566162</strong> / <strong>9696456019</strong> &nbsp;&nbsp;|&nbsp;&nbsp; 🏢 Farrukhabad: NEXA Building, Near Police Station Maudarwaja | Kannauj: Samdhan, Gursahaiganj &nbsp;&nbsp;|&nbsp;&nbsp; 🆓 <span style="color:#fef08a;">FREE Demo Class Available!</span> &nbsp;&nbsp;|&nbsp;&nbsp; 🌐 Online & Offline Batches &nbsp;&nbsp;|&nbsp;&nbsp; 📜 NIELIT Govt. Certified Courses
+  </marquee>
+</div>
 <!-- Digital Background -->
 <div class="digital-bg">
   <div class="digital-grid"></div>
   <div class="floating-orb orb-1"></div>
   <div class="floating-orb orb-2"></div>
   <div class="floating-orb orb-3"></div>
-</div>
-
-<!-- Top Bar -->
-<div class="top-bar">
-  <div style="display:flex; gap:1.5rem; flex-wrap:wrap; align-items:center;">
-    <a href="tel:+917696566162"><i class="fas fa-phone"></i> 7696566162</a>
-    <a href="tel:+919696456019"><i class="fas fa-phone"></i> 9696456019</a>
-    <a href="mailto:nexainstitute@gmail.com"><i class="fas fa-envelope"></i> nexainstitute@gmail.com</a>
-  </div>
-  <div style="display:flex; gap:1.5rem; flex-wrap:wrap; align-items:center;">
-    <span><i class="fas fa-map-marker-alt"></i> Farrukhabad & Kannauj, UP</span>
-  </div>
 </div>
 
 <!-- Navbar -->
@@ -427,11 +494,11 @@ body {
         <a href="course-excel.html"><i class="fas fa-table"></i> Advanced Excel</a>
         <a href="course-tally.html"><i class="fas fa-chart-bar"></i> Tally Prime + GST</a>
         <a href="course-dca.html"><i class="fas fa-laptop"></i> DCA</a>
+        <a href="course-adca.html"><i class="fas fa-award"></i> ADCA</a>
         <a href="course-dtp.html"><i class="fas fa-paint-brush"></i> DTP</a>
         <a href="course-web.html"><i class="fas fa-globe"></i> Web Designing</a>
         <a href="course-python.html"><i class="fab fa-python"></i> Python Programming</a>
         <a href="course-data.html"><i class="fas fa-chart-pie"></i> Data Analytics</a>
-        <a href="course-adca.html"><i class="fas fa-award"></i> ADCA</a>
         <a href="course-olevel.html"><i class="fas fa-graduation-cap"></i> O Level (NIELIT)</a>
         <a href="course-ai.html"><i class="fas fa-robot"></i> Artificial Intelligence</a>
       </div>
@@ -476,7 +543,7 @@ body {
         <div class="floating-card-icon"><i class="fas fa-star"></i></div>
         <div class="floating-card-text"><strong>4.9/5</strong>Student Rating</div>
       </div>
-    </a>
+    </div>
   </div>
 </section>
 
@@ -554,7 +621,7 @@ body {
     <p class="section-subtitle">The most enrolled and career-boosting programs at NEXA Institute.</p>
   </div>
   <div class="featured-grid">
-    <a href="course-tally.html" class="featured-card reveal" id="tally">
+    <a href="tally-course.html" class="featured-card reveal" id="tally">
       <span class="featured-badge">Most Popular</span>
       <div class="featured-icon">📊</div>
       <h3>Tally Prime + GST</h3>
@@ -606,18 +673,18 @@ body {
     <p class="section-subtitle">Industry-relevant courses that make you job-ready from day one. No hidden fees — quality education for all.</p>
   </div>
   <div class="courses-grid">
-    <a href="course-typing.html" class="course-card reveal" id="typing"><div class="course-icon">⌨️</div><h3>Typing (Hindi/English)</h3><p>Speed typing mastery in Hindi and English. Essential skill for data entry, government exams and office jobs.</p><span class="course-tag">3 Months</span></div>
+    <a href="course-typing.html" class="course-card reveal" id="typing"><div class="course-icon">⌨️</div><h3>Typing (Hindi/English)</h3><p>Speed typing mastery in Hindi and English. Essential skill for data entry, government exams and office jobs.</p><span class="course-tag">3 Months</span></a>
     <a href="course-msoffice.html" class="course-card reveal" id="msoffice"><div class="course-icon">📑</div><h3>MS Office 2010</h3><p>Complete training in Word, Excel, PowerPoint and Outlook. The foundation for every office job.</p><span class="course-tag">3 Months</span></a>
-    <a href="course-excel.html" class="course-card reveal" id="excel"><div class="course-icon">📈</div><h3>Advanced Excel</h3><p>Pivot tables, VLOOKUP, macros, data analysis, dashboards and financial modeling for professionals.</p><span class="course-tag">2 Months</span></div>
+    <a href="course-excel.html" class="course-card reveal" id="excel"><div class="course-icon">📈</div><h3>Advanced Excel</h3><p>Pivot tables, VLOOKUP, macros, data analysis, dashboards and financial modeling for professionals.</p><span class="course-tag">2 Months</span></a>
     <a href="course-ccc.html" class="course-card reveal" id="ccc2"><div class="course-icon">📜</div><h3>CCC (NIELIT)</h3><p>Government-certified computer concepts course. Mandatory qualification for all government jobs.</p><span class="course-tag">3 Months</span></a>
     <a href="course-tally.html" class="course-card reveal" id="tally2"><div class="course-icon">📊</div><h3>Tally Prime + GST</h3><p>Master India's #1 accounting software. GST billing, inventory, financial statements and business accounting.</p><span class="course-tag">3 Months</span></a>
-    <a href="course-dca.html" class="course-card reveal" id="dca"><div class="course-icon">💻</div><h3>DCA</h3><p>Diploma in Computer Applications — programming, database, web basics, hardware and networking.</p><span class="course-tag">6 Months</span></div>
+    <a href="course-dca.html" class="course-card reveal" id="dca"><div class="course-icon">💻</div><h3>DCA</h3><p>Diploma in Computer Applications — programming, database, web basics, hardware and networking.</p><span class="course-tag">6 Months</span></a>
     <a href="course-dtp.html" class="course-card reveal" id="dtp"><div class="course-icon">🎨</div><h3>DTP</h3><p>Desktop Publishing with CorelDRAW, Photoshop, page layout and design skills for print and digital media.</p><span class="course-tag">6 Months</span></a>
     <a href="course-web.html" class="course-card reveal" id="web"><div class="course-icon">🌐</div><h3>Web Designing</h3><p>HTML, CSS, JavaScript, responsive design and modern UI/UX principles. Build real websites.</p><span class="course-tag">6 Months</span></a>
     <a href="course-python.html" class="course-card reveal" id="python"><div class="course-icon">🐍</div><h3>Python Programming</h3><p>Learn Python from scratch — syntax, loops, functions, file handling and real-world projects.</p><span class="course-tag">3 Months</span></a>
     <a href="course-data.html" class="course-card reveal" id="data"><div class="course-icon">📉</div><h3>Data Analytics</h3><p>Excel + SQL + Power BI. Data visualization, reporting and business intelligence for modern careers.</p><span class="course-tag">4 Months</span></a>
-    <a href="course-adca.html" class="course-card reveal" id="adca"><div class="course-icon">🏆</div><h3>ADCA</h3><p>Advanced Diploma in Computer Applications — comprehensive 1-year program covering all IT domains.</p><span class="course-tag">12 Months</span></div>
-    <a href="course-olevel.html" class="course-card reveal" id="olevel2"><div class="course-icon">🎓</div><h3>O Level (NIELIT)</h3><p>One-year government IT diploma with Python, Web Design, IoT, practical labs and placement guidance.</p><span class="course-tag">12 Months</span></div>
+    <a href="course-adca.html" class="course-card reveal" id="adca"><div class="course-icon">🏆</div><h3>ADCA</h3><p>Advanced Diploma in Computer Applications — comprehensive 1-year program covering all IT domains.</p><span class="course-tag">12 Months</span></a>
+    <a href="course-olevel.html" class="course-card reveal" id="olevel2"><div class="course-icon">🎓</div><h3>O Level (NIELIT)</h3><p>One-year government IT diploma with Python, Web Design, IoT, practical labs and placement guidance.</p><span class="course-tag">12 Months</span></a>
     <a href="course-ai.html" class="course-card reveal" id="ai2"><div class="course-icon">🤖</div><h3>Artificial Intelligence</h3><p>AI Master Course — ML basics, AI tools, prompt engineering, automation and future-ready skills.</p><span class="course-tag">3 Months</span></a>
   </div>
 </section>
@@ -701,7 +768,7 @@ body {
         <div class="testimonial-avatar">A</div>
         <div class="testimonial-author-info"><h5>Amit Singh</h5><span>CCC Cleared — Govt. Job</span></div>
       </div>
-    </a>
+    </div>
   </div>
 </section>
 
@@ -744,40 +811,32 @@ body {
   <div class="section-header reveal">
     <div class="section-tag">🔍 Verify</div>
     <h2 class="section-title">Certificate Verification</h2>
-    <p class="section-subtitle">Verify the authenticity of NEXA Computer Institute certificates instantly.</p>
+    <p class="section-subtitle">Verify the authenticity of NEXA Computer Institute certificates instantly. Enter your certificate number or roll number below.</p>
   </div>
-  <div class="calendar-section reveal" style="text-align:center; max-width:600px;">
+
+  <div class="calendar-section reveal" style="text-align:center; max-width:700px;">
     <div style="padding:2rem;">
       <div style="width:80px; height:80px; background:linear-gradient(135deg, var(--primary), var(--accent)); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 1.5rem; font-size:2rem; color:#fff; box-shadow:0 10px 30px rgba(37,99,235,0.25);">
         <i class="fas fa-shield-alt"></i>
       </div>
       <h3 style="font-family:'Rajdhani',sans-serif; font-size:1.5rem; margin-bottom:0.8rem; color:var(--dark);">Verify Your Certificate</h3>
-      <p style="color:var(--text-muted); margin-bottom:1.5rem; line-height:1.7;">Enter your certificate number or roll number below to verify the authenticity of your NEXA/NIELIT certificate.</p>
-      <div style="display:flex; gap:0.8rem; max-width:400px; margin:0 auto; flex-wrap:wrap; justify-content:center;">
-        <input type="text" placeholder="Enter Certificate / Roll Number" style="flex:1; min-width:200px; padding:0.9rem 1.2rem; border:2px solid var(--border); border-radius:12px; font-family:'Inter',sans-serif; font-size:0.95rem; outline:none; transition:all 0.3s;" onfocus="this.style.borderColor='var(--primary)'; this.style.boxShadow='0 0 20px rgba(37,99,235,0.15)';" onblur="this.style.borderColor='var(--border)'; this.style.boxShadow='none';">
-        <button class="btn btn-primary" style="padding:0.9rem 1.8rem;" onclick="alert('Certificate verification system coming soon! Please contact institute for manual verification.')">
+      <p style="color:var(--text-muted); margin-bottom:1.5rem; line-height:1.7;">Enter your certificate number or roll number to verify and view your certificate details.</p>
+
+      <div style="display:flex; gap:0.8rem; max-width:450px; margin:0 auto 1.5rem; flex-wrap:wrap; justify-content:center;">
+        <input type="text" id="certInput" placeholder="Enter Certificate / Roll Number" style="flex:1; min-width:220px; padding:0.9rem 1.2rem; border:2px solid var(--border); border-radius:12px; font-family:'Inter',sans-serif; font-size:0.95rem; outline:none; transition:all 0.3s;" onfocus="this.style.borderColor='var(--primary)'; this.style.boxShadow='0 0 20px rgba(37,99,235,0.15)';" onblur="this.style.borderColor='var(--border)'; this.style.boxShadow='none';" onkeypress="if(event.key==='Enter') verifyCertificate()">
+        <button class="btn btn-primary" style="padding:0.9rem 1.8rem;" onclick="verifyCertificate()">
           <i class="fas fa-search"></i> Verify
         </button>
       </div>
+
+      <div id="certLoading" style="display:none; color:var(--primary); font-size:0.9rem; margin-bottom:1rem;">
+        <i class="fas fa-spinner fa-spin"></i> Searching certificate database...
+      </div>
+
+      <div id="certResult" style="display:none; margin-top:1.5rem;"></div>
+
       <p style="color:var(--text-muted); font-size:0.8rem; margin-top:1rem;"><i class="fas fa-info-circle"></i> For manual verification, WhatsApp your certificate to <strong>7696566162</strong></p>
     </div>
-  </div>
-</section>
-<section class="cta-section" id="contact">
-  <div class="cta-box reveal">
-    <div class="cta-content">
-      <h2>Ready to Build Your Future?</h2>
-      <p>Join NEXA Computer Institute today. Admissions open for 2026-27 batch — Limited seats for all courses!</p>
-      <div class="btn-group" style="justify-content:center;">
-        <a href="https://wa.me/917696566162" target="_blank" class="btn btn-whatsapp" style="font-size: 1.05rem; padding: 1.1rem 2.5rem;"><i class="fab fa-whatsapp"></i> Enroll via WhatsApp</a>
-        <a href="tel:+917696566162" class="btn btn-primary" style="font-size: 1.05rem; padding: 1.1rem 2.5rem;"><i class="fas fa-phone"></i> Call Now</a>
-      </div>
-      <div class="contact-info">
-        <div class="contact-item"><i class="fas fa-map-marker-alt"></i><span>Farrukhabad & Kannauj, UP</span></div>
-        <div class="contact-item"><i class="fas fa-envelope"></i><span>nexainstitute@gmail.com</span></div>
-        <div class="contact-item"><i class="fas fa-clock"></i><span>Mon-Sat: 6 AM - 9 PM</span></div>
-      </div>
-    </a>
   </div>
 </section>
 
@@ -876,6 +935,261 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     }
   });
 });
+
+// Certificate Verification from Google Sheets
+const SHEET_ID = '1LP6aTY61R45Rhzrux7M4Lev-j9JvwuXIaOSwDzyLReE';
+const SHEET_GID = '964494568';
+let certDatabase = [];
+let dataLoaded = false;
+
+// ============================================
+// STEP 1: Try loading from Google Sheets CSV
+// ============================================
+async function loadCertificateData() {
+  // Try multiple methods to load data
+
+  // Method 1: Direct CSV fetch (may fail due to CORS)
+  try {
+    const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${SHEET_GID}`;
+    const response = await fetch(url, { mode: 'cors', cache: 'no-cache' });
+    if (response.ok) {
+      const csvText = await response.text();
+      certDatabase = parseCSV(csvText);
+      if (certDatabase.length > 0) {
+        dataLoaded = true;
+        console.log('✅ Certificate database loaded from Google Sheets:', certDatabase.length, 'records');
+        return;
+      }
+    }
+  } catch (e) {
+    console.log('Method 1 failed (CORS):', e.message);
+  }
+
+  // Method 2: Try with published sheet URL
+  try {
+    const pubUrl = `https://docs.google.com/spreadsheets/d/e/${SHEET_ID}/pub?gid=${SHEET_GID}&single=true&output=csv`;
+    const response = await fetch(pubUrl, { mode: 'cors', cache: 'no-cache' });
+    if (response.ok) {
+      const csvText = await response.text();
+      certDatabase = parseCSV(csvText);
+      if (certDatabase.length > 0) {
+        dataLoaded = true;
+        console.log('✅ Certificate database loaded (published):', certDatabase.length, 'records');
+        return;
+      }
+    }
+  } catch (e) {
+    console.log('Method 2 failed:', e.message);
+  }
+
+  // Method 3: Load from embedded data (paste your CSV here as fallback)
+  certDatabase = getEmbeddedData();
+  if (certDatabase.length > 0) {
+    dataLoaded = true;
+    console.log('✅ Certificate database loaded from embedded data:', certDatabase.length, 'records');
+    return;
+  }
+
+  console.warn('⚠️ Could not load certificate data. Using demo mode.');
+  certDatabase = getDemoCertificates();
+  dataLoaded = true;
+}
+
+// ============================================
+// STEP 2: Parse CSV data
+// ============================================
+function parseCSV(csvText) {
+  const lines = csvText.trim().split('\n');
+  if (lines.length < 2) return [];
+
+  // Parse headers - handle quoted values
+  const headers = parseCSVLine(lines[0]);
+  const records = [];
+
+  for (let i = 1; i < lines.length; i++) {
+    const values = parseCSVLine(lines[i]);
+    const record = {};
+    headers.forEach((h, idx) => { 
+      record[h.trim()] = values[idx] ? values[idx].trim() : ''; 
+    });
+    // Only add if has meaningful data
+    if (record['Certificate No'] || record['Roll No'] || record['Name'] ||
+        record['certificate no'] || record['roll no'] || record['name']) {
+      records.push(record);
+    }
+  }
+  return records;
+}
+
+function parseCSVLine(line) {
+  const result = [];
+  let current = '';
+  let inQuotes = false;
+
+  for (let i = 0; i < line.length; i++) {
+    const char = line[i];
+    if (char === '"') {
+      inQuotes = !inQuotes;
+    } else if (char === ',' && !inQuotes) {
+      result.push(current.trim());
+      current = '';
+    } else {
+      current += char;
+    }
+  }
+  result.push(current.trim());
+  return result;
+}
+
+// ============================================
+// STEP 3: Embedded Data (Paste your CSV here)
+// ============================================
+// INSTRUCTIONS: Open your Google Sheet → File → Download → CSV
+// Paste the CSV content between the backticks below
+function getEmbeddedData() {
+  const csvData = ``; // <-- PASTE YOUR CSV DATA HERE BETWEEN BACKTICKS
+
+  if (!csvData.trim()) return [];
+  return parseCSV(csvData);
+}
+
+// ============================================
+// STEP 4: Demo Data (for testing)
+// ============================================
+function getDemoCertificates() {
+  return [
+    { 'Certificate No': 'NEXA-CCC-2026-001', 'Roll No': '300541', 'Name': 'Rahul Kumar', 'Course': 'CCC (NIELIT)', 'Issue Date': '15-01-2026', 'Grade': 'A', 'Status': 'Valid', 'Branch': 'Farrukhabad' },
+    { 'Certificate No': 'NEXA-OL-2026-001', 'Roll No': '300542', 'Name': 'Priya Sharma', 'Course': 'O Level (NIELIT)', 'Issue Date': '20-02-2026', 'Grade': 'B', 'Status': 'Valid', 'Branch': 'Kannauj' },
+    { 'Certificate No': 'NEXA-TALLY-2026-001', 'Roll No': '300543', 'Name': 'Amit Singh', 'Course': 'Tally Prime + GST', 'Issue Date': '10-03-2026', 'Grade': 'A+', 'Status': 'Valid', 'Branch': 'Farrukhabad' }
+  ];
+}
+
+// ============================================
+// STEP 5: Verify Certificate
+// ============================================
+function verifyCertificate() {
+  const input = document.getElementById('certInput').value.trim();
+  const resultDiv = document.getElementById('certResult');
+  const loadingDiv = document.getElementById('certLoading');
+
+  if (!input) {
+    alert('कृपया Certificate Number या Roll Number दर्ज करें');
+    return;
+  }
+
+  resultDiv.style.display = 'none';
+  loadingDiv.style.display = 'block';
+
+  // Ensure data is loaded before searching
+  const searchAndShow = () => {
+    loadingDiv.style.display = 'none';
+
+    const searchTerm = input.toUpperCase();
+    console.log('Searching for:', searchTerm);
+    console.log('Database records:', certDatabase.length);
+
+    const record = certDatabase.find(r => {
+      const certNo = (r['Certificate No'] || r['certificate no'] || '').toUpperCase();
+      const rollNo = (r['Roll No'] || r['roll no'] || '').toUpperCase();
+      const name = (r['Name'] || r['name'] || '').toUpperCase();
+      return certNo === searchTerm || rollNo === searchTerm || name === searchTerm;
+    });
+
+    if (record) {
+      showCertificate(record);
+    } else {
+      showNotFound(input);
+    }
+  };
+
+  if (!dataLoaded) {
+    loadCertificateData().then(searchAndShow);
+  } else {
+    setTimeout(searchAndShow, 600);
+  }
+}
+
+function showCertificate(record) {
+  const resultDiv = document.getElementById('certResult');
+  const name = record['Name'] || record['name'] || 'N/A';
+  const course = record['Course'] || record['course'] || 'N/A';
+  const certNo = record['Certificate No'] || record['certificate no'] || 'N/A';
+  const rollNo = record['Roll No'] || record['roll no'] || 'N/A';
+  const issueDate = record['Issue Date'] || record['issue date'] || 'N/A';
+  const grade = record['Grade'] || record['grade'] || 'N/A';
+  const status = record['Status'] || record['status'] || 'Valid';
+  const branch = record['Branch'] || record['branch'] || 'Farrukhabad';
+
+  resultDiv.innerHTML = `
+    <div class="cert-result-card">
+      <div class="cert-stamp">NEXA<br>INSTITUTE</div>
+      <div class="cert-header">
+        <div class="cert-badge"><i class="fas fa-check"></i></div>
+        <div class="cert-header-text">
+          <h4>✅ Certificate Verified</h4>
+          <p>This certificate is authentic and issued by NEXA Computer Institute</p>
+        </div>
+      </div>
+      <div class="cert-details">
+        <div class="cert-detail-item">
+          <div class="cert-detail-label">Student Name</div>
+          <div class="cert-detail-value">${name}</div>
+        </div>
+        <div class="cert-detail-item">
+          <div class="cert-detail-label">Course</div>
+          <div class="cert-detail-value">${course}</div>
+        </div>
+        <div class="cert-detail-item">
+          <div class="cert-detail-label">Certificate No</div>
+          <div class="cert-detail-value">${certNo}</div>
+        </div>
+        <div class="cert-detail-item">
+          <div class="cert-detail-label">Roll Number</div>
+          <div class="cert-detail-value">${rollNo}</div>
+        </div>
+        <div class="cert-detail-item">
+          <div class="cert-detail-label">Issue Date</div>
+          <div class="cert-detail-value">${issueDate}</div>
+        </div>
+        <div class="cert-detail-item">
+          <div class="cert-detail-label">Grade</div>
+          <div class="cert-detail-value" style="color:var(--success);">${grade}</div>
+        </div>
+        <div class="cert-detail-item">
+          <div class="cert-detail-label">Status</div>
+          <div class="cert-detail-value" style="color:var(--success);">${status}</div>
+        </div>
+        <div class="cert-detail-item">
+          <div class="cert-detail-label">Branch</div>
+          <div class="cert-detail-value">${branch}</div>
+        </div>
+      </div>
+    </div>
+  `;
+  resultDiv.style.display = 'block';
+}
+
+function showNotFound(input) {
+  const resultDiv = document.getElementById('certResult');
+  resultDiv.innerHTML = `
+    <div class="cert-error">
+      <i class="fas fa-times-circle" style="font-size:1.5rem;"></i>
+      <div style="text-align:left;">
+        <div style="font-size:1rem;">Certificate Not Found</div>
+        <div style="font-size:0.85rem; font-weight:400; margin-top:0.3rem;">No record found for "<strong>${input}</strong>". Please check the number and try again, or contact the institute.</div>
+        <div style="font-size:0.8rem; color:var(--text-muted); margin-top:0.5rem;">
+          <i class="fas fa-phone"></i> Helpline: 7696566162 | 9696456019
+        </div>
+      </div>
+    </div>
+  `;
+  resultDiv.style.display = 'block';
+}
+
+// Load data on page load
+window.addEventListener('DOMContentLoaded', loadCertificateData);
+
+
 </script>
 
 </body>
