@@ -90,10 +90,39 @@ body {
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
   letter-spacing: 1px; display: flex; align-items: center; gap: 0.6rem;
 }
+/* Logo Styling */
+.logo { display: flex; align-items: center; gap: 0.6rem; }
+.logo-text { display: flex; flex-direction: column; line-height: 1.1; }
+.logo-main {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 1.7rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: 1.5px;
+}
+.logo-sub {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-top: 1px;
+}
 .logo-icon {
   width: 44px; height: 44px; background: linear-gradient(135deg, var(--primary), var(--primary-dark));
   border-radius: 12px; display: flex; align-items: center; justify-content: center;
   font-size: 1.4rem; color: #fff; box-shadow: 0 4px 15px rgba(37,99,235,0.3);
+  overflow: hidden;
+}
+.logo-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
 }
 .nav-links { display: flex; gap: 1.5rem; list-style: none; align-items: center; }
 .nav-links a { color: var(--text-muted); text-decoration: none; font-weight: 500; font-size: 0.88rem; transition: all 0.3s; position: relative; }
@@ -300,8 +329,30 @@ body {
 
   /* Navbar */
   .navbar { padding: 0.6rem 4%; }
-  .logo { font-size: 1.5rem; }
-  .logo-icon { width: 38px; height: 38px; font-size: 1.2rem; }
+  /* Logo Styling */
+.logo { display: flex; align-items: center; gap: 0.6rem; }
+.logo-text { display: flex; flex-direction: column; line-height: 1.1; }
+.logo-main {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 1.7rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: 1.5px;
+}
+.logo-sub {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-top: 1px;
+}
+.logo-icon { width: 38px; height: 38px; font-size: 1.2rem; overflow: hidden; }
+  .logo-icon img { width: 100%; height: 100%; object-fit: contain; display: block; }
   .nav-links { 
     display: none; 
     position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
@@ -609,13 +660,14 @@ body {
 </style>
 <base target="_blank">
 <base target="_blank">
+<base target="_blank">
 </head>
 <body>
 
 <!-- Marquee Announcement Bar -->
 <div style="background: linear-gradient(90deg, #dc2626, #b91c1c, #dc2626); color: #fff; padding: 0.5rem 0; font-size: 0.9rem; font-weight: 600; position: relative; z-index: 100; border-bottom: 2px solid rgba(255,255,255,0.2); overflow: hidden;">
   <marquee behavior="scroll" direction="left" scrollamount="6" onmouseover="this.stop();" onmouseout="this.start();" style="display: block;">
-    🎓 <span style="color:#fef08a;">Admissions Open 2026-27</span> — CCC, O Level, Tally Prime + GST, AI & more! &nbsp;&nbsp;|&nbsp;&nbsp; 📞 Call <strong>7696566162</strong> / <strong>9696456019</strong> &nbsp;&nbsp;|&nbsp;&nbsp; 🏢 Farrukhabad: NEXA Building, Near Police Station Maudarwaja | Kannauj: Samdhan, Gursahaiganj &nbsp;&nbsp;|&nbsp;&nbsp; 🆓 <span style="color:#fef08a;">FREE Demo Class Available!</span> &nbsp;&nbsp;|&nbsp;&nbsp; 🌐 Online & Offline Batches &nbsp;&nbsp;|&nbsp;&nbsp; 📜 NIELIT Govt. Certified Courses
+    <i class="fas fa-laptop-code" style="margin-right:4px;"></i> <span style="color:#fef08a;">Admissions Open 2026-27</span> — CCC, O Level, Tally Prime + GST, AI & more! &nbsp;&nbsp;|&nbsp;&nbsp; 📞 Call <strong>7696566162</strong> / <strong>9696456019</strong> &nbsp;&nbsp;|&nbsp;&nbsp; 🏢 Farrukhabad: NEXA Building, Near Police Station Maudarwaja | Kannauj: Samdhan, Gursahaiganj &nbsp;&nbsp;|&nbsp;&nbsp; 🆓 <span style="color:#fef08a;">FREE Demo Class Available!</span> &nbsp;&nbsp;|&nbsp;&nbsp; 🌐 Online & Offline Batches &nbsp;&nbsp;|&nbsp;&nbsp; 📜 NIELIT Govt. Certified Courses
   </marquee>
 </div>
 <!-- Digital Background -->
@@ -629,8 +681,11 @@ body {
 <!-- Navbar -->
 <nav class="navbar" id="navbar">
   <div class="logo">
-    <div class="logo-icon">🎓</div>
-    NEXA <span style="font-weight:500; -webkit-text-fill-color:var(--text-muted);">Institute</span>
+    <div class="logo-icon"><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCI+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImhleEdyYWQiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojMjU2M2ViIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6IzFkNGVkOCIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iYWNjZW50R3JhZCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiMwNmI2ZDQiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdHlsZT0ic3RvcC1jb2xvcjojMjU2M2ViIi8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogICAgPGZpbHRlciBpZD0iZ2xvdyIgeD0iLTIwJSIgeT0iLTIwJSIgd2lkdGg9IjE0MCUiIGhlaWdodD0iMTQwJSI+CiAgICAgIDxmZUdhdXNzaWFuQmx1ciBzdGREZXZpYXRpb249IjMiIHJlc3VsdD0iYmx1ciIvPgogICAgICA8ZmVDb21wb3NpdGUgaW49IlNvdXJjZUdyYXBoaWMiIGluMj0iYmx1ciIgb3BlcmF0b3I9Im92ZXIiLz4KICAgIDwvZmlsdGVyPgogIDwvZGVmcz4KICAKICA8IS0tIE91dGVyIGhleGFnb24gLS0+CiAgPHBvbHlnb24gcG9pbnRzPSIxMDAsMTIgMTc2LDU2IDE3NiwxNDQgMTAwLDE4OCAyNCwxNDQgMjQsNTYiIGZpbGw9InVybCgjZXhwb3J0L2hleEdyYWQpIiBzdHJva2U9InJnYmEoMjU1LDI1NSwyNTUsMC4zKSIgc3Ryb2tlLXdpZHRoPSIyIi8+CiAgCiAgPCEtLSBJbm5lciBoZXhhZ29uIHJpbmcgLS0+CiAgPHBvbHlnb24gcG9pbnRzPSIxMDAsMjIgMTY2LDYwIDE2NiwxNDAgMTAwLDE3OCAzNCwxNDAgMzQsNjAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzA2YjZkNCIgc3Ryb2tlLXdpZHRoPSIxLjUiIG9wYWNpdHk9IjAuNSIvPgogIAogIDwhLS0gQ29ybmVyIGFjY2VudCB0cmlhbmdsZXMgLS0+CiAgPHBvbHlnb24gcG9pbnRzPSIxMDAsOCAxMDUsMTggOTUsMTgiIGZpbGw9IiMwNmI2ZDQiIG9wYWNpdHk9IjAuNSIvPgogIDxwb2x5Z29uIHBvaW50cz0iMTgwLDUyIDE3Miw1OCAxNzYsNDgiIGZpbGw9IiMwNmI2ZDQiIG9wYWNpdHk9IjAuNSIvPgogIDxwb2x5Z29uIHBvaW50cz0iMTgwLDE0OCAxNzYsMTM4IDE3MiwxNDQiIGZpbGw9IiMwNmI2ZDQiIG9wYWNpdHk9IjAuNSIvPgogIDxwb2x5Z29uIHBvaW50cz0iMTAwLDE5MiA5NSwxODIgMTA1LDE4MiIgZmlsbD0iIzA2YjZkNCIgb3BhY2l0eT0iMC41Ii8+CiAgPHBvbHlnb24gcG9pbnRzPSIyMCwxNDggMjQsMTM4IDI4LDE0NCIgZmlsbD0iIzA2YjZkNCIgb3BhY2l0eT0iMC41Ii8+CiAgPHBvbHlnb24gcG9pbnRzPSIyMCw1MiAyOCw1OCAyNCw0OCIgZmlsbD0iIzA2YjZkNCIgb3BhY2l0eT0iMC41Ii8+CiAgCiAgPCEtLSBDaXJjdWl0IGRvdHMgLS0+CiAgPGNpcmNsZSBjeD0iMTAwIiBjeT0iNiIgcj0iMS41IiBmaWxsPSJ3aGl0ZSIgb3BhY2l0eT0iMC40Ii8+CiAgPGNpcmNsZSBjeD0iMTg1IiBjeT0iNTAiIHI9IjEuMiIgZmlsbD0id2hpdGUiIG9wYWNpdHk9IjAuMyIvPgogIDxjaXJjbGUgY3g9IjE4NSIgY3k9IjE1MCIgcj0iMS41IiBmaWxsPSJ3aGl0ZSIgb3BhY2l0eT0iMC40Ii8+CiAgPGNpcmNsZSBjeD0iMTAwIiBjeT0iMTk0IiByPSIxLjIiIGZpbGw9IndoaXRlIiBvcGFjaXR5PSIwLjMiLz4KICA8Y2lyY2xlIGN4PSIxNSIgY3k9IjE1MCIgcj0iMS41IiBmaWxsPSJ3aGl0ZSIgb3BhY2l0eT0iMC40Ii8+CiAgPGNpcmNsZSBjeD0iMTUiIGN5PSI1MCIgcj0iMS4yIiBmaWxsPSJ3aGl0ZSIgb3BhY2l0eT0iMC4zIi8+CiAgPGNpcmNsZSBjeD0iMTMwIiBjeT0iOCIgcj0iMSIgZmlsbD0id2hpdGUiIG9wYWNpdHk9IjAuMjUiLz4KICA8Y2lyY2xlIGN4PSIxNzAiIGN5PSIxMDAiIHI9IjEiIGZpbGw9IndoaXRlIiBvcGFjaXR5PSIwLjI1Ii8+CiAgPGNpcmNsZSBjeD0iMTMwIiBjeT0iMTkyIiByPSIxIiBmaWxsPSJ3aGl0ZSIgb3BhY2l0eT0iMC4yNSIvPgogIDxjaXJjbGUgY3g9IjcwIiBjeT0iMTkyIiByPSIxIiBmaWxsPSJ3aGl0ZSIgb3BhY2l0eT0iMC4yNSIvPgogIDxjaXJjbGUgY3g9IjMwIiBjeT0iMTAwIiByPSIxIiBmaWxsPSJ3aGl0ZSIgb3BhY2l0eT0iMC4yNSIvPgogIDxjaXJjbGUgY3g9IjcwIiBjeT0iOCIgcj0iMSIgZmlsbD0id2hpdGUiIG9wYWNpdHk9IjAuMjUiLz4KICAKICA8IS0tIExhcHRvcCBiYXNlIC0tPgogIDxyZWN0IHg9IjQ1IiB5PSIxNDIiIHdpZHRoPSIxMTAiIGhlaWdodD0iMTQiIHJ4PSI3IiBmaWxsPSJ3aGl0ZSIgb3BhY2l0eT0iMC45NSIvPgogIDxyZWN0IHg9IjgyIiB5PSIxNDUiIHdpZHRoPSIzNiIgaGVpZ2h0PSI2IiByeD0iMyIgZmlsbD0iI2UyZThmMCIgb3BhY2l0eT0iMC42Ii8+CiAgCiAgPCEtLSBTY3JlZW4gZnJhbWUgLS0+CiAgPHJlY3QgeD0iNTIiIHk9Ijg4IiB3aWR0aD0iOTYiIGhlaWdodD0iNTIiIHJ4PSI2IiBmaWxsPSJ3aGl0ZSIgb3BhY2l0eT0iMC45OCIvPgogIAogIDwhLS0gU2NyZWVuIGRpc3BsYXkgLS0+CiAgPHJlY3QgeD0iNTgiIHk9Ijk0IiB3aWR0aD0iODQiIGhlaWdodD0iNDAiIHJ4PSI0IiBmaWxsPSIjMGYxNzJhIiBvcGFjaXR5PSIwLjk1Ii8+CiAgCiAgPCEtLSBDb2RlIGxpbmVzIC0tPgogIDxsaW5lIHgxPSI2MiIgeTE9IjEwMiIgeDI9IjkyIiB5Mj0iMTAyIiBzdHJva2U9IiMwNmI2ZDQiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBvcGFjaXR5PSIwLjkiLz4KICA8bGluZSB4MT0iNjIiIHkxPSIxMTIiIHgyPSIxMDIiIHkyPSIxMTIiIHN0cm9rZT0iIzkzYzVmZCIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWNhcD0icm91bmQiIG9wYWNpdHk9IjAuOSIvPgogIDxsaW5lIHgxPSI2MiIgeTE9IjEyMiIgeDI9Ijg2IiB5Mj0iMTIyIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgb3BhY2l0eT0iMC45Ii8+CiAgPGxpbmUgeDE9IjYyIiB5MT0iMTMyIiB4Mj0iOTYiIHkyPSIxMzIiIHN0cm9rZT0iIzA2YjZkNCIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWNhcD0icm91bmQiIG9wYWNpdHk9IjAuOSIvPgogIAogIDwhLS0gQ3Vyc29yIC0tPgogIDxyZWN0IHg9Ijk5IiB5PSIxMjkiIHdpZHRoPSIzIiBoZWlnaHQ9IjgiIGZpbGw9IiMwNmI2ZDQiIG9wYWNpdHk9IjAuOSIvPgogIAogIDwhLS0gR3JhZHVhdGlvbiBjYXAgdG9wIC0tPgogIDxwb2x5Z29uIHBvaW50cz0iMTAwLDY4IDEyNSw4MCAxMDAsOTIgNzUsODAiIGZpbGw9IndoaXRlIiBvcGFjaXR5PSIwLjk4Ii8+CiAgCiAgPCEtLSBDYXAgYmFuZCAtLT4KICA8cmVjdCB4PSI3OCIgeT0iODIiIHdpZHRoPSI0NCIgaGVpZ2h0PSI2IiByeD0iMiIgZmlsbD0iI2UyZThmMCIgb3BhY2l0eT0iMC43Ii8+CiAgCiAgPCEtLSBUYXNzZWwgLS0+CiAgPGxpbmUgeDE9IjEyMiIgeTE9IjgwIiB4Mj0iMTMwIiB5Mj0iODgiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMi41IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KICA8bGluZSB4MT0iMTMwIiB5MT0iODgiIHgyPSIxMzAiIHkyPSI5OCIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIyLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgogIDxjaXJjbGUgY3g9IjEzMCIgY3k9IjEwMCIgcj0iMyIgZmlsbD0iIzA2YjZkNCIvPgo8L3N2Zz4=" alt="NEXA Logo" style="width:100%;height:100%;object-fit:contain;padding:4px;"></div>
+    <div class="logo-text">
+      <div class="logo-main">NEXA</div>
+      <div class="logo-sub">Computer Institute</div>
+    </div>
   </div>
   <ul class="nav-links">
     <button class="mobile-menu-close" onclick="document.querySelector('.nav-links').classList.remove('active');document.body.style.overflow='';">✕</button>
@@ -1005,7 +1060,15 @@ body {
 <footer class="footer">
   <div class="footer-grid">
     <div class="footer-brand">
-      <div class="footer-logo">🎓 NEXA Computer Institute</div>
+      <div class="footer-logo">
+        <div style="display:flex; align-items:center; gap:0.5rem;">
+          <span style="font-size:1.4rem;"><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCI+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImhleEdyYWQiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojMjU2M2ViIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6IzFkNGVkOCIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iYWNjZW50R3JhZCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiMwNmI2ZDQiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdHlsZT0ic3RvcC1jb2xvcjojMjU2M2ViIi8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogICAgPGZpbHRlciBpZD0iZ2xvdyIgeD0iLTIwJSIgeT0iLTIwJSIgd2lkdGg9IjE0MCUiIGhlaWdodD0iMTQwJSI+CiAgICAgIDxmZUdhdXNzaWFuQmx1ciBzdGREZXZpYXRpb249IjMiIHJlc3VsdD0iYmx1ciIvPgogICAgICA8ZmVDb21wb3NpdGUgaW49IlNvdXJjZUdyYXBoaWMiIGluMj0iYmx1ciIgb3BlcmF0b3I9Im92ZXIiLz4KICAgIDwvZmlsdGVyPgogIDwvZGVmcz4KICAKICA8IS0tIE91dGVyIGhleGFnb24gLS0+CiAgPHBvbHlnb24gcG9pbnRzPSIxMDAsMTIgMTc2LDU2IDE3NiwxNDQgMTAwLDE4OCAyNCwxNDQgMjQsNTYiIGZpbGw9InVybCgjZXhwb3J0L2hleEdyYWQpIiBzdHJva2U9InJnYmEoMjU1LDI1NSwyNTUsMC4zKSIgc3Ryb2tlLXdpZHRoPSIyIi8+CiAgCiAgPCEtLSBJbm5lciBoZXhhZ29uIHJpbmcgLS0+CiAgPHBvbHlnb24gcG9pbnRzPSIxMDAsMjIgMTY2LDYwIDE2NiwxNDAgMTAwLDE3OCAzNCwxNDAgMzQsNjAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzA2YjZkNCIgc3Ryb2tlLXdpZHRoPSIxLjUiIG9wYWNpdHk9IjAuNSIvPgogIAogIDwhLS0gQ29ybmVyIGFjY2VudCB0cmlhbmdsZXMgLS0+CiAgPHBvbHlnb24gcG9pbnRzPSIxMDAsOCAxMDUsMTggOTUsMTgiIGZpbGw9IiMwNmI2ZDQiIG9wYWNpdHk9IjAuNSIvPgogIDxwb2x5Z29uIHBvaW50cz0iMTgwLDUyIDE3Miw1OCAxNzYsNDgiIGZpbGw9IiMwNmI2ZDQiIG9wYWNpdHk9IjAuNSIvPgogIDxwb2x5Z29uIHBvaW50cz0iMTgwLDE0OCAxNzYsMTM4IDE3MiwxNDQiIGZpbGw9IiMwNmI2ZDQiIG9wYWNpdHk9IjAuNSIvPgogIDxwb2x5Z29uIHBvaW50cz0iMTAwLDE5MiA5NSwxODIgMTA1LDE4MiIgZmlsbD0iIzA2YjZkNCIgb3BhY2l0eT0iMC41Ii8+CiAgPHBvbHlnb24gcG9pbnRzPSIyMCwxNDggMjQsMTM4IDI4LDE0NCIgZmlsbD0iIzA2YjZkNCIgb3BhY2l0eT0iMC41Ii8+CiAgPHBvbHlnb24gcG9pbnRzPSIyMCw1MiAyOCw1OCAyNCw0OCIgZmlsbD0iIzA2YjZkNCIgb3BhY2l0eT0iMC41Ii8+CiAgCiAgPCEtLSBDaXJjdWl0IGRvdHMgLS0+CiAgPGNpcmNsZSBjeD0iMTAwIiBjeT0iNiIgcj0iMS41IiBmaWxsPSJ3aGl0ZSIgb3BhY2l0eT0iMC40Ii8+CiAgPGNpcmNsZSBjeD0iMTg1IiBjeT0iNTAiIHI9IjEuMiIgZmlsbD0id2hpdGUiIG9wYWNpdHk9IjAuMyIvPgogIDxjaXJjbGUgY3g9IjE4NSIgY3k9IjE1MCIgcj0iMS41IiBmaWxsPSJ3aGl0ZSIgb3BhY2l0eT0iMC40Ii8+CiAgPGNpcmNsZSBjeD0iMTAwIiBjeT0iMTk0IiByPSIxLjIiIGZpbGw9IndoaXRlIiBvcGFjaXR5PSIwLjMiLz4KICA8Y2lyY2xlIGN4PSIxNSIgY3k9IjE1MCIgcj0iMS41IiBmaWxsPSJ3aGl0ZSIgb3BhY2l0eT0iMC40Ii8+CiAgPGNpcmNsZSBjeD0iMTUiIGN5PSI1MCIgcj0iMS4yIiBmaWxsPSJ3aGl0ZSIgb3BhY2l0eT0iMC4zIi8+CiAgPGNpcmNsZSBjeD0iMTMwIiBjeT0iOCIgcj0iMSIgZmlsbD0id2hpdGUiIG9wYWNpdHk9IjAuMjUiLz4KICA8Y2lyY2xlIGN4PSIxNzAiIGN5PSIxMDAiIHI9IjEiIGZpbGw9IndoaXRlIiBvcGFjaXR5PSIwLjI1Ii8+CiAgPGNpcmNsZSBjeD0iMTMwIiBjeT0iMTkyIiByPSIxIiBmaWxsPSJ3aGl0ZSIgb3BhY2l0eT0iMC4yNSIvPgogIDxjaXJjbGUgY3g9IjcwIiBjeT0iMTkyIiByPSIxIiBmaWxsPSJ3aGl0ZSIgb3BhY2l0eT0iMC4yNSIvPgogIDxjaXJjbGUgY3g9IjMwIiBjeT0iMTAwIiByPSIxIiBmaWxsPSJ3aGl0ZSIgb3BhY2l0eT0iMC4yNSIvPgogIDxjaXJjbGUgY3g9IjcwIiBjeT0iOCIgcj0iMSIgZmlsbD0id2hpdGUiIG9wYWNpdHk9IjAuMjUiLz4KICAKICA8IS0tIExhcHRvcCBiYXNlIC0tPgogIDxyZWN0IHg9IjQ1IiB5PSIxNDIiIHdpZHRoPSIxMTAiIGhlaWdodD0iMTQiIHJ4PSI3IiBmaWxsPSJ3aGl0ZSIgb3BhY2l0eT0iMC45NSIvPgogIDxyZWN0IHg9IjgyIiB5PSIxNDUiIHdpZHRoPSIzNiIgaGVpZ2h0PSI2IiByeD0iMyIgZmlsbD0iI2UyZThmMCIgb3BhY2l0eT0iMC42Ii8+CiAgCiAgPCEtLSBTY3JlZW4gZnJhbWUgLS0+CiAgPHJlY3QgeD0iNTIiIHk9Ijg4IiB3aWR0aD0iOTYiIGhlaWdodD0iNTIiIHJ4PSI2IiBmaWxsPSJ3aGl0ZSIgb3BhY2l0eT0iMC45OCIvPgogIAogIDwhLS0gU2NyZWVuIGRpc3BsYXkgLS0+CiAgPHJlY3QgeD0iNTgiIHk9Ijk0IiB3aWR0aD0iODQiIGhlaWdodD0iNDAiIHJ4PSI0IiBmaWxsPSIjMGYxNzJhIiBvcGFjaXR5PSIwLjk1Ii8+CiAgCiAgPCEtLSBDb2RlIGxpbmVzIC0tPgogIDxsaW5lIHgxPSI2MiIgeTE9IjEwMiIgeDI9IjkyIiB5Mj0iMTAyIiBzdHJva2U9IiMwNmI2ZDQiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBvcGFjaXR5PSIwLjkiLz4KICA8bGluZSB4MT0iNjIiIHkxPSIxMTIiIHgyPSIxMDIiIHkyPSIxMTIiIHN0cm9rZT0iIzkzYzVmZCIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWNhcD0icm91bmQiIG9wYWNpdHk9IjAuOSIvPgogIDxsaW5lIHgxPSI2MiIgeTE9IjEyMiIgeDI9Ijg2IiB5Mj0iMTIyIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgb3BhY2l0eT0iMC45Ii8+CiAgPGxpbmUgeDE9IjYyIiB5MT0iMTMyIiB4Mj0iOTYiIHkyPSIxMzIiIHN0cm9rZT0iIzA2YjZkNCIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWNhcD0icm91bmQiIG9wYWNpdHk9IjAuOSIvPgogIAogIDwhLS0gQ3Vyc29yIC0tPgogIDxyZWN0IHg9Ijk5IiB5PSIxMjkiIHdpZHRoPSIzIiBoZWlnaHQ9IjgiIGZpbGw9IiMwNmI2ZDQiIG9wYWNpdHk9IjAuOSIvPgogIAogIDwhLS0gR3JhZHVhdGlvbiBjYXAgdG9wIC0tPgogIDxwb2x5Z29uIHBvaW50cz0iMTAwLDY4IDEyNSw4MCAxMDAsOTIgNzUsODAiIGZpbGw9IndoaXRlIiBvcGFjaXR5PSIwLjk4Ii8+CiAgCiAgPCEtLSBDYXAgYmFuZCAtLT4KICA8cmVjdCB4PSI3OCIgeT0iODIiIHdpZHRoPSI0NCIgaGVpZ2h0PSI2IiByeD0iMiIgZmlsbD0iI2UyZThmMCIgb3BhY2l0eT0iMC43Ii8+CiAgCiAgPCEtLSBUYXNzZWwgLS0+CiAgPGxpbmUgeDE9IjEyMiIgeTE9IjgwIiB4Mj0iMTMwIiB5Mj0iODgiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMi41IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KICA8bGluZSB4MT0iMTMwIiB5MT0iODgiIHgyPSIxMzAiIHkyPSI5OCIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIyLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgogIDxjaXJjbGUgY3g9IjEzMCIgY3k9IjEwMCIgcj0iMyIgZmlsbD0iIzA2YjZkNCIvPgo8L3N2Zz4=" alt="NEXA Logo" style="width:36px;height:36px;object-fit:contain;vertical-align:middle;"></span>
+          <div>
+            <div style="font-size:1.3rem; font-weight:700; line-height:1;">NEXA</div>
+            <div style="font-size:0.85rem; font-weight:500; opacity:0.8; line-height:1.2;">Computer Institute</div>
+          </div>
+        </div>
+      </div>
       <p>Preparing the next generation of tech leaders through quality education and practical training in Farrukhabad & Kannauj.</p>
       <div class="social-links">
         <a href="#"><i class="fab fa-facebook-f"></i></a>
@@ -1043,7 +1106,7 @@ body {
     </div>
   </div>
   <div class="footer-bottom">
-    <p>Made with <span class="footer-heart">❤</span> for Farrukhabad & Kannauj | © 2026 NEXA Computer Institute. All Rights Reserved.<br>
+    <p>Made with <span class="footer-heart"><i class="fas fa-heart"></i></span> for Farrukhabad & Kannauj | © 2026 NEXA Computer Institute. All Rights Reserved.<br>
     Branch: NEXA Building, Near Police Station Maudarwaja, Farrukhabad | Kannauj Branch: Samdhan, Gursahaiganj | 📞 7696566162 / 9696456019</p>
   </div>
 </footer>
