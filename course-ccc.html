@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NIELIT CCC | NEXA Computer Institute</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root {
+  --primary: #2563eb; --primary-dark: #1d4ed8; --secondary: #f59e0b; --accent: #06b6d4;
+  --success: #10b981; --danger: #ef4444; --dark: #0f172a; --text: #1e293b;
+  --text-muted: #64748b; --light: #f8fafc; --white: #ffffff; --border: #e2e8f0;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Inter', sans-serif; color: var(--text);
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 25%, #f5f3ff 50%, #ecfdf5 75%, #f0f9ff 100%);
+  background-size: 400% 400%; animation: gradientShift 15s ease infinite;
+  min-height: 100vh; overflow-x: hidden;
+}
+@keyframes gradientShift { 0%,100%{background-position:0% 50%} 50%{background-position:100% 50%} }
+
+/* Digital Grid Background */
+.digital-bg {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  z-index: 0; pointer-events: none; overflow: hidden;
+}
+.digital-grid {
+  position: absolute; width: 200%; height: 200%;
+  background-image:
+    linear-gradient(rgba(37,99,235,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(37,99,235,0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+  animation: gridMove 20s linear infinite;
+}
+@keyframes gridMove { 0%{transform:translate(0,0)} 100%{transform:translate(-50px,-50px)} }
+.floating-orb {
+  position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.35;
+  animation: orbFloat 8s ease-in-out infinite;
+}
+.orb-1 { width: 400px; height: 400px; background: linear-gradient(135deg, #3b82f6, #06b6d4); top: -10%; left: -5%; animation-delay: 0s; }
+.orb-2 { width: 350px; height: 350px; background: linear-gradient(135deg, #8b5cf6, #ec4899); bottom: 10%; right: -5%; animation-delay: 2s; }
+@keyframes orbFloat { 0%,100%{transform:translateY(0) scale(1)} 50%{transform:translateY(-30px) scale(1.1)} }
+
+/* Navbar */
+.navbar {
+  position: sticky; top: 0; left: 0; width: 100%; padding: 0.8rem 5%;
+  display: flex; justify-content: space-between; align-items: center; z-index: 999;
+  background: rgba(255,255,255,0.85); backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(226,232,240,0.6);
+}
+.logo {
+  font-family: 'Rajdhani', sans-serif; font-size: 1.9rem; font-weight: 700;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  letter-spacing: 1px; display: flex; align-items: center; gap: 0.6rem; text-decoration: none;
+}
+.logo-icon {
+  width: 44px; height: 44px; background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  border-radius: 12px; display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem; color: #fff; box-shadow: 0 4px 15px rgba(37,99,235,0.3);
+}
+.nav-links { display: flex; gap: 2rem; list-style: none; align-items: center; }
+.nav-links a { color: var(--text-muted); text-decoration: none; font-weight: 500; font-size: 0.92rem; transition: all 0.3s; }
+.nav-links a:hover { color: var(--primary); }
+.nav-btn {
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: #fff !important;
+  padding: 0.55rem 1.4rem; border-radius: 50px; font-weight: 600; font-size: 0.85rem;
+  box-shadow: 0 4px 15px rgba(37,99,235,0.3); transition: all 0.3s; text-decoration: none;
+}
+.nav-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(37,99,235,0.4); }
+
+/* Course Hero */
+.course-hero {
+  padding: 4rem 5% 3rem; position: relative; z-index: 1;
+}
+.course-hero-container {
+  max-width: 1100px; margin: 0 auto;
+  background: rgba(255,255,255,0.92); border: 1px solid var(--border); border-radius: 24px;
+  padding: 3rem; backdrop-filter: blur(10px); box-shadow: 0 20px 50px rgba(0,0,0,0.06);
+}
+.course-badge {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.4rem 1rem; background: linear-gradient(135deg, rgba(37,99,235,0.1), rgba(6,182,212,0.1));
+  border: 1.5px solid var(--primary); border-radius: 50px;
+  font-size: 0.8rem; color: var(--primary); font-weight: 600; margin-bottom: 1.2rem;
+}
+.course-hero h1 {
+  font-family: 'Rajdhani', sans-serif; font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+  font-weight: 700; color: var(--dark); margin-bottom: 1rem;
+}
+.course-hero p {
+  color: var(--text-muted); font-size: 1.05rem; line-height: 1.8; margin-bottom: 1.5rem;
+}
+.course-meta {
+  display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem;
+}
+.course-meta span {
+  padding: 0.4rem 1rem; background: var(--light); border-radius: 8px;
+  font-size: 0.85rem; color: var(--text-muted); border: 1px solid var(--border); font-weight: 500;
+}
+.btn {
+  padding: 0.95rem 2rem; border-radius: 12px; font-weight: 600; font-size: 0.95rem;
+  cursor: pointer; transition: all 0.3s ease; text-decoration: none;
+  display: inline-flex; align-items: center; gap: 0.5rem; border: none;
+}
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white;
+  box-shadow: 0 10px 35px rgba(37,99,235,0.35);
+}
+.btn-primary:hover { transform: translateY(-3px); box-shadow: 0 15px 45px rgba(37,99,235,0.45); }
+.btn-whatsapp {
+  background: linear-gradient(135deg, #25D366, #128C7E); color: white;
+  box-shadow: 0 10px 35px rgba(37,211,102,0.3);
+}
+.btn-whatsapp:hover { transform: translateY(-3px); box-shadow: 0 15px 45px rgba(37,211,102,0.4); }
+.btn-outline {
+  background: transparent; color: var(--primary); border: 2px solid var(--primary);
+}
+.btn-outline:hover { background: var(--primary); color: #fff; transform: translateY(-3px); }
+
+/* Syllabus */
+.syllabus-section {
+  padding: 3rem 5%; position: relative; z-index: 1;
+}
+.syllabus-container {
+  max-width: 1100px; margin: 0 auto;
+  background: rgba(255,255,255,0.92); border: 1px solid var(--border); border-radius: 24px;
+  padding: 3rem; backdrop-filter: blur(10px);
+}
+.syllabus-container h2 {
+  font-family: 'Rajdhani', sans-serif; font-size: 1.8rem; color: var(--dark); margin-bottom: 1.5rem;
+}
+.syllabus-list {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem;
+}
+.syllabus-item {
+  display: flex; align-items: flex-start; gap: 1rem;
+  padding: 1.2rem; background: var(--light); border-radius: 12px;
+  border: 1px solid var(--border); transition: all 0.3s;
+}
+.syllabus-item:hover {
+  border-color: var(--primary); transform: translateX(5px);
+  box-shadow: 0 10px 25px rgba(37,99,235,0.08);
+}
+.syllabus-item i {
+  width: 36px; height: 36px; background: linear-gradient(135deg, var(--primary), var(--accent));
+  border-radius: 10px; display: flex; align-items: center; justify-content: center;
+  color: #fff; font-size: 0.9rem; flex-shrink: 0;
+}
+.syllabus-item h4 { font-size: 1rem; color: var(--dark); margin-bottom: 0.3rem; }
+.syllabus-item p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; }
+
+/* CTA */
+.cta-section {
+  text-align: center; padding: 3rem 5% 5rem; position: relative; z-index: 1;
+}
+.cta-box {
+  max-width: 700px; margin: 0 auto; padding: 3rem 2rem;
+  background: linear-gradient(135deg, rgba(37,99,235,0.08), rgba(6,182,212,0.08));
+  border: 1px solid var(--border); border-radius: 24px;
+}
+.cta-box h2 {
+  font-family: 'Rajdhani', sans-serif; font-size: 1.8rem; color: var(--dark); margin-bottom: 0.8rem;
+}
+.cta-box p { color: var(--text-muted); margin-bottom: 1.5rem; }
+
+/* Footer */
+.footer {
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+  border-top: 1px solid rgba(255,255,255,0.05); padding: 3rem 5% 1.5rem;
+  position: relative; z-index: 1; color: #cbd5e1; text-align: center;
+}
+.footer p { color: #94a3b8; font-size: 0.9rem; line-height: 1.7; }
+.footer a { color: #60a5fa; text-decoration: none; }
+.footer-heart { color: #ef4444; }
+
+/* WhatsApp Float */
+.whatsapp-float {
+  position: fixed; bottom: 25px; right: 25px; width: 60px; height: 60px;
+  background: linear-gradient(135deg, #25D366, #128C7E); color: #fff;
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-size: 1.8rem; text-decoration: none; box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+  z-index: 9999; transition: all 0.3s ease; animation: whatsappPulse 2.5s infinite;
+}
+.whatsapp-float:hover { transform: scale(1.1) translateY(-4px); }
+@keyframes whatsappPulse {
+  0%{box-shadow:0 0 0 0 rgba(37,211,102,0.7)}
+  70%{box-shadow:0 0 0 20px rgba(37,211,102,0)}
+  100%{box-shadow:0 0 0 0 rgba(37,211,102,0)}
+}
+
+.reveal { opacity: 0; transform: translateY(30px); transition: all 0.7s ease; }
+.reveal.active { opacity: 1; transform: translateY(0); }
+
+@media (max-width: 768px) {
+  .course-hero-container { padding: 2rem 1.5rem; }
+  .syllabus-container { padding: 2rem 1.5rem; }
+  .nav-links { display: none; }
+}
+</style>
+<base target="_blank">
+</head>
+<body>
+
+<div class="digital-bg">
+  <div class="digital-grid"></div>
+  <div class="floating-orb orb-1"></div>
+  <div class="floating-orb orb-2"></div>
+</div>
+
+<nav class="navbar">
+  <a href="nexa_institute_website.html" class="logo">
+    <div class="logo-icon">🎓</div>
+    NEXA <span style="font-weight:500; -webkit-text-fill-color:var(--text-muted);">Institute</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="nexa_institute_website.html"><i class="fas fa-home"></i> Home</a></li>
+    <li><a href="nexa_institute_website.html#courses"><i class="fas fa-book"></i> Courses</a></li>
+    <li><a href="nexa_institute_website.html#contact"><i class="fas fa-phone"></i> Contact</a></li>
+    <li><a href="https://wa.me/917696566162" class="nav-btn"><i class="fab fa-whatsapp"></i> Enroll Now</a></li>
+  </ul>
+</nav>
+
+<section class="course-hero">
+  <div class="course-hero-container reveal">
+    <div class="course-badge">📜 Govt. Certified</div>
+    <h1>NIELIT CCC</h1>
+    <p>Course on Computer Concepts — mandatory for government jobs. Covers IT tools, Internet, MS Office, and digital literacy. Includes mock tests to ensure first-attempt success.</p>
+    <div class="course-meta">
+      <span><i class="far fa-clock"></i> 3 Months</span>
+      <span><i class="fas fa-signal"></i> Beginner</span>
+      <span><i class="fas fa-certificate"></i> NIELIT Govt. Certificate</span>
+      <span><i class="fas fa-chalkboard-teacher"></i> Offline / Online</span>
+    </div>
+    <div style="display:flex; gap:1rem; flex-wrap:wrap;">
+      <a href="https://wa.me/917696566162" class="btn btn-whatsapp"><i class="fab fa-whatsapp"></i> Enroll via WhatsApp</a>
+      <a href="tel:+917696566162" class="btn btn-primary"><i class="fas fa-phone"></i> Call: 7696566162</a>
+      <a href="nexa_institute_website.html" class="btn btn-outline"><i class="fas fa-arrow-left"></i> Back to Home</a>
+    </div>
+  </div>
+</section>
+
+<section class="syllabus-section">
+  <div class="syllabus-container reveal">
+    <h2><i class="fas fa-list-check" style="color:var(--primary);"></i> Course Syllabus</h2>
+    <div class="syllabus-list">
+      
+        <div class="syllabus-item">
+          <i class="fas fa-check"></i>
+          <div>
+            <h4>Computer Basics</h4>
+            <p>Hardware, software, operating systems, memory types</p>
+          </div>
+        </div>
+        <div class="syllabus-item">
+          <i class="fas fa-check"></i>
+          <div>
+            <h4>MS Office</h4>
+            <p>Word, Excel, PowerPoint practical training</p>
+          </div>
+        </div>
+        <div class="syllabus-item">
+          <i class="fas fa-check"></i>
+          <div>
+            <h4>Internet & WWW</h4>
+            <p>Browsers, search engines, email, social media</p>
+          </div>
+        </div>
+        <div class="syllabus-item">
+          <i class="fas fa-check"></i>
+          <div>
+            <h4>Digital Literacy</h4>
+            <p>Cyber security, e-governance, digital payments</p>
+          </div>
+        </div>
+        <div class="syllabus-item">
+          <i class="fas fa-check"></i>
+          <div>
+            <h4>NIELIT Mock Tests</h4>
+            <p>Chapter-wise and full-length practice tests</p>
+          </div>
+        </div>
+        <div class="syllabus-item">
+          <i class="fas fa-check"></i>
+          <div>
+            <h4>Exam Preparation</h4>
+            <p>Previous year papers, tips & tricks for CCC exam</p>
+          </div>
+        </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="cta-box reveal">
+    <h2>Start Your NIELIT CCC Journey Today!</h2>
+    <p>Limited seats available for the 2026-27 batch. Enroll now and get a free demo class!</p>
+    <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
+      <a href="https://wa.me/917696566162" class="btn btn-whatsapp" style="font-size:1rem; padding:1rem 2rem;"><i class="fab fa-whatsapp"></i> WhatsApp Enquiry</a>
+      <a href="tel:+919696456019" class="btn btn-primary" style="font-size:1rem; padding:1rem 2rem;"><i class="fas fa-phone"></i> Kannauj: 9696456019</a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <p>
+    <strong style="color:#fff; font-size:1.1rem;">🎓 NEXA Computer Institute</strong><br><br>
+    📍 <strong>Main Branch:</strong> NEXA Building, Near Police Station Maudarwaja, Farrukhabad, UP — 209625<br>
+    📍 <strong>Kannauj Branch:</strong> Samdhan, Gursahaiganj, Kannauj, UP<br>
+    📞 <strong>Farrukhabad:</strong> 7696566162 | 📞 <strong>Kannauj:</strong> 9696456019<br><br>
+    Made with <span class="footer-heart">❤</span> for Farrukhabad & Kannauj | © 2026 NEXA Computer Institute
+  </p>
+</footer>
+
+<a href="https://wa.me/917696566162" target="_blank" class="whatsapp-float">
+  <i class="fab fa-whatsapp"></i>
+</a>
+
+<script>
+const revealElements = document.querySelectorAll('.reveal');
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
+}, { threshold: 0.1 });
+revealElements.forEach(el => revealObserver.observe(el));
+</script>
+
+</body>
+</html>
