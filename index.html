@@ -657,7 +657,46 @@ body {
   display: flex; align-items: center; gap: 0.8rem; justify-content: center;
 }
 
+
+/* ================================
+   MOBILE DROPDOWN FIX 
+   ================================ */
+@media (max-width: 768px) {
+  .dropdown-menu {
+    position: static !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+    box-shadow: none !important;
+    border: none !important;
+    max-height: 50vh !important;
+    min-width: 100% !important;
+    background: transparent !important;
+    padding: 0 0 0 1rem !important;
+    display: none;
+  }
+  .dropdown.active .dropdown-menu {
+    display: block !important;
+  }
+  .dropdown-menu a {
+    padding: 0.6rem 0 !important;
+    font-size: 0.9rem !important;
+    border-left: 3px solid transparent !important;
+  }
+  .dropdown-menu a:hover {
+    background: linear-gradient(90deg, rgba(37,99,235,0.06), transparent) !important;
+    color: var(--primary) !important;
+    border-left-color: var(--primary) !important;
+    padding-left: 0.4rem !important;
+  }
+  .dropdown-toggle::after {
+    float: right !important;
+    margin-left: 0 !important;
+  }
+}
+
 </style>
+<base target="_blank">
 <base target="_blank">
 <base target="_blank">
 <base target="_blank">
@@ -1155,9 +1194,13 @@ if (mobileMenuBtn && navLinks) {
     document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
   });
 
-  // Close menu on link click
+  // Close menu on link click (dropdown toggle ko chhod kar)
   navLinks.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => {
+    link.addEventListener('click', (e) => {
+      // Dropdown toggle pe click karne par menu band mat karo
+      if (link.classList.contains('dropdown-toggle')) {
+        return;
+      }
       navLinks.classList.remove('active');
       document.body.style.overflow = '';
     });
