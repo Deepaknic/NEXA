@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CCC Course | NEXA Computer Institute - NIELIT Certified</title>
-<meta name="description" content="NIELIT CCC Course Complete Guide - Exam Pattern, Syllabus, Practice Sets, Chapter-wise MCQs. NEXA Computer Institute Farrukhabad & Kannauj.">
+<meta name="description" content="NIELIT CCC Course Complete Guide - Exam Pattern, Syllabus, Practice Sets, Chapter-wise MCQs. NEXA National Expert Academy Farrukhabad & Kannauj.">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <style>
@@ -63,6 +63,17 @@ body {
   box-shadow: 0 4px 15px rgba(37,99,235,0.3); transition: all 0.3s; text-decoration: none;
 }
 .nav-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(37,99,235,0.4); }
+
+/* Social Top Bar */
+.social-top-bar {
+  background: linear-gradient(90deg, #405DE6, #5851DB, #833AB4, #C13584, #E1306C, #FD1D1D, #F56040, #F77737, #FCAF45, #FFDC80);
+  background-size: 200% 200%; animation: gradientShift 5s ease infinite;
+  padding: 6px 5%; display: flex; justify-content: center; align-items: center; gap: 1.5rem;
+  position: relative; z-index: 999;
+}
+.social-top-bar a { color: #fff; font-size: 0.85rem; font-weight: 600; text-decoration: none; display: flex; align-items: center; gap: 6px; transition: all 0.3s; }
+.social-top-bar a:hover { transform: translateY(-2px); text-shadow: 0 2px 8px rgba(0,0,0,0.3); }
+.social-top-bar i { font-size: 1rem; }
 
 /* Page Title Bar */
 .ptb {
@@ -224,6 +235,35 @@ body {
 }
 .btn-start:hover { background: var(--navy); color: #fff; }
 
+/* Social Connect Section */
+.social-sec {
+  padding: 40px 5%; position: relative; z-index: 1;
+  background: linear-gradient(135deg, rgba(37,99,235,0.05), rgba(6,182,212,0.05));
+}
+.social-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.2rem; max-width: 900px; margin: 0 auto;
+}
+.social-card {
+  background: #fff; border: 1px solid var(--border); border-radius: 16px;
+  padding: 24px 20px; text-align: center; transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05); text-decoration: none; display: block;
+}
+.social-card:hover { transform: translateY(-6px); box-shadow: 0 12px 30px rgba(0,0,0,0.1); }
+.social-card i { font-size: 2.2rem; margin-bottom: 12px; display: block; }
+.social-card.insta i { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.social-card.fb i { color: #1877F2; }
+.social-card.yt i { color: #FF0000; }
+.social-card h5 { font-family: 'Rajdhani', sans-serif; font-size: 1.1rem; color: var(--dark); margin-bottom: 4px; }
+.social-card p { font-size: .82rem; color: var(--text-muted); margin-bottom: 12px; }
+.social-card span {
+  display: inline-block; padding: 5px 14px; border-radius: 20px; font-size: .78rem;
+  font-weight: 600; transition: all 0.3s;
+}
+.social-card.insta span { background: linear-gradient(45deg, #f09433, #dc2743); color: #fff; }
+.social-card.fb span { background: #1877F2; color: #fff; }
+.social-card.yt span { background: #FF0000; color: #fff; }
+.social-card:hover span { transform: scale(1.05); }
+
 /* CTA Section */
 .cta-section { text-align: center; padding: 3rem 5% 4rem; position: relative; z-index: 1; }
 .cta-box {
@@ -260,13 +300,17 @@ body {
 .footer a { color: #94a3b8; font-size: .88rem; display: block; margin-bottom: 8px; text-decoration: none; transition: all 0.3s; }
 .footer a:hover { color: var(--orange); padding-left: 3px; }
 .footer p { font-size: .88rem; line-height: 1.75; color: #94a3b8; }
-.soc { display: flex; gap: 8px; margin-top: 12px; }
+.soc { display: flex; gap: 10px; margin-top: 12px; flex-wrap: wrap; }
 .soc a {
   display: inline-flex; align-items: center; justify-content: center;
-  width: 34px; height: 34px; border-radius: 8px; background: rgba(255,255,255,.08);
-  color: #fff; font-size: .85rem; transition: all 0.3s; text-decoration: none;
+  width: 38px; height: 38px; border-radius: 10px; background: rgba(255,255,255,.08);
+  color: #fff; font-size: .9rem; transition: all 0.3s; text-decoration: none;
 }
-.soc a:hover { background: var(--orange); transform: translateY(-2px); }
+.soc a:hover { transform: translateY(-3px) scale(1.1); }
+.soc a.insta:hover { background: linear-gradient(45deg, #f09433, #dc2743); }
+.soc a.fb:hover { background: #1877F2; }
+.soc a.yt:hover { background: #FF0000; }
+.soc a.wa:hover { background: #25D366; }
 .footer-bot { border-top: 1px solid rgba(255,255,255,.08); margin-top: 20px; padding-top: 18px; font-size: .78rem; color: rgba(255,255,255,.35); text-align: center; }
 
 /* WhatsApp Float */
@@ -303,6 +347,8 @@ body {
 @media(max-width: 991px) {
   .col-lg-4, .col-lg-5, .col-lg-7, .col-xl-3, .col-xl-4 { width: 50%; }
   .ptb-stats { justify-content: flex-start; margin-top: 20px; }
+  .social-top-bar { gap: 1rem; flex-wrap: wrap; padding: 8px 3%; }
+  .social-top-bar a span { display: none; }
 }
 @media(max-width: 767px) {
   .col-md-6, .col-lg-4, .col-lg-5, .col-lg-7, .col-xl-3, .col-xl-4, .col-sm-6 { width: 100%; }
@@ -326,6 +372,14 @@ body {
   <div class="digital-grid"></div>
   <div class="floating-orb orb-1"></div>
   <div class="floating-orb orb-2"></div>
+</div>
+
+<!-- Social Top Bar -->
+<div class="social-top-bar">
+  <a href="https://instagram.com/nexa_farrukhabad" target="_blank"><i class="fab fa-instagram"></i> <span>@nexa_farrukhabad</span></a>
+  <a href="https://facebook.com/profile.php?id=61588174088495" target="_blank"><i class="fab fa-facebook-f"></i> <span>NEXA Farrukhabad</span></a>
+  <a href="https://youtube.com/@learnwithnexa" target="_blank"><i class="fab fa-youtube"></i> <span>@learnwithnexa</span></a>
+  <a href="https://wa.me/917696566162" target="_blank"><i class="fab fa-whatsapp"></i> <span>7696566162</span></a>
 </div>
 
 <!-- Navbar -->
@@ -743,6 +797,37 @@ body {
   </div>
 </section>
 
+<!-- Social Connect -->
+<section class="social-sec" id="social">
+  <div class="container">
+    <div class="sec-head rv">
+      <h2>Connect With <span>NEXA</span> on Social Media</h2>
+      <div class="ubar"></div>
+      <p>Latest updates, tips, and free content – Follow us now!</p>
+    </div>
+    <div class="social-grid rv">
+      <a href="https://instagram.com/nexa_farrukhabad" target="_blank" class="social-card insta">
+        <i class="fab fa-instagram"></i>
+        <h5>Instagram</h5>
+        <p>@nexa_farrukhabad<br>@learnwithnexa</p>
+        <span>Follow on Instagram <i class="fas fa-arrow-right ms-1"></i></span>
+      </a>
+      <a href="https://facebook.com/profile.php?id=61588174088495" target="_blank" class="social-card fb">
+        <i class="fab fa-facebook-f"></i>
+        <h5>Facebook</h5>
+        <p>NEXA - National Expert Academy<br>Farrukhabad</p>
+        <span>Like on Facebook <i class="fas fa-arrow-right ms-1"></i></span>
+      </a>
+      <a href="https://youtube.com/@learnwithnexa" target="_blank" class="social-card yt">
+        <i class="fab fa-youtube"></i>
+        <h5>YouTube</h5>
+        <p>@learnwithnexa<br>Free Computer Tutorials</p>
+        <span>Subscribe on YouTube <i class="fas fa-arrow-right ms-1"></i></span>
+      </a>
+    </div>
+  </div>
+</section>
+
 <!-- CTA -->
 <section class="cta-section">
   <div class="cta-box rv">
@@ -763,12 +848,13 @@ body {
         <div class="logo-icon"><i class="fas fa-graduation-cap"></i></div>
         NEXA <span style="font-weight:500; -webkit-text-fill-color:#94a3b8;">Institute</span>
       </a>
-      <p>Unlock learning with online tests, courses, and study material. Making education easy and accessible for everyone!</p>
+      <p><strong style="color:#fff;">NEXA – National Expert Academy</strong><br>Smart Skills for the Digital Age<br><br>
+      Unlock learning with online tests, courses, and study material. Making education easy and accessible for everyone!</p>
       <div class="soc">
-        <a href="#"><i class="fab fa-facebook-f"></i></a>
-        <a href="#"><i class="fab fa-instagram"></i></a>
-        <a href="#"><i class="fab fa-youtube"></i></a>
-        <a href="https://wa.me/917696566162"><i class="fab fa-whatsapp"></i></a>
+        <a href="https://instagram.com/nexa_farrukhabad" target="_blank" class="insta" title="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="https://facebook.com/profile.php?id=61588174088495" target="_blank" class="fb" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://youtube.com/@learnwithnexa" target="_blank" class="yt" title="YouTube"><i class="fab fa-youtube"></i></a>
+        <a href="https://wa.me/917696566162" target="_blank" class="wa" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
       </div>
     </div>
     <div>
@@ -794,7 +880,7 @@ body {
     </div>
   </div>
   <div class="footer-bot">
-    Made with ❤️ for Farrukhabad & Kannauj | © 2026 NEXA Computer Institute | Developed by NEXA Team
+    Made with ❤️ for Farrukhabad & Kannauj | © 2026 NEXA Computer Institute | <a href="https://instagram.com/nexa_farrukhabad" target="_blank" style="display:inline;color:#94a3b8;">@nexa_farrukhabad</a> | <a href="https://youtube.com/@learnwithnexa" target="_blank" style="display:inline;color:#94a3b8;">@learnwithnexa</a>
   </div>
 </footer>
 
@@ -803,7 +889,6 @@ body {
 </a>
 
 <script>
-// Scroll Reveal
 const rvObs = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
 }, {threshold: 0.08});
