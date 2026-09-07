@@ -1,395 +1,571 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MS Excel 2010 Quiz | NEXA Computer Institute</title>
+    <title>MS Excel 2010 MCQ Quiz | NEXA Computer Institute</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #0f9d58 0%, #146c43 100%);
+            background: #eef2f6;
             min-height: 100vh;
-            padding: 20px;
         }
-        .quiz-container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 20px;
-            background: linear-gradient(135deg, #0f9d58 0%, #146c43 100%);
-            border-radius: 20px;
-            color: white;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-        }
-        .header {
+
+        /* ===== TOP HEADER (dark blue) ===== */
+        .top-header {
+            background: #1e3a5f;
+            color: #fff;
             text-align: center;
-            padding: 20px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 15px;
-            margin-bottom: 20px;
-            backdrop-filter: blur(10px);
+            padding: 28px 20px 20px;
         }
-        .header h1 {
-            margin: 0;
-            font-size: 28px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-        .header p { margin-top: 6px; opacity: 0.9; }
-        .level-legend {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
+        .top-header h1 { font-size: 34px; font-weight: 800; letter-spacing: 1px; }
+        .breadcrumb {
             margin-top: 12px;
+            font-size: 15px;
+            color: #c8d6e5;
+        }
+        .breadcrumb a { color: #c8d6e5; text-decoration: none; }
+        .breadcrumb a:hover { color: #fff; text-decoration: underline; }
+        .breadcrumb .sep { margin: 0 12px; color: #7d94ad; }
+
+        /* ===== TIMER / PROGRESS STRIP ===== */
+        .exam-strip {
+            position: sticky;
+            top: 0;
+            z-index: 500;
+            background: #fff;
+            border-bottom: 2px solid #e3e9f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 24px;
             flex-wrap: wrap;
+            gap: 10px;
         }
-        .lvl-chip {
-            padding: 4px 14px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: bold;
+        .timer-pill {
+            background: #e8f4fd;
+            border: 1px solid #b3d9f2;
+            color: #0b6fa4;
+            font-weight: 700;
+            padding: 8px 18px;
+            border-radius: 30px;
+            font-size: 16px;
         }
-        .lvl-basic { background: #28a745; color: #fff; }
-        .lvl-mid { background: #ffc107; color: #333; }
-        .lvl-high { background: #dc3545; color: #fff; }
-        .student-info {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            background: rgba(255,255,255,0.15);
-            padding: 20px;
-            border-radius: 15px;
-            margin-bottom: 20px;
-        }
-        .student-info input {
-            padding: 12px;
-            border: none;
-            border-radius: 10px;
-            font-size: 14px;
-            background: rgba(255,255,255,0.9);
-            color: #333;
-        }
-        .student-info input:focus {
-            outline: 2px solid #ffc107;
-            transform: scale(1.02);
-        }
-        .timer-box {
-            text-align: center;
-            font-size: 24px;
-            font-weight: bold;
-            background: rgba(255,193,7,0.2);
-            padding: 15px;
-            border-radius: 15px;
-            margin-bottom: 20px;
-            border: 2px solid #ffc107;
-        }
-        .timer-box.warning {
-            background: rgba(220,53,69,0.3);
-            border-color: #ff6b6b;
+        .timer-pill.warning {
+            background: #fde8e8;
+            border-color: #f5b5b5;
+            color: #c0392b;
             animation: pulse 1s infinite;
         }
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-        .progress-bar {
-            width: 100%;
+        @keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.06)} }
+        .progress-wrap {
+            flex: 1;
+            max-width: 420px;
             height: 10px;
-            background: rgba(255,255,255,0.2);
-            border-radius: 5px;
-            margin-bottom: 20px;
+            background: #e3e9f0;
+            border-radius: 6px;
             overflow: hidden;
         }
         .progress-fill {
             height: 100%;
-            background: linear-gradient(90deg, #ffc107, #ff9800);
-            border-radius: 5px;
+            width: 0%;
+            background: linear-gradient(90deg, #00b07f, #00d19a);
+            border-radius: 6px;
             transition: width 0.3s ease;
         }
-        .question-nav {
+        .progress-label { font-size: 13px; color: #5a7184; font-weight: 600; }
+
+        /* ===== MAIN LAYOUT ===== */
+        .page-layout {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 24px;
             display: flex;
-            flex-wrap: wrap;
-            gap: 5px;
-            justify-content: center;
-            margin: 15px 0;
-            padding: 10px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 10px;
+            gap: 24px;
+            align-items: flex-start;
         }
-        .q-dot {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.2s;
-            background: rgba(255,255,255,0.3);
-            color: white;
-        }
-        .q-dot.answered { background: #28a745; }
-        .q-dot.current { background: #ffc107; color: #333; transform: scale(1.2); }
-        .q-dot:hover { transform: scale(1.1); }
-        .question-card {
-            background: rgba(255,255,255,0.95);
-            color: #333;
+        .main-col { flex: 1; min-width: 0; }
+
+        /* ===== STUDENT FORM CARD ===== */
+        .student-card {
+            background: #fff;
+            border: 1px solid #dce4ec;
+            border-radius: 12px;
             padding: 20px;
-            border-radius: 15px;
-            margin-bottom: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            transition: transform 0.2s;
-            border-top: 5px solid #0f9d58;
+            margin-bottom: 24px;
+            box-shadow: 0 3px 10px rgba(30,58,95,0.06);
         }
-        .question-card:hover { transform: translateY(-2px); }
-        .question-header {
+        .student-card h3 {
+            color: #1e3a5f;
+            font-size: 18px;
+            margin-bottom: 14px;
+            border-bottom: 2px solid #e8eef4;
+            padding-bottom: 10px;
+        }
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 12px;
+        }
+        .form-grid input {
+            padding: 11px 14px;
+            border: 1.5px solid #cfd9e3;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+            width: 100%;
+        }
+        .form-grid input:focus {
+            outline: none;
+            border-color: #00b07f;
+            box-shadow: 0 0 0 3px rgba(0,176,127,0.15);
+        }
+
+        /* ===== QUESTION CARD ===== */
+        .q-card {
+            background: #fff;
+            border: 1px solid #dce4ec;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 3px 10px rgba(30,58,95,0.06);
+        }
+        .q-top {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 10px;
             flex-wrap: wrap;
-            gap: 8px;
+            gap: 10px;
+            margin-bottom: 16px;
         }
-        .question-number {
-            display: inline-block;
-            background: linear-gradient(135deg, #0f9d58, #146c43);
-            color: white;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-weight: bold;
+        .q-number {
+            color: #1289a7;
+            font-size: 24px;
+            font-weight: 800;
+        }
+        .q-badges { display: flex; gap: 8px; flex-wrap: wrap; }
+        .verified-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #e8f4fd;
+            color: #1289a7;
+            border: 1px solid #b3d9f2;
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .verified-badge .check {
+            width: 20px; height: 20px;
+            background: #1b9ce4;
+            color: #fff;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
         }
         .level-badge {
-            padding: 4px 14px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: bold;
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 700;
         }
-        .level-badge.Basic { background: #d4edda; color: #155724; border: 1px solid #28a745; }
-        .level-badge.Mid { background: #fff3cd; color: #856404; border: 1px solid #ffc107; }
-        .level-badge.High { background: #f8d7da; color: #721c24; border: 1px solid #dc3545; }
-        .options label {
-            display: block;
-            padding: 10px 15px;
-            margin: 8px 0;
-            background: #f0f0f0;
-            border-radius: 10px;
+        .level-badge.Basic { background: #e6f7ee; color: #1e7e46; border: 1px solid #a9dfc0; }
+        .level-badge.Mid { background: #fff8e1; color: #9a7b00; border: 1px solid #f0dd8a; }
+        .level-badge.High { background: #fdecea; color: #b03a2e; border: 1px solid #f2b8b2; }
+
+        .q-text-hindi {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1a1a2e;
+            line-height: 1.6;
+            margin-bottom: 6px;
+        }
+        .q-text-eng {
+            font-size: 16px;
+            color: #d9534f;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        /* ===== OPTIONS (green letter badges) ===== */
+        .opt {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            background: #eafaf1;
+            border: 1.5px solid #b8e6cf;
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin-bottom: 10px;
             cursor: pointer;
-            transition: all 0.2s;
-            border: 2px solid transparent;
+            transition: all 0.2s ease;
         }
-        .options label:hover {
-            background: #d4f0e0;
-            border-color: #0f9d58;
+        .opt:hover {
+            border-color: #00b07f;
+            background: #dff5ea;
         }
-        .options input[type="radio"] {
-            margin-right: 10px;
-            transform: scale(1.2);
+        .opt-letter {
+            width: 42px; height: 42px;
+            background: #00b07f;
+            color: #fff;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 18px;
+            flex-shrink: 0;
         }
-        .options label.selected {
-            background: linear-gradient(135deg, #0f9d58, #146c43);
-            color: white;
-            border-color: #ffc107;
+        .opt-text { font-size: 16px; color: #333; font-weight: 600; }
+        .opt.selected {
+            background: #00b07f;
+            border-color: #00875f;
         }
-        .nav-buttons {
+        .opt.selected .opt-letter { background: #fff; color: #00b07f; }
+        .opt.selected .opt-text { color: #fff; }
+
+        /* ===== NAV BUTTONS ===== */
+        .nav-row {
             display: flex;
             justify-content: space-between;
-            gap: 10px;
-            margin-top: 20px;
+            gap: 12px;
+            margin-top: 8px;
             flex-wrap: wrap;
         }
-        .btn {
-            padding: 12px 25px;
+        .nbtn {
+            padding: 12px 30px;
             border: none;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: bold;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 700;
             cursor: pointer;
-            transition: all 0.3s;
-            text-transform: uppercase;
+            font-family: inherit;
+            transition: all 0.25s ease;
         }
-        .btn-primary {
-            background: linear-gradient(135deg, #ffc107, #ff9800);
-            color: #333;
+        .nbtn-prev { background: #e8eef4; color: #1e3a5f; }
+        .nbtn-prev:hover { background: #d5e0ea; }
+        .nbtn-next {
+            background: #00b07f;
+            color: #fff;
         }
-        .btn-primary:hover {
-            transform: scale(1.05);
-            box-shadow: 0 5px 20px rgba(255,193,7,0.4);
+        .nbtn-next:hover { background: #00875f; transform: translateY(-2px); box-shadow: 0 5px 14px rgba(0,176,127,0.35); }
+        .nbtn-submit {
+            background: #1e3a5f;
+            color: #fff;
         }
-        .btn-secondary {
-            background: rgba(255,255,255,0.2);
-            color: white;
-            border: 2px solid white;
+        .nbtn-submit:hover { background: #152c49; transform: translateY(-2px); box-shadow: 0 5px 14px rgba(30,58,95,0.35); }
+        .hidden { display: none !important; }
+
+        /* ===== QUESTION DOTS ===== */
+        .dots-card {
+            background: #fff;
+            border: 1px solid #dce4ec;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 24px;
         }
-        .btn-secondary:hover { background: rgba(255,255,255,0.3); }
-        .btn-success {
-            background: linear-gradient(135deg, #28a745, #20c997);
-            color: white;
+        .dots-card h4 { color: #1e3a5f; font-size: 14px; margin-bottom: 12px; }
+        .dots {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
         }
-        .btn-success:hover {
-            transform: scale(1.05);
-            box-shadow: 0 5px 20px rgba(40,167,69,0.4);
+        .dot {
+            width: 32px; height: 32px;
+            border-radius: 50%;
+            border: 1.5px solid #cfd9e3;
+            background: #fff;
+            color: #5a7184;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
         }
+        .dot:hover { border-color: #00b07f; color: #00b07f; }
+        .dot.answered { background: #00b07f; border-color: #00b07f; color: #fff; }
+        .dot.current { background: #1e3a5f; border-color: #1e3a5f; color: #fff; transform: scale(1.15); }
+
+        /* ===== SIDEBAR (Related chapter) ===== */
+        .sidebar {
+            width: 330px;
+            flex-shrink: 0;
+            background: #fff;
+            border: 1px solid #dce4ec;
+            border-radius: 12px;
+            overflow: hidden;
+            position: sticky;
+            top: 72px;
+            box-shadow: 0 3px 10px rgba(30,58,95,0.06);
+        }
+        .sidebar-head {
+            background: #00b07f;
+            color: #fff;
+            text-align: center;
+            padding: 14px;
+            font-size: 20px;
+            font-weight: 800;
+        }
+        .chapter-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 14px 18px;
+            border-bottom: 1px solid #eef2f6;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+        .chapter-item:hover { background: #f2fbf7; }
+        .chapter-item:last-child { border-bottom: none; }
+        .ch-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #1b7a9e;
+            font-weight: 600;
+            font-size: 15px;
+            line-height: 1.4;
+        }
+        .ch-chev { color: #00b07f; font-weight: 900; font-size: 18px; }
+        .solution-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: #fdecea;
+            color: #e0245e;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 5px;
+            flex-shrink: 0;
+        }
+        .solution-badge .yt {
+            width: 16px; height: 16px;
+            background: #ff0000;
+            color: #fff;
+            border-radius: 4px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 9px;
+        }
+
+        /* ===== RESULT ===== */
         .result-card {
-            background: rgba(255,255,255,0.95);
-            color: #333;
-            padding: 30px;
-            border-radius: 20px;
+            background: #fff;
+            border: 1px solid #dce4ec;
+            border-radius: 12px;
+            padding: 34px;
             text-align: center;
             display: none;
         }
-        .result-card h2 {
-            color: #146c43;
-            font-size: 32px;
-            margin-bottom: 20px;
-        }
+        .result-card h2 { color: #1e3a5f; font-size: 30px; margin-bottom: 18px; }
         .score-circle {
-            width: 150px;
-            height: 150px;
+            width: 150px; height: 150px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #0f9d58, #146c43);
+            background: linear-gradient(135deg, #00b07f, #00875f);
+            color: #fff;
+            font-size: 46px;
+            font-weight: 800;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 20px auto;
-            font-size: 48px;
-            font-weight: bold;
-            color: white;
-            box-shadow: 0 10px 30px rgba(15,157,88,0.4);
+            margin: 16px auto;
+            box-shadow: 0 10px 30px rgba(0,176,127,0.35);
         }
+        .grade-badge {
+            display: inline-block;
+            padding: 6px 22px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 15px;
+            margin: 8px 0 14px;
+        }
+        .grade-pass { background: #e6f7ee; color: #1e7e46; border: 1px solid #a9dfc0; }
+        .grade-fail { background: #fdecea; color: #b03a2e; border: 1px solid #f2b8b2; }
         .level-summary {
             display: flex;
             justify-content: center;
-            gap: 15px;
-            margin: 15px 0;
+            gap: 14px;
             flex-wrap: wrap;
+            margin: 16px 0;
         }
         .level-stat {
-            background: #f8f9fa;
-            border-radius: 12px;
-            padding: 12px 20px;
-            min-width: 120px;
+            background: #f8fafc;
+            border: 1px solid #e3e9f0;
+            border-radius: 10px;
+            padding: 12px 22px;
+            min-width: 130px;
         }
-        .level-stat h4 { font-size: 13px; margin-bottom: 5px; }
-        .level-stat p { font-size: 20px; font-weight: bold; }
-        .export-section {
-            margin-top: 20px;
-            padding: 20px;
-            background: rgba(15,157,88,0.08);
-            border-radius: 15px;
+        .level-stat h4 { font-size: 13px; color: #5a7184; margin-bottom: 4px; }
+        .level-stat p { font-size: 20px; font-weight: 800; }
+        .result-stats { margin: 14px 0; font-size: 15px; color: #40566b; }
+        .export-box {
+            margin-top: 18px;
+            padding: 18px;
+            background: #f2fbf7;
+            border: 1px solid #cdeede;
+            border-radius: 10px;
         }
-        .export-section h3 { margin-bottom: 15px; }
-        .export-btn {
+        .export-box h3 { color: #1e3a5f; margin-bottom: 12px; font-size: 16px; }
+        .exp-btn {
             margin: 5px;
             padding: 10px 20px;
             border: none;
             border-radius: 8px;
             cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s;
-        }
-        .export-excel { background: #217346; color: white; }
-        .export-excel:hover { background: #1e6b3f; transform: scale(1.05); }
-        .export-pdf { background: #f40f02; color: white; }
-        .export-pdf:hover { background: #d40d02; transform: scale(1.05); }
-        .export-csv { background: #6c757d; color: white; }
-        .export-csv:hover { background: #5a6268; transform: scale(1.05); }
-        .badge {
-            display: inline-block;
-            padding: 5px 15px;
-            border-radius: 20px;
+            font-weight: 700;
             font-size: 14px;
-            font-weight: bold;
-            margin: 5px;
+            font-family: inherit;
+            color: #fff;
+            transition: all 0.25s;
         }
-        .badge-pass { background: #28a745; color: white; }
-        .badge-fail { background: #dc3545; color: white; }
-        .review-item {
+        .exp-btn:hover { transform: scale(1.05); }
+        .exp-excel { background: #217346; }
+        .exp-pdf { background: #e0245e; }
+        .exp-csv { background: #5a7184; }
+        .result-actions { margin-top: 18px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+        .review-wrap {
+            display: none;
+            margin-top: 22px;
             text-align: left;
-            padding: 15px;
-            margin: 10px 0;
-            background: #f8f9fa;
-            border-radius: 10px;
-            border-left: 4px solid;
+            max-height: 450px;
+            overflow-y: auto;
+            border-top: 2px solid #e8eef4;
+            padding-top: 16px;
         }
-        .review-item.correct { border-left-color: #28a745; }
-        .review-item.incorrect { border-left-color: #dc3545; }
-        .hidden { display: none; }
+        .review-wrap h3 { text-align: center; color: #1e3a5f; margin-bottom: 14px; }
+        .review-item {
+            padding: 14px;
+            margin-bottom: 10px;
+            background: #f8fafc;
+            border-radius: 8px;
+            border-left: 4px solid;
+            font-size: 14px;
+        }
+        .review-item.correct { border-left-color: #00b07f; }
+        .review-item.incorrect { border-left-color: #e0245e; }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .page-layout { flex-direction: column; }
+            .sidebar { width: 100%; position: static; }
+        }
+        @media (max-width: 640px) {
+            .top-header h1 { font-size: 24px; }
+            .q-text-hindi { font-size: 17px; }
+            .exam-strip { padding: 8px 14px; }
+        }
     </style>
 <base target="_blank">
 </head>
 <body>
-    <div class="quiz-container">
-        <div class="header">
-            <h1>📊 MS Excel 2010 Quiz</h1>
-            <p>Complete Test - 100 Questions | Time: 60 Minutes</p>
-            <div class="level-legend">
-                <span class="lvl-chip lvl-basic">Basic (70)</span>
-                <span class="lvl-chip lvl-mid">Mid Level (20)</span>
-                <span class="lvl-chip lvl-high">High Level (10)</span>
+
+<!-- ===== TOP HEADER ===== -->
+<header class="top-header">
+    <h1>📊 MS Excel 2010</h1>
+    <div class="breadcrumb">
+        <a href="index.html">Home</a><span class="sep">•</span>
+        <a href="index.html#courses">Chapters</a><span class="sep">•</span>
+        <a href="tests.html">MCQs</a><span class="sep">•</span>
+        <span style="color:#fff;">MS Excel 2010</span>
+    </div>
+</header>
+
+<!-- ===== EXAM STRIP (timer + progress) ===== -->
+<div class="exam-strip" id="examStrip">
+    <div class="timer-pill" id="timerBox">⏱️ शेष समय / Time Left: <span id="timer">60:00</span></div>
+    <div class="progress-wrap"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="progress-label" id="progressLabel">0 / 100 answered</div>
+</div>
+
+<!-- ===== LAYOUT ===== -->
+<div class="page-layout">
+
+    <!-- MAIN COLUMN -->
+    <div class="main-col">
+
+        <!-- Student Form -->
+        <div class="student-card" id="studentForm">
+            <h3>📝 छात्र विवरण / Student Information</h3>
+            <div class="form-grid">
+                <input type="text" id="studentName" placeholder="👤 छात्र का नाम / Student Name" required>
+                <input type="text" id="studentRoll" placeholder="🎫 रजिस्ट्रेशन नंबर / Registration Number" required>
+                <input type="text" id="studentClass" placeholder="🏫 कक्षा / Class-Section" required>
+                <input type="date" id="examDate" required>
+                <input type="text" id="examCenter" placeholder="📍 परीक्षा केंद्र / Exam Center">
+                <input type="email" id="studentEmail" placeholder="📧 ईमेल / Email (Optional)">
             </div>
         </div>
 
-        <div id="studentForm" class="student-info">
-            <input type="text" id="studentName" placeholder="👤 Student Name" required>
-            <input type="text" id="studentRoll" placeholder="🎫 Registration Number" required>
-            <input type="text" id="studentClass" placeholder="🏫 Class/Section" required>
-            <input type="date" id="examDate" required>
-            <input type="text" id="examCenter" placeholder="📍 Exam Center">
-            <input type="email" id="studentEmail" placeholder="📧 Email (Optional)">
+        <!-- Question dots -->
+        <div class="dots-card" id="dotsCard">
+            <h4>🔢 प्रश्न सूची / Question Navigator — हरे = answered</h4>
+            <div class="dots" id="questionNav"></div>
         </div>
 
-        <div class="timer-box" id="timerBox">
-            ⏱️ Time Remaining: <span id="timer">60:00</span>
-        </div>
-
-        <div class="progress-bar">
-            <div class="progress-fill" id="progressFill" style="width: 0%"></div>
-        </div>
-
-        <div class="question-nav" id="questionNav"></div>
-
+        <!-- Quiz Section -->
         <div id="quizSection">
             <div id="questionContainer"></div>
-            <div class="nav-buttons">
-                <button class="btn btn-secondary" id="prevBtn" onclick="prevQuestion()">⬅️ Previous</button>
-                <button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()">Next ➡️</button>
-                <button class="btn btn-success hidden" id="submitBtn" onclick="submitQuiz()">✅ Submit Quiz</button>
+            <div class="nav-row">
+                <button class="nbtn nbtn-prev" id="prevBtn" onclick="prevQuestion()">⬅️ पिछला / Previous</button>
+                <button class="nbtn nbtn-next" id="nextBtn" onclick="nextQuestion()">अगला / Next ➡️</button>
+                <button class="nbtn nbtn-submit hidden" id="submitBtn" onclick="submitQuiz()">✅ जमा करें / Submit</button>
             </div>
         </div>
 
+        <!-- Result Section -->
         <div id="resultSection" class="result-card">
-            <h2>🎉 Quiz Completed!</h2>
-            <div class="score-circle" id="scoreCircle">0</div>
-            <p style="font-size: 20px; margin: 10px 0;">
-                <span id="scoreText">You scored 0 out of 100</span>
-                <span id="percentageText">(0%)</span>
+            <h2>🎉 परीक्षा पूर्ण! / Quiz Completed!</h2>
+            <div class="score-circle" id="scoreCircle">0%</div>
+            <p style="font-size:19px; color:#40566b;">
+                <span id="scoreText"></span> <span id="percentageText"></span>
             </p>
             <div id="gradeBadge"></div>
             <div class="level-summary" id="levelSummary"></div>
-            <div style="margin: 20px 0;">
-                <p>⏱️ Time Taken: <span id="timeTaken">--</span></p>
-                <p>✅ Correct: <span id="correctCount">0</span> | ❌ Wrong: <span id="wrongCount">0</span> | ⏭️ Skipped: <span id="skippedCount">0</span></p>
+            <div class="result-stats">
+                <p>⏱️ लिया गया समय / Time Taken: <b id="timeTaken">--</b></p>
+                <p>✅ सही / Correct: <b id="correctCount">0</b> &nbsp;|&nbsp; ❌ गलत / Wrong: <b id="wrongCount">0</b> &nbsp;|&nbsp; ⏭️ छोड़े / Skipped: <b id="skippedCount">0</b></p>
             </div>
-            <div class="export-section">
-                <h3>📊 Export Results</h3>
-                <button class="export-btn export-excel" onclick="exportToExcel()">📗 Export to Excel</button>
-                <button class="export-btn export-pdf" onclick="exportToPDF()">📄 Export to PDF</button>
-                <button class="export-btn export-csv" onclick="exportToCSV()">📋 Export to CSV</button>
+            <div class="export-box">
+                <h3>📊 परिणाम डाउनलोड करें / Export Results</h3>
+                <button class="exp-btn exp-excel" onclick="exportToExcel()">📗 Excel</button>
+                <button class="exp-btn exp-pdf" onclick="exportToPDF()">📄 PDF</button>
+                <button class="exp-btn exp-csv" onclick="exportToCSV()">📋 CSV</button>
             </div>
-            <div style="margin-top: 20px;">
-                <button class="btn btn-primary" onclick="showReview()">🔍 Review Answers</button>
-                <button class="btn btn-secondary" onclick="restartQuiz()">🔄 Retake Quiz</button>
+            <div class="result-actions">
+                <button class="nbtn nbtn-next" onclick="showReview()">🔍 उत्तर समीक्षा / Review Answers</button>
+                <button class="nbtn nbtn-prev" onclick="restartQuiz()">🔄 पुनः प्रयास / Retake Quiz</button>
             </div>
-            <div id="reviewSection" style="display:none; margin-top: 20px; text-align: left; max-height: 400px; overflow-y: auto;">
-                <h3 style="color: #146c43; text-align: center;">Answer Review</h3>
+            <div id="reviewSection" class="review-wrap">
+                <h3>उत्तर समीक्षा / Answer Review</h3>
                 <div id="reviewList"></div>
             </div>
         </div>
+
     </div>
 
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sideBar">
+        <div class="sidebar-head">Related chapter</div>
+        <a class="chapter-item" href="tests.html"><span class="ch-left"><span class="ch-chev">❯</span> Introduction to Excel 2010</span><span class="solution-badge"><span class="yt">▶</span>Solution</span></a>
+        <a class="chapter-item" href="tests.html"><span class="ch-left"><span class="ch-chev">❯</span> Basic Operations &amp; Math Functions</span><span class="solution-badge"><span class="yt">▶</span>Solution</span></a>
+        <a class="chapter-item" href="tests.html"><span class="ch-left"><span class="ch-chev">❯</span> Logical, Text Functions &amp; Formatting</span><span class="solution-badge"><span class="yt">▶</span>Solution</span></a>
+        <a class="chapter-item" href="tests.html"><span class="ch-left"><span class="ch-chev">❯</span> Merge Cells, Validation &amp; Custom List</span><span class="solution-badge"><span class="yt">▶</span>Solution</span></a>
+        <a class="chapter-item" href="tests.html"><span class="ch-left"><span class="ch-chev">❯</span> Advanced Mathematical Functions</span><span class="solution-badge"><span class="yt">▶</span>Solution</span></a>
+        <a class="chapter-item" href="tests.html"><span class="ch-left"><span class="ch-chev">❯</span> Data Tools, Shortcuts &amp; Cleaning</span><span class="solution-badge"><span class="yt">▶</span>Solution</span></a>
+        <a class="chapter-item" href="tests.html"><span class="ch-left"><span class="ch-chev">❯</span> Charts, Graphs &amp; Print Setup</span><span class="solution-badge"><span class="yt">▶</span>Solution</span></a>
+        <a class="chapter-item" href="tests.html"><span class="ch-left"><span class="ch-chev">❯</span> Pivot Tables, Protection &amp; Goal Seek</span><span class="solution-badge"><span class="yt">▶</span>Solution</span></a>
+    </aside>
+
+</div>
+
 <script>
-const questions = [{"q": "What is the default file extension for MS Excel 2010 workbooks?", "options": [".xls", ".xlsx", ".xlsm", ".csv"], "correct": 1, "level": "Basic"}, {"q": "By default, how many worksheets open in a new Excel 2010 workbook?", "options": ["1", "2", "3", "5"], "correct": 2, "level": "Basic"}, {"q": "What are the default worksheet names in a new Excel 2010 workbook?", "options": ["Doc1, Doc2, Doc3", "Book1, Book2, Book3", "Sheet1, Sheet2, Sheet3", "Page1, Page2, Page3"], "correct": 2, "level": "Basic"}, {"q": "How many columns are there in an Excel 2010 worksheet?", "options": ["256", "1024", "16,384", "65,536"], "correct": 2, "level": "Basic"}, {"q": "How many rows are there in an Excel 2010 worksheet?", "options": ["65,536", "1,048,576", "100,000", "500,000"], "correct": 1, "level": "Basic"}, {"q": "What is the last column name in Excel 2010?", "options": ["IV", "ZZ", "XFD", "AZ"], "correct": 2, "level": "Basic"}, {"q": "What is the intersection of a row and a column called?", "options": ["Range", "Cell", "Box", "Pointer"], "correct": 1, "level": "Basic"}, {"q": "What is a group of selected cells called (e.g., A1:D10)?", "options": ["Cell", "Worksheet", "Range", "Table"], "correct": 2, "level": "Basic"}, {"q": "A cell address is made up of which two parts?", "options": ["Font and size", "Column letter and row number", "Row letter and column number", "Tab and sheet"], "correct": 1, "level": "Basic"}, {"q": "Which box shows the active cell's address, located left of the Formula Bar?", "options": ["Formula Bar", "Name Box", "Status Bar", "Scroll Box"], "correct": 1, "level": "Basic"}, {"q": "Which Ribbon tab contains everyday tools like Font, Alignment, Number and Styles?", "options": ["Insert", "Home", "Data", "View"], "correct": 1, "level": "Basic"}, {"q": "What is the shortcut key for 'Save' in Excel 2010?", "options": ["Ctrl + S", "Ctrl + O", "Ctrl + N", "Ctrl + P"], "correct": 0, "level": "Basic"}, {"q": "What does 'Ctrl + C' do in Excel 2010?", "options": ["Cut", "Copy", "Paste", "Print"], "correct": 1, "level": "Basic"}, {"q": "What does 'Ctrl + V' do in Excel 2010?", "options": ["Cut", "Copy", "Paste", "Validate"], "correct": 2, "level": "Basic"}, {"q": "What does 'Ctrl + X' do in Excel 2010?", "options": ["Copy", "Cut", "Delete", "Exit"], "correct": 1, "level": "Basic"}, {"q": "What does 'Ctrl + Z' do in Excel 2010?", "options": ["Redo", "Zoom", "Undo", "Freeze"], "correct": 2, "level": "Basic"}, {"q": "What does 'Ctrl + Y' do in Excel 2010?", "options": ["Undo", "Redo", "Copy", "Save"], "correct": 1, "level": "Basic"}, {"q": "Every Excel formula must begin with which symbol?", "options": ["+", "#", "=", "@"], "correct": 2, "level": "Basic"}, {"q": "Which function adds all values in a range?", "options": ["ADD", "TOTAL", "SUM", "PLUS"], "correct": 2, "level": "Basic"}, {"q": "Which function calculates the average of a range?", "options": ["MEAN", "AVG", "AVERAGE", "MEDIAN"], "correct": 2, "level": "Basic"}, {"q": "Which function returns the smallest value in a range?", "options": ["SMALL", "MIN", "LOWEST", "MINIMUM"], "correct": 1, "level": "Basic"}, {"q": "Which function returns the largest value in a range?", "options": ["BIG", "MAX", "HIGHEST", "LARGE"], "correct": 1, "level": "Basic"}, {"q": "Which function counts only the cells containing numbers in a range?", "options": ["COUNTA", "COUNT", "COUNTIF", "TOTAL"], "correct": 1, "level": "Basic"}, {"q": "What does =SQRT(64) return?", "options": ["6", "8", "32", "4096"], "correct": 1, "level": "Basic"}, {"q": "What does =FACT(6) return?", "options": ["36", "120", "720", "60"], "correct": 2, "level": "Basic"}, {"q": "Which function returns today's date only?", "options": ["=NOW()", "=TODAY()", "=DATE()", "=DAY()"], "correct": 1, "level": "Basic"}, {"q": "Which function returns the current date AND time?", "options": ["=DATE()", "=TODAY()", "=NOW()", "=TIME()"], "correct": 2, "level": "Basic"}, {"q": "The Sort & Filter commands are found in which group of the Home tab?", "options": ["Font", "Clipboard", "Editing", "Number"], "correct": 2, "level": "Basic"}, {"q": "What is the shortcut to toggle Filter arrows on/off in a table?", "options": ["Ctrl + F", "Ctrl + Shift + L", "Ctrl + Alt + F", "Shift + F2"], "correct": 1, "level": "Basic"}, {"q": "Which key puts the selected cell into Edit mode?", "options": ["F1", "F2", "F5", "F12"], "correct": 1, "level": "Basic"}, {"q": "What is the shortcut for AutoSum in Excel 2010?", "options": ["Alt + S", "Alt + =", "Ctrl + Sum", "Shift + +"], "correct": 1, "level": "Basic"}, {"q": "What is the shortcut to open Find & Replace?", "options": ["Ctrl + F", "Ctrl + G", "Ctrl + H", "Ctrl + R"], "correct": 2, "level": "Basic"}, {"q": "Which shortcut opens the Format Cells dialog box?", "options": ["Ctrl + 1", "Ctrl + 2", "Ctrl + F1", "Alt + 1"], "correct": 0, "level": "Basic"}, {"q": "Which shortcut inserts cells, rows or columns?", "options": ["Ctrl + -", "Ctrl + Shift + +", "Alt + Insert", "Ctrl + I"], "correct": 1, "level": "Basic"}, {"q": "Which shortcut deletes cells, rows or columns?", "options": ["Ctrl + -", "Ctrl + Del", "Shift + Del", "Alt + -"], "correct": 0, "level": "Basic"}, {"q": "Where is the 'Merge & Center' command located?", "options": ["Home → Alignment", "Insert → Tables", "Data → Group", "View → Window"], "correct": 0, "level": "Basic"}, {"q": "Where is the 'Wrap Text' command located?", "options": ["Home → Font", "Home → Alignment", "Insert → Text", "Page Layout"], "correct": 1, "level": "Basic"}, {"q": "Where is the 'Fill Color' (paint bucket) button located?", "options": ["Home → Clipboard", "Home → Font", "Home → Styles", "Insert → Symbols"], "correct": 1, "level": "Basic"}, {"q": "Which tool copies formatting from one cell to another in one click?", "options": ["Format Copier", "Style Brush", "Format Painter", "Paint Format"], "correct": 2, "level": "Basic"}, {"q": "How can you insert a new row or column quickly?", "options": ["File → Insert", "Right-click on row/column header → Insert", "Ctrl + Insert only", "View → Insert"], "correct": 1, "level": "Basic"}, {"q": "To hide a row, you use: Home → Cells → Format → Hide & Unhide → ?", "options": ["Hide Cells", "Hide Rows", "Hide Grid", "Hide Sheet"], "correct": 1, "level": "Basic"}, {"q": "Where is the Currency number format option found?", "options": ["Home → Number group", "Insert → Symbols", "Data → Format", "Review"], "correct": 0, "level": "Basic"}, {"q": "Where is the Percentage number format option found?", "options": ["Home → Number group", "Formulas → Math", "Page Layout → Scale", "File → Options"], "correct": 0, "level": "Basic"}, {"q": "How do you AutoFit a column width to its content?", "options": ["Ctrl + double-click anywhere", "Double-click the border between column headers", "Right-click → Stretch", "Press Ctrl + A twice"], "correct": 1, "level": "Basic"}, {"q": "Column Width and Row Height can be set from: Home → ?", "options": ["Font", "Cells → Format", "Styles", "Editing"], "correct": 1, "level": "Basic"}, {"q": "What does the LEN function do?", "options": ["Counts words in a cell", "Returns the number of characters in text", "Makes text longer", "Finds line numbers"], "correct": 1, "level": "Basic"}, {"q": "What does =UPPER('excel') return?", "options": ["EXCEL", "Excel", "excel", "eXCEL"], "correct": 0, "level": "Basic"}, {"q": "What does =LOWER('EXCEL') return?", "options": ["EXCEL", "Excel", "excel", "ExCeL"], "correct": 2, "level": "Basic"}, {"q": "What does =PROPER('nexa computer') return?", "options": ["NEXA COMPUTER", "Nexa Computer", "nexa computer", "Nexa computer"], "correct": 1, "level": "Basic"}, {"q": "What does =LEFT('Excel',3) return?", "options": ["Exc", "cel", "xce", "Excel"], "correct": 0, "level": "Basic"}, {"q": "What does =RIGHT('Excel',3) return?", "options": ["Exc", "cel", "xce", "Els"], "correct": 1, "level": "Basic"}, {"q": "What does =MID('Excel',2,3) return?", "options": ["Exc", "cel", "xce", "xceL"], "correct": 2, "level": "Basic"}, {"q": "Which function joins text from multiple cells into one?", "options": ["JOIN", "COMBINE", "CONCATENATE", "MERGE"], "correct": 2, "level": "Basic"}, {"q": "Where do you create a Custom List? (File → Options → ?)", "options": ["Proofing", "Advanced → Edit Custom Lists", "Formulas", "Save"], "correct": 1, "level": "Basic"}, {"q": "Which shortcuts switch between worksheets?", "options": ["Ctrl + Tab", "Ctrl + PageUp / Ctrl + PageDown", "Alt + Left / Right", "Shift + F6"], "correct": 1, "level": "Basic"}, {"q": "How do you add a new worksheet?", "options": ["Right-click a sheet tab → Insert → Worksheet", "File → New Sheet", "Ctrl + N", "Home → New Sheet"], "correct": 0, "level": "Basic"}, {"q": "Which tab is used to insert charts in Excel 2010?", "options": ["Home", "Insert", "Data", "Review"], "correct": 1, "level": "Basic"}, {"q": "A Column chart is best used for?", "options": ["Showing proportions of a whole", "Comparing values across categories", "Showing trends over time", "Filtering data"], "correct": 1, "level": "Basic"}, {"q": "A Pie chart is best used for?", "options": ["Comparing values across categories", "Showing proportions of a whole", "Filtering records", "Printing reports"], "correct": 1, "level": "Basic"}, {"q": "A Line chart is best used for?", "options": ["Showing trends over time", "Splitting columns", "Protecting sheets", "Merging cells"], "correct": 0, "level": "Basic"}, {"q": "Sparklines (mini in-cell charts) are found in which tab?", "options": ["Home", "Insert", "View", "Formulas"], "correct": 1, "level": "Basic"}, {"q": "What is the shortcut for Print Preview / Print?", "options": ["Ctrl + P", "Ctrl + Shift + P", "Alt + P", "F12"], "correct": 0, "level": "Basic"}, {"q": "What are the two page Orientation options in Excel 2010?", "options": ["Tall and Wide", "Portrait and Landscape", "Front and Back", "Auto and Manual"], "correct": 1, "level": "Basic"}, {"q": "Where do you set the Print Area of a worksheet?", "options": ["Home → Editing", "Page Layout → Print Area", "Insert → Links", "Review → Changes"], "correct": 1, "level": "Basic"}, {"q": "Header & Footer are added from which tab?", "options": ["Home", "Insert", "Page Layout", "Data"], "correct": 1, "level": "Basic"}, {"q": "Where is the Freeze Panes command located?", "options": ["View tab", "Home tab", "Data tab", "Review tab"], "correct": 0, "level": "Basic"}, {"q": "Where do you create a PivotTable?", "options": ["Data tab", "Insert tab", "Review tab", "Home tab"], "correct": 1, "level": "Basic"}, {"q": "Where is the Data Validation command located?", "options": ["Home tab", "Data tab", "Formulas tab", "View tab"], "correct": 1, "level": "Basic"}, {"q": "Which tab contains the 'Remove Duplicates' command?", "options": ["Home", "Insert", "Data", "Review"], "correct": 2, "level": "Basic"}, {"q": "The 'Text to Columns' command is located in which tab?", "options": ["Home", "Insert", "Data", "Formulas"], "correct": 2, "level": "Basic"}, {"q": "Which cell reference NEVER changes when a formula is copied?", "options": ["Relative (A1)", "Absolute ($A$1)", "Mixed ($A1)", "Auto (A#1)"], "correct": 1, "level": "Mid"}, {"q": "Pressing which key while typing a cell reference cycles through $ sign options?", "options": ["F2", "F4", "F5", "F9"], "correct": 1, "level": "Mid"}, {"q": "In Paste Special, which option pastes ONLY the calculated values (not formulas)?", "options": ["Formats", "Formulas", "Values", "Transpose"], "correct": 2, "level": "Mid"}, {"q": "Which Paste Special option converts rows to columns and vice versa?", "options": ["Transpose", "Values", "Formats", "Skip Blanks"], "correct": 0, "level": "Mid"}, {"q": "If you name range A1:A10 as 'SalesData', which formula is correct?", "options": ["=SUM($SalesData)", "=SUM(SalesData)", "=SUM[SalesData]", "=SUM#SalesData"], "correct": 1, "level": "Mid"}, {"q": "Which steps select ALL blank cells using Go To Special?", "options": ["Ctrl + G → Special → Blanks", "Ctrl + F → Blanks", "Ctrl + H → Special", "Alt + G → Blanks"], "correct": 0, "level": "Mid"}, {"q": "Which function combines data from multiple sheets into one summary table?", "options": ["Subtotal", "Consolidate", "PivotTable", "Group"], "correct": 1, "level": "Mid"}, {"q": "Track Changes in a shared workbook is found in which tab?", "options": ["Home", "Data", "Review", "View"], "correct": 2, "level": "Mid"}, {"q": "What is the shortcut to Insert a Comment in a cell?", "options": ["Ctrl + F2", "Shift + F2", "Alt + F2", "Ctrl + Alt + C"], "correct": 1, "level": "Mid"}, {"q": "Conditional Formatting is located in which tab?", "options": ["Home", "Insert", "Data", "View"], "correct": 0, "level": "Mid"}, {"q": "For marks 76, what does =IF(C3>=90,'Excellent',IF(C3>=75,'Good','Average')) return?", "options": ["Excellent", "Good", "Average", "Fail"], "correct": 1, "level": "Mid"}, {"q": "The AND function returns TRUE when?", "options": ["Any one condition is TRUE", "All conditions are TRUE", "No condition is TRUE", "Conditions are equal"], "correct": 1, "level": "Mid"}, {"q": "The OR function returns TRUE when?", "options": ["All conditions are TRUE", "At least one condition is TRUE", "No condition is TRUE", "Both conditions are FALSE"], "correct": 1, "level": "Mid"}, {"q": "In =PMT(8%/12, 10, 10000), what does 'nper' (10) represent?", "options": ["Interest rate per month", "Total number of payments", "Loan amount", "Monthly installment"], "correct": 1, "level": "Mid"}, {"q": "What does =DAYS360('16/08/2019','20/08/2019') return?", "options": ["2", "4", "6", "8"], "correct": 1, "level": "Mid"}, {"q": "What does =POWER(5,3) return?", "options": ["15", "125", "243", "8"], "correct": 1, "level": "Mid"}, {"q": "Which function generates a random whole number between two values, e.g. 100–500?", "options": ["=RAND()", "=RANDOM(100,500)", "=RANDBETWEEN(100,500)", "=RANDINT(100,500)"], "correct": 2, "level": "Mid"}, {"q": "If a cell shows 83.5, what does =ROUND(A1,0) return?", "options": ["83", "83.5", "84", "80"], "correct": 2, "level": "Mid"}, {"q": "To create a department drop-down using Data Validation, 'Allow' should be set to?", "options": ["Any Value", "Whole Number", "List", "Text Length"], "correct": 2, "level": "Mid"}, {"q": "Where is the 'Protect Sheet' command located?", "options": ["Home", "Data", "Review", "File"], "correct": 2, "level": "Mid"}, {"q": "Goal Seek is found under: Data → ?", "options": ["Group → Goal Seek", "What-If Analysis → Goal Seek", "Subtotal → Goal Seek", "Consolidate → Goal Seek"], "correct": 1, "level": "High"}, {"q": "In Goal Seek, which three things must you specify?", "options": ["Set cell, To value, By changing cell", "Find cell, Replace value, Row", "Target sheet, Formula, Format", "Cell, Font, Color"], "correct": 0, "level": "High"}, {"q": "Before applying Subtotals (e.g., Department-wise Salary), you must first?", "options": ["Protect the sheet", "Sort data by the grouping column", "Freeze the top row", "Merge the cells"], "correct": 1, "level": "High"}, {"q": "In a PivotTable, which field area performs calculations like Sum, Count or Average?", "options": ["Row Labels", "Column Labels", "Values", "Report Filter"], "correct": 2, "level": "High"}, {"q": "A Slicer in Excel 2010 is used to?", "options": ["Cut cells", "Filter a PivotTable visually with buttons", "Merge charts", "Split panes"], "correct": 1, "level": "High"}, {"q": "Protect Workbook → 'Structure' prevents users from?", "options": ["Editing cell contents", "Adding, deleting, hiding or moving sheets", "Changing fonts", "Printing the file"], "correct": 1, "level": "High"}, {"q": "After grouping rows in Excel, which signs appear to collapse and expand the group?", "options": ["+ and -", "# and @", "Up and Down arrows", "< and >"], "correct": 0, "level": "High"}, {"q": "A student's Total is 250 (subjects: Hindi 65, English 70, Math 55, Science 60). Using Goal Seek to reach 300 by changing Math marks, the required Math marks are?", "options": ["70", "75", "80", "50"], "correct": 1, "level": "High"}, {"q": "A Combo Chart in Excel 2010 lets you?", "options": ["Compare two different data types (e.g., columns + line) in one view", "Combine two workbooks into one", "Merge multiple cells", "Create a custom list"], "correct": 0, "level": "High"}, {"q": "For the mixed reference $A1 copied across columns, which behavior is correct?", "options": ["Column fixed, row changes", "Row fixed, column changes", "Both fixed", "Both change"], "correct": 0, "level": "High"}];
+const questions = [{"q": "What is the default file extension for MS Excel 2010 workbooks?", "options": [".xls", ".xlsx", ".xlsm", ".csv"], "correct": 1, "level": "Basic", "qhi": "MS Excel 2010 वर्कबुक का डिफ़ॉल्ट फ़ाइल एक्सटेंशन क्या है?"}, {"q": "By default, how many worksheets open in a new Excel 2010 workbook?", "options": ["1", "2", "3", "5"], "correct": 2, "level": "Basic", "qhi": "नए Excel 2010 वर्कबुक में डिफ़ॉल्ट रूप से कितनी वर्कशीट खुलती हैं?"}, {"q": "What are the default worksheet names in a new Excel 2010 workbook?", "options": ["Doc1, Doc2, Doc3", "Book1, Book2, Book3", "Sheet1, Sheet2, Sheet3", "Page1, Page2, Page3"], "correct": 2, "level": "Basic", "qhi": "नए वर्कबुक में डिफ़ॉल्ट वर्कशीट के नाम क्या होते हैं?"}, {"q": "How many columns are there in an Excel 2010 worksheet?", "options": ["256", "1024", "16,384", "65,536"], "correct": 2, "level": "Basic", "qhi": "Excel 2010 वर्कशीट में कुल कितने कॉलम होते हैं?"}, {"q": "How many rows are there in an Excel 2010 worksheet?", "options": ["65,536", "1,048,576", "100,000", "500,000"], "correct": 1, "level": "Basic", "qhi": "Excel 2010 वर्कशीट में कुल कितनी रो (पंक्तियाँ) होती हैं?"}, {"q": "What is the last column name in Excel 2010?", "options": ["IV", "ZZ", "XFD", "AZ"], "correct": 2, "level": "Basic", "qhi": "Excel 2010 में आख़िरी कॉलम का नाम क्या है?"}, {"q": "What is the intersection of a row and a column called?", "options": ["Range", "Cell", "Box", "Pointer"], "correct": 1, "level": "Basic", "qhi": "रो और कॉलम के कटान बिंदु को क्या कहते हैं?"}, {"q": "What is a group of selected cells called (e.g., A1:D10)?", "options": ["Cell", "Worksheet", "Range", "Table"], "correct": 2, "level": "Basic", "qhi": "चुनी हुई सेलों के समूह (जैसे A1:D10) को क्या कहते हैं?"}, {"q": "A cell address is made up of which two parts?", "options": ["Font and size", "Column letter and row number", "Row letter and column number", "Tab and sheet"], "correct": 1, "level": "Basic", "qhi": "सेल एड्रेस किन दो भागों से मिलकर बनता है?"}, {"q": "Which box shows the active cell's address, located left of the Formula Bar?", "options": ["Formula Bar", "Name Box", "Status Bar", "Scroll Box"], "correct": 1, "level": "Basic", "qhi": "फ़ॉर्मूला बार के बाईं ओर एक्टिव सेल का एड्रेस दिखाने वाला बॉक्स कौन सा है?"}, {"q": "Which Ribbon tab contains everyday tools like Font, Alignment, Number and Styles?", "options": ["Insert", "Home", "Data", "View"], "correct": 1, "level": "Basic", "qhi": "रोज़मर्रा के टूल्स (Font, Alignment, Number, Styles) किस रिबन टैब में होते हैं?"}, {"q": "What is the shortcut key for 'Save' in Excel 2010?", "options": ["Ctrl + S", "Ctrl + O", "Ctrl + N", "Ctrl + P"], "correct": 0, "level": "Basic", "qhi": "MS Excel 2010 में 'Save' की शॉर्टकट कुंजी क्या है?"}, {"q": "What does 'Ctrl + C' do in Excel 2010?", "options": ["Cut", "Copy", "Paste", "Print"], "correct": 1, "level": "Basic", "qhi": "Ctrl + C क्या करता है?"}, {"q": "What does 'Ctrl + V' do in Excel 2010?", "options": ["Cut", "Copy", "Paste", "Validate"], "correct": 2, "level": "Basic", "qhi": "Ctrl + V क्या करता है?"}, {"q": "What does 'Ctrl + X' do in Excel 2010?", "options": ["Copy", "Cut", "Delete", "Exit"], "correct": 1, "level": "Basic", "qhi": "Ctrl + X क्या करता है?"}, {"q": "What does 'Ctrl + Z' do in Excel 2010?", "options": ["Redo", "Zoom", "Undo", "Freeze"], "correct": 2, "level": "Basic", "qhi": "Ctrl + Z क्या करता है?"}, {"q": "What does 'Ctrl + Y' do in Excel 2010?", "options": ["Undo", "Redo", "Copy", "Save"], "correct": 1, "level": "Basic", "qhi": "Ctrl + Y क्या करता है?"}, {"q": "Every Excel formula must begin with which symbol?", "options": ["+", "#", "=", "@"], "correct": 2, "level": "Basic", "qhi": "हर Excel फ़ॉर्मूला किस चिह्न से शुरू होता है?"}, {"q": "Which function adds all values in a range?", "options": ["ADD", "TOTAL", "SUM", "PLUS"], "correct": 2, "level": "Basic", "qhi": "रेंज के सभी मानों को जोड़ने वाला फ़ंक्शन कौन सा है?"}, {"q": "Which function calculates the average of a range?", "options": ["MEAN", "AVG", "AVERAGE", "MEDIAN"], "correct": 2, "level": "Basic", "qhi": "रेंज का औसत (Average) निकालने वाला फ़ंक्शन कौन सा है?"}, {"q": "Which function returns the smallest value in a range?", "options": ["SMALL", "MIN", "LOWEST", "MINIMUM"], "correct": 1, "level": "Basic", "qhi": "रेंज में सबसे छोटा मान देने वाला फ़ंक्शन कौन सा है?"}, {"q": "Which function returns the largest value in a range?", "options": ["BIG", "MAX", "HIGHEST", "LARGE"], "correct": 1, "level": "Basic", "qhi": "रेंज में सबसे बड़ा मान देने वाला फ़ंक्शन कौन सा है?"}, {"q": "Which function counts only the cells containing numbers in a range?", "options": ["COUNTA", "COUNT", "COUNTIF", "TOTAL"], "correct": 1, "level": "Basic", "qhi": "रेंज में सिर्फ़ नंबर वाली सेलों को गिनने वाला फ़ंक्शन कौन सा है?"}, {"q": "What does =SQRT(64) return?", "options": ["6", "8", "32", "4096"], "correct": 1, "level": "Basic", "qhi": "=SQRT(64) क्या रिटर्न करेगा?"}, {"q": "What does =FACT(6) return?", "options": ["36", "120", "720", "60"], "correct": 2, "level": "Basic", "qhi": "=FACT(6) क्या रिटर्न करेगा?"}, {"q": "Which function returns today's date only?", "options": ["=NOW()", "=TODAY()", "=DATE()", "=DAY()"], "correct": 1, "level": "Basic", "qhi": "कौन सा फ़ंक्शन सिर्फ़ आज की तारीख़ देता है?"}, {"q": "Which function returns the current date AND time?", "options": ["=DATE()", "=TODAY()", "=NOW()", "=TIME()"], "correct": 2, "level": "Basic", "qhi": "कौन सा फ़ंक्शन वर्तमान तारीख़ और समय दोनों देता है?"}, {"q": "What is the shortcut to create an Excel Table from a data range?", "options": ["Ctrl + T", "Ctrl + L", "Ctrl + Shift + T", "Alt + T"], "correct": 0, "level": "Basic", "qhi": "डेटा रेंज से Excel टेबल बनाने की शॉर्टकट कुंजी क्या है?"}, {"q": "What is the shortcut to toggle Filter arrows on/off in a table?", "options": ["Ctrl + F", "Ctrl + Shift + L", "Ctrl + Alt + F", "Shift + F2"], "correct": 1, "level": "Basic", "qhi": "टेबल में फ़िल्टर चालू/बंद करने की शॉर्टकट कुंजी क्या है?"}, {"q": "Which key puts the selected cell into Edit mode?", "options": ["F1", "F2", "F5", "F12"], "correct": 1, "level": "Basic", "qhi": "सेलेक्टेड सेल को एडिट मोड में लाने वाली कुंजी कौन सी है?"}, {"q": "What is the shortcut for AutoSum in Excel 2010?", "options": ["Alt + S", "Alt + =", "Ctrl + Sum", "Shift + +"], "correct": 1, "level": "Basic", "qhi": "AutoSum की शॉर्टकट कुंजी क्या है?"}, {"q": "What is the shortcut to open Find & Replace?", "options": ["Ctrl + F", "Ctrl + G", "Ctrl + H", "Ctrl + R"], "correct": 2, "level": "Basic", "qhi": "Find & Replace खोलने की शॉर्टकट कुंजी क्या है?"}, {"q": "Which shortcut opens the Format Cells dialog box?", "options": ["Ctrl + 1", "Ctrl + 2", "Ctrl + F1", "Alt + 1"], "correct": 0, "level": "Basic", "qhi": "Format Cells डायलॉग बॉक्स खोलने की शॉर्टकट कुंजी क्या है?"}, {"q": "Which shortcut inserts cells, rows or columns?", "options": ["Ctrl + -", "Ctrl + Shift + +", "Alt + Insert", "Ctrl + I"], "correct": 1, "level": "Basic", "qhi": "सेल, रो या कॉलम इंसर्ट करने की शॉर्टकट कुंजी क्या है?"}, {"q": "Which shortcut deletes cells, rows or columns?", "options": ["Ctrl + -", "Ctrl + Del", "Shift + Del", "Alt + -"], "correct": 0, "level": "Basic", "qhi": "सेल, रो या कॉलम डिलीट करने की शॉर्टकट कुंजी क्या है?"}, {"q": "Where is the 'Merge & Center' command located?", "options": ["Home → Alignment", "Insert → Tables", "Data → Group", "View → Window"], "correct": 0, "level": "Basic", "qhi": "'Merge & Center' कमांड कहाँ मिलती है?"}, {"q": "Where is the 'Wrap Text' command located?", "options": ["Home → Font", "Home → Alignment", "Insert → Text", "Page Layout"], "correct": 1, "level": "Basic", "qhi": "'Wrap Text' कमांड कहाँ मिलती है?"}, {"q": "Where is the 'Fill Color' (paint bucket) button located?", "options": ["Home → Clipboard", "Home → Font", "Home → Styles", "Insert → Symbols"], "correct": 1, "level": "Basic", "qhi": "'Fill Color' (पेंट बकेट) बटन कहाँ मिलता है?"}, {"q": "Which tool copies formatting from one cell to another in one click?", "options": ["Format Copier", "Style Brush", "Format Painter", "Paint Format"], "correct": 2, "level": "Basic", "qhi": "एक क्लिक में फ़ॉर्मैटिंग कॉपी करने वाला टूल कौन सा है?"}, {"q": "How can you insert a new row or column quickly?", "options": ["File → Insert", "Right-click on row/column header → Insert", "Ctrl + Insert only", "View → Insert"], "correct": 1, "level": "Basic", "qhi": "नई रो या कॉलम सबसे तेज़ कैसे इंसर्ट करें?"}, {"q": "To hide a row, you use: Home → Cells → Format → Hide & Unhide → ?", "options": ["Hide Cells", "Hide Rows", "Hide Grid", "Hide Sheet"], "correct": 1, "level": "Basic", "qhi": "रो छिपाने (Hide) के लिए कौन सा पथ है?"}, {"q": "Where is the Currency number format option found?", "options": ["Home → Number group", "Insert → Symbols", "Data → Format", "Review"], "correct": 0, "level": "Basic", "qhi": "करंसी नंबर फ़ॉर्मेट विकल्प कहाँ मिलता है?"}, {"q": "Where is the Percentage number format option found?", "options": ["Home → Number group", "Formulas → Math", "Page Layout → Scale", "File → Options"], "correct": 0, "level": "Basic", "qhi": "परसेंटेज नंबर फ़ॉर्मेट विकल्प कहाँ मिलता है?"}, {"q": "How do you AutoFit a column width to its content?", "options": ["Ctrl + double-click anywhere", "Double-click the border between column headers", "Right-click → Stretch", "Press Ctrl + A twice"], "correct": 1, "level": "Basic", "qhi": "कॉलम विड्थ को कंटेंट के हिसाब से ऑटो-फ़िट कैसे करें?"}, {"q": "Column Width and Row Height can be set from: Home → ?", "options": ["Font", "Cells → Format", "Styles", "Editing"], "correct": 1, "level": "Basic", "qhi": "Column Width और Row Height कहाँ से सेट होते हैं?"}, {"q": "What does the LEN function do?", "options": ["Counts words in a cell", "Returns the number of characters in text", "Makes text longer", "Finds line numbers"], "correct": 1, "level": "Basic", "qhi": "LEN फ़ंक्शन क्या करता है?"}, {"q": "What does =UPPER('excel') return?", "options": ["EXCEL", "Excel", "excel", "eXCEL"], "correct": 0, "level": "Basic", "qhi": "=UPPER(\"excel\") क्या रिटर्न करेगा?"}, {"q": "What does =LOWER('EXCEL') return?", "options": ["EXCEL", "Excel", "excel", "ExCeL"], "correct": 2, "level": "Basic", "qhi": "=LOWER(\"EXCEL\") क्या रिटर्न करेगा?"}, {"q": "What does =PROPER('nexa computer') return?", "options": ["NEXA COMPUTER", "Nexa Computer", "nexa computer", "Nexa computer"], "correct": 1, "level": "Basic", "qhi": "=PROPER(\"nexa computer\") क्या रिटर्न करेगा?"}, {"q": "What does =LEFT('Excel',3) return?", "options": ["Exc", "cel", "xce", "Excel"], "correct": 0, "level": "Basic", "qhi": "=LEFT(\"Excel\",3) क्या रिटर्न करेगा?"}, {"q": "What does =RIGHT('Excel',3) return?", "options": ["Exc", "cel", "xce", "Els"], "correct": 1, "level": "Basic", "qhi": "=RIGHT(\"Excel\",3) क्या रिटर्न करेगा?"}, {"q": "What does =MID('Excel',2,3) return?", "options": ["Exc", "cel", "xce", "xceL"], "correct": 2, "level": "Basic", "qhi": "=MID(\"Excel\",2,3) क्या रिटर्न करेगा?"}, {"q": "Which function joins text from multiple cells into one?", "options": ["JOIN", "COMBINE", "CONCATENATE", "MERGE"], "correct": 2, "level": "Basic", "qhi": "कई सेलों का टेक्स्ट एक में जोड़ने वाला फ़ंक्शन कौन सा है?"}, {"q": "Where do you create a Custom List? (File → Options → ?)", "options": ["Proofing", "Advanced → Edit Custom Lists", "Formulas", "Save"], "correct": 1, "level": "Basic", "qhi": "कस्टम लिस्ट कहाँ बनाते हैं? (File → Options → ?)"}, {"q": "Which shortcuts switch between worksheets?", "options": ["Ctrl + Tab", "Ctrl + PageUp / Ctrl + PageDown", "Alt + Left / Right", "Shift + F6"], "correct": 1, "level": "Basic", "qhi": "वर्कशीट के बीच स्विच करने की शॉर्टकट कुंजियाँ कौन सी हैं?"}, {"q": "How do you add a new worksheet?", "options": ["Right-click a sheet tab → Insert → Worksheet", "File → New Sheet", "Ctrl + N", "Home → New Sheet"], "correct": 0, "level": "Basic", "qhi": "नई वर्कशीट कैसे जोड़ें?"}, {"q": "Which tab is used to insert charts in Excel 2010?", "options": ["Home", "Insert", "Data", "Review"], "correct": 1, "level": "Basic", "qhi": "चार्ट इंसर्ट करने के लिए कौन सा टैब इस्तेमाल होता है?"}, {"q": "A Column chart is best used for?", "options": ["Showing proportions of a whole", "Comparing values across categories", "Showing trends over time", "Filtering data"], "correct": 1, "level": "Basic", "qhi": "कॉलम चार्ट किसके लिए सबसे अच्छा होता है?"}, {"q": "A Pie chart is best used for?", "options": ["Comparing values across categories", "Showing proportions of a whole", "Filtering records", "Printing reports"], "correct": 1, "level": "Basic", "qhi": "पाई चार्ट किसके लिए सबसे अच्छा होता है?"}, {"q": "A Line chart is best used for?", "options": ["Showing trends over time", "Splitting columns", "Protecting sheets", "Merging cells"], "correct": 0, "level": "Basic", "qhi": "लाइन चार्ट किसके लिए सबसे अच्छा होता है?"}, {"q": "Sparklines (mini in-cell charts) are found in which tab?", "options": ["Home", "Insert", "View", "Formulas"], "correct": 1, "level": "Basic", "qhi": "स्पार्कलाइन (सेल में छोटा चार्ट) किस टैब में मिलता है?"}, {"q": "What is the shortcut for Print Preview / Print?", "options": ["Ctrl + P", "Ctrl + Shift + P", "Alt + P", "F12"], "correct": 0, "level": "Basic", "qhi": "प्रिंट प्रीव्यू / प्रिंट की शॉर्टकट कुंजी क्या है?"}, {"q": "What are the two page Orientation options in Excel 2010?", "options": ["Tall and Wide", "Portrait and Landscape", "Front and Back", "Auto and Manual"], "correct": 1, "level": "Basic", "qhi": "Excel 2010 में पेज ओरिएंटेशन के कौन से दो विकल्प होते हैं?"}, {"q": "Where do you set the Print Area of a worksheet?", "options": ["Home → Editing", "Page Layout → Print Area", "Insert → Links", "Review → Changes"], "correct": 1, "level": "Basic", "qhi": "वर्कशीट का प्रिंट एरिया कहाँ सेट करते हैं?"}, {"q": "Header & Footer are added from which tab?", "options": ["Home", "Insert", "Page Layout", "Data"], "correct": 1, "level": "Basic", "qhi": "हेडर और फ़ुटर किस टैब से जुड़ते हैं?"}, {"q": "Where is the Freeze Panes command located?", "options": ["View tab", "Home tab", "Data tab", "Review tab"], "correct": 0, "level": "Basic", "qhi": "Freeze Panes कमांड कहाँ मिलती है?"}, {"q": "Where do you create a PivotTable?", "options": ["Data tab", "Insert tab", "Review tab", "Home tab"], "correct": 1, "level": "Basic", "qhi": "PivotTable कहाँ बनाया जाता है?"}, {"q": "Where is the Data Validation command located?", "options": ["Home tab", "Data tab", "Formulas tab", "View tab"], "correct": 1, "level": "Basic", "qhi": "Data Validation कमांड कहाँ मिलती है?"}, {"q": "Which tab contains the 'Remove Duplicates' command?", "options": ["Home", "Insert", "Data", "Review"], "correct": 2, "level": "Basic", "qhi": "'Remove Duplicates' कमांड किस टैब में है?"}, {"q": "The 'Text to Columns' command is located in which tab?", "options": ["Home", "Insert", "Data", "Formulas"], "correct": 2, "level": "Basic", "qhi": "'Text to Columns' कमांड किस टैब में है?"}, {"q": "Which cell reference NEVER changes when a formula is copied?", "options": ["Relative (A1)", "Absolute ($A$1)", "Mixed ($A1)", "Auto (A#1)"], "correct": 1, "level": "Mid", "qhi": "कौन सा सेल रेफ़रंस फ़ॉर्मूला कॉपी करने पर कभी नहीं बदलता?"}, {"q": "Pressing which key while typing a cell reference cycles through $ sign options?", "options": ["F2", "F4", "F5", "F9"], "correct": 1, "level": "Mid", "qhi": "सेल रेफ़रंस लिखते समय $ चिह्न के विकल्प बदलने वाली कुंजी कौन सी है?"}, {"q": "In Paste Special, which option pastes ONLY the calculated values (not formulas)?", "options": ["Formats", "Formulas", "Values", "Transpose"], "correct": 2, "level": "Mid", "qhi": "Paste Special में कौन सा विकल्प सिर्फ़ कैलकुलेटेड वैल्यू (फ़ॉर्मूला नहीं) पेस्ट करता है?"}, {"q": "Which Paste Special option converts rows to columns and vice versa?", "options": ["Transpose", "Values", "Formats", "Skip Blanks"], "correct": 0, "level": "Mid", "qhi": "Paste Special का कौन सा विकल्प रो को कॉलम और कॉलम को रो में बदल देता है?"}, {"q": "If you name range A1:A10 as 'SalesData', which formula is correct?", "options": ["=SUM($SalesData)", "=SUM(SalesData)", "=SUM[SalesData]", "=SUM#SalesData"], "correct": 1, "level": "Mid", "qhi": "अगर A1:A10 रेंज का नाम 'SalesData' है, तो सही फ़ॉर्मूला कौन सा है?"}, {"q": "Which steps select ALL blank cells using Go To Special?", "options": ["Ctrl + G → Special → Blanks", "Ctrl + F → Blanks", "Ctrl + H → Special", "Alt + G → Blanks"], "correct": 0, "level": "Mid", "qhi": "Go To Special से सभी खाली (Blank) सेल चुनने के स्टेप्स कौन से हैं?"}, {"q": "Which function combines data from multiple sheets into one summary table?", "options": ["Subtotal", "Consolidate", "PivotTable", "Group"], "correct": 1, "level": "Mid", "qhi": "कई शीटों का डेटा एक सारांश (Summary) में जोड़ने वाला फ़ीचर कौन सा है?"}, {"q": "Track Changes in a shared workbook is found in which tab?", "options": ["Home", "Data", "Review", "View"], "correct": 2, "level": "Mid", "qhi": "Track Changes किस टैब में मिलता है?"}, {"q": "What is the shortcut to Insert a Comment in a cell?", "options": ["Ctrl + F2", "Shift + F2", "Alt + F2", "Ctrl + Alt + C"], "correct": 1, "level": "Mid", "qhi": "सेल में कमेंट इंसर्ट करने की शॉर्टकट कुंजी क्या है?"}, {"q": "Conditional Formatting is located in which tab?", "options": ["Home", "Insert", "Data", "View"], "correct": 0, "level": "Mid", "qhi": "Conditional Formatting किस टैब में होती है?"}, {"q": "For marks 76, what does =IF(C3>=90,'Excellent',IF(C3>=75,'Good','Average')) return?", "options": ["Excellent", "Good", "Average", "Fail"], "correct": 1, "level": "Mid", "qhi": "76 अंकों पर =IF(C3>=90,\"Excellent\",IF(C3>=75,\"Good\",\"Average\")) क्या देगा?"}, {"q": "The AND function returns TRUE when?", "options": ["Any one condition is TRUE", "All conditions are TRUE", "No condition is TRUE", "Conditions are equal"], "correct": 1, "level": "Mid", "qhi": "AND फ़ंक्शन TRUE कब देता है?"}, {"q": "The OR function returns TRUE when?", "options": ["All conditions are TRUE", "At least one condition is TRUE", "No condition is TRUE", "Both conditions are FALSE"], "correct": 1, "level": "Mid", "qhi": "OR फ़ंक्शन TRUE कब देता है?"}, {"q": "In =PMT(8%/12, 10, 10000), what does 'nper' (10) represent?", "options": ["Interest rate per month", "Total number of payments", "Loan amount", "Monthly installment"], "correct": 1, "level": "Mid", "qhi": "=PMT(8%/12, 10, 10000) में 'nper' (10) क्या दर्शाता है?"}, {"q": "What does =DAYS360('16/08/2019','20/08/2019') return?", "options": ["2", "4", "6", "8"], "correct": 1, "level": "Mid", "qhi": "=DAYS360(\"16/08/2019\",\"20/08/2019\") क्या रिटर्न करेगा?"}, {"q": "What does =POWER(5,3) return?", "options": ["15", "125", "243", "8"], "correct": 1, "level": "Mid", "qhi": "=POWER(5,3) क्या रिटर्न करेगा?"}, {"q": "Which function generates a random whole number between two values, e.g. 100–500?", "options": ["=RAND()", "=RANDOM(100,500)", "=RANDBETWEEN(100,500)", "=RANDINT(100,500)"], "correct": 2, "level": "Mid", "qhi": "दो वैल्यू के बीच रैंडम पूर्णांक बनाने वाला फ़ंक्शन कौन सा है?"}, {"q": "If a cell shows 83.5, what does =ROUND(A1,0) return?", "options": ["83", "83.5", "84", "80"], "correct": 2, "level": "Mid", "qhi": "अगर सेल में 83.5 है, तो =ROUND(A1,0) क्या देगा?"}, {"q": "To create a department drop-down using Data Validation, 'Allow' should be set to?", "options": ["Any Value", "Whole Number", "List", "Text Length"], "correct": 2, "level": "Mid", "qhi": "Data Validation से ड्रॉप-डाउन बनाते समय 'Allow' में क्या चुनें?"}, {"q": "Where is the 'Protect Sheet' command located?", "options": ["Home", "Data", "Review", "File"], "correct": 2, "level": "Mid", "qhi": "'Protect Sheet' कमांड कहाँ मिलती है?"}, {"q": "Goal Seek is found under: Data → ?", "options": ["Group → Goal Seek", "What-If Analysis → Goal Seek", "Subtotal → Goal Seek", "Consolidate → Goal Seek"], "correct": 1, "level": "High", "qhi": "Goal Seek कहाँ मिलता है: Data → ?"}, {"q": "In Goal Seek, which three things must you specify?", "options": ["Set cell, To value, By changing cell", "Find cell, Replace value, Row", "Target sheet, Formula, Format", "Cell, Font, Color"], "correct": 0, "level": "High", "qhi": "Goal Seek में कौन सी तीन चीज़ें बतानी होती हैं?"}, {"q": "Before applying Subtotals (e.g., Department-wise Salary), you must first?", "options": ["Protect the sheet", "Sort data by the grouping column", "Freeze the top row", "Merge the cells"], "correct": 1, "level": "High", "qhi": "Subtotals लगाने से पहले सबसे पहले क्या करना ज़रूरी है?"}, {"q": "In a PivotTable, which field area performs calculations like Sum, Count or Average?", "options": ["Row Labels", "Column Labels", "Values", "Report Filter"], "correct": 2, "level": "High", "qhi": "PivotTable में कौन सा फ़ील्ड एरिया Sum, Count, Average जैसी गणना करता है?"}, {"q": "A Slicer in Excel 2010 is used to?", "options": ["Cut cells", "Filter a PivotTable visually with buttons", "Merge charts", "Split panes"], "correct": 1, "level": "High", "qhi": "Excel 2010 में Slicer का उपयोग किस लिए होता है?"}, {"q": "Protect Workbook → 'Structure' prevents users from?", "options": ["Editing cell contents", "Adding, deleting, hiding or moving sheets", "Changing fonts", "Printing the file"], "correct": 1, "level": "High", "qhi": "Protect Workbook → 'Structure' से उपयोगकर्ता क्या नहीं कर पाते?"}, {"q": "After grouping rows in Excel, which signs appear to collapse and expand the group?", "options": ["+ and -", "# and @", "Up and Down arrows", "< and >"], "correct": 0, "level": "High", "qhi": "रो ग्रुप करने के बाद Collapse/Expand के लिए कौन से चिह्न आते हैं?"}, {"q": "A student's Total is 250 (subjects: Hindi 65, English 70, Math 55, Science 60). Using Goal Seek to reach 300 by changing Math marks, the required Math marks are?", "options": ["70", "75", "80", "50"], "correct": 1, "level": "High", "qhi": "स्टूडेंट का कुल 250 है। Goal Seek से 300 पाने के लिए Math में कितने अंक चाहिए?"}, {"q": "A Combo Chart in Excel 2010 lets you?", "options": ["Compare two different data types (e.g., columns + line) in one view", "Combine two workbooks into one", "Merge multiple cells", "Create a custom list"], "correct": 0, "level": "High", "qhi": "Combo Chart क्या काम करता है?"}, {"q": "For the mixed reference $A1 copied down rows, which behavior is correct?", "options": ["Column fixed, row changes", "Row fixed, column changes", "Both fixed", "Both change"], "correct": 0, "level": "High", "qhi": "Mixed reference $A1 को नीचे कॉपी करने पर व्यवहार क्या होगा?"}];
 
 let currentQuestion = 0;
 let userAnswers = new Array(questions.length).fill(-1);
@@ -410,8 +586,8 @@ function renderQuestionNav() {
   const nav = document.getElementById('questionNav');
   nav.innerHTML = '';
   for (let i = 0; i < questions.length; i++) {
-    const dot = document.createElement('div');
-    dot.className = 'q-dot' + (userAnswers[i] !== -1 ? ' answered' : '') + (i === currentQuestion ? ' current' : '');
+    const dot = document.createElement('button');
+    dot.className = 'dot' + (userAnswers[i] !== -1 ? ' answered' : '') + (i === currentQuestion ? ' current' : '');
     dot.textContent = i + 1;
     dot.onclick = () => showQuestion(i);
     nav.appendChild(dot);
@@ -425,21 +601,23 @@ function showQuestion(index) {
   let optionsHtml = '';
   q.options.forEach((opt, i) => {
     const selected = userAnswers[index] === i ? 'selected' : '';
-    optionsHtml += `<label class="${selected}" onclick="selectOption(${i})">
-      <input type="radio" name="q${index}" value="${i}" ${selected ? 'checked' : ''}>
-      ${String.fromCharCode(65 + i)}. ${opt}
-    </label>`;
+    optionsHtml += `<div class="opt ${selected}" onclick="selectOption(${i})">
+      <span class="opt-letter">${String.fromCharCode(65 + i)}</span>
+      <span class="opt-text">${opt}</span>
+    </div>`;
   });
   container.innerHTML = `
-    <div class="question-card">
-      <div class="question-header">
-        <span class="question-number">Question ${index + 1} of ${questions.length}</span>
-        <span class="level-badge ${q.level}">Level: ${q.level}</span>
+    <div class="q-card">
+      <div class="q-top">
+        <span class="q-number">Question: ${index + 1}</span>
+        <div class="q-badges">
+          <span class="level-badge ${q.level}">${q.level === 'Basic' ? 'बेसिक / Basic' : (q.level === 'Mid' ? 'मध्य / Mid' : 'उच्च / High')}</span>
+          <span class="verified-badge"><span class="check">✓</span> Verified by Expert</span>
+        </div>
       </div>
-      <h3 style="margin: 15px 0; font-size: 18px;">${q.q}</h3>
-      <div class="options">
-        ${optionsHtml}
-      </div>
+      <div class="q-text-hindi">${q.qhi}</div>
+      <div class="q-text-eng">${q.q}</div>
+      ${optionsHtml}
     </div>
   `;
   document.getElementById('prevBtn').style.display = index === 0 ? 'none' : 'inline-block';
@@ -447,6 +625,7 @@ function showQuestion(index) {
   document.getElementById('submitBtn').classList.toggle('hidden', index !== questions.length - 1);
   renderQuestionNav();
   updateProgress();
+  window.scrollTo({ top: document.getElementById('examStrip').offsetTop, behavior: 'smooth' });
 }
 
 function selectOption(optionIndex) {
@@ -466,6 +645,7 @@ function updateProgress() {
   const answered = userAnswers.filter(a => a !== -1).length;
   const percent = (answered / questions.length) * 100;
   document.getElementById('progressFill').style.width = percent + '%';
+  document.getElementById('progressLabel').textContent = `${answered} / ${questions.length} answered`;
 }
 
 function startTimer() {
@@ -481,6 +661,10 @@ function startTimer() {
 
 function submitQuiz() {
   clearInterval(timerInterval);
+  const unanswered = userAnswers.filter(a => a === -1).length;
+  if (unanswered > 0 && timeRemaining > 0) {
+    if (!confirm(`आपने ${unanswered} प्रश्न छोड़े हैं। क्या आप सबमिट करना चाहते हैं?\nYou have skipped ${unanswered} questions. Submit anyway?`)) return;
+  }
   let correct = 0, wrong = 0, skipped = 0;
   const levelStats = { Basic: {c:0,t:0}, Mid: {c:0,t:0}, High: {c:0,t:0} };
   userAnswers.forEach((ans, i) => {
@@ -502,8 +686,7 @@ function submitQuiz() {
     correct: correct, wrong: wrong, skipped: skipped, total: questions.length,
     percentage: percentage, timeTaken: timeTaken, levelStats: levelStats,
     answers: userAnswers.map((ans, i) => ({
-      q: questions[i].q,
-      level: questions[i].level,
+      q: questions[i].q, qhi: questions[i].qhi, level: questions[i].level,
       userAns: ans === -1 ? 'Skipped' : questions[i].options[ans],
       correctAns: questions[i].options[questions[i].correct],
       isCorrect: ans === questions[i].correct
@@ -511,9 +694,8 @@ function submitQuiz() {
   };
   document.getElementById('quizSection').style.display = 'none';
   document.getElementById('studentForm').style.display = 'none';
-  document.getElementById('timerBox').style.display = 'none';
-  document.getElementById('progressFill').parentElement.style.display = 'none';
-  document.getElementById('questionNav').style.display = 'none';
+  document.getElementById('dotsCard').style.display = 'none';
+  document.getElementById('examStrip').style.display = 'none';
   const resultSection = document.getElementById('resultSection');
   resultSection.style.display = 'block';
   document.getElementById('scoreCircle').textContent = percentage + '%';
@@ -524,23 +706,22 @@ function submitQuiz() {
   document.getElementById('wrongCount').textContent = wrong;
   document.getElementById('skippedCount').textContent = skipped;
   let grade = '', badgeClass = '';
-  if (percentage >= 90) { grade = 'A+ (Excellent)'; badgeClass = 'badge-pass'; }
-  else if (percentage >= 80) { grade = 'A (Very Good)'; badgeClass = 'badge-pass'; }
-  else if (percentage >= 70) { grade = 'B (Good)'; badgeClass = 'badge-pass'; }
-  else if (percentage >= 60) { grade = 'C (Average)'; badgeClass = 'badge-pass'; }
-  else if (percentage >= 50) { grade = 'D (Pass)'; badgeClass = 'badge-pass'; }
-  else { grade = 'F (Fail)'; badgeClass = 'badge-fail'; }
-  document.getElementById('gradeBadge').innerHTML = `<span class="badge ${badgeClass}">${grade}</span>`;
-  const lvlColors = { Basic: '#28a745', Mid: '#e0a800', High: '#dc3545' };
+  if (percentage >= 90) { grade = 'A+ (उत्कृष्ट / Excellent)'; badgeClass = 'grade-pass'; }
+  else if (percentage >= 80) { grade = 'A (बहुत अच्छा / Very Good)'; badgeClass = 'grade-pass'; }
+  else if (percentage >= 70) { grade = 'B (अच्छा / Good)'; badgeClass = 'grade-pass'; }
+  else if (percentage >= 60) { grade = 'C (औसत / Average)'; badgeClass = 'grade-pass'; }
+  else if (percentage >= 50) { grade = 'D (उत्तीर्ण / Pass)'; badgeClass = 'grade-pass'; }
+  else { grade = 'F (अनुत्तीर्ण / Fail)'; badgeClass = 'grade-fail'; }
+  document.getElementById('gradeBadge').innerHTML = `<span class="grade-badge ${badgeClass}">${grade}</span>`;
+  const lvlColors = { Basic: '#1e7e46', Mid: '#9a7b00', High: '#b03a2e' };
   let lvlHtml = '';
   for (const [lvl, st] of Object.entries(levelStats)) {
     const pct = st.t ? Math.round((st.c / st.t) * 100) : 0;
-    lvlHtml += `<div class="level-stat" style="border-top: 4px solid ${lvlColors[lvl]}">
-      <h4>${lvl} Level</h4>
-      <p style="color:${lvlColors[lvl]}">${st.c}/${st.t} (${pct}%)</p>
-    </div>`;
+    lvlHtml += `<div class="level-stat" style="border-top:4px solid ${lvlColors[lvl]}">
+      <h4>${lvl} Level</h4><p style="color:${lvlColors[lvl]}">${st.c}/${st.t} (${pct}%)</p></div>`;
   }
   document.getElementById('levelSummary').innerHTML = lvlHtml;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function formatTime(seconds) {
@@ -559,11 +740,10 @@ function showReview() {
       const statusClass = item.isCorrect ? 'correct' : 'incorrect';
       const statusIcon = item.isCorrect ? '✅' : '❌';
       html += `<div class="review-item ${statusClass}">
-          <strong>Q${i+1} [${item.level}]: ${item.q}</strong><br>
-          <span style="color: ${item.isCorrect ? 'green' : 'red'}">
-            ${statusIcon} Your Answer: ${item.userAns}
-          </span><br>
-          ✅ Correct Answer: ${item.correctAns}
+          <strong>Q${i+1} [${item.level}]: ${item.qhi}</strong><br>
+          <span style="color:#d9534f; font-size:13px;">${item.q}</span><br>
+          <span style="color:${item.isCorrect ? 'green' : 'red'}">${statusIcon} आपका उत्तर / Your Answer: ${item.userAns}</span><br>
+          ✅ सही उत्तर / Correct Answer: ${item.correctAns}
         </div>`;
     });
     reviewList.innerHTML = html;
@@ -571,56 +751,29 @@ function showReview() {
 }
 
 function exportToExcel() {
-  let csv = 'MS Excel 2010 Quiz Results\n\n';
-  csv += 'Student Information\n';
-  csv += `Name,${examData.name}\n`;
-  csv += `Roll Number,${examData.roll}\n`;
-  csv += `Class,${examData.class}\n`;
-  csv += `Date,${examData.date}\n`;
-  csv += `Center,${examData.center}\n`;
-  csv += `Email,${examData.email}\n\n`;
+  let csv = 'MS Excel 2010 Quiz Results\n\nStudent Information\n';
+  csv += `Name,${examData.name}\nRoll Number,${examData.roll}\nClass,${examData.class}\nDate,${examData.date}\nCenter,${examData.center}\nEmail,${examData.email}\n\n`;
   csv += 'Result Summary\n';
-  csv += `Total Questions,${examData.total}\n`;
-  csv += `Correct,${examData.correct}\n`;
-  csv += `Wrong,${examData.wrong}\n`;
-  csv += `Skipped,${examData.skipped}\n`;
-  csv += `Percentage,${examData.percentage}%\n`;
-  csv += `Time Taken,${examData.timeTaken}\n\n`;
-  csv += 'Level-wise Performance\n';
-  csv += 'Level,Correct,Total,Percentage\n';
+  csv += `Total Questions,${examData.total}\nCorrect,${examData.correct}\nWrong,${examData.wrong}\nSkipped,${examData.skipped}\nPercentage,${examData.percentage}%\nTime Taken,${examData.timeTaken}\n\n`;
+  csv += 'Level-wise Performance\nLevel,Correct,Total,Percentage\n';
   for (const [lvl, st] of Object.entries(examData.levelStats)) {
     const pct = st.t ? Math.round((st.c / st.t) * 100) : 0;
     csv += `${lvl},${st.c},${st.t},${pct}%\n`;
   }
-  csv += '\nDetailed Answers\n';
-  csv += 'Q.No,Level,Question,Your Answer,Correct Answer,Status\n';
+  csv += '\nDetailed Answers\nQ.No,Level,Question (Hindi),Question (English),Your Answer,Correct Answer,Status\n';
   examData.answers.forEach((item, i) => {
     const status = item.isCorrect ? 'Correct' : (item.userAns === 'Skipped' ? 'Skipped' : 'Wrong');
-    csv += `${i+1},${item.level},"${item.q}","${item.userAns}","${item.correctAns}",${status}\n`;
+    csv += `${i+1},${item.level},"${item.qhi}","${item.q}","${item.userAns}","${item.correctAns}",${status}\n`;
   });
-  const blob = new Blob([csv], { type: 'application/vnd.ms-excel' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = `MS_Excel_2010_Quiz_${examData.name}_${examData.date}.xls`;
-  a.click();
-  URL.revokeObjectURL(url);
-  alert('✅ Results exported to Excel successfully!');
+  downloadFile(csv, 'application/vnd.ms-excel', `MS_Excel_2010_Quiz_${examData.name}_${examData.date}.xls`);
+  alert('✅ परिणाम Excel में एक्सपोर्ट हुआ! / Results exported to Excel!');
 }
 
 function exportToPDF() {
-  let content = `MS EXCEL 2010 QUIZ RESULTS\n\n`;
-  content += `STUDENT INFORMATION\n`;
-  content += `Name: ${examData.name}\n`;
-  content += `Roll: ${examData.roll}\n`;
-  content += `Class: ${examData.class}\n`;
-  content += `Date: ${examData.date}\n`;
-  content += `Center: ${examData.center}\n\n`;
-  content += `RESULTS\n`;
-  content += `Score: ${examData.correct}/${examData.total} (${examData.percentage}%)\n`;
-  content += `Correct: ${examData.correct} | Wrong: ${examData.wrong} | Skipped: ${examData.skipped}\n`;
-  content += `Time: ${examData.timeTaken}\n\n`;
-  content += `LEVEL-WISE PERFORMANCE:\n`;
+  let content = `MS EXCEL 2010 QUIZ RESULTS\n\nSTUDENT INFORMATION\n`;
+  content += `Name: ${examData.name}\nRoll: ${examData.roll}\nClass: ${examData.class}\nDate: ${examData.date}\nCenter: ${examData.center}\n\n`;
+  content += `RESULTS\nScore: ${examData.correct}/${examData.total} (${examData.percentage}%)\n`;
+  content += `Correct: ${examData.correct} | Wrong: ${examData.wrong} | Skipped: ${examData.skipped}\nTime: ${examData.timeTaken}\n\nLEVEL-WISE PERFORMANCE:\n`;
   for (const [lvl, st] of Object.entries(examData.levelStats)) {
     const pct = st.t ? Math.round((st.c / st.t) * 100) : 0;
     content += `${lvl}: ${st.c}/${st.t} (${pct}%)\n`;
@@ -628,37 +781,35 @@ function exportToPDF() {
   content += `\nDETAILED ANSWERS:\n`;
   examData.answers.forEach((item, i) => {
     const status = item.isCorrect ? '✓' : '✗';
-    content += `Q${i+1} [${item.level}]: ${status} ${item.q}\n`;
+    content += `Q${i+1} [${item.level}]: ${status} ${item.qhi} / ${item.q}\n`;
     content += `   Your: ${item.userAns} | Correct: ${item.correctAns}\n\n`;
   });
-  const blob = new Blob([content], { type: 'text/plain' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = `MS_Excel_2010_Quiz_${examData.name}_${examData.date}.txt`;
-  a.click();
-  URL.revokeObjectURL(url);
-  alert('✅ Results exported to Text/PDF format!');
+  downloadFile(content, 'text/plain', `MS_Excel_2010_Quiz_${examData.name}_${examData.date}.txt`);
+  alert('✅ परिणाम टेक्स्ट/PDF फ़ॉर्मेट में एक्सपोर्ट हुआ! / Exported!');
 }
 
 function exportToCSV() {
-  let csv = 'Q.No,Level,Question,Your Answer,Correct Answer,Status\n';
+  let csv = 'Q.No,Level,Question (Hindi),Question (English),Your Answer,Correct Answer,Status\n';
   examData.answers.forEach((item, i) => {
     const status = item.isCorrect ? 'Correct' : (item.userAns === 'Skipped' ? 'Skipped' : 'Wrong');
-    csv += `${i+1},${item.level},"${item.q}","${item.userAns}","${item.correctAns}",${status}\n`;
+    csv += `${i+1},${item.level},"${item.qhi}","${item.q}","${item.userAns}","${item.correctAns}",${status}\n`;
   });
-  const blob = new Blob([csv], { type: 'text/csv' });
+  downloadFile(csv, 'text/csv', `MS_Excel_2010_Quiz_${examData.name}_${examData.date}.csv`);
+  alert('✅ परिणाम CSV में एक्सपोर्ट हुआ! / Results exported to CSV!');
+}
+
+function downloadFile(content, mime, filename) {
+  const blob = new Blob([content], { type: mime });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = `MS_Excel_2010_Quiz_${examData.name}_${examData.date}.csv`;
+  a.download = filename;
   a.click();
   URL.revokeObjectURL(url);
-  alert('✅ Results exported to CSV successfully!');
 }
 
 function restartQuiz() {
-  if (confirm('Are you sure you want to restart the quiz? All progress will be lost.')) location.reload();
+  if (confirm('क्या आप दोबारा शुरू करना चाहते हैं? पूरी प्रगति मिट जाएगी।\nRestart? All progress will be lost.')) location.reload();
 }
 
 init();
