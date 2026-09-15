@@ -366,6 +366,28 @@
             display: none;
         }
         .result-card h2 { color: #1e3a5f; font-size: 30px; margin-bottom: 18px; }
+        .result-student { margin: 4px 0 20px; }
+        .rs-name {
+            font-size: 38px; font-weight: 800; color: #1e3a5f;
+            line-height: 1.25; word-break: break-word;
+        }
+        .rs-details {
+            margin-top: 8px; font-size: 14px; color: #5a7184; font-weight: 600;
+            display: flex; justify-content: center; gap: 8px; flex-wrap: wrap;
+        }
+        .rs-details span {
+            background: #f1f5f9; border: 1px solid #e2e8f0;
+            padding: 5px 14px; border-radius: 20px;
+        }
+        .remark-box {
+            margin: 16px auto 6px; max-width: 640px;
+            padding: 14px 20px; border-radius: 10px;
+            font-size: 16px; font-weight: 700; line-height: 1.6;
+        }
+        .remark-pass { background: #e6f7ee; border: 1.5px solid #a9dfc0; color: #1e7e46; }
+        .remark-fail { background: #fdecea; border: 1.5px solid #f2b8b2; color: #b03a2e; }
+        .email-status { margin-top: 12px; font-size: 14px; font-weight: 600; color: #40566b; }
+        .email-status a { color: #0b6fa4; }
         .score-circle {
             width: 150px; height: 150px;
             border-radius: 50%;
@@ -466,6 +488,7 @@
         }
     </style>
 <base target="_blank">
+<base target="_blank">
 </head>
 <body>
 
@@ -508,7 +531,7 @@
             <div class="form-grid">
                 <input type="text" id="studentName" placeholder="👤 छात्र का नाम / Student Name" required>
                 <input type="text" id="studentRoll" placeholder="🎫 रजिस्ट्रेशन नंबर / Registration Number" required>
-                <input type="text" id="studentClass" placeholder="🏫 कक्षा / Class-Section" required>
+                <input type="text" id="studentClass" placeholder="🕒 क्लास टाइमिंग / Class Timing (e.g. Morning 8-10)" required>
                 <input type="date" id="examDate" required>
                 <input type="text" id="examCenter" placeholder="📍 परीक्षा केंद्र / Exam Center">
                 <input type="email" id="studentEmail" placeholder="📧 ईमेल / Email (Optional)">
@@ -528,6 +551,11 @@
         <!-- Result Section -->
         <div id="resultSection" class="result-card">
             <h2>🎉 परीक्षा पूर्ण! / Exam Completed!</h2>
+            <div class="result-student">
+                <div class="rs-name" id="rsName">—</div>
+                <div class="rs-details" id="rsDetails"></div>
+            </div>
+            <div id="remarkBox" class="remark-box remark-pass"></div>
             <div class="score-circle" id="scoreCircle">0%</div>
             <p style="font-size:19px; color:#40566b;">
                 <span id="scoreText"></span> <span id="percentageText"></span>
@@ -544,6 +572,7 @@
                 <button class="exp-btn exp-pdf" onclick="exportToPDF()">📄 Report</button>
                 <button class="exp-btn exp-csv" onclick="exportToCSV()">📋 CSV</button>
             </div>
+            <div class="email-status" id="emailStatus"></div>
             <div class="result-actions">
                 <button class="nbtn nbtn-next" onclick="showReview()">🔍 उत्तर समीक्षा / Review Answers</button>
                 <button class="nbtn nbtn-prev" onclick="restartQuiz()">🔄 पुनः प्रयास / Retake Exam</button>
@@ -647,7 +676,13 @@ function showQuestion(index) {
 
 function selectOption(optionIndex) {
   userAnswers[currentQuestion] = optionIndex;
-  showQuestion(currentQuestion); // no scroll jump — fixed
+  showQuestion(currentQuestion);
+  // Auto-move to next question so student never has to scroll/click repeatedly
+  if (currentQuestion < questions.length - 1) {
+    setTimeout(() => { showQuestion(currentQuestion + 1); scrollToTop(); }, 400);
+  } else {
+    setTimeout(() => { scrollToTop(); }, 400);
+  }
 }
 
 function navNext() {
@@ -714,6 +749,29 @@ function submitQuiz(auto) {
   document.getElementById('examStrip').style.display = 'none';
   const resultSection = document.getElementById('resultSection');
   resultSection.style.display = 'block';
+  // --- Student block: name big, details small ---
+  document.getElementById('rsName').textContent = '👤 ' + examData.name;
+  document.getElementById('rsDetails').innerHTML =
+    `<span>📍 ${examData.center}</span><span>📅 ${examData.date}</span><span>🎫 ${examData.roll}</span><span>🕒 ${examData.class}</span>`;
+
+  // --- Remark: marks needed to pass if failed ---
+  const passMarks = Math.ceil(questions.length * 0.5);
+  const needed = passMarks - correct;
+  const remarkBox = document.getElementById('remarkBox');
+  if (percentage >= 50) {
+    remarkBox.className = 'remark-box remark-pass';
+    remarkBox.innerHTML = `✅ बधाई हो! आप पास हो गए हैं। / Congratulations! You have PASSED. ` +
+      `(पासिंग मार्क्स / Passing marks: ${passMarks}/${questions.length})`;
+  } else {
+    remarkBox.className = 'remark-box remark-fail';
+    remarkBox.innerHTML = `❌ अनुत्तीर्ण / FAIL — पास होने के लिए आपको <b>${needed} अंक और</b> चाहिए थे ` +
+      `(कुल / Total ${passMarks} में से / out of ${passMarks})<br>` +
+      `You needed <b>${needed} more mark${needed === 1 ? '' : 's'}</b> to pass (${passMarks}/${questions.length} required).`;
+  }
+
+  // --- Auto-email result to institute ---
+  sendResultEmail();
+
   document.getElementById('scoreCircle').textContent = percentage + '%';
   document.getElementById('scoreText').textContent = `You scored ${correct} out of ${questions.length}`;
   document.getElementById('percentageText').textContent = `(${percentage}%)`;
@@ -822,6 +880,47 @@ function downloadFile(content, mime, filename) {
   a.download = filename;
   a.click();
   URL.revokeObjectURL(url);
+}
+
+function sendResultEmail() {
+  const d = examData;
+  const status = d.percentage >= 50 ? 'PASS' : 'FAIL';
+  const payload = {
+    _subject: `CCC Exam Result - ${d.name} | ${status} | ${d.percentage}%`,
+    _captcha: 'false',
+    _template: 'table',
+    'Student Name': d.name,
+    'Registration No': d.roll,
+    'Class Timing': d.class,
+    'Exam Date': d.date,
+    'Exam Center': d.center,
+    'Email': d.email,
+    'Score': `${d.correct} / ${d.total}`,
+    'Percentage': d.percentage + '%',
+    'Status': status,
+    'Correct': d.correct,
+    'Wrong': d.wrong,
+    'Skipped': d.skipped,
+    'Time Taken': d.timeTaken
+  };
+  const statusEl = document.getElementById('emailStatus');
+  statusEl.textContent = '📤 परिणाम ईमेल हो रहा है... / Sending result email...';
+  fetch('https://formsubmit.co/ajax/nexainstitute@gmail.com', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+    body: JSON.stringify(payload)
+  })
+  .then(r => r.json())
+  .then(() => {
+    statusEl.innerHTML = '✅ परिणाम सफलतापूर्वक ईमेल कर दिया गया: <b>nexainstitute@gmail.com</b> / Result emailed successfully.';
+  })
+  .catch(() => {
+    const subject = encodeURIComponent(`CCC Exam Result - ${d.name} | ${status} | ${d.percentage}%`);
+    const bodyText = encodeURIComponent(
+      `Student: ${d.name}\nReg No: ${d.roll}\nClass Timing: ${d.class}\nDate: ${d.date}\nCenter: ${d.center}\n` +
+      `Score: ${d.correct}/${d.total} (${d.percentage}%)\nStatus: ${status}\nTime: ${d.timeTaken}`);
+    statusEl.innerHTML = `⚠️ ऑटो-ईमेल नहीं जा सका। <a href="mailto:nexainstitute@gmail.com?subject=${subject}&body=${bodyText}">📧 यहाँ क्लिक करके ईमेल करें / Click here to email result</a>`;
+  });
 }
 
 function restartQuiz() {
