@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CCC Operating System Exam | NEXA Computer Institute</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#eef2f6;min-height:100vh}
+.top-header{background:linear-gradient(135deg,#1e3a5f 0%,#0f6e5d 100%);color:#fff;text-align:center;padding:30px 20px 22px}
+.institute-tag{display:inline-block;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.35);padding:5px 18px;border-radius:30px;font-size:13px;font-weight:700;letter-spacing:2px;margin-bottom:12px;text-transform:uppercase}
+.top-header h1{font-size:32px;font-weight:800;letter-spacing:.5px}
+.top-header .sub-hindi{font-size:19px;font-weight:600;color:#d9f2e9;margin-top:6px}
+.exam-meta{margin-top:14px;display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.meta-pill{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.3);padding:6px 16px;border-radius:30px;font-size:13px;font-weight:600}
+/* PASSWORD GATE */
+#gateOverlay{position:fixed;inset:0;background:rgba(15,30,50,.92);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px}
+.gate-card{background:#fff;border-radius:16px;padding:36px;max-width:420px;width:100%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.4)}
+.gate-card h2{color:#1e3a5f;font-size:22px;margin-bottom:6px}
+.gate-card p{color:#5a7184;font-size:14px;margin-bottom:20px}
+.gate-card input{width:100%;padding:13px 16px;border:1.5px solid #cfd9e3;border-radius:8px;font-size:16px;text-align:center;letter-spacing:3px;margin-bottom:14px;font-family:inherit}
+.gate-card input:focus{outline:none;border-color:#00b07f;box-shadow:0 0 0 3px rgba(0,176,127,.15)}
+.gate-btn{width:100%;padding:13px;border:none;border-radius:8px;background:#00b07f;color:#fff;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .25s}
+.gate-btn:hover{background:#00875f}
+.gate-error{color:#c0392b;font-size:14px;font-weight:600;margin-top:10px;display:none}
+.gate-hint{margin-top:16px;font-size:12px;color:#94a3b8}
+/* EXAM STRIP */
+.exam-strip{position:sticky;top:0;z-index:500;background:#fff;border-bottom:2px solid #e3e9f0;display:flex;justify-content:space-between;align-items:center;padding:10px 24px;flex-wrap:wrap;gap:10px}
+.timer-pill{background:#e8f4fd;border:1px solid #b3d9f2;color:#0b6fa4;font-weight:700;padding:8px 18px;border-radius:30px;font-size:16px}
+.timer-pill.warning{background:#fde8e8;border-color:#f5b5b5;color:#c0392b;animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+.progress-wrap{flex:1;max-width:420px;height:10px;background:#e3e9f0;border-radius:6px;overflow:hidden}
+.progress-fill{height:100%;width:0;background:linear-gradient(90deg,#00b07f,#00d19a);border-radius:6px;transition:width .3s}
+.progress-label{font-size:13px;color:#5a7184;font-weight:600}
+.strip-submit{background:#1e3a5f;color:#fff;border:none;padding:9px 20px;border-radius:30px;font-weight:700;font-size:14px;cursor:pointer;font-family:inherit;transition:all .25s}
+.strip-submit:hover{background:#c0392b}
+.page-layout{max-width:1400px;margin:0 auto;padding:24px;display:flex;gap:24px;align-items:flex-start}
+.main-col{flex:1;min-width:0}
+.student-card{background:#fff;border:1px solid #dce4ec;border-radius:12px;padding:20px;margin-bottom:24px;box-shadow:0 3px 10px rgba(30,58,95,.06)}
+.student-card h3{color:#1e3a5f;font-size:18px;margin-bottom:14px;border-bottom:2px solid #e8eef4;padding-bottom:10px}
+.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.form-grid input{padding:11px 14px;border:1.5px solid #cfd9e3;border-radius:8px;font-size:14px;font-family:inherit;width:100%}
+.form-grid input:focus{outline:none;border-color:#00b07f;box-shadow:0 0 0 3px rgba(0,176,127,.15)}
+.q-card{background:#fff;border:1px solid #dce4ec;border-radius:12px;padding:24px;margin-bottom:20px;box-shadow:0 3px 10px rgba(30,58,95,.06)}
+.q-top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:16px}
+.q-number{color:#1289a7;font-size:24px;font-weight:800}
+.q-badges{display:flex;gap:8px;flex-wrap:wrap}
+.verified-badge{display:inline-flex;align-items:center;gap:6px;background:#e8f4fd;color:#1289a7;border:1px solid #b3d9f2;padding:6px 16px;border-radius:30px;font-size:14px;font-weight:600}
+.verified-badge .check{width:20px;height:20px;background:#1b9ce4;color:#fff;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:12px}
+.level-badge{padding:6px 16px;border-radius:30px;font-size:13px;font-weight:700}
+.level-badge.Basic{background:#e6f7ee;color:#1e7e46;border:1px solid #a9dfc0}
+.level-badge.Mid{background:#fff8e1;color:#9a7b00;border:1px solid #f0dd8a}
+.level-badge.High{background:#fdecea;color:#b03a2e;border:1px solid #f2b8b2}
+.q-text-hindi{font-size:20px;font-weight:700;color:#1a1a2e;line-height:1.6;margin-bottom:6px}
+.q-text-eng{font-size:16px;color:#d9534f;line-height:1.6;margin-bottom:20px}
+.opt{display:flex;align-items:center;gap:14px;background:#eafaf1;border:1.5px solid #b8e6cf;border-radius:8px;padding:12px 16px;margin-bottom:10px;cursor:pointer;transition:all .2s}
+.opt:hover{border-color:#00b07f;background:#dff5ea}
+.opt-letter{width:42px;height:42px;background:#00b07f;color:#fff;border-radius:6px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px;flex-shrink:0}
+.opt-text{font-size:16px;color:#333;font-weight:600;line-height:1.5}
+.opt.selected{background:#00b07f;border-color:#00875f}
+.opt.selected .opt-letter{background:#fff;color:#00b07f}
+.opt.selected .opt-text{color:#fff}
+.nav-row{display:flex;justify-content:space-between;gap:12px;margin-top:8px;flex-wrap:wrap}
+.nbtn{padding:12px 30px;border:none;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .25s}
+.nbtn-prev{background:#e8eef4;color:#1e3a5f}
+.nbtn-prev:hover{background:#d5e0ea}
+.nbtn-next{background:#00b07f;color:#fff}
+.nbtn-next:hover{background:#00875f;transform:translateY(-2px);box-shadow:0 5px 14px rgba(0,176,127,.35)}
+.nbtn-submit{background:#1e3a5f;color:#fff}
+.nbtn-submit:hover{background:#152c49}
+.hidden{display:none!important}
+.dots-card{background:#fff;border:1px solid #dce4ec;border-radius:12px;padding:16px}
+.dots-card h4{color:#1e3a5f;font-size:14px;margin-bottom:12px}
+.dots-legend{font-size:12px;color:#5a7184;margin-bottom:12px;line-height:1.8}
+.lg{display:inline-flex;align-items:center;gap:5px;margin-right:12px}
+.lg span{width:12px;height:12px;border-radius:50%;display:inline-block}
+.dots{display:flex;flex-wrap:wrap;gap:6px;max-height:56vh;overflow-y:auto;padding-right:4px}
+.dot{width:30px;height:30px;border-radius:50%;border:1.5px solid #cfd9e3;background:#fff;color:#5a7184;font-size:11px;font-weight:700;cursor:pointer;transition:all .2s}
+.dot:hover{border-color:#00b07f;color:#00b07f}
+.dot.answered{background:#00b07f;border-color:#00b07f;color:#fff}
+.dot.current{background:#1e3a5f;border-color:#1e3a5f;color:#fff;transform:scale(1.18)}
+.sidebar{width:320px;flex-shrink:0;background:#fff;border:1px solid #dce4ec;border-radius:12px;overflow:hidden;position:sticky;top:72px;box-shadow:0 3px 10px rgba(30,58,95,.06)}
+.sidebar-head{background:#00b07f;color:#fff;text-align:center;padding:13px;font-size:18px;font-weight:800}
+.result-card{background:#fff;border:1px solid #dce4ec;border-radius:12px;padding:34px;text-align:center;display:none}
+.result-card h2{color:#1e3a5f;font-size:30px;margin-bottom:18px}
+.rs-name{font-size:38px;font-weight:800;color:#1e3a5f;line-height:1.25;word-break:break-word}
+.rs-details{margin-top:8px;font-size:14px;color:#5a7184;font-weight:600;display:flex;justify-content:center;gap:8px;flex-wrap:wrap}
+.rs-details span{background:#f1f5f9;border:1px solid #e2e8f0;padding:5px 14px;border-radius:20px}
+.remark-box{margin:16px auto 6px;max-width:640px;padding:14px 20px;border-radius:10px;font-size:16px;font-weight:700;line-height:1.6}
+.remark-pass{background:#e6f7ee;border:1.5px solid #a9dfc0;color:#1e7e46}
+.remark-fail{background:#fdecea;border:1.5px solid #f2b8b2;color:#b03a2e}
+.score-circle{width:150px;height:150px;border-radius:50%;background:linear-gradient(135deg,#00b07f,#00875f);color:#fff;font-size:46px;font-weight:800;display:flex;align-items:center;justify-content:center;margin:16px auto;box-shadow:0 10px 30px rgba(0,176,127,.35)}
+.grade-badge{display:inline-block;padding:6px 22px;border-radius:30px;font-weight:700;font-size:15px;margin:8px 0 14px}
+.grade-pass{background:#e6f7ee;color:#1e7e46;border:1px solid #a9dfc0}
+.grade-fail{background:#fdecea;color:#b03a2e;border:1px solid #f2b8b2}
+.level-summary{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin:16px 0}
+.level-stat{background:#f8fafc;border:1px solid #e3e9f0;border-radius:10px;padding:12px 22px;min-width:130px}
+.level-stat h4{font-size:13px;color:#5a7184;margin-bottom:4px}
+.level-stat p{font-size:20px;font-weight:800}
+.result-stats{margin:14px 0;font-size:15px;color:#40566b}
+.email-status{margin-top:12px;font-size:14px;font-weight:600;color:#40566b}
+.email-status a{color:#0b6fa4}
+.export-box{margin-top:18px;padding:18px;background:#f2fbf7;border:1px solid #cdeede;border-radius:10px}
+.export-box h3{color:#1e3a5f;margin-bottom:12px;font-size:16px}
+.exp-btn{margin:5px;padding:10px 20px;border:none;border-radius:8px;cursor:pointer;font-weight:700;font-size:14px;font-family:inherit;color:#fff;transition:all .25s}
+.exp-btn:hover{transform:scale(1.05)}
+.exp-excel{background:#217346}.exp-pdf{background:#e0245e}.exp-csv{background:#5a7184}
+.result-actions{margin-top:18px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.review-wrap{display:none;margin-top:22px;text-align:left;max-height:450px;overflow-y:auto;border-top:2px solid #e8eef4;padding-top:16px}
+.review-wrap h3{text-align:center;color:#1e3a5f;margin-bottom:14px}
+.review-item{padding:14px;margin-bottom:10px;background:#f8fafc;border-radius:8px;border-left:4px solid;font-size:14px}
+.review-item.correct{border-left-color:#00b07f}
+.review-item.incorrect{border-left-color:#e0245e}
+@media(max-width:1024px){.page-layout{flex-direction:column}.sidebar{width:100%;position:static}.dots{max-height:220px}}
+@media(max-width:640px){.top-header h1{font-size:24px}.sub-hindi{font-size:16px!important}.q-text-hindi{font-size:17px}.exam-strip{padding:8px 14px}}
+</style>
+<base target="_blank">
+<base target="_blank">
+</head>
+<body>
+
+<!-- ===== PASSWORD GATE ===== -->
+<div id="gateOverlay">
+  <div class="gate-card">
+    <div style="font-size:48px;margin-bottom:10px">🔐</div>
+    <h2>Exam Access Password</h2>
+    <p>यह परीक्षा केवल NEXA Computer Institute के छात्रों के लिए है।<br>Access करने के लिए password दर्ज करें।</p>
+    <input type="password" id="gatePass" placeholder="••••••••" onkeydown="if(event.key==='Enter')checkGate()">
+    <button class="gate-btn" onclick="checkGate()">🔓 Unlock Exam</button>
+    <div class="gate-error" id="gateError">❌ गलत पासवर्ड! / Wrong password. फिर से कोशिश करें।</div>
+  </div>
+</div>
+
+<!-- ===== TOP HEADER ===== -->
+<header class="top-header">
+  <div class="institute-tag">🏛️ NEXA Computer Institute</div>
+  <h1>🖥️ CCC — Operating System (Chapter 2)</h1>
+  <div class="sub-hindi">ऑपरेटिंग सिस्टम — 100 महत्वपूर्ण प्रश्नों का ऑनलाइन मॉक टेस्ट (बाइलिंगुअल)</div>
+  <div class="exam-meta">
+    <span class="meta-pill">📝 100 प्रश्न / Questions</span>
+    <span class="meta-pill">⏱️ 90 मिनट / Minutes</span>
+    <span class="meta-pill">🎯 पासिंग / Passing: 50%</span>
+    <span class="meta-pill">🇮🇳 Hindi + English</span>
+  </div>
+</header>
+
+<!-- ===== EXAM STRIP ===== -->
+<div class="exam-strip" id="examStrip">
+  <div class="timer-pill" id="timerBox">⏱️ शेष समय / Time Left: <span id="timer">90:00</span></div>
+  <div class="progress-wrap"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="progress-label" id="progressLabel">0 / 100 answered</div>
+  <button class="strip-submit" onclick="submitQuiz()">✅ जमा करें / Submit</button>
+</div>
+
+<!-- ===== LAYOUT ===== -->
+<div class="page-layout">
+  <div class="main-col">
+    <div class="student-card" id="studentForm">
+      <h3>📝 छात्र विवरण / Student Information</h3>
+      <div class="form-grid">
+        <input type="text" id="studentName" placeholder="👤 छात्र का नाम / Student Name" required>
+        <input type="text" id="studentRoll" placeholder="🎫 रजिस्ट्रेशन नंबर / Registration Number" required>
+        <input type="text" id="studentClass" placeholder="🕒 क्लास टाइमिंग / Class Timing (e.g. Morning 8-10)" required>
+        <input type="date" id="examDate" required>
+        <input type="text" id="examCenter" placeholder="📍 परीक्षा केंद्र / Exam Center">
+        <input type="email" id="studentEmail" placeholder="📧 ईमेल / Email (Optional)">
+      </div>
+    </div>
+
+    <div id="quizSection">
+      <div id="questionContainer"></div>
+      <div class="nav-row">
+        <button class="nbtn nbtn-prev" id="prevBtn" onclick="navPrev()">⬅️ पिछला / Previous</button>
+        <button class="nbtn nbtn-next" id="nextBtn" onclick="navNext()">अगला / Next ➡️</button>
+        <button class="nbtn nbtn-submit hidden" id="submitBtn" onclick="submitQuiz()">✅ जमा करें / Submit</button>
+      </div>
+    </div>
+
+    <div id="resultSection" class="result-card">
+      <h2>🎉 परीक्षा पूर्ण! / Exam Completed!</h2>
+      <div class="rs-name" id="rsName">—</div>
+      <div class="rs-details" id="rsDetails"></div>
+      <div id="remarkBox" class="remark-box remark-pass"></div>
+      <div class="score-circle" id="scoreCircle">0%</div>
+      <p style="font-size:19px;color:#40566b"><span id="scoreText"></span> <span id="percentageText"></span></p>
+      <div id="gradeBadge"></div>
+      <div class="level-summary" id="levelSummary"></div>
+      <div class="result-stats">
+        <p>⏱️ लिया गया समय / Time Taken: <b id="timeTaken">--</b></p>
+        <p>✅ सही / Correct: <b id="correctCount">0</b> &nbsp;|&nbsp; ❌ गलत / Wrong: <b id="wrongCount">0</b> &nbsp;|&nbsp; ⏭️ छोड़े / Skipped: <b id="skippedCount">0</b></p>
+      </div>
+      <div class="export-box">
+        <h3>📊 परिणाम डाउनलोड करें / Export Results</h3>
+        <button class="exp-btn exp-excel" onclick="exportToExcel()">📗 Excel</button>
+        <button class="exp-btn exp-pdf" onclick="exportToPDF()">📄 Report</button>
+        <button class="exp-btn exp-csv" onclick="exportToCSV()">📋 CSV</button>
+      </div>
+      <div class="email-status" id="emailStatus"></div>
+      <div class="result-actions">
+        <button class="nbtn nbtn-next" onclick="showReview()">🔍 उत्तर समीक्षा / Review Answers</button>
+        <button class="nbtn nbtn-prev" onclick="restartQuiz()">🔄 पुनः प्रयास / Retake Exam</button>
+      </div>
+      <div id="reviewSection" class="review-wrap">
+        <h3>उत्तर समीक्षा / Answer Review</h3>
+        <div id="reviewList"></div>
+      </div>
+    </div>
+  </div>
+
+  <aside class="sidebar" id="sideBar">
+    <div class="sidebar-head">🔢 प्रश्न सूची / Question Navigator</div>
+    <div class="dots-card" style="border:none;box-shadow:none">
+      <div class="dots-legend">
+        <span class="lg"><span style="background:#00b07f"></span> Answered / किए गए</span>
+        <span class="lg"><span style="background:#1e3a5f"></span> Current / वर्तमान</span>
+        <span class="lg"><span style="background:#fff;border:1.5px solid #cfd9e3"></span> Pending / बाकी</span>
+      </div>
+      <div class="dots" id="questionNav"></div>
+    </div>
+  </aside>
+</div>
+
+<script>
+/* ================= CHANGE EXAM PASSWORD HERE ================= */
+const EXAM_PASSWORD = "nexa123";
+/* ============================================================ */
+
+const EXAM_DURATION = 5400; // 90 minutes
+
+const questions = [{"q": "Operating System user और किसके बीच interface (मध्यस्थ) का काम करता है?", "qhi": "Operating System acts as an interface between the user and the?", "options": ["Hardware / हार्डवेयर", "Internet / इंटरनेट", "Keyboard / कीबोर्ड", "Printer / प्रिंटर"], "correct": 0, "level": "Basic"}, {"q": "Operating System किस प्रकार का software है?", "qhi": "Operating System is which type of software?", "options": ["Application Software / एप्लीकेशन सॉफ्टवेयर", "System Software / सिस्टम सॉफ्टवेयर", "Game Software / गेम सॉफ्टवेयर", "Utility Software / यूटिलिटी सॉफ्टवेयर"], "correct": 1, "level": "Basic"}, {"q": "Operating System को और क्या कहा जाता है?", "qhi": "Operating System is also known as?", "options": ["Resource Manager / रिसोर्स मैनेजर", "Word Processor / वर्ड प्रोसेसर", "Compiler / कंपाइलर", "Spreadsheet / स्प्रेडशीट"], "correct": 0, "level": "Basic"}, {"q": "OS का मुख्य कार्य क्या है?", "qhi": "What is the main function of an Operating System?", "options": ["केवल गेम चलाना / Only run games", "Hardware और Software का प्रबंधन / Manage hardware and software", "केवल टाइपिंग / Only typing", "केवल इंटरनेट / Only internet"], "correct": 1, "level": "Basic"}, {"q": "CPU को कंप्यूटर का Brain कहा जाता है, तो OS को क्या कहा जाता है?", "qhi": "CPU is called the Brain of the computer; OS is called the?", "options": ["Boss/Manager / बॉस/मैनेजर", "Heart / दिल", "Eye / आँख", "Hand / हाथ"], "correct": 0, "level": "Basic"}, {"q": "बिना OS के कंप्यूटर को क्या कहा जाता है?", "qhi": "A computer without an Operating System is called?", "options": ["Super Computer / सुपर कंप्यूटर", "Dead Machine / डेड मशीन", "Smart Machine / स्मार्ट मशीन", "Server / सर्वर"], "correct": 1, "level": "Basic"}, {"q": "सबसे पहला Operating System कौन-सा माना जाता है?", "qhi": "Which is considered the first Operating System?", "options": ["MS-DOS / एमएस-डॉस", "UNIX / यूनिक्स", "Windows / विंडोज", "Linux / लिनक्स"], "correct": 1, "level": "Mid"}, {"q": "पहला Microsoft Operating System कौन-सा था?", "qhi": "What was the first Microsoft Operating System?", "options": ["Windows 1.0 / विंडोज 1.0", "MS-DOS / एमएस-डॉस", "Windows 95 / विंडोज 95", "Windows XP / विंडोज XP"], "correct": 1, "level": "Mid"}, {"q": "पहला GUI-based Microsoft OS कौन-सा था?", "qhi": "Which was the first GUI-based Microsoft OS?", "options": ["Windows 1.0 (1985) / विंडोज 1.0", "Windows 95 / विंडोज 95", "MS-DOS / एमएस-डॉस", "Windows XP / विंडोज XP"], "correct": 0, "level": "Mid"}, {"q": "भारत सरकार के offices में कौन-सा Linux-based OS प्रयोग किया जाता है?", "qhi": "Which Linux-based OS is used in Indian government offices?", "options": ["BOSS Linux (C-DAC) / बॉस लिनक्स", "Ubuntu / उबंटू", "Fedora / फेडोरा", "Mint / मिंट"], "correct": 0, "level": "Mid"}, {"q": "Open Source OS का मतलब क्या है?", "qhi": "What does Open Source OS mean?", "options": ["Source code free में उपलब्ध, कोई भी modify कर सकता है / Free source code, anyone can modify", "बहुत महंगा OS / Very costly OS", "केवल companies के लिए / Only for companies", "Virus वाला OS / Virus OS"], "correct": 0, "level": "Basic"}, {"q": "निम्नलिखित में से कौन-सा Open Source OS है?", "qhi": "Which of the following is an Open Source OS?", "options": ["Windows / विंडोज", "macOS / मैकओएस", "Linux / लिनक्स", "MS-DOS / एमएस-डॉस"], "correct": 2, "level": "Basic"}, {"q": "निम्नलिखित में से कौन-सा Closed Source (Proprietary) OS है?", "qhi": "Which of the following is a Closed Source (Proprietary) OS?", "options": ["Linux / लिनक्स", "Android / एंड्रॉइड", "iOS / आईओएस", "Ubuntu / उबंटू"], "correct": 2, "level": "Basic"}, {"q": "Real-time OS (RTOS) का उपयोग कहाँ होता है?", "qhi": "Where is a Real-time OS (RTOS) used?", "options": ["ATM और Air Traffic Control / ATM & Air Traffic Control", "सिर्फ घर पर / Only at home", "Typing के लिए / For typing", "Gaming के लिए / For gaming"], "correct": 0, "level": "Mid"}, {"q": "Multi-user OS का example कौन-सा है?", "qhi": "Which of the following is a multi-user OS?", "options": ["MS-DOS / एमएस-डॉस", "UNIX / यूनिक्स", "Calculator / कैलकुलेटर", "Notepad / नोटपैड"], "correct": 1, "level": "Mid"}, {"q": "Windows desktop OS किस प्रकार का OS है?", "qhi": "Windows desktop OS is which type of OS?", "options": ["Multi-user / मल्टी-यूजर", "Single-user / सिंगल-यूजर", "Real-time / रियल-टाइम", "Network / नेटवर्क"], "correct": 1, "level": "Mid"}, {"q": "CUI का दूसरा नाम क्या है?", "qhi": "What is another name for CUI?", "options": ["GUI / जीयूआई", "CLI (Command Line Interface) / सीएलआई", "BIOS / बायोस", "API / एपीआई"], "correct": 1, "level": "Basic"}, {"q": "MS-DOS किस प्रकार का OS है?", "qhi": "MS-DOS is which type of OS?", "options": ["GUI-based / जीयूआई आधारित", "CUI/CLI-based (text command) / सीयूआई/सीएलआई आधारित", "Touch-based / टच आधारित", "Voice-based / वॉइस आधारित"], "correct": 1, "level": "Basic"}, {"q": "GUI का full form क्या है?", "qhi": "What is the full form of GUI?", "options": ["Graphical User Interface / ग्राफिकल यूजर इंटरफेस", "General User Interface / जनरल यूजर इंटरफेस", "Global User Interface / ग्लोबल यूजर इंटरफेस", "Group User Input / ग्रुप यूजर इनपुट"], "correct": 0, "level": "Basic"}, {"q": "GUI को पहली बार किसने बनाया?", "qhi": "Who first developed the GUI concept?", "options": ["Microsoft / माइक्रोसॉफ्ट", "Xerox PARC / ज़ेरॉक्स पार्क", "IBM / आईबीएम", "Google / गूगल"], "correct": 1, "level": "High"}, {"q": "MS-DOS में 'dir' command का काम क्या है?", "qhi": "What does the 'dir' command do in MS-DOS?", "options": ["File delete करना / Delete files", "Files और folders की list दिखाना / List files and folders", "Folder बनाना / Create folder", "Computer बंद करना / Shutdown"], "correct": 1, "level": "Mid"}, {"q": "MS-DOS में 'md' या 'mkdir' command का काम है?", "qhi": "What does 'md' or 'mkdir' command do in MS-DOS?", "options": ["Folder बनाना / Create a folder", "File delete करना / Delete a file", "Screen साफ करना / Clear screen", "Copy करना / Copy"], "correct": 0, "level": "Mid"}, {"q": "MS-DOS में screen साफ करने की command कौन-सी है?", "qhi": "Which command clears the screen in MS-DOS?", "options": ["clear / क्लियर", "cls / सीएलएस", "clean / क्लीन", "delete / डिलीट"], "correct": 1, "level": "Mid"}, {"q": "MS-DOS में file name की limit क्या थी (8.3 rule)?", "qhi": "What was the filename limit in MS-DOS (8.3 rule)?", "options": ["8 अक्षर + 3 extension / 8 characters + 3 extension", "255 अक्षर / 255 characters", "16 अक्षर / 16 characters", "unlimited / असीमित"], "correct": 0, "level": "High"}, {"q": "Windows file name में कौन-सा character allowed नहीं है?", "qhi": "Which character is NOT allowed in a Windows filename?", "options": ["* (asterisk) / * (तारा)", "a / ए", "1 / एक", "space / स्पेस"], "correct": 0, "level": "Mid"}, {"q": "Microsoft company की स्थापना किसने और कब की?", "qhi": "Who founded Microsoft and when?", "options": ["Bill Gates और Paul Allen (1975) / बिल गेट्स और पॉल एलन", "Steve Jobs (1976) / स्टीव जॉब्स", "Linus Torvalds (1991) / लिनस टोरवाल्ड्स", "Andy Rubin (2003) / एंडी रुबिन"], "correct": 0, "level": "Mid"}, {"q": "Linux OS को किसने बनाया?", "qhi": "Who created the Linux OS?", "options": ["Bill Gates / बिल गेट्स", "Linus Torvalds (1991) / लिनस टोरवाल्ड्स", "Steve Jobs / स्टीव जॉब्स", "Tim Berners-Lee / टिम बर्नर्स-ली"], "correct": 1, "level": "Basic"}, {"q": "Linux का mascot (pratīk) कौन-सा है?", "qhi": "What is the mascot of Linux?", "options": ["Penguin (Tux) / पेंगुइन (टक्स)", "Tiger / बाघ", "Eagle / बाज", "Lion / शेर"], "correct": 0, "level": "Mid"}, {"q": "Ubuntu किस OS का version है?", "qhi": "Ubuntu is a version of which OS?", "options": ["Windows / विंडोज", "macOS / मैकओएस", "Linux / लिनक्स", "Android / एंड्रॉइड"], "correct": 2, "level": "Basic"}, {"q": "पूरी तरह Free/Open Source OS कौन-सा है?", "qhi": "Which OS is completely Free/Open Source?", "options": ["Windows 11 / विंडोज 11", "macOS / मैकओएस", "Linux / लिनक्स", "MS-DOS / एमएस-डॉस"], "correct": 2, "level": "Basic"}, {"q": "macOS किस company का OS है?", "qhi": "macOS is the OS of which company?", "options": ["Microsoft / माइक्रोसॉफ्ट", "Apple / एप्पल", "Google / गूगल", "IBM / आईबीएम"], "correct": 1, "level": "Basic"}, {"q": "Chrome OS किस company का है?", "qhi": "Chrome OS belongs to which company?", "options": ["Microsoft / माइक्रोसॉफ्ट", "Apple / एप्पल", "Google / गूगल", "Amazon / अमेज़न"], "correct": 2, "level": "Basic"}, {"q": "Windows 11 किस वर्ष launch हुआ?", "qhi": "In which year was Windows 11 launched?", "options": ["2019", "2020", "2021", "2022"], "correct": 2, "level": "Mid"}, {"q": "Windows 11 में Start button की position कहाँ है?", "qhi": "Where is the Start button located in Windows 11?", "options": ["Center में / In the center", "Left corner में / Left corner", "Right corner में / Right corner", "Top पर / On top"], "correct": 0, "level": "Mid"}, {"q": "Android OS को किसने बनाया?", "qhi": "Who created the Android OS?", "options": ["Andy Rubin / एंडी रुबिन", "Bill Gates / बिल गेट्स", "Steve Jobs / स्टीव जॉब्स", "Linus Torvalds / लिनस टोरवाल्ड्स"], "correct": 0, "level": "Basic"}, {"q": "Android Inc. को किसने और कब खरीदा?", "qhi": "Who bought Android Inc. and when?", "options": ["Google (2005) / गूगल", "Microsoft (2003) / माइक्रोसॉफ्ट", "Apple (2007) / एप्पल", "Samsung (2010) / सैमसंग"], "correct": 0, "level": "Mid"}, {"q": "दुनिया में सबसे ज्यादा use होने वाला Mobile OS कौन-सा है?", "qhi": "Which is the most used Mobile OS in the world?", "options": ["iOS / आईओएस", "Android / एंड्रॉइड", "Windows Phone / विंडोज फोन", "Symbian / सिम्बियन"], "correct": 1, "level": "Basic"}, {"q": "Android apps कहाँ से download होती हैं?", "qhi": "From where are Android apps downloaded?", "options": ["Google Play Store / गूगल प्ले स्टोर", "App Store / ऐप स्टोर", "Microsoft Store / माइक्रोसॉफ्ट स्टोर", "Chrome Web Store / क्रोम वेब स्टोर"], "correct": 0, "level": "Basic"}, {"q": "iPhone का app store कौन-सा है?", "qhi": "Which is the app store for iPhone?", "options": ["Google Play / गूगल प्ले", "App Store / ऐप स्टोर", "Play Store / प्ले स्टोर", "Amazon Store / अमेज़न स्टोर"], "correct": 1, "level": "Basic"}, {"q": "Android OS किस पर आधारित है?", "qhi": "Android OS is based on?", "options": ["Windows kernel / विंडोज कर्नल", "Linux kernel / लिनक्स कर्नल", "macOS kernel / मैकओएस कर्नल", "UNIX shell / यूनिक्स शेल"], "correct": 1, "level": "Mid"}, {"q": "JioPhone जैसे budget phones में कौन-सा OS use होता है?", "qhi": "Which OS is used in budget phones like JioPhone?", "options": ["KaiOS / काईओएस", "iOS / आईओएस", "Windows / विंडोज", "macOS / मैकओएस"], "correct": 0, "level": "Mid"}, {"q": "Desktop पर Right-click करने से क्या खुलता है?", "qhi": "What opens when you right-click on the Desktop?", "options": ["Context Menu / कॉन्टेक्स्ट मेनू", "Start Menu / स्टार्ट मेनू", "Control Panel / कंट्रोल पैनल", "Task Manager / टास्क मैनेजर"], "correct": 0, "level": "Basic"}, {"q": "Recycle Bin का कार्य क्या है?", "qhi": "What is the function of the Recycle Bin?", "options": ["डिलीट की गई फाइलें अस्थायी रखना / Temporarily store deleted files", "फाइलें स्थायी रखना / Store files permanently", "Virus रखना / Store viruses", "Internet चलाना / Run internet"], "correct": 0, "level": "Basic"}, {"q": "'This PC' पहले क्या कहलाता था?", "qhi": "What was 'This PC' previously called?", "options": ["My Computer / माय कंप्यूटर", "PC Manager / पीसी मैनेजर", "My Folder / माय फोल्डर", "Explorer / एक्सप्लोरर"], "correct": 0, "level": "Mid"}, {"q": "Taskbar की default position कहाँ होती है?", "qhi": "What is the default position of the Taskbar?", "options": ["Bottom (नीचे) / Bottom", "Top (ऊपर) / Top", "Left (बाईं ओर) / Left", "Right (दाईं ओर) / Right"], "correct": 0, "level": "Basic"}, {"q": "Taskbar में सबसे दाईं ओर (Right side) क्या होता है?", "qhi": "What is located at the right-most end of the Taskbar?", "options": ["Notification Area (System Tray) - Clock, Wi-Fi / नोटिफिकेशन एरिया", "Start Button / स्टार्ट बटन", "Search Box / सर्च बॉक्स", "Start Menu / स्टार्ट मेनू"], "correct": 0, "level": "Basic"}, {"q": "सभी खुली windows का preview देखने की shortcut key क्या है?", "qhi": "Which shortcut shows a preview of all open windows (Task View)?", "options": ["Windows + Tab / विंडोज+टैब", "Ctrl + C / कंट्रोल+सी", "Alt + F4 / ऑल्ट+एफ4", "F1 / एफ1"], "correct": 0, "level": "Mid"}, {"q": "Shortcut icon पर क्या दिखता है?", "qhi": "What appears on a shortcut icon?", "options": ["छोटा तीर (arrow) / Small arrow", "तारा (star) / Star", "गोला (circle) / Circle", "कुछ नहीं / Nothing"], "correct": 0, "level": "Basic"}, {"q": "Shortcut file का size लगभग कितना होता है?", "qhi": "What is the approximate size of a shortcut file?", "options": ["~1 KB (क्योंकि ये सिर्फ link होता है) / ~1 KB (it's only a link)", "~1 GB / ~1 जीबी", "~1 MB / ~1 एमबी", "~1 TB / ~1 टीबी"], "correct": 0, "level": "Mid"}, {"q": "Shortcut बनाने का सही तरीका क्या है?", "qhi": "What is the correct way to create a shortcut?", "options": ["Right-click → Send to → Desktop (create shortcut) / राइट-क्लिक → सेंड टू → डेस्कटॉप", "File को delete करना / Delete the file", "Ctrl + Alt + Del / कंट्रोल+ऑल्ट+डिलीट", "F5 दबाना / Press F5"], "correct": 0, "level": "Basic"}, {"q": "Shortcut delete करने से मूल (original) program का क्या होता है?", "qhi": "What happens to the original program when a shortcut is deleted?", "options": ["Original delete हो जाता है / Original gets deleted", "Original बिल्कुल safe रहता है / Original stays safe", "Computer बंद हो जाता है / Computer shuts down", "Virus आ जाता है / Virus comes"], "correct": 1, "level": "Basic"}, {"q": "File extension दिखाने/छुपाने के लिए कहाँ जाएँ?", "qhi": "Where do you show/hide file name extensions?", "options": ["File Explorer → View → File name extensions / फाइल एक्सप्लोरर → व्यू → फाइल नेम एक्सटेंशन", "Control Panel → Mouse / कंट्रोल पैनल → माउस", "Settings → Display / सेटिंग्स → डिस्प्ले", "Taskbar / टास्कबार"], "correct": 0, "level": "Mid"}, {"q": "एक चल रही application को बंद करने का shortcut key क्या है?", "qhi": "Which shortcut key closes the currently running application?", "options": ["Alt + F4 / ऑल्ट+एफ4", "Ctrl + C / कंट्रोल+सी", "F5 / एफ5", "Ctrl + P / कंट्रोल+पी"], "correct": 0, "level": "Basic"}, {"q": "Hang हुए (frozen) program को force close करने के लिए क्या use करें?", "qhi": "Which tool is used to force close a hung/frozen program?", "options": ["Task Manager (Ctrl + Shift + Esc) / टास्क मैनेजर", "Notepad / नोटपैड", "Paint / पेंट", "Calculator / कैलकुलेटर"], "correct": 0, "level": "Basic"}, {"q": "Run dialog खोलने की shortcut key क्या है?", "qhi": "Which shortcut opens the Run dialog?", "options": ["Windows + R / विंडोज+आर", "Windows + E / विंडोज+ई", "Ctrl + R / कंट्रोल+आर", "Alt + R / ऑल्ट+आर"], "correct": 0, "level": "Basic"}, {"q": "Windows Settings खोलने का सबसे तेज़ तरीका क्या है?", "qhi": "What is the fastest way to open Windows Settings?", "options": ["Windows + I / विंडोज+आई", "Ctrl + S / कंट्रोल+एस", "F1 / एफ1", "Alt + Tab / ऑल्ट+टैब"], "correct": 0, "level": "Basic"}, {"q": "File Explorer खोलने की shortcut key क्या है?", "qhi": "Which shortcut opens File Explorer?", "options": ["Windows + E / विंडोज+ई", "Windows + X / विंडोज+एक्स", "Ctrl + F / कंट्रोल+एफ", "Shift + E / शिफ्ट+ई"], "correct": 0, "level": "Basic"}, {"q": "Desktop तुरंत दिखाने के लिए कौन-सी shortcut key है?", "qhi": "Which shortcut immediately shows the Desktop?", "options": ["Windows + D / विंडोज+डी", "Windows + L / विंडोज+एल", "Ctrl + D / कंट्रोल+डी", "Alt + D / ऑल्ट+डी"], "correct": 0, "level": "Basic"}, {"q": "कंप्यूटर को तुरंत Lock करने की shortcut key क्या है?", "qhi": "Which shortcut instantly locks the computer?", "options": ["Windows + L / विंडोज+एल", "Windows + D / विंडोज+डी", "Ctrl + L / कंट्रोल+एल", "Alt + L / ऑल्ट+एल"], "correct": 0, "level": "Basic"}, {"q": "Mouse का आविष्कार किसने किया?", "qhi": "Who invented the computer mouse?", "options": ["Douglas Engelbart (1964) / डगलस एंगेलबार्ट", "Bill Gates / बिल गेट्स", "Steve Jobs / स्टीव जॉब्स", "Jack Kilby / जैक किल्बी"], "correct": 0, "level": "Basic"}, {"q": "पहला mouse किस material का बना था?", "qhi": "The first mouse was made of?", "options": ["लकड़ी (Wood) / Wood", "प्लास्टिक / Plastic", "धातु (Metal) / Metal", "कांच (Glass) / Glass"], "correct": 0, "level": "Mid"}, {"q": "Mouse का पहला नाम क्या था?", "qhi": "What was the original name of the mouse?", "options": ["X-Y Position Indicator / एक्स-वाय पोजीशन इंडिकेटर", "Pointer / पॉइंटर", "Clicker / क्लिकर", "Mover / मूवर"], "correct": 0, "level": "High"}, {"q": "Left-handed लोगों के लिए mouse की कौन-सी setting बदलनी होती है?", "qhi": "Which mouse setting is changed for left-handed users?", "options": ["Switch primary and secondary buttons / प्राइमरी और सेकेंडरी बटन बदलना", "Pointer speed / पॉइंटर स्पीड", "Wheel settings / व्हील सेटिंग्स", "Pointer trail / पॉइंटर ट्रेल"], "correct": 0, "level": "Mid"}, {"q": "Mouse की sensitivity किस इकाई में मापी जाती है?", "qhi": "Mouse sensitivity is measured in?", "options": ["DPI (Dots Per Inch) / डीपीआई", "GB / जीबी", "Hz / हर्ट्ज", "KB / केबी"], "correct": 0, "level": "Mid"}, {"q": "System Date और Time बदलने का सही तरीका क्या है?", "qhi": "What is the correct way to change System Date and Time?", "options": ["Taskbar clock पर Right-click → Adjust date/time / टास्कबार घड़ी पर राइट-क्लिक", "Mouse properties / माउस प्रॉपर्टी", "Ctrl + Alt + Del / कंट्रोल+ऑल्ट+डिलीट", "F1 दबाना / Press F1"], "correct": 0, "level": "Basic"}, {"q": "India का Time Zone कौन-सा है?", "qhi": "What is India's Time Zone?", "options": ["UTC +5:30 / यूटीसी +5:30", "UTC -5:30 / यूटीसी -5:30", "UTC 0 / यूटीसी 0", "UTC +9 / यूटीसी +9"], "correct": 0, "level": "Basic"}, {"q": "UTC का full form क्या है?", "qhi": "What is the full form of UTC?", "options": ["Coordinated Universal Time / समन्वित सार्वभौमिक समय", "Universal Time Control / यूनिवर्सल टाइम कंट्रोल", "United Time Code / यूनाइटेड टाइम कोड", "Universal Transfer Code / यूनिवर्सल ट्रांसफर कोड"], "correct": 0, "level": "Mid"}, {"q": "कंप्यूटर बंद होने के बाद भी date-time याद रखने के लिए motherboard में क्या लगा होता है?", "qhi": "What is fitted on the motherboard to remember date-time even when the PC is off?", "options": ["CMOS Battery / सीमॉस बैटरी", "RAM / रैम", "CPU / सीपीयू", "Fan / फैन"], "correct": 0, "level": "Basic"}, {"q": "Screen Resolution का मतलब क्या है?", "qhi": "What does Screen Resolution mean?", "options": ["Pixels (width × height), जैसे 1920×1080 / Pixels (width × height), e.g. 1920×1080", "Screen का color / Screen color", "Keyboard की speed / Keyboard speed", "Printer की quality / Printer quality"], "correct": 0, "level": "Basic"}, {"q": "Screen Saver का मूल (original) उद्देश्य क्या था?", "qhi": "What was the original purpose of the Screen Saver?", "options": ["CRT monitor को burn से बचाना / Protect CRT monitors from burn-in", "Computer तेज़ करना / Speed up computer", "Virus रोकना / Stop viruses", "Internet चलाना / Run internet"], "correct": 0, "level": "High"}, {"q": "Program install करने वाली file के extensions कौन-से हैं?", "qhi": "Which extensions are used for program installation files?", "options": [".exe और .msi / .exe and .msi", ".jpg और .png / .jpg and .png", ".mp3 और .mp4 / .mp3 and .mp4", ".docx और .xlsx / .docx and .xlsx"], "correct": 0, "level": "Basic"}, {"q": "Program को सही तरीके से हटाने (uninstall) के लिए क्या करें?", "qhi": "What is the correct way to remove a program?", "options": ["Settings → Apps → Uninstall / सेटिंग्स → ऐप्स → अनइंस्टॉल", "Desktop shortcut delete करना / Delete desktop shortcut", "Monitor बंद करना / Turn off monitor", "File rename करना / Rename the file"], "correct": 0, "level": "Basic"}, {"q": "सिर्फ Shortcut delete करने से program uninstall होता है?", "qhi": "Does deleting only the shortcut uninstall a program?", "options": ["हाँ, पूरी तरह uninstall हो जाता है / Yes, fully uninstalled", "नहीं, program install ही रहता है / No, the program stays installed", "Computer बंद हो जाता है / Computer shuts down", "Virus आ जाता है / Virus comes"], "correct": 1, "level": "Mid"}, {"q": "Printer add (जोड़ने) के लिए कहाँ जाएँ?", "qhi": "Where do you go to add a printer?", "options": ["Settings → Devices → Printers & Scanners / सेटिंग्स → डिवाइसेस → प्रिंटर्स एंड स्कैनर्स", "Settings → Display / सेटिंग्स → डिस्प्ले", "Control Panel → Mouse / कंट्रोल पैनल → माउस", "File Explorer / फाइल एक्सप्लोरर"], "correct": 0, "level": "Basic"}, {"q": "Printer Sharing के लिए क्या जरूरी है?", "qhi": "What is necessary for Printer Sharing?", "options": ["सभी computers का same network में होना / All computers on the same network", "सभी computers अलग-अलग network में / Different networks", "केवल Bluetooth / Only Bluetooth", "कुछ जरूरी नहीं / Nothing needed"], "correct": 0, "level": "Mid"}, {"q": "Laser printer में printing के लिए क्या use होता है?", "qhi": "What does a laser printer use for printing?", "options": ["Toner powder / टोनर पाउडर", "Ink spray / स्याही छिड़काव", "Ribbon / रिबन", "Pencil / पेंसिल"], "correct": 0, "level": "Basic"}, {"q": "निम्नलिखित में से Impact printer कौन-सा है?", "qhi": "Which of the following is an Impact printer?", "options": ["Dot Matrix / डॉट मैट्रिक्स", "Laser Printer / लेजर प्रिंटर", "Inkjet Printer / इंकजेट प्रिंटर", "Photo Printer / फोटो प्रिंटर"], "correct": 0, "level": "Basic"}, {"q": "निम्नलिखित में से Non-Impact printer कौन-सा है?", "qhi": "Which of the following is a Non-Impact printer?", "options": ["Dot Matrix / डॉट मैट्रिक्स", "Daisy Wheel / डेज़ी व्हील", "Laser Printer / लेजर प्रिंटर", "Line Printer / लाइन प्रिंटर"], "correct": 2, "level": "Basic"}, {"q": "Print command की shortcut key क्या है?", "qhi": "What is the shortcut key for the Print command?", "options": ["Ctrl + P / कंट्रोल+पी", "Ctrl + S / कंट्रोल+एस", "Ctrl + C / कंट्रोल+सी", "Alt + P / ऑल्ट+पी"], "correct": 0, "level": "Basic"}, {"q": "File या Folder को rename करने की shortcut key क्या है?", "qhi": "Which shortcut key renames a file or folder?", "options": ["F2 / एफ2", "F5 / एफ5", "Ctrl + R / कंट्रोल+आर", "Delete / डिलीट"], "correct": 0, "level": "Basic"}, {"q": "File को permanent delete (Recycle Bin में न भेजना) के लिए क्या दबाएँ?", "qhi": "To permanently delete a file (skip Recycle Bin), press?", "options": ["Shift + Delete / शिफ्ट+डिलीट", "Ctrl + Delete / कंट्रोल+डिलीट", "Alt + Delete / ऑल्ट+डिलीट", "F2 / एफ2"], "correct": 0, "level": "Basic"}, {"q": ".docx file किस program की होती है?", "qhi": ".docx file belongs to which program?", "options": ["MS Word / एमएस वर्ड", "MS Excel / एमएस एक्सेल", "MS PowerPoint / एमएस पावरपॉइंट", "Adobe Reader / एडोब रीडर"], "correct": 0, "level": "Basic"}, {"q": ".xlsx file किस program की होती है?", "qhi": ".xlsx file belongs to which program?", "options": ["MS Word / एमएस वर्ड", "MS Excel / एमएस एक्सेल", "MS PowerPoint / एमएस पावरपॉइंट", "Notepad / नोटपैड"], "correct": 1, "level": "Basic"}, {"q": ".pptx file किस program की होती है?", "qhi": ".pptx file belongs to which program?", "options": ["MS Word / एमएस वर्ड", "MS Excel / एमएस एक्सेल", "MS PowerPoint / एमएस पावरपॉइंट", "VLC Player / वीएलसी प्लेयर"], "correct": 2, "level": "Basic"}, {"q": ".pdf file किस program में खुलती है?", "qhi": ".pdf file opens in which program?", "options": ["Adobe Acrobat Reader / एडोब एक्रोबैट रीडर", "MS Paint / एमएस पेंट", "Calculator / कैलकुलेटर", "Notepad / नोटपैड"], "correct": 0, "level": "Basic"}, {"q": "PDF का full form क्या है?", "qhi": "What is the full form of PDF?", "options": ["Portable Document Format / पोर्टेबल डॉक्यूमेंट फॉर्मेट", "Personal Data File / पर्सनल डेटा फाइल", "Public Document File / पब्लिक डॉक्यूमेंट फाइल", "Print Document Format / प्रिंट डॉक्यूमेंट फॉर्मेट"], "correct": 0, "level": "Basic"}, {"q": ".exe file क्या होती है?", "qhi": "What is an .exe file?", "options": ["Executable file (Program/Software) / एक्सीक्यूटेबल फाइल (प्रोग्राम)", "Image file / इमेज फाइल", "Audio file / ऑडियो फाइल", "Text file / टेक्स्ट फाइल"], "correct": 0, "level": "Basic"}, {"q": ".zip और .rar files किस प्रकार की होती हैं?", "qhi": ".zip and .rar files are which type of files?", "options": ["Compressed files / कंप्रेस्ड (संपीड़ित) फाइलें", "Video files / वीडियो फाइलें", "Image files / इमेज फाइलें", "System files / सिस्टम फाइलें"], "correct": 0, "level": "Basic"}, {"q": ".mp3 file किस प्रकार की होती है?", "qhi": "What type of file is .mp3?", "options": ["Audio / ऑडियो", "Video / वीडियो", "Document / डॉक्यूमेंट", "Image / इमेज"], "correct": 0, "level": "Basic"}, {"q": "Photos के लिए सबसे common image extension कौन-सा है?", "qhi": "Which is the most common image extension for photos?", "options": [".jpg / .jpeg / जेपीजी", ".exe / एक्सई", ".mp3 / एमपी3", ".txt / टीएक्सटी"], "correct": 0, "level": "Basic"}, {"q": "Windows में file name की maximum length कितनी होती है?", "qhi": "What is the maximum filename length in Windows?", "options": ["255 characters / 255 अक्षर", "8 characters / 8 अक्षर", "100 characters / 100 अक्षर", "Unlimited / असीमित"], "correct": 0, "level": "Mid"}, {"q": "Windows file names case-sensitive होते हैं?", "qhi": "Are Windows file names case-sensitive?", "options": ["नहीं — Resume.docx = resume.docx / No", "हाँ, बिल्कुल / Yes, fully", "केवल folders के लिए / Only for folders", "केवल C drive में / Only on C drive"], "correct": 0, "level": "Mid"}, {"q": "Folder के अंदर folder क्या कहलाता है?", "qhi": "What is a folder inside a folder called?", "options": ["Sub-folder (Tree structure) / सब-फोल्डर", "Super-folder / सुपर-फोल्डर", "Main folder / मेन फोल्डर", "Root folder / रूट फोल्डर"], "correct": 0, "level": "Basic"}, {"q": "Root Directory कौन-सी है?", "qhi": "Which is the Root Directory?", "options": ["C:\ / सी ड्राइव", "Documents folder / डॉक्यूमेंट्स", "Recycle Bin / रिसाइकल बिन", "Desktop / डेस्कटॉप"], "correct": 0, "level": "Mid"}, {"q": "File को दूसरे program में open करके format बदलने का सही तरीका क्या है?", "qhi": "What is the correct way to change a file's format?", "options": ["दूसरे program में खोलकर 'Save As' करना / Open in another program and 'Save As'", "सिर्फ rename करना / Just rename it", "Delete करना / Delete it", "F5 दबाना / Press F5"], "correct": 0, "level": "Mid"}, {"q": "Compressed (.zip) file से original file निकालने को क्या कहते हैं?", "qhi": "What is extracting original files from a compressed (.zip) file called?", "options": ["Extract / एक्सट्रैक्ट", "Copy / कॉपी", "Cut / कट", "Rename / रिनेम"], "correct": 0, "level": "Basic"}, {"q": "दो अलग-अलग drives के बीच drag & drop करने से file क्या होती है?", "qhi": "What happens when you drag & drop a file between two different drives?", "options": ["Copy / कॉपी", "Move / मूव", "Delete / डिलीट", "Rename / रिनेम"], "correct": 0, "level": "High"}, {"q": "Same drive में drag & drop करने से file क्या होती है?", "qhi": "What happens when you drag & drop a file within the same drive?", "options": ["Move / मूव", "Copy / कॉपी", "Delete / डिलीट", "Hide / हाइड"], "correct": 0, "level": "High"}, {"q": "Booting का अर्थ क्या है?", "qhi": "What does Booting mean?", "options": ["OS load करके computer start करना / Loading the OS to start the computer", "Computer बंद करना / Shutting down", "File delete करना / Deleting files", "Internet चलाना / Running internet"], "correct": 0, "level": "Basic"}, {"q": "Android के versions किस naming pattern पर आधारित थे (Android 9 तक)?", "qhi": "Android versions were named on which pattern (till Android 9)?", "options": ["Dessert names (Cupcake, Oreo, Pie) / डेज़र्ट के नाम", "City names / शहरों के नाम", "Animal names / जानवरों के नाम", "River names / नदियों के नाम"], "correct": 0, "level": "Mid"}];
+
+let currentQuestion = 0;
+let userAnswers = new Array(questions.length).fill(-1);
+let timerInterval;
+let timeRemaining = EXAM_DURATION;
+let startTime;
+let examData = {};
+let examStarted = false;
+
+function checkGate(){
+  const val = document.getElementById('gatePass').value;
+  if(val === EXAM_PASSWORD){
+    document.getElementById('gateOverlay').style.display = 'none';
+    if(!examStarted){ examStarted = true; init(); }
+  } else {
+    const err = document.getElementById('gateError');
+    err.style.display = 'block';
+    document.getElementById('gatePass').value = '';
+    document.getElementById('gatePass').focus();
+  }
+}
+
+function init(){
+  document.getElementById('examDate').valueAsDate = new Date();
+  renderQuestionNav();
+  showQuestion(0);
+  startTimer();
+  startTime = new Date();
+}
+
+function levelLabel(lv){ return lv==='Basic'?'बेसिक / Basic':(lv==='Mid'?'मध्य / Mid':'उच्च / High'); }
+
+function renderQuestionNav(){
+  const nav = document.getElementById('questionNav');
+  nav.innerHTML = '';
+  for(let i=0;i<questions.length;i++){
+    const dot = document.createElement('button');
+    dot.className = 'dot' + (userAnswers[i]!==-1?' answered':'') + (i===currentQuestion?' current':'');
+    dot.textContent = i+1;
+    dot.title = 'Question ' + (i+1);
+    dot.onclick = () => { showQuestion(i); scrollToTop(); };
+    nav.appendChild(dot);
+  }
+}
+
+function scrollToTop(){ window.scrollTo({top:document.getElementById('examStrip').offsetTop, behavior:'smooth'}); }
+
+function showQuestion(index){
+  currentQuestion = index;
+  const q = questions[index];
+  const container = document.getElementById('questionContainer');
+  let optionsHtml = '';
+  q.options.forEach((opt,i)=>{
+    const selected = userAnswers[index]===i?'selected':'';
+    optionsHtml += `<div class="opt ${selected}" onclick="selectOption(${i})">
+      <span class="opt-letter">${String.fromCharCode(65+i)}</span>
+      <span class="opt-text">${opt}</span></div>`;
+  });
+  container.innerHTML = `
+    <div class="q-card">
+      <div class="q-top">
+        <span class="q-number">प्रश्न / Question: ${index+1} <span style="font-size:15px;color:#5a7184;font-weight:600;">of / में से ${questions.length}</span></span>
+        <div class="q-badges">
+          <span class="level-badge ${q.level}">${levelLabel(q.level)}</span>
+          <span class="verified-badge"><span class="check">✓</span> Verified by Expert</span>
+        </div>
+      </div>
+      <div class="q-text-hindi">${q.q}</div>
+      <div class="q-text-eng">${q.qhi}</div>
+      ${optionsHtml}
+    </div>`;
+  document.getElementById('prevBtn').style.display = index===0?'none':'inline-block';
+  document.getElementById('nextBtn').style.display = index===questions.length-1?'none':'inline-block';
+  document.getElementById('submitBtn').classList.toggle('hidden', index!==questions.length-1);
+  renderQuestionNav();
+  updateProgress();
+}
+
+function selectOption(optionIndex){
+  userAnswers[currentQuestion] = optionIndex;
+  showQuestion(currentQuestion);
+  if(currentQuestion < questions.length-1){
+    setTimeout(()=>{ showQuestion(currentQuestion+1); scrollToTop(); }, 400);
+  } else { setTimeout(()=>scrollToTop(), 400); }
+}
+
+function navNext(){ if(currentQuestion<questions.length-1){ showQuestion(currentQuestion+1); scrollToTop(); } }
+function navPrev(){ if(currentQuestion>0){ showQuestion(currentQuestion-1); scrollToTop(); } }
+
+function updateProgress(){
+  const answered = userAnswers.filter(a=>a!==-1).length;
+  const percent = (answered/questions.length)*100;
+  document.getElementById('progressFill').style.width = percent + '%';
+  document.getElementById('progressLabel').textContent = answered + ' / ' + questions.length + ' answered';
+}
+
+function startTimer(){
+  timerInterval = setInterval(()=>{
+    timeRemaining--;
+    const mins = Math.floor(timeRemaining/60);
+    const secs = timeRemaining%60;
+    document.getElementById('timer').textContent = `${mins.toString().padStart(2,'0')}:${secs.toString().padStart(2,'0')}`;
+    if(timeRemaining<=300) document.getElementById('timerBox').classList.add('warning');
+    if(timeRemaining<=0){ clearInterval(timerInterval); submitQuiz(true); }
+  },1000);
+}
+
+function submitQuiz(auto){
+  clearInterval(timerInterval);
+  const unanswered = userAnswers.filter(a=>a===-1).length;
+  if(!auto && unanswered>0 && timeRemaining>0){
+    if(!confirm(`आपने ${unanswered} प्रश्न छोड़े हैं। क्या आप सबमिट करना चाहते हैं?\nYou have skipped ${unanswered} questions. Submit anyway?`)){ startTimer(); return; }
+  }
+  let correct=0, wrong=0, skipped=0;
+  const levelStats = { Basic:{c:0,t:0}, Mid:{c:0,t:0}, High:{c:0,t:0} };
+  userAnswers.forEach((ans,i)=>{
+    const lvl = questions[i].level;
+    levelStats[lvl].t++;
+    if(ans===-1) skipped++;
+    else if(ans===questions[i].correct){ correct++; levelStats[lvl].c++; }
+    else wrong++;
+  });
+  const percentage = Math.round((correct/questions.length)*100);
+  const timeTaken = formatTime(EXAM_DURATION-timeRemaining);
+  examData = {
+    name: document.getElementById('studentName').value || 'Unknown',
+    roll: document.getElementById('studentRoll').value || 'N/A',
+    class: document.getElementById('studentClass').value || 'N/A',
+    date: document.getElementById('examDate').value || new Date().toISOString().split('T')[0],
+    center: document.getElementById('examCenter').value || 'N/A',
+    email: document.getElementById('studentEmail').value || 'N/A',
+    correct, wrong, skipped, total: questions.length,
+    percentage, timeTaken, levelStats,
+    answers: userAnswers.map((ans,i)=>({
+      q: questions[i].q, qhi: questions[i].qhi, level: questions[i].level,
+      userAns: ans===-1?'Skipped':questions[i].options[ans],
+      correctAns: questions[i].options[questions[i].correct],
+      isCorrect: ans===questions[i].correct
+    }))
+  };
+  document.getElementById('quizSection').style.display = 'none';
+  document.getElementById('studentForm').style.display = 'none';
+  document.getElementById('examStrip').style.display = 'none';
+  document.getElementById('sideBar').style.display = 'none';
+  document.getElementById('resultSection').style.display = 'block';
+  document.getElementById('rsName').textContent = '👤 ' + examData.name;
+  document.getElementById('rsDetails').innerHTML = `<span>📍 ${examData.center}</span><span>📅 ${examData.date}</span><span>🎫 ${examData.roll}</span><span>🕒 ${examData.class}</span>`;
+
+  const passMarks = Math.ceil(questions.length*0.5);
+  const needed = passMarks - correct;
+  const remarkBox = document.getElementById('remarkBox');
+  if(percentage>=50){
+    remarkBox.className = 'remark-box remark-pass';
+    remarkBox.innerHTML = `✅ बधाई हो! आप पास हो गए हैं। / Congratulations! You have PASSED. (पासिंग मार्क्स / Passing marks: ${passMarks}/${questions.length})`;
+  } else {
+    remarkBox.className = 'remark-box remark-fail';
+    remarkBox.innerHTML = `❌ अनुत्तीर्ण / FAIL — पास होने के लिए आपको <b>${needed} अंक और</b> चाहिए थे<br>You needed <b>${needed} more marks</b> to pass (${passMarks}/${questions.length} required).`;
+  }
+  sendResultEmail();
+  document.getElementById('scoreCircle').textContent = percentage + '%';
+  document.getElementById('scoreText').textContent = `You scored ${correct} out of ${questions.length}`;
+  document.getElementById('percentageText').textContent = `(${percentage}%)`;
+  document.getElementById('timeTaken').textContent = timeTaken;
+  document.getElementById('correctCount').textContent = correct;
+  document.getElementById('wrongCount').textContent = wrong;
+  document.getElementById('skippedCount').textContent = skipped;
+  let grade='', badgeClass='';
+  if(percentage>=90){grade='A+ (उत्कृष्ट / Excellent)';badgeClass='grade-pass';}
+  else if(percentage>=80){grade='A (बहुत अच्छा / Very Good)';badgeClass='grade-pass';}
+  else if(percentage>=70){grade='B (अच्छा / Good)';badgeClass='grade-pass';}
+  else if(percentage>=60){grade='C (औसत / Average)';badgeClass='grade-pass';}
+  else if(percentage>=50){grade='D (उत्तीर्ण / Pass)';badgeClass='grade-pass';}
+  else {grade='F (अनुत्तीर्ण / Fail) — 50% आवश्यक / 50% required';badgeClass='grade-fail';}
+  document.getElementById('gradeBadge').innerHTML = `<span class="grade-badge ${badgeClass}">${grade}</span>`;
+  const lvlColors = { Basic:'#1e7e46', Mid:'#9a7b00', High:'#b03a2e' };
+  let lvlHtml = '';
+  for(const [lvl,st] of Object.entries(levelStats)){
+    const pct = st.t?Math.round((st.c/st.t)*100):0;
+    lvlHtml += `<div class="level-stat" style="border-top:4px solid ${lvlColors[lvl]}"><h4>${levelLabel(lvl)}</h4><p style="color:${lvlColors[lvl]}">${st.c}/${st.t} (${pct}%)</p></div>`;
+  }
+  document.getElementById('levelSummary').innerHTML = lvlHtml;
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function formatTime(seconds){ const m=Math.floor(seconds/60), s=seconds%60; return `${m}m ${s}s`; }
+
+function showReview(){
+  const reviewSection = document.getElementById('reviewSection');
+  const reviewList = document.getElementById('reviewList');
+  if(reviewSection.style.display==='none'){
+    reviewSection.style.display = 'block';
+    let html = '';
+    examData.answers.forEach((item,i)=>{
+      const statusClass = item.isCorrect?'correct':'incorrect';
+      const statusIcon = item.isCorrect?'✅':'❌';
+      html += `<div class="review-item ${statusClass}">
+          <strong>Q${i+1} [${levelLabel(item.level)}]: ${item.q}</strong><br>
+          <span style="color:#d9534f;font-size:13px;">${item.qhi}</span><br>
+          <span style="color:${item.isCorrect?'green':'red'}">${statusIcon} आपका उत्तर / Your Answer: ${item.userAns}</span><br>
+          ✅ सही उत्तर / Correct Answer: ${item.correctAns}
+        </div>`;
+    });
+    reviewList.innerHTML = html;
+  } else { reviewSection.style.display = 'none'; }
+}
+
+function exportToExcel(){
+  let csv = 'CCC Operating System Exam - Results\n\nStudent Information\n';
+  csv += `Name,${examData.name}\nRoll Number,${examData.roll}\nClass,${examData.class}\nDate,${examData.date}\nCenter,${examData.center}\nEmail,${examData.email}\n\n`;
+  csv += 'Result Summary\n';
+  csv += `Total Questions,${examData.total}\nCorrect,${examData.correct}\nWrong,${examData.wrong}\nSkipped,${examData.skipped}\nPercentage,${examData.percentage}%\nTime Taken,${examData.timeTaken}\n\n`;
+  csv += 'Level-wise Performance\nLevel,Correct,Total,Percentage\n';
+  for(const [lvl,st] of Object.entries(examData.levelStats)){
+    const pct = st.t?Math.round((st.c/st.t)*100):0;
+    csv += `${lvl},${st.c},${st.t},${pct}%\n`;
+  }
+  csv += '\nDetailed Answers\nQ.No,Level,Question (Hindi),Question (English),Your Answer,Correct Answer,Status\n';
+  examData.answers.forEach((item,i)=>{
+    const status = item.isCorrect?'Correct':(item.userAns==='Skipped'?'Skipped':'Wrong');
+    csv += `${i+1},${item.level},"${item.q}","${item.qhi}","${item.userAns}","${item.correctAns}",${status}\n`;
+  });
+  downloadFile(csv, 'application/vnd.ms-excel', `CCC_OS_Exam_${examData.name}_${examData.date}.xls`);
+  alert('✅ परिणाम Excel में एक्सपोर्ट हुआ! / Results exported to Excel!');
+}
+
+function exportToPDF(){
+  let content = `CCC OPERATING SYSTEM - EXAM RESULTS\n\nSTUDENT INFORMATION\n`;
+  content += `Name: ${examData.name}\nRoll: ${examData.roll}\nClass: ${examData.class}\nDate: ${examData.date}\nCenter: ${examData.center}\n\n`;
+  content += `RESULTS\nScore: ${examData.correct}/${examData.total} (${examData.percentage}%)\n`;
+  content += `Correct: ${examData.correct} | Wrong: ${examData.wrong} | Skipped: ${examData.skipped}\nTime: ${examData.timeTaken}\n\nLEVEL-WISE PERFORMANCE:\n`;
+  for(const [lvl,st] of Object.entries(examData.levelStats)){
+    const pct = st.t?Math.round((st.c/st.t)*100):0;
+    content += `${lvl}: ${st.c}/${st.t} (${pct}%)\n`;
+  }
+  content += `\nDETAILED ANSWERS:\n`;
+  examData.answers.forEach((item,i)=>{
+    const status = item.isCorrect?'✓':'✗';
+    content += `Q${i+1} [${item.level}]: ${status} ${item.q} / ${item.qhi}\n`;
+    content += `   Your: ${item.userAns} | Correct: ${item.correctAns}\n\n`;
+  });
+  downloadFile(content, 'text/plain', `CCC_OS_Exam_${examData.name}_${examData.date}.txt`);
+  alert('✅ परिणाम रिपोर्ट फ़ॉर्मेट में एक्सपोर्ट हुआ! / Report exported!');
+}
+
+function exportToCSV(){
+  let csv = 'Q.No,Level,Question (Hindi),Question (English),Your Answer,Correct Answer,Status\n';
+  examData.answers.forEach((item,i)=>{
+    const status = item.isCorrect?'Correct':(item.userAns==='Skipped'?'Skipped':'Wrong');
+    csv += `${i+1},${item.level},"${item.q}","${item.qhi}","${item.userAns}","${item.correctAns}",${status}\n`;
+  });
+  downloadFile(csv, 'text/csv', `CCC_OS_Exam_${examData.name}_${examData.date}.csv`);
+  alert('✅ परिणाम CSV में एक्सपोर्ट हुआ! / Results exported to CSV!');
+}
+
+function downloadFile(content, mime, filename){
+  const blob = new Blob([content], {type:mime});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = filename; a.click();
+  URL.revokeObjectURL(url);
+}
+
+function sendResultEmail(){
+  const d = examData;
+  const status = d.percentage >= 50 ? 'PASS' : 'FAIL';
+  const payload = {
+    _subject: `CCC OS Exam Result - ${d.name} | ${status} | ${d.percentage}%`,
+    _captcha: 'false',
+    _template: 'table',
+    'Student Name': d.name,
+    'Registration No': d.roll,
+    'Class Timing': d.class,
+    'Exam Date': d.date,
+    'Exam Center': d.center,
+    'Email': d.email,
+    'Score': `${d.correct} / ${d.total}`,
+    'Percentage': d.percentage + '%',
+    'Status': status,
+    'Correct': d.correct,
+    'Wrong': d.wrong,
+    'Skipped': d.skipped,
+    'Time Taken': d.timeTaken
+  };
+  const statusEl = document.getElementById('emailStatus');
+  statusEl.textContent = '📤 परिणाम ईमेल हो रहा है... / Sending result email...';
+  fetch('https://formsubmit.co/ajax/nexainstitute@gmail.com', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+    body: JSON.stringify(payload)
+  })
+  .then(r => r.json())
+  .then(() => {
+    statusEl.innerHTML = '✅ परिणाम सफलतापूर्वक ईमेल कर दिया गया: <b>nexainstitute@gmail.com</b> / Result emailed successfully.';
+  })
+  .catch(() => {
+    const subject = encodeURIComponent(`CCC OS Exam Result - ${d.name} | ${status} | ${d.percentage}%`);
+    const bodyText = encodeURIComponent(
+      `Student: ${d.name}\nReg No: ${d.roll}\nClass Timing: ${d.class}\nDate: ${d.date}\nCenter: ${d.center}\n` +
+      `Score: ${d.correct}/${d.total} (${d.percentage}%)\nStatus: ${status}\nTime: ${d.timeTaken}`);
+    statusEl.innerHTML = `⚠️ ऑटो-ईमेल नहीं जा सका। <a href="mailto:nexainstitute@gmail.com?subject=${subject}&body=${bodyText}">📧 यहाँ क्लिक करके ईमेल करें / Click here to email result</a>`;
+  });
+}
+
+function restartQuiz(){
+  if(confirm('क्या आप दोबारा शुरू करना चाहते हैं? पूरी प्रगति मिट जाएगी।\nRestart? All progress will be lost.')) location.reload();
+}
+</script>
+</body>
+</html>
