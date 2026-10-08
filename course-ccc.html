@@ -254,6 +254,132 @@ body {
 }
 .btn-start:hover { background: var(--navy); color: #fff; }
 
+/* ===== Class Notes (Locked) ===== */
+.notes-wrap {
+  position: relative; overflow: hidden; border-radius: 24px; padding: 44px 36px;
+  background: linear-gradient(135deg, var(--navy) 0%, #1e3a8a 55%, #312e81 100%);
+  box-shadow: 0 20px 50px rgba(11,45,110,.28); color: #fff;
+  display: flex; align-items: center; gap: 36px; flex-wrap: wrap;
+}
+.notes-wrap::before, .notes-wrap::after {
+  content: ""; position: absolute; border-radius: 50%; filter: blur(60px); opacity: .45; pointer-events: none;
+}
+.notes-wrap::before { width: 260px; height: 260px; background: var(--orange); top: -80px; right: -60px; }
+.notes-wrap::after  { width: 220px; height: 220px; background: var(--accent); bottom: -90px; left: -50px; }
+.notes-left, .notes-right { position: relative; z-index: 1; }
+.notes-left { flex: 1 1 380px; }
+.notes-tag {
+  display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,.14);
+  border: 1px solid rgba(255,255,255,.25); padding: 5px 14px; border-radius: 50px;
+  font-size: .75rem; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; margin-bottom: 14px;
+}
+.notes-left h2 { font-family: 'Rajdhani', sans-serif; font-size: clamp(1.7rem, 3.6vw, 2.5rem); font-weight: 700; line-height: 1.15; margin-bottom: 10px; }
+.notes-left h2 span { color: var(--secondary); }
+.notes-left p { color: rgba(255,255,255,.78); font-size: .95rem; line-height: 1.7; margin-bottom: 18px; max-width: 520px; }
+.notes-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+.notes-chips span {
+  background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2);
+  padding: 6px 12px; border-radius: 8px; font-size: .78rem; font-weight: 600;
+}
+.notes-chips i { color: var(--secondary); margin-right: 5px; }
+.btn-notes {
+  background: linear-gradient(135deg, var(--orange), #f59e0b); color: #fff; border: none; cursor: pointer;
+  padding: 14px 30px; border-radius: 14px; font-size: 1rem; font-weight: 700; font-family: 'Inter', sans-serif;
+  display: inline-flex; align-items: center; gap: 10px; text-decoration: none;
+  box-shadow: 0 10px 30px rgba(242,101,34,.45); transition: all .3s; animation: notesPulse 2.4s infinite;
+}
+.btn-notes:hover { transform: translateY(-3px) scale(1.03); box-shadow: 0 14px 38px rgba(242,101,34,.6); }
+@keyframes notesPulse { 0%{box-shadow:0 0 0 0 rgba(242,101,34,.55)} 70%{box-shadow:0 0 0 16px rgba(242,101,34,0)} 100%{box-shadow:0 0 0 0 rgba(242,101,34,0)} }
+.notes-right { flex: 0 1 220px; display: flex; justify-content: center; }
+.lock-card {
+  width: 180px; height: 180px; border-radius: 28px; background: rgba(255,255,255,.12);
+  border: 1px solid rgba(255,255,255,.25); backdrop-filter: blur(8px);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
+  animation: lockFloat 4s ease-in-out infinite;
+}
+.lock-card i.big { font-size: 3.6rem; color: var(--secondary); }
+.lock-card small { font-size: .72rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: rgba(255,255,255,.8); }
+@keyframes lockFloat { 0%,100%{transform:translateY(0) rotate(-2deg)} 50%{transform:translateY(-12px) rotate(2deg)} }
+
+/* Password Modal */
+.nm-overlay {
+  position: fixed; inset: 0; background: rgba(15,23,42,.72); backdrop-filter: blur(6px);
+  display: none; align-items: center; justify-content: center; z-index: 10000; padding: 20px;
+}
+.nm-overlay.show { display: flex; }
+.nm-box {
+  background: #fff; width: 100%; max-width: 420px; border-radius: 22px; padding: 32px 26px 26px;
+  text-align: center; position: relative; box-shadow: 0 30px 80px rgba(0,0,0,.4); animation: nmPop .35s ease;
+}
+@keyframes nmPop { from{opacity:0; transform:translateY(20px) scale(.95)} to{opacity:1; transform:none} }
+.nm-close { position: absolute; top: 12px; right: 14px; background: none; border: none; font-size: 1.2rem; color: var(--text-muted); cursor: pointer; }
+.nm-icon {
+  width: 70px; height: 70px; margin: 0 auto 14px; border-radius: 20px; font-size: 1.9rem; color: #fff;
+  background: linear-gradient(135deg, var(--primary), var(--navy)); display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 8px 22px rgba(37,99,235,.35);
+}
+.nm-icon.ok { background: linear-gradient(135deg, #10b981, #047857); box-shadow: 0 8px 22px rgba(16,185,129,.4); }
+.nm-box h3 { font-family: 'Rajdhani', sans-serif; color: var(--navy); font-size: 1.5rem; margin-bottom: 6px; }
+.nm-box p { color: var(--text-muted); font-size: .88rem; margin-bottom: 18px; line-height: 1.6; }
+.nm-input-wrap { position: relative; margin-bottom: 8px; }
+.nm-input-wrap input {
+  width: 100%; padding: 13px 44px 13px 16px; border: 2px solid var(--border); border-radius: 12px;
+  font-size: 1rem; font-family: 'Inter', sans-serif; outline: none; transition: border-color .3s;
+}
+.nm-input-wrap input:focus { border-color: var(--primary); }
+.nm-input-wrap button { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 1rem; }
+.nm-err { color: var(--danger); font-size: .8rem; font-weight: 600; min-height: 20px; margin-bottom: 10px; }
+.nm-box.shake { animation: nmShake .4s; }
+@keyframes nmShake { 0%,100%{transform:translateX(0)} 20%,60%{transform:translateX(-9px)} 40%,80%{transform:translateX(9px)} }
+.nm-submit {
+  width: 100%; border: none; cursor: pointer; padding: 13px; border-radius: 12px; color: #fff; font-weight: 700; font-size: .95rem;
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark)); box-shadow: 0 8px 22px rgba(37,99,235,.3);
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; transition: all .3s;
+}
+.nm-submit:hover { transform: translateY(-2px); }
+.nm-submit.green { background: linear-gradient(135deg, #10b981, #047857); box-shadow: 0 8px 22px rgba(16,185,129,.35); }
+.nm-hint { margin-top: 14px; font-size: .78rem; color: var(--text-muted); }
+.nm-hint a { color: #128C7E; font-weight: 700; text-decoration: none; }
+@media(max-width:600px){ .notes-wrap{padding:30px 20px; text-align:center; justify-content:center} .notes-chips{justify-content:center} .notes-left p{margin-inline:auto} }
+
+/* ===== Syllabus Accordion ===== */
+section[id], .syl-item { scroll-margin-top: 80px; }
+.syl-tools { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; align-items: center; margin-bottom: 22px; }
+.syl-search { position: relative; flex: 1 1 280px; max-width: 400px; }
+.syl-search i { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: .85rem; }
+.syl-search input { width: 100%; padding: 11px 16px 11px 40px; border: 2px solid var(--border); border-radius: 50px; font-size: .9rem; font-family: 'Inter', sans-serif; outline: none; background: #fff; transition: border-color .3s; }
+.syl-search input:focus { border-color: var(--primary); }
+.syl-toggle { border: 2px solid var(--navy); background: #fff; color: var(--navy); border-radius: 50px; padding: 10px 22px; font-weight: 700; font-size: .85rem; cursor: pointer; font-family: 'Inter', sans-serif; transition: all .3s; }
+.syl-toggle:hover { background: var(--navy); color: #fff; }
+.syl-list { max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
+.syl-item { background: #fff; border: 1px solid var(--border); border-radius: 16px; box-shadow: 0 4px 16px rgba(0,0,0,.05); overflow: hidden; transition: all .3s; }
+.syl-item:hover { border-color: var(--primary); }
+.syl-item.open { border-color: var(--primary); box-shadow: 0 10px 30px rgba(37,99,235,.14); }
+.syl-head { width: 100%; display: flex; align-items: center; gap: 14px; padding: 14px 18px; background: none; border: none; cursor: pointer; text-align: left; font-family: 'Inter', sans-serif; }
+.syl-num { width: 44px; height: 44px; border-radius: 12px; color: #fff; font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 1.3rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.syl-title { flex: 1; font-weight: 700; color: var(--navy); font-size: 1rem; }
+.syl-title small { display: block; font-weight: 500; color: var(--text-muted); font-size: .75rem; margin-top: 2px; }
+.syl-chev { color: var(--text-muted); transition: transform .3s; }
+.syl-item.open .syl-chev { transform: rotate(180deg); color: var(--primary); }
+.syl-body { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .35s ease; }
+.syl-item.open .syl-body { grid-template-rows: 1fr; }
+.syl-body-in { overflow: hidden; }
+.syl-topics { list-style: none; padding: 2px 18px 18px 76px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px 22px; }
+.syl-topics li { font-size: .86rem; color: var(--text); padding-left: 22px; position: relative; line-height: 1.55; }
+.syl-topics li::before { content: "\f00c"; font-family: "Font Awesome 6 Free"; font-weight: 900; position: absolute; left: 0; top: 3px; font-size: .7rem; color: var(--success); }
+.syl-topics li.hide, .syl-item.nomatch { display: none; }
+.syl-topics li mark { background: #fde68a; border-radius: 3px; padding: 0 2px; }
+.syl-empty { text-align: center; padding: 24px; color: var(--text-muted); font-size: .9rem; }
+.btn-syl { background: transparent; color: var(--navy); border: 2px solid var(--navy); padding: 5px 14px; }
+.btn-syl:hover { background: var(--navy); color: #fff; }
+.chap-btns { display: flex; flex-wrap: wrap; gap: 6px; }
+.chap-btns .btn-view { padding: 6px 12px; font-size: .78rem; font-family: 'Inter', sans-serif; }
+.btn-notes-ch { background: linear-gradient(135deg, var(--orange), #f59e0b); color: #fff; border: none; }
+.btn-notes-ch:hover { background: var(--navy); }
+.nexa-toast { position: fixed; left: 50%; bottom: 100px; transform: translate(-50%, 20px); background: var(--dark); color: #fff; padding: 11px 22px; border-radius: 50px; font-size: .85rem; font-weight: 600; opacity: 0; pointer-events: none; transition: all .35s; z-index: 10001; box-shadow: 0 10px 30px rgba(0,0,0,.3); }
+.nexa-toast.show { opacity: 1; transform: translate(-50%, 0); }
+@media (max-width: 600px) { .syl-topics { grid-template-columns: 1fr; padding-left: 18px; } }
+
 /* Social Connect Section */
 .social-sec {
   padding: 40px 5%; position: relative; z-index: 1;
@@ -418,7 +544,9 @@ body {
   <ul class="nav-links">
     <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
     <li><a href="#about"><i class="fas fa-info-circle"></i> About CCC</a></li>
-    <li><a href="#study"><i class="fas fa-book"></i> Syllabus</a></li>
+    <li><a href="#syllabus"><i class="fas fa-list-check"></i> Syllabus</a></li>
+    <li><a href="#notes"><i class="fas fa-book-open"></i> Notes</a></li>
+    <li><a href="#study"><i class="fas fa-book"></i> MCQs</a></li>
     <li><a href="#practice"><i class="fas fa-clipboard-check"></i> Practice</a></li>
     <li><a href="https://wa.me/917696566162" class="nav-btn"><i class="fab fa-whatsapp"></i> Enroll Now</a></li>
   </ul>
@@ -471,7 +599,7 @@ body {
       <div class="col-md-6 col-xl-4 rv">
         <div class="info-card">
           <div class="ic-icon" style="background:#FFF3E0;"><i class="fas fa-file-alt" style="color:#E65100;"></i></div>
-          <h5>Online Form Kaise Bharen?</h5>
+          <h5>Online Form कैसे भरें?</h5>
           <p><strong>Step 1:</strong> <a href="https://student.nielit.gov.in" target="_blank" style="color:var(--primary);">student.nielit.gov.in</a> पर जाएं<br>
           <strong>Step 2:</strong> Apply Online → IT Literacy → CCC चुनें<br>
           <strong>Step 3:</strong> Photo (200KB) & Signature (50KB) JPEG Upload करें<br>
@@ -485,7 +613,7 @@ body {
       <div class="col-md-6 col-xl-4 rv">
         <div class="info-card">
           <div class="ic-icon" style="background:#E8F5E9;"><i class="fas fa-chart-bar" style="color:#1B5E20;"></i></div>
-          <h5>Result Kaise Check Karen?</h5>
+          <h5>Result कैसे Check करें?</h5>
           <p>Exam के <strong>15–25 दिन बाद</strong> Result आता है।<br><br>
           student.nielit.gov.in → View Result → CCC → Application Number, DOB, Exam Name → View<br><br>
           Result में मिलेगा:<br>
@@ -519,7 +647,7 @@ body {
           ✔ SSC CGL / CHSL<br>
           ✔ Bank Clerk / PO<br><br>
           <span class="bn">Validity:</span> Certificate Lifetime Valid होता है।</p>
-          <a href="#study" class="btn-nv">Preparation Start करें <i class="fas fa-arrow-down ms-1"></i></a>
+          <a href="#syllabus" class="btn-nv">Preparation Start करें <i class="fas fa-arrow-down ms-1"></i></a>
         </div>
       </div>
 
@@ -605,8 +733,153 @@ body {
   </div>
 </section>
 
+<!-- Complete Syllabus -->
+<section class="sec" id="syllabus">
+  <div class="container">
+    <div class="sec-head rv">
+      <h2>CCC <span>Complete Syllabus</span></h2>
+      <div class="ubar"></div>
+      <p>NIELIT CCC के सभी 10 Chapters और Topics – Chapter पर Click करके पूरा Syllabus देखें</p>
+    </div>
+    <div class="syl-tools rv">
+      <div class="syl-search"><i class="fas fa-search"></i><input type="text" id="sylSearch" placeholder="Topic search करें (e.g. UPI, Mail Merge)" autocomplete="off"></div>
+      <button type="button" class="syl-toggle" id="sylToggle"><i class="fas fa-layer-group"></i> <span>सभी Chapters खोलें</span></button>
+    </div>
+    <div class="syl-list rv" id="sylList">
+      <div class="syl-item" id="syl-1">
+        <button class="syl-head" type="button" aria-expanded="false">
+          <span class="syl-num" style="background:linear-gradient(135deg,#1044A6,#1565C0);">1</span>
+          <span class="syl-title">💻 Introduction to Computers<small>12 Topics</small></span>
+          <i class="fas fa-chevron-down syl-chev"></i>
+        </button>
+        <div class="syl-body"><div class="syl-body-in"><ul class="syl-topics"><li>Introduction & Objectives</li><li>Evolution of Computers & its Applications</li><li>IT Gadgets & their Applications</li><li>Basics of Hardware & Software</li><li>Central Processing Unit (CPU)</li><li>Input & Output Devices</li><li>Computer Memory & Storage</li><li>Application Software</li><li>System Software</li><li>Utility Software</li><li>Open Source & Proprietary Software</li><li>Mobile Apps</li></ul></div></div>
+      </div>
+      <div class="syl-item" id="syl-2">
+        <button class="syl-head" type="button" aria-expanded="false">
+          <span class="syl-num" style="background:linear-gradient(135deg,#6A1B9A,#8E24AA);">2</span>
+          <span class="syl-title">🖥️ Introduction to Operating System<small>7 Topics</small></span>
+          <i class="fas fa-chevron-down syl-chev"></i>
+        </button>
+        <div class="syl-body"><div class="syl-body-in"><ul class="syl-topics"><li>Operating System: Functions & Types</li><li>Basics of OS (Desktop, Icons, Taskbar)</li><li>User Interface for Desktop & Laptop (GUI)</li><li>OS Simple Settings (Display, Date/Time, Printer, Users)</li><li>File & Folder Management (Create, Copy, Move, Rename, Delete, Search)</li><li>Types of File Extensions</li><li>Keyboard Shortcuts</li></ul></div></div>
+      </div>
+      <div class="syl-item" id="syl-3">
+        <button class="syl-head" type="button" aria-expanded="false">
+          <span class="syl-num" style="background:linear-gradient(135deg,#1B5E20,#2E7D32);">3</span>
+          <span class="syl-title">📝 Word Processing (Writer)<small>8 Topics</small></span>
+          <i class="fas fa-chevron-down syl-chev"></i>
+        </button>
+        <div class="syl-body"><div class="syl-body-in"><ul class="syl-topics"><li>Word Processing Basics</li><li>Opening & Closing a Document</li><li>Text Creation & Manipulation (Cut, Copy, Paste, Find & Replace)</li><li>Formatting Text (Font, Paragraph, Bullets, Page Setup)</li><li>Table Manipulation</li><li>Mail Merge</li><li>Header, Footer, Page Numbers & Printing</li><li>Shortcut Keys</li></ul></div></div>
+      </div>
+      <div class="syl-item" id="syl-4">
+        <button class="syl-head" type="button" aria-expanded="false">
+          <span class="syl-num" style="background:linear-gradient(135deg,#E65100,#F57C00);">4</span>
+          <span class="syl-title">📊 Spreadsheet (Calc)<small>6 Topics</small></span>
+          <i class="fas fa-chevron-down syl-chev"></i>
+        </button>
+        <div class="syl-body"><div class="syl-body-in"><ul class="syl-topics"><li>Elements of Spreadsheet (Workbook, Sheet, Cell, Row, Column)</li><li>Creating & Saving a Spreadsheet</li><li>Manipulation of Cells & Sheets</li><li>Formulas & Functions (SUM, AVERAGE, MAX, MIN, COUNT, IF)</li><li>Charts</li><li>Sorting, Filtering & Printing</li></ul></div></div>
+      </div>
+      <div class="syl-item" id="syl-5">
+        <button class="syl-head" type="button" aria-expanded="false">
+          <span class="syl-num" style="background:linear-gradient(135deg,#880E4F,#AD1457);">5</span>
+          <span class="syl-title">📽️ Presentation (Impress)<small>6 Topics</small></span>
+          <i class="fas fa-chevron-down syl-chev"></i>
+        </button>
+        <div class="syl-body"><div class="syl-body-in"><ul class="syl-topics"><li>Creation of Presentation</li><li>Manipulation of Slides (Add, Delete, Reorder, Layouts)</li><li>Presentation of Slides (Slide Show)</li><li>Transitions & Animations</li><li>Providing Aesthetics to Slides (Themes, Master Slide, Images)</li><li>Printing Slides</li></ul></div></div>
+      </div>
+      <div class="syl-item" id="syl-6">
+        <button class="syl-head" type="button" aria-expanded="false">
+          <span class="syl-num" style="background:linear-gradient(135deg,#00695C,#00897B);">6</span>
+          <span class="syl-title">🌐 Introduction to Internet & WWW<small>8 Topics</small></span>
+          <i class="fas fa-chevron-down syl-chev"></i>
+        </button>
+        <div class="syl-body"><div class="syl-body-in"><ul class="syl-topics"><li>Basics of Computer Networks (LAN, MAN, WAN)</li><li>Internet & World Wide Web (WWW)</li><li>Website Address & URL</li><li>IP Address, Domain Name</li><li>ISP & Role of ISP</li><li>Popular Web Browsers (Chrome, Edge, Firefox)</li><li>Search Engines & Searching the Web</li><li>Downloading & Uploading</li></ul></div></div>
+      </div>
+      <div class="syl-item" id="syl-7">
+        <button class="syl-head" type="button" aria-expanded="false">
+          <span class="syl-num" style="background:linear-gradient(135deg,#1A237E,#283593);">7</span>
+          <span class="syl-title">📧 E-mail, Social Networking & e-Governance<small>7 Topics</small></span>
+          <i class="fas fa-chevron-down syl-chev"></i>
+        </button>
+        <div class="syl-body"><div class="syl-body-in"><ul class="syl-topics"><li>E-mail: Compose, Send, CC/BCC, Attachments</li><li>E-mail: Inbox, Folders, Spam</li><li>Instant Messaging (WhatsApp, Messenger, Telegram)</li><li>Social Networking (Facebook, Instagram, X, LinkedIn)</li><li>Introduction to Blogs</li><li>Basics of E-Commerce</li><li>e-Governance Services (UMANG, DigiLocker, MyGov)</li></ul></div></div>
+      </div>
+      <div class="syl-item" id="syl-8">
+        <button class="syl-head" type="button" aria-expanded="false">
+          <span class="syl-num" style="background:linear-gradient(135deg,#B71C1C,#C62828);">8</span>
+          <span class="syl-title">🔐 Overview of Cyber Security<small>8 Topics</small></span>
+          <i class="fas fa-chevron-down syl-chev"></i>
+        </button>
+        <div class="syl-body"><div class="syl-body-in"><ul class="syl-topics"><li>Need of Cyber Security</li><li>Threats: Virus, Worm, Trojan, Spyware, Ransomware</li><li>Phishing & Social Engineering</li><li>Antivirus & Firewall</li><li>Strong Passwords & Safe Browsing</li><li>Securing PC & Smartphone</li><li>Cyber Crime Awareness</li><li>IT Act 2000</li></ul></div></div>
+      </div>
+      <div class="syl-item" id="syl-9">
+        <button class="syl-head" type="button" aria-expanded="false">
+          <span class="syl-num" style="background:linear-gradient(135deg,#004D40,#00695C);">9</span>
+          <span class="syl-title">💳 Digital Financial Tools<small>8 Topics</small></span>
+          <i class="fas fa-chevron-down syl-chev"></i>
+        </button>
+        <div class="syl-body"><div class="syl-body-in"><ul class="syl-topics"><li>Digital Financial Tools: Overview</li><li>OTP (One Time Password) & QR Code</li><li>UPI & BHIM</li><li>Internet Banking & Mobile Banking</li><li>NEFT, RTGS & IMPS</li><li>Aadhaar Enabled Payment System (AEPS)</li><li>Debit/Credit Cards, ATM, POS & e-Wallets</li><li>Safe Digital Payment Practices</li></ul></div></div>
+      </div>
+      <div class="syl-item" id="syl-10">
+        <button class="syl-head" type="button" aria-expanded="false">
+          <span class="syl-num" style="background:linear-gradient(135deg,#4A148C,#6A1B9A);">10</span>
+          <span class="syl-title">🤖 Future Skills & AI Overview<small>8 Topics</small></span>
+          <i class="fas fa-chevron-down syl-chev"></i>
+        </button>
+        <div class="syl-body"><div class="syl-body-in"><ul class="syl-topics"><li>Introduction to Future Skills</li><li>Artificial Intelligence (AI) & Machine Learning</li><li>Internet of Things (IoT)</li><li>Big Data & Cloud Computing</li><li>Blockchain Technology</li><li>3D Printing</li><li>Robotics & Robotic Process Automation (RPA)</li><li>Future of Artificial Intelligence</li></ul></div></div>
+      </div>
+      <div class="syl-empty" id="sylEmpty" style="display:none;"><i class="fas fa-search"></i> कोई Topic नहीं मिला। कृपया दूसरा Keyword try करें।</div>
+    </div>
+    <div class="hbox" style="max-width:900px;margin:18px auto 0;">
+      <i class="fas fa-info-circle me-2" style="color:var(--orange);"></i>
+      <strong>Note:</strong> यह Syllabus NIELIT CCC के Chapters के अनुसार है। Latest Official Syllabus के लिए <a href="https://nielit.gov.in" target="_blank" rel="noopener" style="color:var(--primary);font-weight:600;">nielit.gov.in</a> भी जरूर check करें।
+    </div>
+  </div>
+</section>
+
+<!-- Complete Class Notes (Password Protected) -->
+<section class="sec" id="notes">
+  <div class="container">
+    <div class="notes-wrap rv">
+      <div class="notes-left">
+        <div class="notes-tag"><i class="fas fa-lock"></i> सिर्फ NEXA Students के लिए · Password Protected</div>
+        <h2>CCC <span>Complete Class Notes</span> Download करें</h2>
+        <p>NEXA के सभी Class Notes, Study Material और Important Topics एक ही जगह। Notes पाने के लिए अपने Institute या Teacher से Password लें।</p>
+        <div class="notes-chips">
+          <span><i class="fas fa-file-pdf"></i> Chapter-wise Notes</span>
+          <span><i class="fas fa-bolt"></i> Exam Important Topics</span>
+          <span><i class="fas fa-sync-alt"></i> Regularly Updated</span>
+          <span><i class="fas fa-gift"></i> NEXA Students के लिए Free</span>
+        </div>
+        <button class="btn-notes" onclick="openNotesModal()"><i class="fas fa-key"></i> Notes Access करें</button>
+      </div>
+      <div class="notes-right">
+        <div class="lock-card"><i class="fas fa-book-reader big"></i><small>Class Notes</small></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Password Modal -->
+<div class="nm-overlay" id="nmOverlay" onclick="if(event.target===this)closeNotesModal()">
+  <div class="nm-box" id="nmBox">
+    <button class="nm-close" onclick="closeNotesModal()" aria-label="Close"><i class="fas fa-times"></i></button>
+    <div class="nm-icon" id="nmIcon"><i class="fas fa-lock"></i></div>
+    <h3 id="nmTitle">Password डालें</h3>
+    <p id="nmText">Class Notes देखने के लिए NEXA Student Password enter करें।</p>
+    <div id="nmForm">
+      <div class="nm-input-wrap">
+        <input type="password" id="nmPass" placeholder="Password enter करें" autocomplete="off" onkeydown="if(event.key==='Enter')unlockNotes()">
+        <button type="button" onclick="togglePass()" aria-label="Show password"><i class="fas fa-eye" id="nmEye"></i></button>
+      </div>
+      <div class="nm-err" id="nmErr"></div>
+      <button class="nm-submit" id="nmBtn" onclick="unlockNotes()"><i class="fas fa-unlock-alt"></i> Notes Unlock करें</button>
+      <div class="nm-hint">Password नहीं पता? <a href="https://wa.me/917696566162?text=Hello%20NEXA%2C%20%E0%A4%AE%E0%A5%81%E0%A4%9D%E0%A5%87%20CCC%20Notes%20%E0%A4%95%E0%A4%BE%20Password%20%E0%A4%9A%E0%A4%BE%E0%A4%B9%E0%A4%BF%E0%A4%8F" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp पर पूछें</a></div>
+    </div>
+    <a class="nm-submit green" id="nmOpen" target="_blank" rel="noopener noreferrer" style="display:none;"><i class="fas fa-folder-open"></i> Class Notes Open करें</a>
+  </div>
+</div>
+
 <!-- Study Material -->
-<section class="sec" id="study">
+<section class="sec" id="study" style="background:rgba(255,255,255,0.6);">
   <div class="container">
     <div class="sec-head rv">
       <h2>CCC <span>Study Material</span> & Chapters</h2>
@@ -618,70 +891,70 @@ body {
       <div class="col-sm-6 col-lg-4 col-xl-3 rv">
         <div class="chap-card ch1">
           <div class="chap-head"><div class="chap-icon-bg">💻</div><h6>Introduction to Computers</h6><span class="mcq-pill"><i class="fas fa-question-circle me-1"></i>150 MCQs</span></div>
-          <div class="chap-body"><p>History, Types, Generation, Hardware & Software।</p><a href="Fundamental_test.html" class="btn-view"><i class="fas fa-eye me-1"></i>View MCQ</a></div>
+          <div class="chap-body"><p>History, Types, Generation, Hardware & Software।</p><div class="chap-btns"><a href="#syl-1" class="btn-view btn-syl"><i class="fas fa-list-ul me-1"></i>Syllabus</a><button type="button" class="btn-view btn-notes-ch" data-chapter="Introduction to Computers" data-pdf=""><i class="fas fa-book-open me-1"></i>Notes</button><a href="Fundamental_test.html" class="btn-view"><i class="fas fa-eye me-1"></i>View MCQ</a></div></div>
         </div>
       </div>
 
       <div class="col-sm-6 col-lg-4 col-xl-3 rv">
         <div class="chap-card ch2">
           <div class="chap-head"><div class="chap-icon-bg">🖥️</div><h6>Introduction to Operating System</h6><span class="mcq-pill"><i class="fas fa-question-circle me-1"></i>100 MCQs</span></div>
-          <div class="chap-body"><p>Windows OS, File Management और Shortcuts।</p><a href="Os.html" class="btn-view"><i class="fas fa-eye me-1"></i>View MCQ</a></div>
+          <div class="chap-body"><p>Windows OS, File Management और Shortcuts।</p><div class="chap-btns"><a href="#syl-2" class="btn-view btn-syl"><i class="fas fa-list-ul me-1"></i>Syllabus</a><button type="button" class="btn-view btn-notes-ch" data-chapter="Introduction to Operating System" data-pdf=""><i class="fas fa-book-open me-1"></i>Notes</button><a href="Os.html" class="btn-view"><i class="fas fa-eye me-1"></i>View MCQ</a></div></div>
         </div>
       </div>
 
       <div class="col-sm-6 col-lg-4 col-xl-3 rv">
         <div class="chap-card ch3">
           <div class="chap-head"><div class="chap-icon-bg">📝</div><h6>Word Processing (Writer)</h6><span class="mcq-pill"><i class="fas fa-question-circle me-1"></i>100 MCQs</span></div>
-          <div class="chap-body"><p>Formatting, Tables, Mail Merge, LibreOffice Writer।</p><a href="Libreofficewriter.html" class="btn-view"><i class="fas fa-eye me-1"></i>View MCQ</a></div>
+          <div class="chap-body"><p>Formatting, Tables, Mail Merge, LibreOffice Writer।</p><div class="chap-btns"><a href="#syl-3" class="btn-view btn-syl"><i class="fas fa-list-ul me-1"></i>Syllabus</a><button type="button" class="btn-view btn-notes-ch" data-chapter="Word Processing (Writer)" data-pdf=""><i class="fas fa-book-open me-1"></i>Notes</button><a href="Libreofficewriter.html" class="btn-view"><i class="fas fa-eye me-1"></i>View MCQ</a></div></div>
         </div>
       </div>
 
       <div class="col-sm-6 col-lg-4 col-xl-3 rv">
         <div class="chap-card ch4">
           <div class="chap-head"><div class="chap-icon-bg">📊</div><h6>Spreadsheet (Calc)</h6><span class="mcq-pill"><i class="fas fa-question-circle me-1"></i>150 MCQs</span></div>
-          <div class="chap-body"><p>Formulas, Functions, Charts, LibreOffice Calc।</p><a href="#" class="btn-view"><i class="fas fa-eye me-1"></i>View MCQ</a></div>
+          <div class="chap-body"><p>Formulas, Functions, Charts, LibreOffice Calc।</p><div class="chap-btns"><a href="#syl-4" class="btn-view btn-syl"><i class="fas fa-list-ul me-1"></i>Syllabus</a><button type="button" class="btn-view btn-notes-ch" data-chapter="Spreadsheet (Calc)" data-pdf=""><i class="fas fa-book-open me-1"></i>Notes</button><a href="#" class="btn-view"><i class="fas fa-eye me-1"></i>View MCQ</a></div></div>
         </div>
       </div>
 
       <div class="col-sm-6 col-lg-4 col-xl-3 rv">
         <div class="chap-card ch5">
           <div class="chap-head"><div class="chap-icon-bg">📽️</div><h6>Presentation (Impress)</h6><span class="mcq-pill"><i class="fas fa-question-circle me-1"></i>100 MCQs</span></div>
-          <div class="chap-body"><p>Slides, Animations, Transitions, LibreOffice Impress।</p><a href="#" class="btn-view"><i class="fas fa-eye me-1"></i>View MCQ</a></div>
+          <div class="chap-body"><p>Slides, Animations, Transitions, LibreOffice Impress।</p><div class="chap-btns"><a href="#syl-5" class="btn-view btn-syl"><i class="fas fa-list-ul me-1"></i>Syllabus</a><button type="button" class="btn-view btn-notes-ch" data-chapter="Presentation (Impress)" data-pdf=""><i class="fas fa-book-open me-1"></i>Notes</button><a href="#" class="btn-view"><i class="fas fa-eye me-1"></i>View MCQ</a></div></div>
         </div>
       </div>
 
       <div class="col-sm-6 col-lg-4 col-xl-3 rv">
         <div class="chap-card ch6">
           <div class="chap-head"><div class="chap-icon-bg">🌐</div><h6>Introduction to Internet & WWW</h6><span class="mcq-pill"><i class="fas fa-question-circle me-1"></i>150 MCQs</span></div>
-          <div class="chap-body"><p>Browser, URL, HTTP/HTTPS, Search Engines।</p><a href="#" class="btn-view"><i class="fas fa-eye me-1"></i>View MCQ</a></div>
+          <div class="chap-body"><p>Browser, URL, HTTP/HTTPS, Search Engines।</p><div class="chap-btns"><a href="#syl-6" class="btn-view btn-syl"><i class="fas fa-list-ul me-1"></i>Syllabus</a><button type="button" class="btn-view btn-notes-ch" data-chapter="Introduction to Internet &amp; WWW" data-pdf=""><i class="fas fa-book-open me-1"></i>Notes</button><a href="#" class="btn-view"><i class="fas fa-eye me-1"></i>View MCQ</a></div></div>
         </div>
       </div>
 
       <div class="col-sm-6 col-lg-4 col-xl-3 rv">
         <div class="chap-card ch7">
           <div class="chap-head"><div class="chap-icon-bg">📧</div><h6>E-mail, Social Networking & e-Governance</h6><span class="mcq-pill"><i class="fas fa-question-circle me-1"></i>100 MCQs</span></div>
-          <div class="chap-body"><p>Compose, CC/BCC, Attachment, Spam, Gmail।</p><a href="#" class="btn-view"><i class="fas fa-eye me-1"></i>View MCQ</a></div>
+          <div class="chap-body"><p>Compose, CC/BCC, Attachment, Spam, Gmail।</p><div class="chap-btns"><a href="#syl-7" class="btn-view btn-syl"><i class="fas fa-list-ul me-1"></i>Syllabus</a><button type="button" class="btn-view btn-notes-ch" data-chapter="E-mail, Social Networking &amp; e-Governance" data-pdf=""><i class="fas fa-book-open me-1"></i>Notes</button><a href="#" class="btn-view"><i class="fas fa-eye me-1"></i>View MCQ</a></div></div>
         </div>
       </div>
 
       <div class="col-sm-6 col-lg-4 col-xl-3 rv">
         <div class="chap-card ch8">
           <div class="chap-head"><div class="chap-icon-bg">🔐</div><h6>Overview of Cyber Security</h6><span class="mcq-pill"><i class="fas fa-question-circle me-1"></i>45 MCQs</span></div>
-          <div class="chap-body"><p>Virus, Malware, Firewall, Phishing, IT Act 2000।</p><a href="#" class="btn-view"><i class="fas fa-eye me-1"></i>View MCQ</a></div>
+          <div class="chap-body"><p>Virus, Malware, Firewall, Phishing, IT Act 2000।</p><div class="chap-btns"><a href="#syl-8" class="btn-view btn-syl"><i class="fas fa-list-ul me-1"></i>Syllabus</a><button type="button" class="btn-view btn-notes-ch" data-chapter="Overview of Cyber Security" data-pdf=""><i class="fas fa-book-open me-1"></i>Notes</button><a href="#" class="btn-view"><i class="fas fa-eye me-1"></i>View MCQ</a></div></div>
         </div>
       </div>
 
       <div class="col-sm-6 col-lg-4 col-xl-3 rv">
         <div class="chap-card ch9">
           <div class="chap-head"><div class="chap-icon-bg">💳</div><h6>Digital Financial Tools</h6><span class="mcq-pill"><i class="fas fa-question-circle me-1"></i>50 MCQs</span></div>
-          <div class="chap-body"><p>UPI, Net Banking, e-Wallet, NEFT/RTGS।</p><a href="#" class="btn-view"><i class="fas fa-eye me-1"></i>View MCQ</a></div>
+          <div class="chap-body"><p>UPI, Net Banking, e-Wallet, NEFT/RTGS।</p><div class="chap-btns"><a href="#syl-9" class="btn-view btn-syl"><i class="fas fa-list-ul me-1"></i>Syllabus</a><button type="button" class="btn-view btn-notes-ch" data-chapter="Digital Financial Tools" data-pdf=""><i class="fas fa-book-open me-1"></i>Notes</button><a href="#" class="btn-view"><i class="fas fa-eye me-1"></i>View MCQ</a></div></div>
         </div>
       </div>
 
       <div class="col-sm-6 col-lg-4 col-xl-3 rv">
         <div class="chap-card ch10">
           <div class="chap-head"><div class="chap-icon-bg">🤖</div><h6>Future Skills & AI Overview</h6><span class="mcq-pill"><i class="fas fa-question-circle me-1"></i>30 MCQs</span></div>
-          <div class="chap-body"><p>AI, Cloud Computing, IoT, Big Data, Future Tech।</p><a href="#" class="btn-view"><i class="fas fa-eye me-1"></i>View MCQ</a></div>
+          <div class="chap-body"><p>AI, Cloud Computing, IoT, Big Data, Future Tech।</p><div class="chap-btns"><a href="#syl-10" class="btn-view btn-syl"><i class="fas fa-list-ul me-1"></i>Syllabus</a><button type="button" class="btn-view btn-notes-ch" data-chapter="Future Skills &amp; AI Overview" data-pdf=""><i class="fas fa-book-open me-1"></i>Notes</button><a href="#" class="btn-view"><i class="fas fa-eye me-1"></i>View MCQ</a></div></div>
         </div>
       </div>
 
@@ -690,7 +963,7 @@ body {
 </section>
 
 <!-- Practice Sets -->
-<section class="sec" id="practice" style="background:rgba(255,255,255,0.6);">
+<section class="sec" id="practice">
   <div class="container">
     <div class="sec-head rv">
       <h2>CCC <span>Online Practice Sets</span></h2>
@@ -888,7 +1161,9 @@ body {
       <h5>Quick Links</h5>
       <a href="#about">About CCC</a>
       <a href="#exam">Exam Pattern</a>
-      <a href="#study">Study Material</a>
+      <a href="#syllabus">Complete Syllabus</a>
+      <a href="#notes">Class Notes</a>
+      <a href="#study">MCQ Study Material</a>
       <a href="#practice">Practice Sets</a>
       <a href="https://student.nielit.gov.in" target="_blank">NIELIT Portal</a>
     </div>
@@ -920,6 +1195,141 @@ const rvObs = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
 }, {threshold: 0.08});
 document.querySelectorAll('.rv').forEach(el => rvObs.observe(el));
+
+/* ---- Locked Class Notes (Drive link encrypted, plain text me nahi hai) ---- */
+const NOTES_BLOB = "aXxgmXYZUkCkAv8nDZJOgE1hm3d7EvUwvc9mYpFXIcadOEzT0otzDl4UiPktMrFAFtgTPcLCyj0Zk9FY47lcoJIlDOpa8yYEcwN0RwjIWbJ2EPAdsjkbutYDPnONP3VJaYTiNmwa6iWYEIgrB1J4HfXjgL8=";
+
+let notesPdf = '';
+function openNotesModal(pdf, chapter){
+  notesPdf = pdf || '';
+  if (chapter) document.getElementById('nmText').textContent = chapter + ' के Notes देखने के लिए NEXA Student Password enter करें।';
+  document.getElementById('nmOverlay').classList.add('show');
+  setTimeout(()=>document.getElementById('nmPass').focus(),100);
+}
+function closeNotesModal(){
+  document.getElementById('nmOverlay').classList.remove('show');
+  document.getElementById('nmPass').value = '';
+  document.getElementById('nmErr').textContent = '';
+  document.getElementById('nmForm').style.display = '';
+  const o = document.getElementById('nmOpen'); o.style.display = 'none'; o.removeAttribute('href');
+  const ic = document.getElementById('nmIcon'); ic.className = 'nm-icon'; ic.innerHTML = '<i class="fas fa-lock"></i>';
+  document.getElementById('nmTitle').textContent = 'Password डालें';
+  document.getElementById('nmText').textContent = 'Class Notes देखने के लिए NEXA Student Password enter करें।';
+}
+function togglePass(){
+  const i = document.getElementById('nmPass'), e = document.getElementById('nmEye');
+  const show = i.type === 'password'; i.type = show ? 'text' : 'password';
+  e.className = show ? 'fas fa-eye-slash' : 'fas fa-eye';
+}
+async function unlockNotes(){
+  const pw = document.getElementById('nmPass').value;
+  const err = document.getElementById('nmErr'), box = document.getElementById('nmBox');
+  if(!pw){ err.textContent = 'कृपया Password enter करें।'; return; }
+  try{
+    const raw = Uint8Array.from(atob(NOTES_BLOB), c => c.charCodeAt(0));
+    const salt = raw.slice(0,16), iv = raw.slice(16,28), data = raw.slice(28);
+    const enc = new TextEncoder();
+    const base = await crypto.subtle.importKey('raw', enc.encode(pw), 'PBKDF2', false, ['deriveKey']);
+    const key = await crypto.subtle.deriveKey(
+      {name:'PBKDF2', salt, iterations:100000, hash:'SHA-256'},
+      base, {name:'AES-GCM', length:256}, false, ['decrypt']);
+    const plain = await crypto.subtle.decrypt({name:'AES-GCM', iv}, key, data);
+    const url = new TextDecoder().decode(plain);
+    document.getElementById('nmForm').style.display = 'none';
+    const ic = document.getElementById('nmIcon'); ic.className = 'nm-icon ok'; ic.innerHTML = '<i class="fas fa-check"></i>';
+    document.getElementById('nmTitle').textContent = 'Access Granted! 🎉';
+    document.getElementById('nmText').textContent = 'आपके Class Notes ready हैं। नीचे दिए button से open करें।';
+    const o = document.getElementById('nmOpen'); o.href = notesPdf || url; o.style.display = 'inline-flex';
+  }catch(e){
+    err.textContent = (window.crypto && crypto.subtle) ? '❌ गलत Password। दोबारा try करें।' : 'Page को https:// पर open करें।';
+    box.classList.remove('shake'); void box.offsetWidth; box.classList.add('shake');
+  }
+}
+
+/* ---- In-page navigation: page par hi rahe, naye tab me na khule ---- */
+const nexaToast = (msg) => {
+  let el = document.getElementById('nexaToast');
+  if (!el) { el = document.createElement('div'); el.id = 'nexaToast'; el.className = 'nexa-toast'; document.body.appendChild(el); }
+  el.textContent = msg; el.classList.add('show');
+  clearTimeout(el._t); el._t = setTimeout(() => el.classList.remove('show'), 2200);
+};
+function openSyl(item, scroll) {
+  if (!item) return;
+  item.classList.add('open');
+  item.querySelector('.syl-head').setAttribute('aria-expanded', 'true');
+  syncSylToggle();
+  if (scroll) setTimeout(() => item.scrollIntoView({behavior: 'smooth', block: 'start'}), 60);
+}
+document.querySelectorAll('a[href^="#"]').forEach(a => a.setAttribute('target', '_self'));
+document.addEventListener('click', e => {
+  const a = e.target.closest('a[href^="#"]');
+  if (!a) return;
+  e.preventDefault();
+  const h = a.getAttribute('href');
+  if (h === '#') {
+    if (a.matches('.btn-view, .btn-start') || (a.closest('.footer') && !a.classList.contains('logo'))) { nexaToast('यह Section जल्दी ही आ रहा है 🚀'); }
+    else { window.scrollTo({top: 0, behavior: 'smooth'}); }
+    return;
+  }
+  const target = document.getElementById(h.slice(1));
+  if (!target) return;
+  if (target.classList.contains('syl-item')) {
+    openSyl(target, false);
+    document.getElementById('syllabus');
+    setTimeout(() => target.scrollIntoView({behavior: 'smooth', block: 'start'}), 60);
+  } else {
+    target.scrollIntoView({behavior: 'smooth', block: 'start'});
+  }
+});
+
+/* ---- Syllabus accordion, search, expand all ---- */
+const sylItems = [...document.querySelectorAll('.syl-item')];
+const sylToggle = document.getElementById('sylToggle');
+function syncSylToggle() {
+  const allOpen = sylItems.every(i => i.classList.contains('open'));
+  sylToggle.querySelector('span').textContent = allOpen ? 'सभी Chapters बंद करें' : 'सभी Chapters खोलें';
+}
+sylItems.forEach(item => {
+  item.querySelector('.syl-head').addEventListener('click', () => {
+    const open = item.classList.toggle('open');
+    item.querySelector('.syl-head').setAttribute('aria-expanded', open);
+    syncSylToggle();
+  });
+});
+sylToggle.addEventListener('click', () => {
+  const allOpen = sylItems.every(i => i.classList.contains('open'));
+  sylItems.forEach(i => { i.classList.toggle('open', !allOpen); i.querySelector('.syl-head').setAttribute('aria-expanded', !allOpen); });
+  syncSylToggle();
+});
+const lisOrig = new Map();
+document.querySelectorAll('.syl-topics li').forEach(li => lisOrig.set(li, li.textContent));
+document.getElementById('sylSearch').addEventListener('input', e => {
+  const q = e.target.value.trim().toLowerCase();
+  let any = false;
+  sylItems.forEach(item => {
+    const title = item.querySelector('.syl-title').textContent.toLowerCase();
+    const lis = [...item.querySelectorAll('.syl-topics li')];
+    let hits = 0;
+    lis.forEach(li => {
+      const txt = lisOrig.get(li);
+      const m = q && txt.toLowerCase().includes(q);
+      li.classList.toggle('hide', !!q && !m && !title.includes(q));
+      li.innerHTML = m ? txt.replace(new RegExp('(' + q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'ig'), '<mark>$1</mark>') : txt;
+      if (!q || m || title.includes(q)) hits++;
+    });
+    const show = !q || hits > 0;
+    item.classList.toggle('nomatch', !show);
+    if (q && show) item.classList.add('open'); else if (!q) item.classList.remove('open');
+    if (show) any = true;
+  });
+  document.getElementById('sylEmpty').style.display = any ? 'none' : 'block';
+  syncSylToggle();
+});
+
+/* ---- Chapter-wise Notes buttons (data-pdf khali ho to Drive folder, PDF ho to wahi PDF) ---- */
+document.querySelectorAll('.btn-notes-ch').forEach(b => {
+  b.addEventListener('click', () => openNotesModal(b.dataset.pdf, b.dataset.chapter));
+});
 </script>
 
 </body>
