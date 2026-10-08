@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nexa Institute - Word Processing (LibreOffice Writer) Online Test</title>
+<style>
+  :root{--primary:#1a237e;--accent:#ff6f00;--ok:#2e7d32;--bad:#c62828;--bg:#f4f6fb;}
+  *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif;}
+  body{background:var(--bg);color:#222;}
+  header{background:linear-gradient(135deg,#1a237e,#3949ab);color:#fff;padding:18px 20px;text-align:center;}
+  header h1{font-size:24px;} header p{font-size:14px;opacity:.9;margin-top:4px;}
+  .wrap{max-width:900px;margin:20px auto;padding:0 15px;}
+  .card{background:#fff;border-radius:12px;padding:24px;box-shadow:0 3px 12px rgba(0,0,0,.08);margin-bottom:20px;}
+  h2{color:var(--primary);margin-bottom:12px;font-size:20px;}
+  label{font-weight:600;display:block;margin:12px 0 4px;}
+  input[type=text],input[type=tel]{width:100%;padding:11px;border:1.5px solid #c5cae9;border-radius:8px;font-size:15px;}
+  input:focus{outline:none;border-color:var(--primary);}
+  .btn{display:inline-block;background:var(--accent);color:#fff;border:none;padding:13px 34px;font-size:16px;font-weight:700;border-radius:8px;cursor:pointer;margin-top:16px;}
+  .btn:hover{background:#e65100;}
+  .btn2{background:var(--primary);} .btn2:hover{background:#0d1442;}
+  .instr li{margin:7px 0 7px 20px;font-size:15px;}
+  #timerBar{position:sticky;top:0;z-index:99;background:var(--primary);color:#fff;text-align:center;padding:10px;font-size:18px;font-weight:700;display:none;}
+  .q{background:#fff;border-radius:10px;padding:16px 18px;margin-bottom:14px;box-shadow:0 2px 8px rgba(0,0,0,.06);}
+  .q h3{font-size:16px;margin-bottom:10px;}
+  .q h3 span.qn{color:var(--accent);margin-right:6px;}
+  .opt{display:block;padding:9px 12px;border:1.5px solid #e0e0e0;border-radius:8px;margin-bottom:7px;cursor:pointer;font-size:15px;}
+  .opt:hover{border-color:var(--primary);background:#f5f7ff;}
+  .opt input{margin-right:8px;}
+  #resultBox{display:none;}
+  .scoreCircle{width:170px;height:170px;border-radius:50%;margin:15px auto;display:flex;align-items:center;justify-content:center;font-size:34px;font-weight:800;color:#fff;}
+  .stats{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin:14px 0;}
+  .stat{background:#eceff1;border-radius:10px;padding:12px 22px;text-align:center;font-size:16px;min-width:130px;}
+  .stat b{display:block;font-size:22px;}
+  table{width:100%;border-collapse:collapse;margin-top:14px;font-size:14px;}
+  th,td{border:1px solid #cfd8dc;padding:8px;text-align:left;vertical-align:top;}
+  th{background:var(--primary);color:#fff;}
+  .ok{color:var(--ok);font-weight:700;} .bad{color:var(--bad);font-weight:700;} .skip{color:#9e9e9e;font-weight:700;}
+  .footer-note{text-align:center;color:#78909c;font-size:13px;margin:20px 0;}
+  @media print{#timerBar,.btn,.btn2{display:none!important;}}
+</style>
+<base target="_blank">
+</head>
+<body>
+<header>
+  <h1>🖥️ NEXA INSTITUTE</h1>
+  <p>CCC / O Level - Chapter 3 : Word Processing (LibreOffice Writer) Online Test</p>
+</header>
+<div id="timerBar">⏱️ समय शेष / Time Left: <span id="timer">60:00</span></div>
+
+<div class="wrap">
+
+  <!-- Registration -->
+  <div class="card" id="regBox">
+    <h2>📝 छात्र विवरण / Student Details</h2>
+    <label>नाम / Name *</label><input type="text" id="sname" placeholder="अपना नाम लिखें">
+    <label>मोबाइल नंबर / Roll No. *</label><input type="tel" id="sroll" placeholder="मोबाइल / रोल नंबर">
+    <label>Batch / Branch (optional)</label><input type="text" id="sbatch" placeholder="Batch / Branch">
+    <h2 style="margin-top:22px;">📋 निर्देश / Instructions</h2>
+    <ul class="instr">
+      <li>कुल प्रश्न / Total Questions: <b>100</b> (PDF + NIELIT CCC Previous Exam)</li>
+      <li>प्रत्येक प्रश्न के <b>4 विकल्प</b> हैं, सही एक को चुनें।</li>
+      <li>समय / Time: <b>60 मिनट</b></li>
+      <li>Negative Marking: <b>नहीं</b></li>
+      <li>Submit करते ही आपका Result <b>nexainstitute@gmail.com</b> पर भेज दिया जाएगा।</li>
+    </ul>
+    <button class="btn" onclick="startTest()">▶️ परीक्षा शुरू करें / Start Test</button>
+  </div>
+
+  <!-- Questions -->
+  <div id="quizBox" style="display:none;">
+    <div id="qArea"></div>
+    <div style="text-align:center;">
+      <button class="btn" onclick="submitTest(true)">✅ परीक्षा Submit करें / Submit Test</button>
+    </div>
+  </div>
+
+  <!-- Result -->
+  <div class="card" id="resultBox">
+    <div style="text-align:center;">
+      <h2>🎉 परीक्षा पूर्ण! / Exam Completed!</h2>
+      <div class="scoreCircle" id="circle">0%</div>
+      <p id="gradeLine" style="font-size:18px;font-weight:700;"></p>
+      <p>👨‍🎓 <b id="rName"></b> | 🆔 <span id="rRoll"></span></p>
+      <p>⏱️ लिया गया समय / Time Taken: <b id="rTime"></b></p>
+      <div class="stats">
+        <div class="stat">✅ सही / Correct<b id="rCorrect" style="color:var(--ok)"></b></div>
+        <div class="stat">❌ गलत / Wrong<b id="rWrong" style="color:var(--bad)"></b></div>
+        <div class="stat">⏭️ छोड़े / Skipped<b id="rSkip"></b></div>
+        <div class="stat">🎯 कुल अंक / Score<b id="rScore"></b></div>
+      </div>
+      <p id="emailStatus" style="font-size:14px;color:#607d8b;"></p>
+      <button class="btn2 btn" onclick="window.print()">🖨️ परिणाम प्रिंट / Download (PDF)</button>
+      <button class="btn" onclick="location.reload()">🔄 नया टेस्ट / Retake</button>
+    </div>
+    <h2 style="margin-top:26px;">📖 उत्तर समीक्षा / Answer Review</h2>
+    <table id="reviewTable">
+      <tr><th>#</th><th>प्रश्न / Question</th><th>आपका उत्तर</th><th>सही उत्तर</th><th>परिणाम</th></tr>
+    </table>
+  </div>
+
+  <p class="footer-note">© Nexa Institute | Online Exam Portal | nexainstitute@gmail.com</p>
+</div>
+
+<script>
+const QUESTIONS = [["LibreOffice को किस Foundation द्वारा विकसित किया गया है?", ["Microsoft Foundation", "The Document Foundation", "Apache Foundation", "Google Foundation"], 1], ["LibreOffice पहली बार कब Launch किया गया था?", ["25 जनवरी 2011", "15 अगस्त 2010", "1 जनवरी 2012", "25 जनवरी 2015"], 0], ["LibreOffice में कुल कितने Components होते हैं?", ["3", "4", "5", "6"], 3], ["Microsoft Word के समान कार्य करने वाला LibreOffice Component कौन सा है?", ["Calc", "Writer", "Impress", "Base"], 1], ["Microsoft Excel के समान कार्य करने वाला LibreOffice Component कौन सा है?", ["Writer", "Impress", "Calc", "Draw"], 2], ["Microsoft PowerPoint के समान कार्य करने वाला LibreOffice Component कौन सा है?", ["Impress", "Base", "Math", "Writer"], 0], ["Microsoft Access के स्थान पर LibreOffice में क्या दिया गया है?", ["Base", "Draw", "Math", "Calc"], 0], ["Run Dialog Box में LibreOffice Writer खोलने के लिए क्या लिखते हैं?", ["writer", "swriter", "lowriter", "owriter"], 1], ["Run Dialog Box खोलने की Shortcut Key क्या है?", ["Window + E", "Window + R", "Ctrl + R", "Alt + R"], 1], ["LibreOffice Writer के Menu Bar में Total कितने Menu होते हैं?", ["9", "10", "11", "12"], 2], ["LibreOffice में Default प्रोग्राम का नाम (Title) क्या होता है?", ["Document1", "Untitled 1", "Doc1", "File1"], 1], ["Title Bar के Right Side में कितने Control Button होते हैं?", ["2", "3", "4", "5"], 1], ["Menu Bar के ठीक नीचे कौन सी Toolbar होती है?", ["Formatting Toolbar", "Standard Toolbar", "Drawing Toolbar", "Status Bar"], 1], ["Standard Toolbar के ठीक नीचे कौन सी Toolbar होती है?", ["Standard Toolbar", "Formatting Toolbar", "Sidebar", "Ruler"], 1], ["Ruler को Hide/Unhide करने की Shortcut Key क्या है?", ["Ctrl + R", "Ctrl + Shift + R", "Alt + R", "Shift + R"], 1], ["LibreOffice Writer का Default Font कौन सा है?", ["Times New Roman", "Arial", "Liberation Serif", "Calibri"], 2], ["LibreOffice Writer का Default Font Size कितना होता है?", ["10", "11", "12", "14"], 2], ["LibreOffice में Minimum Font Size कितना होता है?", ["1", "2", "4", "6"], 1], ["LibreOffice Writer में Default Page Orientation कौन सा होता है?", ["Landscape", "Portrait", "Slide", "Square"], 1], ["LibreOffice Writer में Page Orientation कितने प्रकार के होते हैं?", ["1", "2", "3", "4"], 1], ["Page Setup करने के लिए कौन सा Option सही है?", ["File → Page", "Format → Page Style", "View → Page", "Insert → Page"], 1], ["New Document Open करने की Shortcut Key क्या है?", ["Ctrl + O", "Ctrl + N", "Ctrl + S", "Ctrl + P"], 1], ["पहले से बनी File को Open करने की Shortcut Key क्या है?", ["Ctrl + N", "Ctrl + O", "Ctrl + W", "Ctrl + Q"], 1], ["File को Save करने की Shortcut Key क्या है?", ["Ctrl + Shift + S", "Ctrl + S", "F12", "Ctrl + P"], 1], ["Save As करने की Shortcut Key क्या है?", ["Ctrl + Shift + S", "Ctrl + S", "Shift + S", "Ctrl + A"], 0], ["Document Print करने की Shortcut Key क्या है?", ["Ctrl + Shift + P", "Ctrl + P", "Alt + P", "Shift + P"], 1], ["Print Preview देखने की Shortcut Key क्या है?", ["Ctrl + O", "Ctrl + Shift + O", "Ctrl + P", "Shift + P"], 1], ["Open Document को बंद (Close) करने की Shortcut Key क्या है?", ["Ctrl + Q", "Ctrl + W", "Alt + F4", "Ctrl + C"], 1], ["पूरी तरीके से LibreOffice को Close करने की Shortcut Key क्या है?", ["Ctrl + W", "Ctrl + Q", "Ctrl + E", "Ctrl + X"], 1], ["LibreOffice Writer में Help की Shortcut Key क्या है?", ["F2", "F1", "F7", "F12"], 1], ["Selected Text को Cut करने की Shortcut Key क्या है?", ["Ctrl + C", "Ctrl + X", "Ctrl + V", "Ctrl + Z"], 1], ["Selected Text को Copy करने की Shortcut Key क्या है?", ["Ctrl + X", "Ctrl + C", "Ctrl + V", "Ctrl + P"], 1], ["Cut/Copy किए गए Text को Paste करने की Shortcut Key क्या है?", ["Ctrl + P", "Ctrl + V", "Ctrl + C", "Ctrl + D"], 1], ["Undo करने की Shortcut Key क्या है?", ["Ctrl + Y", "Ctrl + Z", "Ctrl + U", "Ctrl + R"], 1], ["Redo करने की Shortcut Key क्या है?", ["Ctrl + Z", "Ctrl + Y", "Ctrl + R", "Ctrl + A"], 1], ["Bold करने की Shortcut Key क्या है?", ["Ctrl + B", "Ctrl + I", "Ctrl + U", "Ctrl + D"], 0], ["Italic करने की Shortcut Key क्या है?", ["Ctrl + B", "Ctrl + I", "Ctrl + U", "Ctrl + E"], 1], ["Underline करने की Shortcut Key क्या है?", ["Ctrl + D", "Ctrl + U", "Ctrl + L", "Ctrl + I"], 1], ["Double Underline करने की Shortcut Key क्या है?", ["Ctrl + Shift + D", "Ctrl + D", "Ctrl + U", "Shift + U"], 1], ["Superscript करने की Shortcut Key क्या है?", ["Ctrl + Shift + P", "Ctrl + Shift + B", "Ctrl + P", "Ctrl + S"], 0], ["Subscript करने की Shortcut Key क्या है?", ["Ctrl + Shift + S", "Ctrl + Shift + B", "Ctrl + B", "Shift + B"], 1], ["Left Alignment की Shortcut Key क्या है?", ["Ctrl + R", "Ctrl + L", "Ctrl + E", "Ctrl + J"], 1], ["Right Alignment की Shortcut Key क्या है?", ["Ctrl + L", "Ctrl + R", "Ctrl + E", "Ctrl + J"], 1], ["Center Alignment की Shortcut Key क्या है?", ["Ctrl + C", "Ctrl + E", "Ctrl + M", "Ctrl + A"], 1], ["Justify Alignment की Shortcut Key क्या है?", ["Ctrl + F", "Ctrl + J", "Ctrl + T", "Ctrl + G"], 1], ["Find Dialog Box Open करने की Shortcut Key क्या है?", ["Ctrl + H", "Ctrl + F", "Ctrl + D", "Ctrl + G"], 1], ["Find & Replace Dialog Box की Shortcut Key क्या है?", ["Ctrl + F", "Ctrl + H", "Ctrl + R", "Ctrl + P"], 1], ["Spelling & Grammar Check करने की Shortcut Key क्या है?", ["F5", "F7", "F1", "F12"], 1], ["Automatic Spell Checking की Shortcut Key क्या है?", ["F7", "Shift + F7", "Ctrl + F7", "Alt + F7"], 1], ["Thesaurus खोलने की Shortcut Key क्या है?", ["F7", "Shift + F7", "Ctrl + F7", "Ctrl + T"], 2], ["Bullets लगाने की Shortcut Key क्या है?", ["F12", "Shift + F12", "Ctrl + F12", "Alt + F12"], 1], ["Numbering लगाने की Shortcut Key क्या है?", ["Shift + F12", "F12", "Ctrl + F12", "Ctrl + Shift + F12"], 1], ["Table Insert करने की Shortcut Key क्या है?", ["F12", "Shift + F12", "Ctrl + F12", "Ctrl + Shift + F12"], 2], ["Mail Merge (Mail Merge Wizard) किस Menu में होता है?", ["File", "Insert", "Tools", "Format"], 2], ["Mail Merge Wizard में कुल कितने Steps होते हैं?", ["3", "4", "5", "6"], 2], ["Hyperlink Insert करने की Shortcut Key क्या है?", ["Ctrl + L", "Ctrl + H", "Ctrl + K", "Ctrl + J"], 2], ["Document को PDF Format में Save/Export करने के लिए किस Menu का प्रयोग करते हैं?", ["File → Export", "Edit → Export", "View → Save", "Tools → PDF"], 0], ["LibreOffice Writer की Default File Extension क्या है?", [".doc", ".odt", ".ods", ".odp"], 1], ["LibreOffice Writer में Template की File Extension क्या है?", [".odt", ".ott", ".ods", ".odp"], 1], ["Header Page के किस हिस्से में लगाया जाता है?", ["Bottom Margin में", "Top Margin में", "Middle में", "Footer में"], 1], ["Footer Page के किस हिस्से में लगाया जाता है?", ["Top Margin में", "Bottom Margin में", "Header में", "Title Bar में"], 1], ["Word Processing Software किस प्रकार का Software है?", ["System Software", "Application Software", "Utility Software", "Operating System"], 1], ["LibreOffice Writer की Status Bar में क्या नहीं दिखाई देता?", ["Total Words", "Current Page Number", "Computer का नाम", "Total Characters"], 2], ["LibreOffice Writer में Default Line Spacing कितनी होती है?", ["1", "1.5", "2", "2.5"], 0], ["LibreOffice Writer में Minimum Zoom कितना होता है?", ["10%", "20%", "50%", "100%"], 1], ["Cycle Case की Shortcut Key क्या है?", ["F3", "Shift + F3", "Ctrl + F3", "Alt + F3"], 1], ["Clear Formatting (Formatting हटाने) की Shortcut Key क्या है?", ["Ctrl + C", "Ctrl + M", "Ctrl + Shift + M", "Ctrl + P"], 1], ["Paste Special की Shortcut Key क्या है?", ["Ctrl + V", "Ctrl + Shift + V", "Ctrl + P", "Shift + V"], 1], ["Full Screen Mode की Shortcut Key क्या है?", ["Ctrl + Shift + J", "Ctrl + Shift + K", "Shift + F11", "F11"], 0], ["Sidebar Show/Hide करने की Shortcut Key क्या है?", ["F5", "Ctrl + F5", "Ctrl + Shift + F5", "Alt + F5"], 1], ["Select All करने की Shortcut Key क्या है?", ["Ctrl + A", "Ctrl + S", "Ctrl + Shift + A", "Alt + A"], 0], ["Page Break की Shortcut Key क्या है?", ["Shift + Enter", "Ctrl + Enter", "Alt + Enter", "Ctrl + Shift + Enter"], 1], ["Document के शुरुआत (Start) में जाने की Shortcut Key क्या है?", ["Home", "Ctrl + Home", "Ctrl + End", "Shift + Home"], 1], ["Whole Word Delete करने की Shortcut Key क्या है?", ["Ctrl + Delete", "Ctrl + Backspace", "Shift + Delete", "Alt + Delete"], 1], ["Table में Cells को Merge करने का सही Option क्या है?", ["Table → Merge Cells", "Format → Merge", "Edit → Merge Cells", "Insert → Merge"], 0], ["Table में Row Height / Column Width बदलने का Option कहाँ है?", ["Table → Size", "Format → Size", "Edit → Row", "View → Size"], 0], ["Table में Row/Column Delete करने का Option कहाँ है?", ["Table → Delete", "Edit → Delete", "Format → Delete", "Insert → Delete"], 0], ["Table के अंदर Text का Alignment किसके द्वारा किया जाता है?", ["Standard Toolbar", "Formatting Toolbar", "Menu Bar", "Title Bar"], 1], ["LibreOffice एक ___ Software है?", ["Paid", "Open Source", "Trial Only", "Microsoft का Product"], 1], ["LibreOffice की Programming किन Languages में हुई है?", ["सिर्फ C", "C++, Java और Python", "सिर्फ Java", "HTML और CSS"], 1], ["1970 के दशक (late 1970s) का सबसे लोकप्रिय Word Processing Software कौन सा था?", ["MS Word", "Word Star", "LibreOffice Writer", "Word Perfect"], 1], ["Header Insert करने का सही Option कौन सा है?", ["Format → Header", "Insert → Header", "View → Header", "Edit → Header"], 1], ["Word Count का Option किस Menu में होता है?", ["File", "Edit", "Tools", "View"], 2], ["Footnote Page के कहाँ Located होता है?", ["Header में", "Middle में", "Bottom of the Page", "Top of the Document"], 2], ["Extension Manager की Shortcut Key क्या है?", ["Ctrl + Alt + E", "Ctrl + E", "Ctrl + Shift + E", "Alt + E"], 0], ["New Style बनाने की Shortcut Key क्या है?", ["Shift + F12", "Shift + F11", "Ctrl + F11", "F11"], 1], ["Manage Template की Shortcut Key क्या है?", ["Ctrl + T", "Ctrl + Shift + N", "Shift + N", "Ctrl + N"], 1], ["AutoText की Shortcut Key क्या है?", ["Ctrl + F2", "Ctrl + F3", "Ctrl + F4", "Ctrl + F1"], 1], ["Comment Insert करने की Shortcut Key क्या है?", ["Ctrl + C", "Ctrl + Alt + C", "Ctrl + Shift + C", "Alt + C"], 1], ["Formatting Marks दिखाने की Shortcut Key क्या है?", ["Ctrl + F5", "Ctrl + F10", "Ctrl + F2", "Ctrl + F12"], 1], ["LibreOffice कुल कितनी Languages को Support करता है?", ["100", "110", "115", "125"], 2], ["Ctrl + G Shortcut Key का प्रयोग किसके लिए होता है?", ["Go to Page", "Find", "Replace", "Print"], 0], ["Track Changes Record करने की Shortcut Key क्या है?", ["Ctrl + Shift + T", "Ctrl + Shift + C", "Ctrl + Shift + R", "Ctrl + Alt + C"], 1], ["क्या LibreOffice Writer Document में Video Add किया जा सकता है?", ["नहीं, कभी नहीं", "हाँ, जोड़ सकते हैं", "सिर्फ Audio", "सिर्फ YouTube से"], 1], ["LibreOffice Writer की Table को Text में Convert किया जा सकता है?", ["नहीं, नहीं कर सकते", "हाँ, कर सकते हैं", "सिर्फ Calc में", "सिर्फ Impress में"], 1], ["क्या LibreOffice Writer में Even और Odd Pages पर अलग-अलग Footer लगा सकते हैं?", ["नहीं", "हाँ, लगा सकते हैं", "सिर्फ Header में", "सिर्फ Calc में"], 1], ["LibreOffice Writer का Default View कौन सा है?", ["Web View", "Normal View", "Full Screen", "Print Layout"], 1], ["LibreOffice किस Operating System पर काम करता है?", ["सिर्फ Windows", "सिर्फ Linux", "Windows, Linux और Mac — सभी पर", "सिर्फ Mac"], 2], ["Ctrl + 1, Ctrl + 2, Ctrl + 3 Shortcut Keys किसके लिए प्रयोग होती हैं?", ["Font Size", "Heading Styles", "Zoom Level", "Page Number"], 1], ["LibreOffice में Donate to LibreOffice का Option किस Menu में मिलता है?", ["File", "Tools", "Help", "View"], 2]];
+const EMAIL_TO = "nexainstitute@gmail.com";
+let startTime=null, timerInt=null, totalSec=3600, submitted=false;
+
+function startTest(){
+  const n=document.getElementById('sname').value.trim();
+  const r=document.getElementById('sroll').value.trim();
+  if(!n||!r){alert("कृपया Name और Mobile/Roll No. भरें!");return;}
+  document.getElementById('regBox').style.display='none';
+  document.getElementById('quizBox').style.display='block';
+  document.getElementById('timerBar').style.display='block';
+  startTime=Date.now();
+  buildQuiz();
+  window.scrollTo(0,0);
+  timerInt=setInterval(tick,1000);
+}
+function tick(){
+  totalSec--;
+  if(totalSec<=0){submitTest(false);return;}
+  const m=String(Math.floor(totalSec/60)).padStart(2,'0'), s=String(totalSec%60).padStart(2,'0');
+  document.getElementById('timer').textContent=m+":"+s;
+}
+function buildQuiz(){
+  const area=document.getElementById('qArea');
+  QUESTIONS.forEach((q,i)=>{
+    const div=document.createElement('div');div.className='q';
+    let opts='';
+    q[1].forEach((o,j)=>{opts+=`<label class="opt"><input type="radio" name="q${i}" value="${j}"> ${String.fromCharCode(65+j)}) ${o}</label>`;});
+    div.innerHTML=`<h3><span class="qn">Q${i+1}.</span> ${q[0]}</h3>${opts}`;
+    area.appendChild(div);
+  });
+}
+function fmtTime(sec){const m=Math.floor(sec/60),s=sec%60;return m+" min "+s+" sec";}
+function submitTest(manual){
+  if(submitted)return; submitted=true;
+  clearInterval(timerInt);
+  let c=0,w=0,sk=0,rows='';
+  QUESTIONS.forEach((q,i)=>{
+    const sel=document.querySelector(`input[name="q${i}"]:checked`);
+    let your='—',cls='skip',res='छोड़ा / Skipped';
+    if(sel){
+      if(parseInt(sel.value)===q[2]){c++;cls='ok';res='✔ सही / Correct';your=q[1][parseInt(sel.value)];}
+      else{w++;cls='bad';res='✖ गलत / Wrong';your=q[1][parseInt(sel.value)];}
+    } else sk++;
+    rows+=`<tr><td>${i+1}</td><td>${q[0]}</td><td>${your}</td><td><b>${q[1][q[2]]}</b></td><td class="${cls}">${res}</td></tr>`;
+  });
+  const pct=Math.round(c/QUESTIONS.length*100);
+  const taken=Math.round((Date.now()-startTime)/1000);
+  document.getElementById('quizBox').style.display='none';
+  document.getElementById('timerBar').style.display='none';
+  document.getElementById('resultBox').style.display='block';
+  document.getElementById('circle').textContent=pct+'%';
+  document.getElementById('circle').style.background=pct>=60?'var(--ok)':(pct>=40?'#f9a825':'var(--bad)');
+  const grade=pct>=80?'🏆 उत्कृष्ट / Excellent!':pct>=60?'✅ सफल / Pass!':pct>=40?'⚠️ औसत / Average':'❌ अभ्यास जारी रखें / Keep Practicing';
+  document.getElementById('gradeLine').textContent=grade;
+  document.getElementById('rName').textContent=document.getElementById('sname').value;
+  document.getElementById('rRoll').textContent=document.getElementById('sroll').value;
+  document.getElementById('rTime').textContent=fmtTime(taken);
+  document.getElementById('rCorrect').textContent=c;
+  document.getElementById('rWrong').textContent=w;
+  document.getElementById('rSkip').textContent=sk;
+  document.getElementById('rScore').textContent=c+' / '+QUESTIONS.length;
+  document.getElementById('reviewTable').innerHTML='<tr><th>#</th><th>प्रश्न / Question</th><th>आपका उत्तर</th><th>सही उत्तर</th><th>परिणाम</th></tr>'+rows;
+
+  // ---- Send result to email (FormSubmit AJAX) ----
+  const payload={
+    _subject:"CCC Writer Test Result - "+document.getElementById('sname').value,
+    _captcha:"false",
+    _template:"table",
+    Name:document.getElementById('sname').value,
+    Mobile_Roll:document.getElementById('sroll').value,
+    Batch:document.getElementById('sbatch').value||'-',
+    Score:c+" / 100",
+    Percentage:pct+"%",
+    Correct:c, Wrong:w, Skipped:sk,
+    Time_Taken:fmtTime(taken),
+    Grade:grade,
+    Date:new Date().toLocaleString('en-IN')
+  };
+  fetch("https://formsubmit.co/ajax/"+EMAIL_TO,{
+    method:"POST",
+    headers:{'Content-Type':'application/json','Accept':'application/json'},
+    body:JSON.stringify(payload)
+  }).then(r=>r.json()).then(()=>{
+    document.getElementById('emailStatus').textContent='✅ Result सफलतापूर्वक nexainstitute@gmail.com पर भेज दिया गया।';
+  }).catch(()=>{
+    document.getElementById('emailStatus').textContent='⚠️ Result स्क्रीन पर है। Email भेजने में समस्या — परिणाम Print/Download करके भेजें।';
+  });
+  window.scrollTo(0,0);
+}
+</script>
+</body>
+</html>
