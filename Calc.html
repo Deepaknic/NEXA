@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="hi"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>CCC Spreadsheet (LibreOffice Calc) MCQ Exam | NEXA Computer Institute</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Tahoma,sans-serif;background:#eef2f6;min-height:100vh}
+.top-header{background:linear-gradient(135deg,#1e3a5f,#0f6e5d);color:#fff;text-align:center;padding:30px 20px 22px}
+.institute-tag{display:inline-block;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.35);padding:5px 18px;border-radius:30px;font-size:13px;font-weight:700;letter-spacing:2px;margin-bottom:12px;text-transform:uppercase}
+.top-header h1{font-size:32px;font-weight:800}.sub-hindi{font-size:19px;font-weight:600;color:#d9f2e9;margin-top:6px}
+.exam-meta{margin-top:14px;display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.meta-pill{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.3);padding:6px 16px;border-radius:30px;font-size:13px;font-weight:600}
+.breadcrumb{margin-top:14px;font-size:14px;color:#c8d6e5}.breadcrumb a{color:#c8d6e5;text-decoration:none}.breadcrumb .sep{margin:0 10px}
+#gateOverlay{position:fixed;inset:0;background:rgba(15,30,50,.92);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px}
+.gate-card{background:#fff;border-radius:16px;padding:36px;max-width:420px;width:100%;text-align:center}
+.gate-card h2{color:#1e3a5f;font-size:22px;margin-bottom:6px}.gate-card p{color:#5a7184;font-size:14px;margin-bottom:20px}
+.gate-card input{width:100%;padding:13px;border:1.5px solid #cfd9e3;border-radius:8px;font-size:16px;text-align:center;letter-spacing:3px;margin-bottom:14px}
+.gate-btn{width:100%;padding:13px;border:none;border-radius:8px;background:#00b07f;color:#fff;font-size:16px;font-weight:700;cursor:pointer}
+.gate-error{color:#c0392b;font-size:14px;font-weight:600;margin-top:10px;display:none}
+.exam-strip{position:sticky;top:0;z-index:500;background:#fff;border-bottom:2px solid #e3e9f0;display:flex;justify-content:space-between;align-items:center;padding:10px 24px;flex-wrap:wrap;gap:10px}
+.timer-pill{background:#e8f4fd;border:1px solid #b3d9f2;color:#0b6fa4;font-weight:700;padding:8px 18px;border-radius:30px;font-size:16px}
+.timer-pill.warning{background:#fde8e8;border-color:#f5b5b5;color:#c0392b}
+.progress-wrap{flex:1;max-width:420px;height:10px;background:#e3e9f0;border-radius:6px;overflow:hidden}
+.progress-fill{height:100%;width:0;background:linear-gradient(90deg,#00b07f,#00d19a);transition:width .3s}
+.progress-label{font-size:13px;color:#5a7184;font-weight:600}
+.strip-submit{background:#1e3a5f;color:#fff;border:none;padding:9px 20px;border-radius:30px;font-weight:700;cursor:pointer}
+.page-layout{max-width:1400px;margin:0 auto;padding:24px;display:flex;gap:24px;align-items:flex-start}
+.main-col{flex:1;min-width:0}
+.student-card,.q-card{background:#fff;border:1px solid #dce4ec;border-radius:12px;padding:22px;margin-bottom:20px;box-shadow:0 3px 10px rgba(30,58,95,.06)}
+.student-card h3{color:#1e3a5f;font-size:18px;margin-bottom:14px;border-bottom:2px solid #e8eef4;padding-bottom:10px}
+.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.form-grid input{padding:11px 14px;border:1.5px solid #cfd9e3;border-radius:8px;font-size:14px;width:100%}
+.q-top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:16px}
+.q-number{color:#1289a7;font-size:24px;font-weight:800}
+.verified-badge{background:#e8f4fd;color:#1289a7;border:1px solid #b3d9f2;padding:6px 16px;border-radius:30px;font-size:14px;font-weight:600}
+.q-text-hindi{font-size:20px;font-weight:700;color:#1a1a2e;line-height:1.6;margin-bottom:20px}
+.opt{display:flex;align-items:center;gap:14px;background:#eafaf1;border:1.5px solid #b8e6cf;border-radius:8px;padding:12px 16px;margin-bottom:10px;cursor:pointer}
+.opt:hover{border-color:#00b07f;background:#dff5ea}
+.opt-letter{width:42px;height:42px;background:#00b07f;color:#fff;border-radius:6px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px;flex-shrink:0}
+.opt-text{font-size:16px;color:#333;font-weight:600}
+.opt.selected{background:#00b07f;border-color:#00875f}.opt.selected .opt-letter{background:#fff;color:#00b07f}.opt.selected .opt-text{color:#fff}
+.nav-row{display:flex;justify-content:space-between;gap:12px;margin-top:8px;flex-wrap:wrap}
+.nbtn{padding:12px 30px;border:none;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer}
+.nbtn-prev{background:#e8eef4;color:#1e3a5f}.nbtn-next{background:#00b07f;color:#fff}.nbtn-submit{background:#1e3a5f;color:#fff}
+.hidden{display:none!important}
+.sidebar{width:320px;flex-shrink:0;background:#fff;border:1px solid #dce4ec;border-radius:12px;overflow:hidden;position:sticky;top:72px}
+.sidebar-head{background:#00b07f;color:#fff;text-align:center;padding:13px;font-size:18px;font-weight:800}
+.dots-card{padding:16px}.dots{display:flex;flex-wrap:wrap;gap:6px;max-height:56vh;overflow-y:auto}
+.dot{width:30px;height:30px;border-radius:50%;border:1.5px solid #cfd9e3;background:#fff;color:#5a7184;font-size:11px;font-weight:700;cursor:pointer}
+.dot.answered{background:#00b07f;border-color:#00b07f;color:#fff}.dot.current{background:#1e3a5f;border-color:#1e3a5f;color:#fff;transform:scale(1.18)}
+.result-card{background:#fff;border:1px solid #dce4ec;border-radius:12px;padding:34px;text-align:center;display:none}
+.result-card h2{color:#1e3a5f;font-size:30px;margin-bottom:18px}
+.rs-name{font-size:34px;font-weight:800;color:#1e3a5f;word-break:break-word}
+.rs-details{margin-top:8px;font-size:14px;color:#5a7184;font-weight:600;display:flex;justify-content:center;gap:8px;flex-wrap:wrap}
+.rs-details span{background:#f1f5f9;border:1px solid #e2e8f0;padding:5px 14px;border-radius:20px}
+.remark-box{margin:16px auto 6px;max-width:640px;padding:14px 20px;border-radius:10px;font-weight:700;line-height:1.6}
+.remark-pass{background:#e6f7ee;border:1.5px solid #a9dfc0;color:#1e7e46}.remark-fail{background:#fdecea;border:1.5px solid #f2b8b2;color:#b03a2e}
+.email-status{margin-top:12px;font-size:14px;font-weight:600;color:#40566b}
+.score-circle{width:150px;height:150px;border-radius:50%;background:linear-gradient(135deg,#00b07f,#00875f);color:#fff;font-size:46px;font-weight:800;display:flex;align-items:center;justify-content:center;margin:16px auto}
+.grade-badge{display:inline-block;padding:6px 22px;border-radius:30px;font-weight:700;margin:8px 0 14px}
+.grade-pass{background:#e6f7ee;color:#1e7e46}.grade-fail{background:#fdecea;color:#b03a2e}
+.export-box{margin-top:18px;padding:18px;background:#f2fbf7;border:1px solid #cdeede;border-radius:10px}
+.exp-btn{margin:5px;padding:10px 20px;border:none;border-radius:8px;cursor:pointer;font-weight:700;color:#fff}
+.exp-excel{background:#217346}.exp-pdf{background:#e0245e}.exp-csv{background:#5a7184}
+.result-actions{margin-top:18px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.review-wrap{display:none;margin-top:22px;text-align:left;max-height:450px;overflow-y:auto;border-top:2px solid #e8eef4;padding-top:16px}
+.review-item{padding:14px;margin-bottom:10px;background:#f8fafc;border-radius:8px;border-left:4px solid;font-size:14px}
+.review-item.correct{border-left-color:#00b07f}.review-item.incorrect{border-left-color:#e0245e}
+@media(max-width:1024px){.page-layout{flex-direction:column}.sidebar{width:100%;position:static}.dots{max-height:220px}}
+@media(max-width:640px){.top-header h1{font-size:24px}.q-text-hindi{font-size:17px}}
+</style><base target="_blank"></head>
+<body>
+<div id="gateOverlay"><div class="gate-card">
+<div style="font-size:48px;margin-bottom:10px">🔐</div><h2>Exam Access Password</h2>
+<p>यह परीक्षा केवल NEXA Computer Institute के छात्रों के लिए है।<br>Access करने के लिए password दर्ज करें।</p>
+<input type="password" id="gatePass" placeholder="••••••••" onkeydown="if(event.key==='Enter')checkGate()">
+<button class="gate-btn" onclick="checkGate()">🔓 Unlock Exam</button>
+<div class="gate-error" id="gateError">❌ गलत पासवर्ड! / Wrong password. फिर से कोशिश करें।</div></div></div>
+
+<header class="top-header">
+<div class="institute-tag">🏛️ NEXA Computer Institute</div>
+<h1>📊 CCC — Spreadsheet (LibreOffice Calc)</h1>
+<div class="sub-hindi">स्प्रेडशीट (लिब्रे ऑफिस कैल्क) — ऑनलाइन मॉक टेस्ट</div>
+<div class="exam-meta"><span class="meta-pill">📝 100 प्रश्न / Questions</span><span class="meta-pill">⏱️ 60 मिनट / Minutes</span><span class="meta-pill">🎯 पासिंग / Passing: 50%</span><span class="meta-pill">🚫 No Negative Marking</span></div>
+<div class="breadcrumb"><a href="index.html">Home</a><span class="sep">•</span><a href="index.html#courses">Chapters</a><span class="sep">•</span><a href="tests.html">MCQs</a><span class="sep">•</span><span style="color:#fff">Spreadsheet (Calc)</span></div>
+</header>
+
+<div class="exam-strip" id="examStrip">
+<div class="timer-pill" id="timerBox">⏱️ शेष समय / Time Left: <span id="timer">60:00</span></div>
+<div class="progress-wrap"><div class="progress-fill" id="progressFill"></div></div>
+<div class="progress-label" id="progressLabel">0 / 100 answered</div>
+<button class="strip-submit" onclick="submitQuiz()">✅ जमा करें / Submit</button>
+</div>
+
+<div class="page-layout"><div class="main-col">
+<div class="student-card" id="studentForm"><h3>📝 छात्र विवरण / Student Information</h3>
+<div class="form-grid">
+<input type="text" id="studentName" placeholder="👤 छात्र का नाम / Student Name">
+<input type="text" id="studentRoll" placeholder="🎫 रजिस्ट्रेशन नंबर / Registration Number">
+<input type="text" id="studentClass" placeholder="🕒 क्लास टाइमिंग / Class Timing (e.g. Morning 8-10)">
+<input type="date" id="examDate">
+<input type="text" id="examCenter" placeholder="📍 परीक्षा केंद्र / Exam Center">
+<input type="email" id="studentEmail" placeholder="📧 ईमेल / Email (Optional)">
+</div></div>
+<div id="quizSection"><div id="questionContainer"></div>
+<div class="nav-row">
+<button class="nbtn nbtn-prev" id="prevBtn" onclick="navPrev()">⬅️ पिछला / Previous</button>
+<button class="nbtn nbtn-next" id="nextBtn" onclick="navNext()">अगला / Next ➡️</button>
+<button class="nbtn nbtn-submit hidden" id="submitBtn" onclick="submitQuiz()">✅ जमा करें / Submit</button>
+</div></div>
+<div id="resultSection" class="result-card">
+<h2>🎉 परीक्षा पूर्ण! / Exam Completed!</h2>
+<div><div class="rs-name" id="rsName">—</div><div class="rs-details" id="rsDetails"></div></div>
+<div id="remarkBox" class="remark-box remark-pass"></div>
+<div class="score-circle" id="scoreCircle">0%</div>
+<p style="font-size:19px;color:#40566b"><span id="scoreText"></span> <span id="percentageText"></span></p>
+<div id="gradeBadge"></div>
+<div style="margin:14px 0;color:#40566b">
+<p>⏱️ लिया गया समय / Time Taken: <b id="timeTaken">--</b></p>
+<p>✅ सही / Correct: <b id="correctCount">0</b> | ❌ गलत / Wrong: <b id="wrongCount">0</b> | ⏭️ छोड़े / Skipped: <b id="skippedCount">0</b></p></div>
+<div class="export-box"><h3 style="margin-bottom:12px">📊 परिणाम डाउनलोड करें / Export Results</h3>
+<button class="exp-btn exp-excel" onclick="exportToExcel()">📗 Excel</button>
+<button class="exp-btn exp-pdf" onclick="exportToPDF()">📄 Report</button>
+<button class="exp-btn exp-csv" onclick="exportToCSV()">📋 CSV</button></div>
+<div class="email-status" id="emailStatus"></div>
+<div class="result-actions">
+<button class="nbtn nbtn-next" onclick="showReview()">🔍 उत्तर समीक्षा / Review Answers</button>
+<button class="nbtn nbtn-prev" onclick="restartQuiz()">🔄 पुनः प्रयास / Retake Exam</button></div>
+<div id="reviewSection" class="review-wrap"><h3 style="text-align:center;margin-bottom:14px">उत्तर समीक्षा / Answer Review</h3><div id="reviewList"></div></div>
+</div></div>
+<aside class="sidebar"><div class="sidebar-head">🔢 प्रश्न सूची / Question Navigator</div>
+<div class="dots-card"><div class="dots" id="questionNav"></div></div></aside>
+</div>
+
+<script>
+/* Previous CCC exam questions (memory-based papers). Format: question|correct|wrong1|wrong2|wrong3 - options auto-shuffle */
+const DATA = `Calc में Cell की Width से बड़ी Value होने पर क्या दिखाई देता है?|###|सेल अपने आप बड़ी हो जाती है और मान सही आता है|####|#Name?
+किसी Cell को Delete करने की Shortcut Key क्या है?|Ctrl + -|Ctrl + +|Ctrl + D|Delete
+LibreOffice Calc में अधिकतम Zoom कितना नहीं किया जा सकता?|500%|300%|200%|400%
+LibreOffice Calc में कुल कितने Column होते हैं?|1024|1048576|16384|None
+LibreOffice Calc में कुल कितनी Row होती हैं?|1048576|256|2048576|10541
+पूरी Row को Select करने के लिए कौन सी Shortcut Key का प्रयोग करते हैं?|Shift + Space|Ctrl + Space|Ctrl + Shift + Page Down|None
+LibreOffice Calc File By Default किस नाम से Save होती है?|Untitled1|Calc1|Spreadsheet1|None
+LibreOffice में Comment के लिए किस Key का प्रयोग करते हैं?|Ctrl + Alt + C|Ctrl + Shift + C|Ctrl + C|Ctrl + Shift + T
+Calc में किसी Value को Highlight करने (Value Highlighting) की Shortcut Key क्या है?|Ctrl + F8|Ctrl + F6|Ctrl + F1|Ctrl
+Round और Trunc Function एक समान होते हैं?|False|True
+Calc में किसी Cell का Address कहाँ दिखाई देता है?|Name Box|Formula Bar|Address Book|None
+Calc में Last Cell का Address क्या होता है?|AMJ1048576|XFD1048576|$D$10|$AMD$1048576
+Number को Currency Format में बदलने की Shortcut Key क्या है?|Ctrl + Shift + 4|Ctrl + Shift + 1|Ctrl + Shift + 5|Ctrl + Shift + 3
+Direct Format Clear करने की Shortcut Key क्या है?|Ctrl + M|Ctrl + V|Ctrl + Shift + F|Ctrl + 1
+Calc में Cell के Left (एक कदम पीछे) जाने के लिए कौन सी Key का प्रयोग करते हैं?|Shift + Tab|Tab|Alt + Tab|Alt
+Calc में कई Cells को Merge करके एक Cell बनाया जा सकता है?|True|False
+Calc और Writer में Ctrl + D का कार्य समान होता है?|False|True
+Calc में अंतिम Column का Address क्या है?|AMJ|XFD|AMG|EMJ
+Row और Column को जोड़ने पर क्या बनता है?|Cell|Table|Position|Data
+Calc में Current Window से बाहर निकलने (Close) की Shortcut Key क्या है?|Ctrl + W|Ctrl + Q|Ctrl + Shift + C|Shift + W
+Name Box कहाँ होता है?|Menu Bar के नीचे बायीं तरफ|Menu Bar के ऊपर बायीं तरफ|Status Bar पर|Menu Bar के नीचे दायीं तरफ
+Calc में Print Preview की Shortcut Key क्या है?|Ctrl + Shift + O|Ctrl + Shift + P|Ctrl + P|None
+Calc में Function Insert करने की Shortcut Key क्या है?|Ctrl + F2|Ctrl + F4|Ctrl + F3|Shift + F3
+Calc में COS, EVEN, FACT, EXP किस Category के Function हैं?|Mathematical|Data|Math / Tring|String
+Calc में Default File Extension क्या है?|.ods|.odt|.odp|.xlsx
+Cell को Edit Mode में करने के लिए किस Key का प्रयोग करते हैं?|F2|Ctrl + Shift + M|Ctrl + M|F3
+Calc में Time Insert करने की Shortcut Key क्या है?|Ctrl + Shift + ;|Ctrl + ;|Ctrl + T|None
+Calc में Cell Formatting के लिए किस Shortcut Key का प्रयोग करते हैं?|Ctrl + 1|Ctrl + F2|Ctrl + 2|Ctrl + M
+Calc में Merge Cells Command किस Menu में पाया जाता है?|Format|Styles|Sheet|Edit
+अगली Sheet में जाने के लिए किस Key का प्रयोग करते हैं?|Ctrl + Tab|Tab|Ctrl + Shift + Tab|Shift + Tab
+पूरी Sheet Select करने के लिए किस Key का प्रयोग करेंगे?|Ctrl + A और Ctrl + Shift + Space दोनों|Ctrl + A|Ctrl + Shift + A|Ctrl + Shift + Space के अलावा कोई नहीं
+Calc में Date Insert करने की Shortcut Key क्या है?|Ctrl + ;|Ctrl + :|Ctrl + Shift + ;|Ctrl + Shift + :
+Merge हुए Cell को तोड़ने के लिए Cell Select करके किस Button पर Click करें?|Merge and Center|Center|Split|Split और Merge
+Calc में Monday से Sunday तक लिखने के लिए क्या करते हैं?|Monday लिखकर Right Down Corner पकड़कर नीचे की तरफ खींचते हैं|Monday लिखकर Enter Press करते हैं|=week() Function का Use करते हैं|इनमें से कोई नहीं
+=PRODUCT(7,-5) का क्या मान आएगा?|-35|35|12|2
+=PRODUCT(7,8) का क्या मान होगा?|56|15|1|-1
+Calc में Alphabet Right और Numbers Left Align होते हैं?|False|True
+Calc By Default एक Auto Calculator Feature उपलब्ध कराता है जो चयनित Range में मानों को प्रदर्शित करता है?|True|False
+=ROUND(275,-2) का क्या मान होगा?|300|200|00|2.75
+Calc में Formula Error होने पर कौन सा Sign दिखाई देता है?|#|$|*|\\
+=ROUND(247,-2) का क्या मान आएगा?|200|247|240|200.47
+Calc में =10*20/4*8 का क्या मान आएगा?|400|6.25|7|500
+Calc में =1020/48 का क्या मान आएगा?|21.25|21.5|20.25|22
+Calc में =500/10/2 का Output क्या होगा?|25|100|250|10
+Calc में Sum Tool कहाँ उपलब्ध होता है?|Standard Toolbar|Formatting Toolbar|Formula Toolbar|Status Bar
+Calc में Row और Column को Hide/Unhide करने का Option किस Menu में है?|Format|Tools|File|View
+Calc में अधिकतम कितनी Worksheet हो सकती हैं?|10000|256|1028|None
+Calc में Save As की Shortcut Key क्या है?|Ctrl + Shift + S|Ctrl + Shift + F|Ctrl + F2|Ctrl + S
+Calc में कुल कितने प्रकार के Chart होते हैं?|10|5|7|13
+Calc में New File Open करने की Shortcut Key क्या है?|Ctrl + N|Ctrl + O|Ctrl + Shift + N|Ctrl + W
+Calc में संग्रहित दिनांक (Date) और समय (Time) को आंतरिक रूप से संख्याओं के रूप में माना जाता है?|True|False
+Calc में Function किस Sign से शुरू होना चाहिए?|=|#|@|$
+नई Calc File बनाने पर By Default कितनी Sheet बनती हैं?|1|2|3|4
+Calc में Formula को Refresh (Recalculate) करने की Key कौन सी है?|F9|F7|F5|F12
+पहले से बनी File Open करने की Shortcut Key क्या है?|Ctrl + O|Ctrl + N|Ctrl + Q|Ctrl + S
+File Save करने की Shortcut Key क्या है?|Ctrl + S|Ctrl + Shift + S|F12|Ctrl + W
+पूरे LibreOffice को Exit करने की Shortcut Key क्या है?|Ctrl + Q|Ctrl + W|Ctrl + E|Ctrl + Z
+Document Print करने की Shortcut Key क्या है?|Ctrl + P|Ctrl + Shift + P|Alt + P|Ctrl + R
+Cut की Shortcut Key क्या है?|Ctrl + X|Ctrl + C|Ctrl + V|Ctrl + Z
+Copy की Shortcut Key क्या है?|Ctrl + C|Ctrl + X|Ctrl + V|Ctrl + P
+Paste की Shortcut Key क्या है?|Ctrl + V|Ctrl + P|Ctrl + C|Ctrl + D
+Paste Special की Shortcut Key क्या है?|Ctrl + Shift + V|Ctrl + V|Ctrl + P|Shift + V
+Undo की Shortcut Key क्या है?|Ctrl + Z|Ctrl + Y|Ctrl + U|Ctrl + R
+Redo की Shortcut Key क्या है?|Ctrl + Y|Ctrl + Z|Ctrl + R|Ctrl + A
+Repeat की Shortcut Key क्या है?|Ctrl + Shift + Y|Ctrl + Y|Ctrl + R|Ctrl + Shift + R
+पूरे Column को Select करने की Shortcut Key क्या है?|Ctrl + Space|Shift + Space|Ctrl + Shift + Space|Alt + Space
+Previous Sheet पर जाने की Shortcut Key क्या है?|Ctrl + Page Up|Ctrl + Page Down|Ctrl + Home|Ctrl + End
+Find & Replace की Shortcut Key क्या है?|Ctrl + H|Ctrl + F|Ctrl + R|Ctrl + P
+Sidebar Show/Hide करने की Shortcut Key क्या है?|Ctrl + F5|F5|F11|Ctrl + F11
+Styles (Manage Style) Show/Hide करने की Key क्या है?|F11|F5|F7|F12
+Navigator खोलने की Shortcut Key क्या है?|F5|F11|F7|F12
+Full Screen की Shortcut Key क्या है?|Ctrl + Shift + J|Ctrl + Shift + K|Ctrl + F|Ctrl + J
+Hyperlink Insert करने की Shortcut Key क्या है?|Ctrl + K|Ctrl + L|Ctrl + H|Ctrl + J
+Superscript की Shortcut Key क्या है?|Ctrl + Shift + P|Ctrl + Shift + B|Ctrl + P|Ctrl + S
+Subscript की Shortcut Key क्या है?|Ctrl + Shift + B|Ctrl + Shift + P|Ctrl + B|Shift + B
+Cycle Case की Shortcut Key क्या है?|Shift + F3|Ctrl + F3|F3|Alt + F3
+Percent Format की Shortcut Key क्या है?|Ctrl + Shift + 5|Ctrl + Shift + 4|Ctrl + Shift + 3|Ctrl + Shift + 1
+Ctrl + D से क्या होता है?|ऊपर वाली Cell का Data नीचे Copy होता है|Cell Delete होती है|Date Insert होती है|Sheet Duplicate होती है
+Manage Names की Shortcut Key क्या है?|Ctrl + F3|Ctrl + F2|Ctrl + F4|Ctrl + N
+अगली Cell पर जाने की Key क्या है?|Tab|Shift + Tab|Ctrl + Tab|Esc
+Automatic Spell Check की Shortcut Key क्या है?|Shift + F7|F7|Ctrl + F7|Alt + F7
+Excel 2013 में अंतिम Column का नाम क्या है?|XFD|AMJ|IV|ZZZ
+LibreOffice का Default Font Style क्या है?|Liberation Sans|Liberation Serif|Times New Roman|Calibri
+Calc का Default Font Size कितना होता है?|10 pt|8 pt|12 pt|14 pt
+Calc में Row की Default Height कितनी होती है?|0.18"|0.89"|1.00"|0.50"
+Calc में Column की Default Width कितनी होती है?|0.89"|0.18"|1.50"|0.25"
+Page Setup करने का सही Option कौन सा है?|Format → Page Style|File → Page|View → Page|Insert → Page
+Calc में Default Page Orientation कौन सा होता है?|Portrait|Landscape|Square|Slide
+नई Row Insert करने के लिए किस Menu का प्रयोग करते हैं?|Sheet → Insert Rows|File → Insert Rows|View → Insert Rows|Data → Insert Rows
+Row/Column Delete करने के लिए किस Menu का प्रयोग करते हैं?|Sheet → Delete Rows/Columns|File → Delete|View → Delete|Tools → Delete
+AutoFill के लिए Cell के किस हिस्से को Drag किया जाता है?|निचले Right Corner की Fill Handle को|ऊपरी Left Corner को|Row Header को|Column Header को
+Fill Series का सही Option कौन सा है?|Sheet → Fill Cells → Fill Series|Data → Fill Series|Format → Fill Series|Insert → Fill Series
+AutoFilter की Shortcut Key क्या है?|Ctrl + Shift + L|Ctrl + L|Ctrl + F|Ctrl + Shift + F
+Sort और Filter के Options किस Menu में मिलते हैं?|Data|Format|Insert|View
+Freeze Cells का Option किस Menu में होता है?|View|Format|Data|Sheet
+Cell Values या Range को जोड़ने के लिए कौन सा Function प्रयोग होता है?|SUM|COUNT|MAX|AVERAGE
+Range में संख्यात्मक मानों को गिनने के लिए कौन सा Function प्रयोग होता है?|COUNT|SUM|MIN|AVERAGE
+Range में सबसे बड़ा मान निकालने के लिए कौन सा Function प्रयोग होता है?|MAX|MIN|SUM|COUNT
+Range में सबसे छोटा मान निकालने के लिए कौन सा Function प्रयोग होता है?|MIN|MAX|AVERAGE|SUM
+Range के मानों का औसत निकालने के लिए कौन सा Function प्रयोग होता है?|AVERAGE|SUM|COUNT|MAX`;
+const RAW = DATA.split('\n').map(l => l.split('|'));
+const questions = RAW.map(r => {
+  const opts = r.slice(1).map((t, i) => ({ t, c: i === 0 }));
+  for (let i = opts.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [opts[i], opts[j]] = [opts[j], opts[i]]; }
+  return { qhi: r[0], options: opts.map(o => o.t), correct: opts.findIndex(o => o.c) };
+});
+
+/* ================= CHANGE EXAM PASSWORD HERE ================= */
+const EXAM_PASSWORD = "nexa@321";
+/* ============================================================ */
+const EXAM_DURATION = 3600, EMAIL_TO = "nexainstitute@gmail.com", EXAM_TITLE = "CCC Spreadsheet (LibreOffice Calc)";
+let currentQuestion = 0, userAnswers = new Array(questions.length).fill(-1), timerInterval, timeRemaining = EXAM_DURATION, examData = {};
+
+function init() { document.getElementById('examDate').valueAsDate = new Date(); showQuestion(0); startTimer(); }
+function renderQuestionNav() {
+  const nav = document.getElementById('questionNav'); nav.innerHTML = '';
+  questions.forEach((_, i) => {
+    const d = document.createElement('button');
+    d.className = 'dot' + (userAnswers[i] !== -1 ? ' answered' : '') + (i === currentQuestion ? ' current' : '');
+    d.textContent = i + 1; d.onclick = () => { showQuestion(i); scrollToTop(); }; nav.appendChild(d);
+  });
+}
+function scrollToTop() { window.scrollTo({ top: document.getElementById('examStrip').offsetTop, behavior: 'smooth' }); }
+function showQuestion(index) {
+  currentQuestion = index; const q = questions[index]; let h = '';
+  q.options.forEach((o, i) => { h += `<div class="opt ${userAnswers[index] === i ? 'selected' : ''}" onclick="selectOption(${i})"><span class="opt-letter">${String.fromCharCode(65 + i)}</span><span class="opt-text">${o.replace(/</g, '&lt;')}</span></div>`; });
+  document.getElementById('questionContainer').innerHTML = `<div class="q-card"><div class="q-top"><span class="q-number">प्रश्न / Question: ${index + 1} <span style="font-size:15px;color:#5a7184;font-weight:600">of / में से ${questions.length}</span></span><span class="verified-badge">✓ Verified by Expert</span></div><div class="q-text-hindi">${q.qhi}</div>${h}</div>`;
+  document.getElementById('prevBtn').style.display = index === 0 ? 'none' : 'inline-block';
+  document.getElementById('nextBtn').style.display = index === questions.length - 1 ? 'none' : 'inline-block';
+  document.getElementById('submitBtn').classList.toggle('hidden', index !== questions.length - 1);
+  renderQuestionNav(); updateProgress();
+}
+function selectOption(i) {
+  userAnswers[currentQuestion] = i; showQuestion(currentQuestion);
+  if (currentQuestion < questions.length - 1) setTimeout(() => { showQuestion(currentQuestion + 1); scrollToTop(); }, 400);
+}
+function navNext() { if (currentQuestion < questions.length - 1) { showQuestion(currentQuestion + 1); scrollToTop(); } }
+function navPrev() { if (currentQuestion > 0) { showQuestion(currentQuestion - 1); scrollToTop(); } }
+function updateProgress() {
+  const a = userAnswers.filter(x => x !== -1).length;
+  document.getElementById('progressFill').style.width = (a / questions.length * 100) + '%';
+  document.getElementById('progressLabel').textContent = `${a} / ${questions.length} answered`;
+}
+function startTimer() {
+  timerInterval = setInterval(() => {
+    timeRemaining--; const m = Math.floor(timeRemaining / 60), s = timeRemaining % 60;
+    document.getElementById('timer').textContent = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+    if (timeRemaining <= 300) document.getElementById('timerBox').classList.add('warning');
+    if (timeRemaining <= 0) { clearInterval(timerInterval); submitQuiz(true); }
+  }, 1000);
+}
+function formatTime(s) { return `${Math.floor(s / 60)}m ${s % 60}s`; }
+function submitQuiz(auto) {
+  clearInterval(timerInterval);
+  const un = userAnswers.filter(a => a === -1).length;
+  if (!auto && un > 0 && timeRemaining > 0 && !confirm(`आपने ${un} प्रश्न छोड़े हैं। क्या आप सबमिट करना चाहते हैं?\nYou have skipped ${un} questions. Submit anyway?`)) { startTimer(); return; }
+  let correct = 0, wrong = 0, skipped = 0;
+  userAnswers.forEach((a, i) => { if (a === -1) skipped++; else if (a === questions[i].correct) correct++; else wrong++; });
+  const percentage = Math.round(correct / questions.length * 100), timeTaken = formatTime(EXAM_DURATION - timeRemaining), v = id => document.getElementById(id).value;
+  examData = { name: v('studentName') || 'Unknown', roll: v('studentRoll') || 'N/A', class: v('studentClass') || 'N/A', date: v('examDate') || new Date().toISOString().split('T')[0], center: v('examCenter') || 'N/A', email: v('studentEmail') || 'N/A', correct, wrong, skipped, total: questions.length, percentage, timeTaken,
+    answers: userAnswers.map((a, i) => ({ qhi: questions[i].qhi, userAns: a === -1 ? 'Skipped' : questions[i].options[a], correctAns: questions[i].options[questions[i].correct], isCorrect: a === questions[i].correct })) };
+  ['quizSection', 'studentForm', 'examStrip'].forEach(id => document.getElementById(id).style.display = 'none');
+  document.getElementById('resultSection').style.display = 'block';
+  document.getElementById('rsName').textContent = '👤 ' + examData.name;
+  document.getElementById('rsDetails').innerHTML = `<span>📍 ${examData.center}</span><span>📅 ${examData.date}</span><span>🎫 ${examData.roll}</span><span>🕒 ${examData.class}</span>`;
+  const pass = Math.ceil(questions.length * 0.5), need = pass - correct, rb = document.getElementById('remarkBox');
+  if (percentage >= 50) { rb.className = 'remark-box remark-pass'; rb.innerHTML = `✅ बधाई हो! आप पास हो गए हैं। / Congratulations! You have PASSED. (Passing marks: ${pass}/${questions.length})`; }
+  else { rb.className = 'remark-box remark-fail'; rb.innerHTML = `❌ अनुत्तीर्ण / FAIL — पास होने के लिए आपको <b>${need} अंक और</b> चाहिए थे<br>You needed <b>${need} more mark${need === 1 ? '' : 's'}</b> to pass (${pass}/${questions.length} required).`; }
+  sendResultEmail();
+  document.getElementById('scoreCircle').textContent = percentage + '%';
+  document.getElementById('scoreText').textContent = `You scored ${correct} out of ${questions.length}`;
+  document.getElementById('percentageText').textContent = `(${percentage}%)`;
+  document.getElementById('timeTaken').textContent = timeTaken;
+  document.getElementById('correctCount').textContent = correct; document.getElementById('wrongCount').textContent = wrong; document.getElementById('skippedCount').textContent = skipped;
+  let grade, cls = 'grade-pass';
+  if (percentage >= 90) grade = 'A+ (उत्कृष्ट / Excellent)'; else if (percentage >= 80) grade = 'A (बहुत अच्छा / Very Good)'; else if (percentage >= 70) grade = 'B (अच्छा / Good)'; else if (percentage >= 60) grade = 'C (औसत / Average)'; else if (percentage >= 50) grade = 'D (उत्तीर्ण / Pass)'; else { grade = 'F (अनुत्तीर्ण / Fail) — 50% आवश्यक'; cls = 'grade-fail'; }
+  document.getElementById('gradeBadge').innerHTML = `<span class="grade-badge ${cls}">${grade}</span>`;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function showReview() {
+  const s = document.getElementById('reviewSection');
+  if (s.style.display === 'block') { s.style.display = 'none'; return; }
+  s.style.display = 'block';
+  document.getElementById('reviewList').innerHTML = examData.answers.map((it, i) => `<div class="review-item ${it.isCorrect ? 'correct' : 'incorrect'}"><strong>Q${i + 1}: ${it.qhi}</strong><br><span style="color:${it.isCorrect ? 'green' : 'red'}">${it.isCorrect ? '✅' : '❌'} आपका उत्तर / Your Answer: ${it.userAns.replace(/</g, '&lt;')}</span><br>✅ सही उत्तर / Correct Answer: ${it.correctAns.replace(/</g, '&lt;')}</div>`).join('');
+}
+const q2 = s => `"${String(s).replace(/"/g, '""')}"`;
+function detailCSV() {
+  let c = 'Q.No,Question,Your Answer,Correct Answer,Status\n';
+  examData.answers.forEach((it, i) => { c += `${i + 1},${q2(it.qhi)},${q2(it.userAns)},${q2(it.correctAns)},${it.isCorrect ? 'Correct' : (it.userAns === 'Skipped' ? 'Skipped' : 'Wrong')}\n`; });
+  return c;
+}
+function fname(e) { return `Calc_Exam_${examData.name}_${examData.date}.${e}`; }
+function exportToExcel() {
+  let c = `${EXAM_TITLE} - Exam Results\n\nStudent Information\nName,${q2(examData.name)}\nRoll Number,${q2(examData.roll)}\nClass,${q2(examData.class)}\nDate,${examData.date}\nCenter,${q2(examData.center)}\nEmail,${q2(examData.email)}\n\n`;
+  c += `Result Summary\nTotal Questions,${examData.total}\nCorrect,${examData.correct}\nWrong,${examData.wrong}\nSkipped,${examData.skipped}\nPercentage,${examData.percentage}%\nTime Taken,${examData.timeTaken}\n\nDetailed Answers\n` + detailCSV();
+  downloadFile('\uFEFF' + c, 'application/vnd.ms-excel;charset=utf-8', fname('xls'));
+}
+function exportToPDF() {
+  let t = `${EXAM_TITLE.toUpperCase()} - EXAM RESULTS\n\nName: ${examData.name}\nRoll: ${examData.roll}\nClass: ${examData.class}\nDate: ${examData.date}\nCenter: ${examData.center}\n\nScore: ${examData.correct}/${examData.total} (${examData.percentage}%)\nCorrect: ${examData.correct} | Wrong: ${examData.wrong} | Skipped: ${examData.skipped}\nTime: ${examData.timeTaken}\n\nDETAILED ANSWERS:\n`;
+  examData.answers.forEach((it, i) => { t += `Q${i + 1}: ${it.isCorrect ? '✓' : '✗'} ${it.qhi}\n   Your: ${it.userAns} | Correct: ${it.correctAns}\n\n`; });
+  downloadFile(t, 'text/plain;charset=utf-8', fname('txt'));
+}
+function exportToCSV() { downloadFile('\uFEFF' + detailCSV(), 'text/csv;charset=utf-8', fname('csv')); }
+function downloadFile(content, mime, filename) {
+  const url = URL.createObjectURL(new Blob([content], { type: mime })), a = document.createElement('a');
+  a.href = url; a.download = filename; a.click(); URL.revokeObjectURL(url);
+}
+function sendResultEmail() {
+  const d = examData, status = d.percentage >= 50 ? 'PASS' : 'FAIL', subject = `Calc Exam Result - ${d.name} | ${status} | ${d.percentage}%`;
+  const payload = { _subject: subject, _captcha: 'false', _template: 'table', 'Student Name': d.name, 'Registration No': d.roll, 'Class Timing': d.class, 'Exam Date': d.date, 'Exam Center': d.center, 'Email': d.email, 'Score': `${d.correct} / ${d.total}`, 'Percentage': d.percentage + '%', 'Status': status, 'Correct': d.correct, 'Wrong': d.wrong, 'Skipped': d.skipped, 'Time Taken': d.timeTaken };
+  const el = document.getElementById('emailStatus'); el.textContent = '📤 परिणाम ईमेल हो रहा है... / Sending result email...';
+  fetch('https://formsubmit.co/ajax/' + EMAIL_TO, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(payload) })
+    .then(r => r.json()).then(() => { el.innerHTML = `✅ परिणाम सफलतापूर्वक ईमेल कर दिया गया: <b>${EMAIL_TO}</b> / Result emailed successfully.`; })
+    .catch(() => {
+      const body = encodeURIComponent(`Student: ${d.name}\nReg No: ${d.roll}\nClass Timing: ${d.class}\nDate: ${d.date}\nCenter: ${d.center}\nScore: ${d.correct}/${d.total} (${d.percentage}%)\nStatus: ${status}\nTime: ${d.timeTaken}`);
+      el.innerHTML = `⚠️ ऑटो-ईमेल नहीं जा सका। <a href="mailto:${EMAIL_TO}?subject=${encodeURIComponent(subject)}&body=${body}">📧 यहाँ क्लिक करके ईमेल करें / Click here to email result</a>`;
+    });
+}
+function restartQuiz() { if (confirm('क्या आप दोबारा शुरू करना चाहते हैं? पूरी प्रगति मिट जाएगी।\nRestart? All progress will be lost.')) location.reload(); }
+function checkGate() {
+  if (document.getElementById('gatePass').value === EXAM_PASSWORD) { document.getElementById('gateOverlay').style.display = 'none'; init(); }
+  else { document.getElementById('gateError').style.display = 'block'; const p = document.getElementById('gatePass'); p.value = ''; p.focus(); }
+}
+</script></body></html>
