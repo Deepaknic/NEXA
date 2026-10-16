@@ -328,7 +328,7 @@ function fname(e) { return `Calc_Exam_${examData.name}_${examData.date}.${e}`; }
 function exportToExcel() {
   let c = `${EXAM_TITLE} - Exam Results\n\nStudent Information\nName,${q2(examData.name)}\nRoll Number,${q2(examData.roll)}\nClass,${q2(examData.class)}\nDate,${examData.date}\nCenter,${q2(examData.center)}\nEmail,${q2(examData.email)}\n\n`;
   c += `Result Summary\nTotal Questions,${examData.total}\nCorrect,${examData.correct}\nWrong,${examData.wrong}\nSkipped,${examData.skipped}\nPercentage,${examData.percentage}%\nTime Taken,${examData.timeTaken}\n\nDetailed Answers\n` + detailCSV();
-  downloadFile('\uFEFF' + c, 'application/vnd.ms-excel;charset=utf-8', fname('xls'));
+  downloadFile('\uFEFF' + c, 'text/csv;charset=utf-8', fname('csv'));
 }
 function exportToPDF() {
   let t = `${EXAM_TITLE.toUpperCase()} - EXAM RESULTS\n\nName: ${examData.name}\nRoll: ${examData.roll}\nClass: ${examData.class}\nDate: ${examData.date}\nCenter: ${examData.center}\n\nScore: ${examData.correct}/${examData.total} (${examData.percentage}%)\nCorrect: ${examData.correct} | Wrong: ${examData.wrong} | Skipped: ${examData.skipped}\nTime: ${examData.timeTaken}\n\nDETAILED ANSWERS:\n`;
@@ -336,20 +336,15 @@ function exportToPDF() {
   downloadFile(t, 'text/plain;charset=utf-8', fname('txt'));
 }
 function exportToCSV() { downloadFile('\uFEFF' + detailCSV(), 'text/csv;charset=utf-8', fname('csv')); }
-function downloadFile(content, mime, filename) {
-  const url = URL.createObjectURL(new Blob([content], { type: mime })), a = document.createElement('a');
-  a.href = url; a.download = filename; a.click(); URL.revokeObjectURL(url);
+async function downloadFile(content, mime, filename) {
+  try { const dl = await claude.use("downloads"); if (!dl) { alert('Download is not available here / यहाँ डाउनलोड उपलब्ध नहीं है।'); return; } await dl.save({ filename, data: content }); } catch (e) {}
 }
 function sendResultEmail() {
   const d = examData, status = d.percentage >= 50 ? 'PASS' : 'FAIL', subject = `Calc Exam Result - ${d.name} | ${status} | ${d.percentage}%`;
   const payload = { _subject: subject, _captcha: 'false', _template: 'table', 'Student Name': d.name, 'Registration No': d.roll, 'Class Timing': d.class, 'Exam Date': d.date, 'Exam Center': d.center, 'Email': d.email, 'Score': `${d.correct} / ${d.total}`, 'Percentage': d.percentage + '%', 'Status': status, 'Correct': d.correct, 'Wrong': d.wrong, 'Skipped': d.skipped, 'Time Taken': d.timeTaken };
-  const el = document.getElementById('emailStatus'); el.textContent = '📤 परिणाम ईमेल हो रहा है... / Sending result email...';
-  fetch('https://formsubmit.co/ajax/' + EMAIL_TO, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(payload) })
-    .then(r => r.json()).then(() => { el.innerHTML = `✅ परिणाम सफलतापूर्वक ईमेल कर दिया गया: <b>${EMAIL_TO}</b> / Result emailed successfully.`; })
-    .catch(() => {
-      const body = encodeURIComponent(`Student: ${d.name}\nReg No: ${d.roll}\nClass Timing: ${d.class}\nDate: ${d.date}\nCenter: ${d.center}\nScore: ${d.correct}/${d.total} (${d.percentage}%)\nStatus: ${status}\nTime: ${d.timeTaken}`);
-      el.innerHTML = `⚠️ ऑटो-ईमेल नहीं जा सका। <a href="mailto:${EMAIL_TO}?subject=${encodeURIComponent(subject)}&body=${body}">📧 यहाँ क्लिक करके ईमेल करें / Click here to email result</a>`;
-    });
+  const el = document.getElementById('emailStatus');
+  const body = encodeURIComponent(`Student: ${d.name}\nReg No: ${d.roll}\nClass Timing: ${d.class}\nDate: ${d.date}\nCenter: ${d.center}\nScore: ${d.correct}/${d.total} (${d.percentage}%)\nStatus: ${status}\nTime: ${d.timeTaken}`);
+  el.innerHTML = `📧 <a href="mailto:${EMAIL_TO}?subject=${encodeURIComponent(subject)}&body=${body}">यहाँ क्लिक करके परिणाम ईमेल करें / Click here to email result</a>`;
 }
 function restartQuiz() { if (confirm('क्या आप दोबारा शुरू करना चाहते हैं? पूरी प्रगति मिट जाएगी।\nRestart? All progress will be lost.')) location.reload(); }
 function checkGate() {
