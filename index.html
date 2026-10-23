@@ -1527,4 +1527,48 @@ window.addEventListener('DOMContentLoaded', loadCertificateData);
 </script>
 
 </body>
+  <style>
+.rv-banner{max-width:1000px;margin:0 auto 1.8rem;border-radius:18px;position:relative;overflow:hidden;background:linear-gradient(135deg,#1d4ed8,#2563eb 50%,#06b6d4);color:#fff;box-shadow:0 12px 30px rgba(37,99,235,.28);display:flex;align-items:center;justify-content:space-between;gap:1.2rem;padding:1.1rem 1.5rem}
+.rv-left{flex:1;min-width:0}
+.rv-top{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;margin-bottom:.3rem}
+.rv-stars{color:#fbbf24;font-size:1.15rem;letter-spacing:2px}
+.rv-tag{font-size:.72rem;font-weight:600;background:rgba(255,255,255,.18);padding:.15rem .6rem;border-radius:50px}
+.rv-left h3{font-family:'Rajdhani',sans-serif;font-size:clamp(1.15rem,2.4vw,1.5rem);line-height:1.25;margin:0 0 .25rem;font-weight:700;color:#fff}
+.rv-left p{margin:0 0 .7rem;font-size:.82rem;line-height:1.5;opacity:.92;color:#fff}
+.rv-btn{display:inline-flex;align-items:center;gap:.5rem;background:#fff;color:#1d4ed8 !important;font-weight:800;font-size:.9rem;padding:.6rem 1.2rem;border-radius:10px;text-decoration:none;box-shadow:0 6px 16px rgba(0,0,0,.2);transition:transform .25s}
+.rv-btn:hover{transform:translateY(-2px)}
+.rv-note{display:block;margin-top:.5rem;font-size:.72rem;opacity:.85;color:#fff}
+.rv-note a{color:#fff;font-weight:700;text-decoration:underline}
+.rv-qr{background:#fff;color:#0f172a;border-radius:12px;padding:.5rem .5rem .35rem;text-align:center;flex-shrink:0}
+#rvQR{display:flex;justify-content:center}
+#rvQR img,#rvQR canvas{display:block;width:100px;height:100px}
+.rv-qr small{display:block;font-size:.65rem;color:#475569;font-weight:600;margin-top:.2rem}
+#rvSource{display:none}
+@media(max-width:600px){.rv-banner{flex-direction:column;text-align:center;padding:1rem}.rv-top{justify-content:center}.rv-btn{width:100%;justify-content:center}}
+</style>
+
+<div id="rvSource">
+  <div class="rv-banner" id="rvBanner">
+    <div class="rv-left">
+      <div class="rv-top"><span class="rv-stars">★★★★★</span><span class="rv-tag">Google Review</span></div>
+      <h3>NEXA में पढ़ाई कैसी लगी? Google पर बताएँ</h3>
+      <p>आपका 1 मिनट का रिव्यू नए students की मदद करता है।</p>
+      <a class="rv-btn" href="https://g.page/r/CTerffOuyCZvEAE/review" target="_blank" rel="noopener"><i class="fas fa-star"></i> रिव्यू लिखें</a>
+      <span class="rv-note">पहले <a href="https://mail.google.com" target="_blank" rel="noopener">Gmail</a> में अपना Email और Password खुद डालकर लॉगिन करें, फिर बटन दबाएँ।</span>
+    </div>
+    <div class="rv-qr"><div id="rvQR"></div><small>मोबाइल से स्कैन करें</small></div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+(function(){
+  var sec=document.getElementById('testimonials'),b=document.getElementById('rvBanner');
+  if(!sec||!b)return;
+  sec.insertBefore(b,sec.firstElementChild);
+  var box=document.getElementById('rvQR');
+  try{new QRCode(box,{text:'https://g.page/r/CTerffOuyCZvEAE/review',width:100,height:100,correctLevel:QRCode.CorrectLevel.M});}
+  catch(e){box.innerHTML='<a href="https://g.page/r/CTerffOuyCZvEAE/review" target="_blank" rel="noopener">Review link</a>';}
+})();
+</script>
 </html>
