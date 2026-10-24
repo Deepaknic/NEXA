@@ -357,6 +357,8 @@ function downloadFile(content, mime, filename) {
 /* ===== EmailJS settings (student ko mail bhejne ke liye) — emailjs.com se free account banakar teeno value yahan daalo ===== */
 const EMAILJS = { publicKey: "", serviceId: "", templateId: "" };
 
+const emailjsReady = () => !!(EMAILJS.publicKey && EMAILJS.serviceId && EMAILJS.templateId);
+const validEmail = e => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e) && e.toLowerCase() !== EMAIL_TO.toLowerCase();
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
 function buildStudentHTML(d, passed) {
@@ -393,7 +395,7 @@ function sendStudentEmail(d, passed) {
   const el = document.getElementById('studentMailStatus');
   const ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email);
   if (!ok) { el.textContent = ''; return; }
-  if (!EMAILJS.publicKey || !EMAILJS.serviceId || !EMAILJS.templateId) { el.textContent = '⚠️ Student mail setup (EmailJS) अभी नहीं हुआ है।'; return; }
+  if (!emailjsReady()) return; // EmailJS set nahi hai: _cc fallback sendResultEmail me chalta hai
   el.textContent = '📤 आपके ईमेल पर परिणाम भेजा जा रहा है... / Sending result to your email...';
   fetch('https://api.emailjs.com/api/v1.0/email/send', {
     method: 'POST',
@@ -422,6 +424,21 @@ function sendResultEmail() {
     'Score': `${d.correct} / ${d.total}`, 'Percentage': d.percentage + '%', 'Status': status,
     'Correct': d.correct, 'Wrong': d.wrong, 'Skipped': d.skipped, 'Time Taken': d.timeTaken
   };
+  const usedCC = validEmail(d.email) && !emailjsReady();
+  if (usedCC) {
+    const I = INSTITUTE;
+    payload._cc = d.email;
+    payload['Message for Student'] = passed
+      ? 'बधाई हो! आपने बहुत अच्छा प्रदर्शन किया। रोज़ अभ्यास करते रहें। / Congratulations! Keep practicing daily.'
+      : 'निराश न हों! थोड़ी और मेहनत से आप ज़रूर सफल होंगे। फिर से टेस्ट दें। / Do not be disheartened! Practice more and retake the test.';
+    payload['NEXA Computer Institute'] = I.tagline;
+    payload['Director'] = I.director;
+    payload['Contact Mobile'] = I.mobile;
+    payload['Contact Email'] = I.email;
+    if (I.website) payload['Website'] = I.website;
+    payload['Address'] = I.address;
+    payload['Admission'] = 'अपने दोस्तों को भी बताएं — आज ही NEXA में Admission लें! / Join NEXA today!';
+  }
   const el = document.getElementById('emailStatus');
   el.textContent = '📤 परिणाम ईमेल हो रहा है... / Sending result email...';
   fetch('https://formsubmit.co/ajax/' + EMAIL_TO, {
@@ -431,6 +448,7 @@ function sendResultEmail() {
   }).then(r => r.json()).then(res => {
     if (res && String(res.success) === 'false') throw new Error(res.message || 'FormSubmit error');
     el.innerHTML = `✅ परिणाम सफलतापूर्वक ईमेल कर दिया गया: <b>${EMAIL_TO}</b> / Result emailed successfully.`;
+    if (usedCC) document.getElementById('studentMailStatus').innerHTML = `✅ परिणाम की copy आपके ईमेल <b>${esc(d.email)}</b> पर भी भेज दी गई है (Spam folder भी देखें) / Copy sent to your email.`;
   }).catch(err => {
     console.error('FormSubmit:', err);
     const body = encodeURIComponent(`Student: ${d.name}\nReg No: ${d.roll}\nClass Timing: ${d.class}\nDate: ${d.date}\nCenter: ${d.center}\nScore: ${d.correct}/${d.total} (${d.percentage}%)\nStatus: ${status}\nTime: ${d.timeTaken}`);
