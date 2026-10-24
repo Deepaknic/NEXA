@@ -245,6 +245,16 @@ const questions = RAW.map(r => {
 const EXAM_PASSWORD = "nexa@111";
 /* ============================================================ */
 const EXAM_DURATION = 3600, EMAIL_TO = "nexainstitute@gmail.com", EXAM_TITLE = "CCC Spreadsheet (LibreOffice Calc)";
+/* ===== NEXA details used in the student's result email (edit here) ===== */
+const INSTITUTE = {
+  name: "NEXA Computer Institute",
+  director: "Deepak Kumar",
+  mobile: "7696566162",
+  email: "nexainstitute@gmail.com",
+  website: "https://nexainstitute.co.in",
+  address: "NEXA Building, near Police Station, Maudarwaja, Farrukhabad / Samdhan, Kannauj",
+  tagline: "CCC (NIELIT) Course, Practice Tests & Computer Training"
+};
 let currentQuestion = 0, userAnswers = new Array(questions.length).fill(-1), timerInterval, timeRemaining = EXAM_DURATION, examData = {};
 
 function init() { document.getElementById('examDate').valueAsDate = new Date(); showQuestion(0); startTimer(); }
@@ -349,12 +359,40 @@ function sendResultEmail() {
   const payload = {
     _subject: subject, _captcha: 'false', _template: 'table',
     'Student Name': d.name, 'Registration No': d.roll, 'Class Timing': d.class,
-    'Exam Date': d.date, 'Exam Center': d.center, 'Email': d.email,
+    'Exam Date': d.date, 'Exam Center': d.center,
     'Score': `${d.correct} / ${d.total}`, 'Percentage': d.percentage + '%', 'Status': status,
     'Correct': d.correct, 'Wrong': d.wrong, 'Skipped': d.skipped, 'Time Taken': d.timeTaken
   };
   const studentOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email) && d.email.toLowerCase() !== EMAIL_TO.toLowerCase();
-  if (studentOk) payload._cc = d.email;
+  if (studentOk) {
+    const I = INSTITUTE, passed = d.percentage >= 50;
+    payload.email = d.email; // FormSubmit autoresponse is sent to this address
+    payload._autoresponse = [
+      `🏛️ ${I.name} — ${EXAM_TITLE} Result`,
+      ``,
+      `प्रिय ${d.name} / Dear ${d.name},`,
+      ``,
+      `📊 आपका परिणाम / Your Result`,
+      `Reg. No: ${d.roll} | Date: ${d.date}`,
+      `Score: ${d.correct} / ${d.total} (${d.percentage}%) — ${passed ? 'PASS ✅' : 'FAIL ❌'}`,
+      `Correct: ${d.correct} | Wrong: ${d.wrong} | Skipped: ${d.skipped} | Time: ${d.timeTaken}`,
+      ``,
+      passed
+        ? `🎉 बधाई हो! आपने बहुत अच्छा प्रदर्शन किया। CCC परीक्षा के लिए रोज़ अभ्यास करते रहें और अपने लक्ष्य की ओर बढ़ते रहें।\nCongratulations! Keep practicing daily and keep moving towards your goal.`
+        : `💪 निराश न हों! थोड़ी और मेहनत और रोज़ाना अभ्यास से आप ज़रूर सफल होंगे। गलत प्रश्नों को दोबारा पढ़ें और फिर से टेस्ट दें।\nDon't be disheartened! A little more practice and you will succeed. Revise and retake the test.`,
+      ``,
+      `━━━━━━━━━━━━━━━━━━`,
+      `🏛️ ${I.name}`,
+      `${I.tagline}`,
+      `👤 Director: ${I.director}`,
+      `📞 Mobile: ${I.mobile}`,
+      `📧 Email: ${I.email}`,
+      I.website ? `🌐 Website: ${I.website}` : null,
+      `📍 Address: ${I.address}`,
+      `━━━━━━━━━━━━━━━━━━`,
+      `अपने दोस्तों को भी बताएं — आज ही NEXA में Admission लें! / Join NEXA today!`
+    ].filter(l => l !== null).join('\n');
+  }
   const el = document.getElementById('emailStatus');
   el.textContent = '📤 परिणाम ईमेल हो रहा है... / Sending result email...';
   fetch('https://formsubmit.co/ajax/' + EMAIL_TO, {
