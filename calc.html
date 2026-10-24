@@ -399,11 +399,13 @@ function sendResultEmail() {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
     body: JSON.stringify(payload)
-  }).then(r => r.json()).then(() => {
+  }).then(r => r.json()).then(res => {
+    if (res && String(res.success) === 'false') throw new Error(res.message || 'FormSubmit error');
     el.innerHTML = `✅ परिणाम सफलतापूर्वक ईमेल कर दिया गया: <b>${EMAIL_TO}</b>${studentOk ? ' और / and <b>' + d.email.replace(/</g, '&lt;') + '</b>' : ''} / Result emailed successfully.`;
-  }).catch(() => {
+  }).catch(err => {
+    console.error('FormSubmit:', err);
     const body = encodeURIComponent(`Student: ${d.name}\nReg No: ${d.roll}\nClass Timing: ${d.class}\nDate: ${d.date}\nCenter: ${d.center}\nScore: ${d.correct}/${d.total} (${d.percentage}%)\nStatus: ${status}\nTime: ${d.timeTaken}`);
-    el.innerHTML = `⚠️ ऑटो-ईमेल नहीं जा सका। <a href="mailto:${EMAIL_TO}?subject=${encodeURIComponent(subject)}&body=${body}">📧 यहाँ क्लिक करके ईमेल करें / Click here to email result</a>`;
+    el.innerHTML = `⚠️ ऑटो-ईमेल नहीं जा सका (${String((err && err.message) || err).replace(/</g, '&lt;')})। <a href="mailto:${EMAIL_TO}?subject=${encodeURIComponent(subject)}&body=${body}">📧 यहाँ क्लिक करके ईमेल करें / Click here to email result</a>`;
   });
 }
 function restartQuiz() { if (confirm('क्या आप दोबारा शुरू करना चाहते हैं? पूरी प्रगति मिट जाएगी।\nRestart? All progress will be lost.')) location.reload(); }
