@@ -353,6 +353,8 @@ function sendResultEmail() {
     'Score': `${d.correct} / ${d.total}`, 'Percentage': d.percentage + '%', 'Status': status,
     'Correct': d.correct, 'Wrong': d.wrong, 'Skipped': d.skipped, 'Time Taken': d.timeTaken
   };
+  const studentOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email) && d.email.toLowerCase() !== EMAIL_TO.toLowerCase();
+  if (studentOk) payload._cc = d.email;
   const el = document.getElementById('emailStatus');
   el.textContent = '📤 परिणाम ईमेल हो रहा है... / Sending result email...';
   fetch('https://formsubmit.co/ajax/' + EMAIL_TO, {
@@ -360,7 +362,7 @@ function sendResultEmail() {
     headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
     body: JSON.stringify(payload)
   }).then(r => r.json()).then(() => {
-    el.innerHTML = `✅ परिणाम सफलतापूर्वक ईमेल कर दिया गया: <b>${EMAIL_TO}</b> / Result emailed successfully.`;
+    el.innerHTML = `✅ परिणाम सफलतापूर्वक ईमेल कर दिया गया: <b>${EMAIL_TO}</b>${studentOk ? ' और / and <b>' + d.email.replace(/</g, '&lt;') + '</b>' : ''} / Result emailed successfully.`;
   }).catch(() => {
     const body = encodeURIComponent(`Student: ${d.name}\nReg No: ${d.roll}\nClass Timing: ${d.class}\nDate: ${d.date}\nCenter: ${d.center}\nScore: ${d.correct}/${d.total} (${d.percentage}%)\nStatus: ${status}\nTime: ${d.timeTaken}`);
     el.innerHTML = `⚠️ ऑटो-ईमेल नहीं जा सका। <a href="mailto:${EMAIL_TO}?subject=${encodeURIComponent(subject)}&body=${body}">📧 यहाँ क्लिक करके ईमेल करें / Click here to email result</a>`;
