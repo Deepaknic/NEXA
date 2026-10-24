@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="hi"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>CCC Presentation (LibreOffice Impress) MCQ Exam | NEXA Computer Institute</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Tahoma,sans-serif;background:#eef2f6;min-height:100vh}
+.top-header{background:linear-gradient(135deg,#1e3a5f,#0f6e5d);color:#fff;text-align:center;padding:30px 20px 22px}
+.institute-tag{display:inline-block;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.35);padding:5px 18px;border-radius:30px;font-size:13px;font-weight:700;letter-spacing:2px;margin-bottom:12px;text-transform:uppercase}
+.top-header h1{font-size:32px;font-weight:800}.sub-hindi{font-size:19px;font-weight:600;color:#d9f2e9;margin-top:6px}
+.exam-meta{margin-top:14px;display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.meta-pill{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.3);padding:6px 16px;border-radius:30px;font-size:13px;font-weight:600}
+.breadcrumb{margin-top:14px;font-size:14px;color:#c8d6e5}.breadcrumb a{color:#c8d6e5;text-decoration:none}.breadcrumb .sep{margin:0 10px}
+#gateOverlay{position:fixed;inset:0;background:rgba(15,30,50,.92);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px}
+.gate-card{background:#fff;border-radius:16px;padding:36px;max-width:420px;width:100%;text-align:center}
+.gate-card h2{color:#1e3a5f;font-size:22px;margin-bottom:6px}.gate-card p{color:#5a7184;font-size:14px;margin-bottom:20px}
+.gate-card input{width:100%;padding:13px;border:1.5px solid #cfd9e3;border-radius:8px;font-size:16px;text-align:center;letter-spacing:3px;margin-bottom:14px}
+.gate-btn{width:100%;padding:13px;border:none;border-radius:8px;background:#00b07f;color:#fff;font-size:16px;font-weight:700;cursor:pointer}
+.gate-error{color:#c0392b;font-size:14px;font-weight:600;margin-top:10px;display:none}
+.exam-strip{position:sticky;top:0;z-index:500;background:#fff;border-bottom:2px solid #e3e9f0;display:flex;justify-content:space-between;align-items:center;padding:10px 24px;flex-wrap:wrap;gap:10px}
+.timer-pill{background:#e8f4fd;border:1px solid #b3d9f2;color:#0b6fa4;font-weight:700;padding:8px 18px;border-radius:30px;font-size:16px}
+.timer-pill.warning{background:#fde8e8;border-color:#f5b5b5;color:#c0392b}
+.progress-wrap{flex:1;max-width:420px;height:10px;background:#e3e9f0;border-radius:6px;overflow:hidden}
+.progress-fill{height:100%;width:0;background:linear-gradient(90deg,#00b07f,#00d19a);transition:width .3s}
+.progress-label{font-size:13px;color:#5a7184;font-weight:600}
+.strip-submit{background:#1e3a5f;color:#fff;border:none;padding:9px 20px;border-radius:30px;font-weight:700;cursor:pointer}
+.page-layout{max-width:1400px;margin:0 auto;padding:24px;display:flex;gap:24px;align-items:flex-start}
+.main-col{flex:1;min-width:0}
+.student-card,.q-card{background:#fff;border:1px solid #dce4ec;border-radius:12px;padding:22px;margin-bottom:20px;box-shadow:0 3px 10px rgba(30,58,95,.06)}
+.student-card h3{color:#1e3a5f;font-size:18px;margin-bottom:14px;border-bottom:2px solid #e8eef4;padding-bottom:10px}
+.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.form-grid input{padding:11px 14px;border:1.5px solid #cfd9e3;border-radius:8px;font-size:14px;width:100%}
+.q-top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:16px}
+.q-number{color:#1289a7;font-size:24px;font-weight:800}
+.verified-badge{background:#e8f4fd;color:#1289a7;border:1px solid #b3d9f2;padding:6px 16px;border-radius:30px;font-size:14px;font-weight:600}
+.q-text-hindi{font-size:20px;font-weight:700;color:#1a1a2e;line-height:1.6;margin-bottom:20px}
+.opt{display:flex;align-items:center;gap:14px;background:#eafaf1;border:1.5px solid #b8e6cf;border-radius:8px;padding:12px 16px;margin-bottom:10px;cursor:pointer}
+.opt:hover{border-color:#00b07f;background:#dff5ea}
+.opt-letter{width:42px;height:42px;background:#00b07f;color:#fff;border-radius:6px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px;flex-shrink:0}
+.opt-text{font-size:16px;color:#333;font-weight:600}
+.opt.selected{background:#00b07f;border-color:#00875f}.opt.selected .opt-letter{background:#fff;color:#00b07f}.opt.selected .opt-text{color:#fff}
+.nav-row{display:flex;justify-content:space-between;gap:12px;margin-top:8px;flex-wrap:wrap}
+.nbtn{padding:12px 30px;border:none;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer}
+.nbtn-prev{background:#e8eef4;color:#1e3a5f}.nbtn-next{background:#00b07f;color:#fff}.nbtn-submit{background:#1e3a5f;color:#fff}
+.hidden{display:none!important}
+.sidebar{width:320px;flex-shrink:0;background:#fff;border:1px solid #dce4ec;border-radius:12px;overflow:hidden;position:sticky;top:72px}
+.sidebar-head{background:#00b07f;color:#fff;text-align:center;padding:13px;font-size:18px;font-weight:800}
+.dots-card{padding:16px}.dots{display:flex;flex-wrap:wrap;gap:6px;max-height:56vh;overflow-y:auto}
+.dot{width:30px;height:30px;border-radius:50%;border:1.5px solid #cfd9e3;background:#fff;color:#5a7184;font-size:11px;font-weight:700;cursor:pointer}
+.dot.answered{background:#00b07f;border-color:#00b07f;color:#fff}.dot.current{background:#1e3a5f;border-color:#1e3a5f;color:#fff;transform:scale(1.18)}
+.result-card{background:#fff;border:1px solid #dce4ec;border-radius:12px;padding:34px;text-align:center;display:none}
+.result-card h2{color:#1e3a5f;font-size:30px;margin-bottom:18px}
+.rs-name{font-size:34px;font-weight:800;color:#1e3a5f;word-break:break-word}
+.rs-details{margin-top:8px;font-size:14px;color:#5a7184;font-weight:600;display:flex;justify-content:center;gap:8px;flex-wrap:wrap}
+.rs-details span{background:#f1f5f9;border:1px solid #e2e8f0;padding:5px 14px;border-radius:20px}
+.remark-box{margin:16px auto 6px;max-width:640px;padding:14px 20px;border-radius:10px;font-weight:700;line-height:1.6}
+.remark-pass{background:#e6f7ee;border:1.5px solid #a9dfc0;color:#1e7e46}.remark-fail{background:#fdecea;border:1.5px solid #f2b8b2;color:#b03a2e}
+.email-status{margin-top:12px;font-size:14px;font-weight:600;color:#40566b}
+.email-status a{color:#0b6fa4}
+.score-circle{width:150px;height:150px;border-radius:50%;background:linear-gradient(135deg,#00b07f,#00875f);color:#fff;font-size:46px;font-weight:800;display:flex;align-items:center;justify-content:center;margin:16px auto}
+.grade-badge{display:inline-block;padding:6px 22px;border-radius:30px;font-weight:700;margin:8px 0 14px}
+.grade-pass{background:#e6f7ee;color:#1e7e46}.grade-fail{background:#fdecea;color:#b03a2e}
+.export-box{margin-top:18px;padding:18px;background:#f2fbf7;border:1px solid #cdeede;border-radius:10px}
+.exp-btn{margin:5px;padding:10px 20px;border:none;border-radius:8px;cursor:pointer;font-weight:700;color:#fff}
+.exp-excel{background:#217346}.exp-pdf{background:#e0245e}.exp-csv{background:#5a7184}
+.result-actions{margin-top:18px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.review-wrap{display:none;margin-top:22px;text-align:left;max-height:450px;overflow-y:auto;border-top:2px solid #e8eef4;padding-top:16px}
+.review-item{padding:14px;margin-bottom:10px;background:#f8fafc;border-radius:8px;border-left:4px solid;font-size:14px}
+.review-item.correct{border-left-color:#00b07f}.review-item.incorrect{border-left-color:#e0245e}
+@media(max-width:1024px){.page-layout{flex-direction:column}.sidebar{width:100%;position:static}.dots{max-height:220px}}
+@media(max-width:640px){.top-header h1{font-size:24px}.q-text-hindi{font-size:17px}}
+</style><base target="_blank"></head>
+<body>
+<div id="gateOverlay"><div class="gate-card">
+<div style="font-size:48px;margin-bottom:10px">🔐</div><h2>Exam Access Password</h2>
+<p>यह परीक्षा केवल NEXA Computer Institute के छात्रों के लिए है।<br>Access करने के लिए password दर्ज करें।</p>
+<input type="password" id="gatePass" placeholder="••••••••" onkeydown="if(event.key==='Enter')checkGate()">
+<button class="gate-btn" onclick="checkGate()">🔓 Unlock Exam</button>
+<div class="gate-error" id="gateError">❌ गलत पासवर्ड! / Wrong password. फिर से कोशिश करें।</div></div></div>
+
+<header class="top-header">
+<div class="institute-tag">🏛️ NEXA Computer Institute</div>
+<h1>📽️ CCC — Presentation (LibreOffice Impress)</h1>
+<div class="sub-hindi">प्रेजेंटेशन (लिब्रे ऑफिस इम्प्रेस) — ऑनलाइन मॉक टेस्ट</div>
+<div class="exam-meta"><span class="meta-pill">📝 100 प्रश्न / Questions</span><span class="meta-pill">⏱️ 60 मिनट / Minutes</span><span class="meta-pill">🎯 पासिंग / Passing: 50%</span><span class="meta-pill">🚫 No Negative Marking</span></div>
+<div class="breadcrumb"><a href="index.html">Home</a><span class="sep">•</span><a href="index.html#courses">Chapters</a><span class="sep">•</span><a href="tests.html">MCQs</a><span class="sep">•</span><span style="color:#fff">Presentation (Impress)</span></div>
+</header>
+
+<div class="exam-strip" id="examStrip">
+<div class="timer-pill" id="timerBox">⏱️ शेष समय / Time Left: <span id="timer">60:00</span></div>
+<div class="progress-wrap"><div class="progress-fill" id="progressFill"></div></div>
+<div class="progress-label" id="progressLabel">0 / 100 answered</div>
+<button class="strip-submit" onclick="submitQuiz()">✅ जमा करें / Submit</button>
+</div>
+
+<div class="page-layout"><div class="main-col">
+<div class="student-card" id="studentForm"><h3>📝 छात्र विवरण / Student Information</h3>
+<div class="form-grid">
+<input type="text" id="studentName" placeholder="👤 छात्र का नाम / Student Name">
+<input type="text" id="studentRoll" placeholder="🎫 रजिस्ट्रेशन नंबर / Registration Number">
+<input type="text" id="studentClass" placeholder="🕒 क्लास टाइमिंग / Class Timing (e.g. Morning 8-10)">
+<input type="date" id="examDate">
+<input type="text" id="examCenter" placeholder="📍 परीक्षा केंद्र / Exam Center">
+<input type="email" id="studentEmail" placeholder="📧 ईमेल / Email (Optional)">
+</div></div>
+<div id="quizSection"><div id="questionContainer"></div>
+<div class="nav-row">
+<button class="nbtn nbtn-prev" id="prevBtn" onclick="navPrev()">⬅️ पिछला / Previous</button>
+<button class="nbtn nbtn-next" id="nextBtn" onclick="navNext()">अगला / Next ➡️</button>
+<button class="nbtn nbtn-submit hidden" id="submitBtn" onclick="submitQuiz()">✅ जमा करें / Submit</button>
+</div></div>
+<div id="resultSection" class="result-card">
+<h2>🎉 परीक्षा पूर्ण! / Exam Completed!</h2>
+<div><div class="rs-name" id="rsName">—</div><div class="rs-details" id="rsDetails"></div></div>
+<div id="remarkBox" class="remark-box remark-pass"></div>
+<div class="score-circle" id="scoreCircle">0%</div>
+<p style="font-size:19px;color:#40566b"><span id="scoreText"></span> <span id="percentageText"></span></p>
+<div id="gradeBadge"></div>
+<div style="margin:14px 0;color:#40566b">
+<p>⏱️ लिया गया समय / Time Taken: <b id="timeTaken">--</b></p>
+<p>✅ सही / Correct: <b id="correctCount">0</b> | ❌ गलत / Wrong: <b id="wrongCount">0</b> | ⏭️ छोड़े / Skipped: <b id="skippedCount">0</b></p></div>
+<div class="export-box"><h3 style="margin-bottom:12px">📊 परिणाम डाउनलोड करें / Export Results</h3>
+<button class="exp-btn exp-excel" onclick="exportToExcel()">📗 Excel</button>
+<button class="exp-btn exp-pdf" onclick="exportToPDF()">📄 Report</button>
+<button class="exp-btn exp-csv" onclick="exportToCSV()">📋 CSV</button></div>
+<div class="email-status" id="emailStatus"></div>
+<div class="email-status" id="studentMailStatus"></div>
+<div class="result-actions">
+<button class="nbtn nbtn-next" onclick="showReview()">🔍 उत्तर समीक्षा / Review Answers</button>
+<button class="nbtn nbtn-prev" onclick="restartQuiz()">🔄 पुनः प्रयास / Retake Exam</button></div>
+<div id="reviewSection" class="review-wrap"><h3 style="text-align:center;margin-bottom:14px">उत्तर समीक्षा / Answer Review</h3><div id="reviewList"></div></div>
+</div></div>
+<aside class="sidebar"><div class="sidebar-head">🔢 प्रश्न सूची / Question Navigator</div>
+<div class="dots-card"><div class="dots" id="questionNav"></div></div></aside>
+</div>
+
+<script>
+/* 100 most important CCC (NIELIT) Impress questions. Format: question|correct|wrong1|wrong2|wrong3 - options auto-shuffle */
+const DATA = `LibreOffice Impress क्या है?|Presentation program|Spreadsheet program|Word processor|Database program
+LibreOffice Impress, MS Office के किस प्रोग्राम जैसा है?|MS PowerPoint|MS Word|MS Excel|MS Access
+LibreOffice Impress फ़ाइल का Default Extension क्या है?|.odp|.odt|.ods|.pptx
+इनमें से कौन LibreOffice का भाग नहीं है?|Internet Explorer|Impress|Writer|Calc
+Impress की मुख्य विंडो में कितने मुख्य भाग होते हैं?|3|2|4|5
+Impress विंडो के तीन मुख्य भाग कौन-से हैं?|Slide Pane, Workspace, Sidebar|Menu bar, Title bar, Status bar|Header, Footer, Notes|Ruler, Toolbar, Scroll bar
+Impress का Slide Pane क्या दिखाता है?|सभी स्लाइड के Thumbnails|केवल Notes|केवल Sidebar|Printer की सूची
+बीच का वह क्षेत्र जहाँ स्लाइड बनाई और Edit की जाती है, कहलाता है?|Workspace|Slide Pane|Sidebar|Status Bar
+नई Impress फ़ाइल का Default नाम क्या होता है?|Untitled 1|Presentation1|Slide1|Book1
+नए संस्करणों में स्लाइड का Default Format क्या है?|Screen 16:9|Screen 4:3|A4|Letter
+स्लाइड का Default Orientation क्या होता है?|Landscape|Portrait|Square|Diagonal
+Impress फ़ाइल को PowerPoint में खुलने योग्य बनाने के लिए किस Format में Save करें?|PowerPoint 2007-365 (.pptx)|.odp|.otp|.pdf
+Impress Template फ़ाइल का Extension क्या है?|.otp|.odp|.odt|.ots
+नई Presentation बनाने की Shortcut Key क्या है?|Ctrl + N|Ctrl + O|Ctrl + M|Ctrl + W
+Templates Dialog (Manage Templates) खोलने की Shortcut Key क्या है?|Ctrl + Shift + N|Ctrl + N|Ctrl + T|Ctrl + Alt + N
+पहले से बनी Presentation खोलने की Shortcut Key क्या है?|Ctrl + O|Ctrl + P|Ctrl + N|Alt + O
+Impress में Text Edit Mode चालू करने की Key कौन-सी है?|F2|F5|F1|F4
+Presentation Save करने की Shortcut Key क्या है?|Ctrl + S|Ctrl + P|Ctrl + A|Ctrl + Shift + S
+Save As की Shortcut Key क्या है?|Ctrl + Shift + S|Ctrl + S|Ctrl + A|Ctrl + Alt + S
+नई Slide जोड़ने की Shortcut Key क्या है?|Ctrl + M|Ctrl + N|Ctrl + L|Ctrl + D
+पूरे LibreOffice से बाहर निकलने की Shortcut Key क्या है?|Ctrl + Q|Ctrl + W|Ctrl + E|Ctrl + X
+Undo की Shortcut Key क्या है?|Ctrl + Z|Ctrl + Y|Ctrl + U|Ctrl + B
+Find & Replace की Shortcut Key क्या है?|Ctrl + H|Ctrl + F|Ctrl + R|Ctrl + G
+Object Position and Size Dialog की Shortcut Key क्या है?|F4|F2|F5|F6
+Slide Show पहली Slide से शुरू करने की Key क्या है?|F5|F4|F7|F11
+Slide Show वर्तमान Slide से शुरू करने की Shortcut Key क्या है?|Shift + F5|F5|Ctrl + F5|Alt + F5
+Impress में Navigator खोलने की Shortcut Key क्या है?|Ctrl + Shift + F5|Ctrl + F5|Shift + F5|F5
+Slide Show के दौरान Home Key दबाने से क्या होता है?|पहली Slide पर जाता है|शो बंद होता है|अंतिम Slide पर जाता है|शो रुक जाता है
+Slide Show बंद करने (Exit) की Key कौन-सी है?|Esc|Tab|Enter|Space
+Slide Show के दौरान B Key दबाने से क्या होता है?|काली Screen दिखती है|सफ़ेद Screen दिखती है|Text Bold होता है|पिछली Slide आती है
+Slide Show के दौरान W Key दबाने से क्या होता है?|सफ़ेद Screen दिखती है|काली Screen दिखती है|Window Menu खुलता है|अगली Slide आती है
+चुने हुए Objects को Group करने की Shortcut Key क्या है?|Ctrl + Shift + G|Ctrl + G|Ctrl + Alt + G|Alt + Shift + G
+LibreOffice में Help खोलने की Key कौन-सी है?|F1|F2|F10|Ctrl + H
+Presentation Print करने की Shortcut Key क्या है?|Ctrl + P|Ctrl + R|Alt + P|Ctrl + Shift + P
+Hyperlink Insert करने की Shortcut Key क्या है?|Ctrl + K|Ctrl + L|Ctrl + H|Ctrl + J
+Text को Center Align करने की Shortcut Key क्या है?|Ctrl + E|Ctrl + L|Ctrl + R|Ctrl + J
+Impress में Spelling Check शुरू करने की Key क्या है?|F7|F3|F9|F10
+Slide में Comment डालने की Shortcut Key क्या है?|Ctrl + Alt + C|Ctrl + C|Ctrl + Shift + C|Alt + C
+Impress में नई Slide जोड़ने का Menu Path क्या है?|Slide → New Slide|File → New Slide|Insert → Slide Show|Tools → New Slide
+नई Slide पर लिखा "Click to add Title" वाला भाग क्या कहलाता है?|Placeholder|Text Box|Shape|Hyperlink
+Slide Layouts (Title, Content आदि) कहाँ मिलते हैं?|Sidebar (Properties deck → Layouts)|Status Bar|Title Bar|केवल Menu Bar
+Menu से Slide Delete करने का सही तरीका कौन-सा है?|Slide चुनकर Slide → Delete Slide|Edit → Remove|File → Delete|Format → Delete
+Slide → Duplicate Slide कमांड क्या करता है?|चालू Slide की कॉपी बनाता है|Slide को Hide करता है|Slide का नाम बदलता है|Slide को Move करता है
+दूसरी Presentation फ़ाइल से Slides लाने का कमांड कौन-सा है?|Slide → Insert Slide from File|Slide → Layout|Slide → Move|File → Send
+Slide → Hide Slide क्या करता है?|Slide फ़ाइल में रहती है पर Slide Show में नहीं दिखती|Slide को Delete करता है|Slide को Lock करता है|Slide को केवल Print करता है
+Slide Properties से क्या बदला जाता है?|Slide का Format, Orientation और Background|केवल Font|केवल File Name|केवल Printer
+Impress के Workspace में कितने मुख्य Views मिलते हैं?|5 (Normal, Outline, Notes, Slide Sorter, Handout)|3|4|7
+एक Slide और उसकी सामग्री Edit करने के लिए कौन-सा View है?|Normal View|Slide Sorter|Outline|Handout
+सभी Slides को छोटे Thumbnails में दिखाकर क्रम बदलने वाला View कौन-सा है?|Slide Sorter View|Normal View|Notes View|Outline View
+Outline View में क्या दिखता है?|सभी Slides के Titles और मुख्य Text|केवल चित्र|केवल Notes|केवल Animation
+Slide में Speaker Notes जोड़ने के लिए कौन-सा View है?|Notes View|Outline View|Slide Sorter|Handout View
+Handout View किसलिए प्रयोग होता है?|एक Page पर कई Slides Print करने की तैयारी|Animation जोड़ने के लिए|Sound जोड़ने के लिए|Slides Delete करने के लिए
+Slides का क्रम (Order) कैसे बदला जाता है?|Slide Pane में Thumbnail को Drag करके|Esc दबाकर|Ctrl + Q दबाकर|Slide Show Settings से
+"Blank" Layout वाली Slide में क्या होता है?|कोई Placeholder नहीं|Title और Content|केवल Title|दो Charts
+Font का नाम, आकार और Style किस Dialog से सेट होता है?|Format → Character|Format → Page|Slide → Properties|Tools → Options
+Indent और Line Spacing कहाँ से सेट होते हैं?|Format → Paragraph|Format → Character|Slide → Layout|View → Zoom
+Bullets and Numbering किस Menu में मिलता है?|Format|Insert|Slide Show|Window
+सजावटी Text Art बनाने वाला Insert Menu आइटम कौन-सा है?|Fontwork|Comment|Table|Chart
+© या Ω जैसे चिह्न किससे डाले जाते हैं?|Insert → Special Character|Insert → Chart|Format → Page|Tools → Macros
+Impress Slide में Table कैसे जोड़ी जाती है?|Insert → Table|Tools → Table|Format → Table|Slide → Table
+Slide में Picture फ़ाइल डालने का Menu Item कौन-सा है?|Insert → Image|Format → Image|Slide → Image|Tools → Image
+Image के चारों ओर आकार बदलने वाले छोटे वर्ग क्या कहलाते हैं?|Handles|Markers|Pointers|Anchors
+Sound और Video Clips जोड़ने का सही मार्ग कौन-सा है?|Insert → Audio or Video|Slide → Audio|Format → Media|Tools → Video
+Clip Art डालने का मार्ग (Gallery) कौन-सा है?|Insert → Media → Gallery|Format → Gallery|Slide → Gallery|File → Gallery
+इनमें से कौन Impress के Insert Menu का आइटम नहीं है?|Pivot Table|Table|Hyperlink|Chart
+Impress में Shapes कहाँ से डाली जाती हैं?|Insert → Shape|File → Shape|Slide → Shape|Tools → Shape
+Rectangle Tool से पूर्ण वर्ग (Square) बनाने के लिए कौन-सी Key दबाएँ?|Shift|Ctrl|Alt|Tab
+Shape की Border Line (रंग, मोटाई, Style) कहाँ से सेट होती है?|Format → Line|Format → Page|Slide → Line|Insert → Line
+Fill के विकल्प (Colour, Gradient, Hatch, Image, Pattern) कहाँ मिलते हैं?|Format → Area|Format → Character|Format → Paragraph|Slide → Layout
+Objects का Stacking Order (Bring to Front, Send to Back) कहाँ से बदलते हैं?|Format → Arrange|Format → Page|File → Properties|Slide → Master
+Objects को Group करने का अर्थ क्या है?|कई Objects को एक Object की तरह मानना|उन्हें Delete करना|उन्हें Print करना|उन्हें Hide करना
+Process या Flow Diagrams बनाने के लिए कौन-सी Shapes प्रयोग होती हैं?|Flowchart Shapes|Callout Shapes|Star Shapes|Line Shapes
+Master Slide (Master View) सुविधा किसलिए है?|पूरी Presentation की Slides और Layouts जल्दी बदलने के लिए|केवल Printing के लिए|Slides Delete करने के लिए|Music चलाने के लिए
+Master Slide View कहाँ से खुलता है?|View → Master Slide|File → Master|Insert → Master|Tools → Master
+Master Slide के नीचे किन के Placeholders होते हैं?|Date/Time, Footer और Slide Number|Charts|Pictures|केवल Title
+Template से Presentation बनाने का मार्ग कौन-सा है?|File → New → Templates|File → Open → Template|Slide → Template|Tools → Template
+Slide पर दूसरा Master लगाने का कमांड कौन-सा है?|Slide → Change Slide Master|Slide → New Master|Slide → Delete Master|Slide → Master Objects
+Header और Footer कहाँ से जोड़े जाते हैं?|Insert → Header and Footer|Format → Page|Slide → Footer|Tools → Footer
+Header and Footer Dialog में कौन-से दो Tabs होते हैं?|Slides और Notes and Handouts|General और Advanced|Print और Export|Date और Time
+Header and Footer में Date and time के विकल्प कौन-से हैं?|Fixed और Variable|केवल Delete|केवल Hide|केवल Sort
+Slide Show के दौरान Speaker Notes क्या होते हैं?|दर्शकों को नहीं दिखते|दर्शकों को दिखते हैं|Save पर Delete हो जाते हैं|Slide पर ही Print होते हैं
+Slide Transition क्या है?|एक Slide से अगली Slide में बदलते समय दिखने वाला प्रभाव|एक Sound फ़ाइल|एक Table Style|एक Print Option
+Slide Transition किस पर लागू होता है?|पूरी Slide पर|केवल Text पर|केवल Picture पर|केवल Footer पर
+Custom Animation किस पर लागू होता है?|Slide के Objects (Text, Image, Shape) पर|पूरी Slide पर|पूरी फ़ाइल पर|Printer पर
+Slide Transition Panel किस मार्ग से खुलता है?|Slide → Slide Transition|Insert → Transition|Format → Transition|View → Transition
+कुछ सेकंड बाद Slide Show अपने आप आगे बढ़ाने के लिए क्या चुनें?|After और समय सेट करें|On mouse click|Apply to Master|Loop only
+चुना हुआ Transition सभी Slides पर लगाने वाला बटन कौन-सा है?|Apply Transition to All Slides|Apply to Master|Play|Automatic Preview
+इनमें से कौन Slide Transition Effect है?|Wipe|Bold|Underline|Hyperlink
+Impress में Animation Effect के प्रकार कौन-से हैं?|Entrance, Emphasis, Exit और Motion Paths|केवल Entrance|केवल Exit|केवल Motion Paths
+Slide Show के दौरान अगली Slide पर जाने की Key कौन-सी है?|Right Arrow / Space / Enter / Page Down|Esc|Home|B
+Slide Show में किसी विशेष Slide पर जाने का तरीका क्या है?|Slide Number टाइप करके Enter दबाएँ|F5 दो बार दबाएँ|W दबाएँ|Ctrl + Q दबाएँ
+Presenter Console में प्रस्तुतकर्ता क्या देख सकता है?|वर्तमान-अगली Slide, Notes और Timer|केवल दर्शक|केवल File Name|केवल Sidebar
+Slide Show एक से अधिक Screen पर चलाने का विकल्प कौन-सा है?|Slide Show Settings → Multiple Displays|Range|Options|Loop
+Print Dialog किस Menu मार्ग से खुलता है?|File → Print|Insert → Print|Slide → Print|Tools → Print
+Print के समय Handouts में एक Page पर कई Slides छापने का विकल्प कब सक्रिय होता है?|Document Type = Handouts होने पर|Document Type = Slides होने पर|केवल Outline में|कभी नहीं
+Presentation को PDF के रूप में Save करने का मार्ग कौन-सा है?|File → Export as → Export as PDF|Slide → PDF|Tools → PDF|View → PDF
+Presentation को Template के रूप में Save करने के लिए File Type कौन-सा चुनें?|ODF Presentation Template (.otp)|ODF Presentation (.odp)|PDF|HTML
+Presentation को E-mail करने के लिए File Menu का कौन-सा विकल्प है?|Send|Export|Reload|Close
+File Menu का कौन-सा विकल्प केवल वर्तमान Document बंद करता है?|Close|Exit LibreOffice|Reload|Save All
+इनमें से कौन Presentation Software नहीं है?|MS Excel|LibreOffice Impress|Google Slides|MS PowerPoint`;
+const RAW = DATA.split('\n').map(l => l.split('|'));
+const questions = RAW.map(r => {
+  const opts = r.slice(1).map((t, i) => ({ t, c: i === 0 }));
+  for (let i = opts.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [opts[i], opts[j]] = [opts[j], opts[i]]; }
+  return { qhi: r[0], options: opts.map(o => o.t), correct: opts.findIndex(o => o.c) };
+});
+
+/* ================= CHANGE EXAM PASSWORD HERE ================= */
+const EXAM_PASSWORD = "nexa@111";
+/* ============================================================ */
+const EXAM_DURATION = 3600, EMAIL_TO = "nexainstitute@gmail.com", EXAM_TITLE = "CCC Presentation (LibreOffice Impress)";
+/* ===== NEXA details used in the student's result email (edit here) ===== */
+const INSTITUTE = {
+  name: "NEXA Computer Institute",
+  director: "Deepak Kumar",
+  mobile: "7696566162",
+  email: "nexainstitute@gmail.com",
+  website: "https://nexainstitute.co.in",
+  address: "NEXA Building, near Police Station, Maudarwaja, Farrukhabad / Samdhan, Kannauj",
+  tagline: "CCC (NIELIT) Course, Practice Tests & Computer Training"
+};
+let currentQuestion = 0, userAnswers = new Array(questions.length).fill(-1), timerInterval, timeRemaining = EXAM_DURATION, examData = {};
+
+function init() { document.getElementById('examDate').valueAsDate = new Date(); showQuestion(0); startTimer(); }
+function renderQuestionNav() {
+  const nav = document.getElementById('questionNav'); nav.innerHTML = '';
+  questions.forEach((_, i) => {
+    const d = document.createElement('button');
+    d.className = 'dot' + (userAnswers[i] !== -1 ? ' answered' : '') + (i === currentQuestion ? ' current' : '');
+    d.textContent = i + 1; d.onclick = () => { showQuestion(i); scrollToTop(); }; nav.appendChild(d);
+  });
+}
+function scrollToTop() { window.scrollTo({ top: document.getElementById('examStrip').offsetTop, behavior: 'smooth' }); }
+function showQuestion(index) {
+  currentQuestion = index; const q = questions[index]; let h = '';
+  q.options.forEach((o, i) => { h += `<div class="opt ${userAnswers[index] === i ? 'selected' : ''}" onclick="selectOption(${i})"><span class="opt-letter">${String.fromCharCode(65 + i)}</span><span class="opt-text">${o.replace(/</g, '&lt;')}</span></div>`; });
+  document.getElementById('questionContainer').innerHTML = `<div class="q-card"><div class="q-top"><span class="q-number">प्रश्न / Question: ${index + 1} <span style="font-size:15px;color:#5a7184;font-weight:600">of / में से ${questions.length}</span></span><span class="verified-badge">✓ Verified by Expert</span></div><div class="q-text-hindi">${q.qhi}</div>${h}</div>`;
+  document.getElementById('prevBtn').style.display = index === 0 ? 'none' : 'inline-block';
+  document.getElementById('nextBtn').style.display = index === questions.length - 1 ? 'none' : 'inline-block';
+  document.getElementById('submitBtn').classList.toggle('hidden', index !== questions.length - 1);
+  renderQuestionNav(); updateProgress();
+}
+function selectOption(i) {
+  userAnswers[currentQuestion] = i; showQuestion(currentQuestion);
+  if (currentQuestion < questions.length - 1) setTimeout(() => { showQuestion(currentQuestion + 1); scrollToTop(); }, 400);
+}
+function navNext() { if (currentQuestion < questions.length - 1) { showQuestion(currentQuestion + 1); scrollToTop(); } }
+function navPrev() { if (currentQuestion > 0) { showQuestion(currentQuestion - 1); scrollToTop(); } }
+function updateProgress() {
+  const a = userAnswers.filter(x => x !== -1).length;
+  document.getElementById('progressFill').style.width = (a / questions.length * 100) + '%';
+  document.getElementById('progressLabel').textContent = `${a} / ${questions.length} answered`;
+}
+function startTimer() {
+  timerInterval = setInterval(() => {
+    timeRemaining--; const m = Math.floor(timeRemaining / 60), s = timeRemaining % 60;
+    document.getElementById('timer').textContent = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+    if (timeRemaining <= 300) document.getElementById('timerBox').classList.add('warning');
+    if (timeRemaining <= 0) { clearInterval(timerInterval); submitQuiz(true); }
+  }, 1000);
+}
+function formatTime(s) { return `${Math.floor(s / 60)}m ${s % 60}s`; }
+function submitQuiz(auto) {
+  clearInterval(timerInterval);
+  const un = userAnswers.filter(a => a === -1).length;
+  if (!auto && un > 0 && timeRemaining > 0 && !confirm(`आपने ${un} प्रश्न छोड़े हैं। क्या आप सबमिट करना चाहते हैं?\nYou have skipped ${un} questions. Submit anyway?`)) { startTimer(); return; }
+  let correct = 0, wrong = 0, skipped = 0;
+  userAnswers.forEach((a, i) => { if (a === -1) skipped++; else if (a === questions[i].correct) correct++; else wrong++; });
+  const percentage = Math.round(correct / questions.length * 100), timeTaken = formatTime(EXAM_DURATION - timeRemaining), v = id => document.getElementById(id).value;
+  examData = { name: v('studentName') || 'Unknown', roll: v('studentRoll') || 'N/A', class: v('studentClass') || 'N/A', date: v('examDate') || new Date().toISOString().split('T')[0], center: v('examCenter') || 'N/A', email: v('studentEmail') || 'N/A', correct, wrong, skipped, total: questions.length, percentage, timeTaken,
+    answers: userAnswers.map((a, i) => ({ qhi: questions[i].qhi, userAns: a === -1 ? 'Skipped' : questions[i].options[a], correctAns: questions[i].options[questions[i].correct], isCorrect: a === questions[i].correct })) };
+  ['quizSection', 'studentForm', 'examStrip'].forEach(id => document.getElementById(id).style.display = 'none');
+  document.getElementById('resultSection').style.display = 'block';
+  document.getElementById('rsName').textContent = '👤 ' + examData.name;
+  document.getElementById('rsDetails').innerHTML = `<span>📍 ${examData.center}</span><span>📅 ${examData.date}</span><span>🎫 ${examData.roll}</span><span>🕒 ${examData.class}</span>`;
+  const pass = Math.ceil(questions.length * 0.5), need = pass - correct, rb = document.getElementById('remarkBox');
+  if (percentage >= 50) { rb.className = 'remark-box remark-pass'; rb.innerHTML = `✅ बधाई हो! आप पास हो गए हैं। / Congratulations! You have PASSED. (Passing marks: ${pass}/${questions.length})`; }
+  else { rb.className = 'remark-box remark-fail'; rb.innerHTML = `❌ अनुत्तीर्ण / FAIL — पास होने के लिए आपको <b>${need} अंक और</b> चाहिए थे<br>You needed <b>${need} more mark${need === 1 ? '' : 's'}</b> to pass (${pass}/${questions.length} required).`; }
+  sendResultEmail();
+  document.getElementById('scoreCircle').textContent = percentage + '%';
+  document.getElementById('scoreText').textContent = `You scored ${correct} out of ${questions.length}`;
+  document.getElementById('percentageText').textContent = `(${percentage}%)`;
+  document.getElementById('timeTaken').textContent = timeTaken;
+  document.getElementById('correctCount').textContent = correct; document.getElementById('wrongCount').textContent = wrong; document.getElementById('skippedCount').textContent = skipped;
+  let grade, cls = 'grade-pass';
+  if (percentage >= 90) grade = 'A+ (उत्कृष्ट / Excellent)'; else if (percentage >= 80) grade = 'A (बहुत अच्छा / Very Good)'; else if (percentage >= 70) grade = 'B (अच्छा / Good)'; else if (percentage >= 60) grade = 'C (औसत / Average)'; else if (percentage >= 50) grade = 'D (उत्तीर्ण / Pass)'; else { grade = 'F (अनुत्तीर्ण / Fail) — 50% आवश्यक'; cls = 'grade-fail'; }
+  document.getElementById('gradeBadge').innerHTML = `<span class="grade-badge ${cls}">${grade}</span>`;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function showReview() {
+  const s = document.getElementById('reviewSection');
+  if (s.style.display === 'block') { s.style.display = 'none'; return; }
+  s.style.display = 'block';
+  document.getElementById('reviewList').innerHTML = examData.answers.map((it, i) => `<div class="review-item ${it.isCorrect ? 'correct' : 'incorrect'}"><strong>Q${i + 1}: ${it.qhi}</strong><br><span style="color:${it.isCorrect ? 'green' : 'red'}">${it.isCorrect ? '✅' : '❌'} आपका उत्तर / Your Answer: ${it.userAns.replace(/</g, '&lt;')}</span><br>✅ सही उत्तर / Correct Answer: ${it.correctAns.replace(/</g, '&lt;')}</div>`).join('');
+}
+const q2 = s => `"${String(s).replace(/"/g, '""')}"`;
+function detailCSV() {
+  let c = 'Q.No,Question,Your Answer,Correct Answer,Status\n';
+  examData.answers.forEach((it, i) => { c += `${i + 1},${q2(it.qhi)},${q2(it.userAns)},${q2(it.correctAns)},${it.isCorrect ? 'Correct' : (it.userAns === 'Skipped' ? 'Skipped' : 'Wrong')}\n`; });
+  return c;
+}
+function fname(e) { return `Impress_Exam_${examData.name}_${examData.date}.${e}`; }
+function exportToExcel() {
+  let c = `${EXAM_TITLE} - Exam Results\n\nStudent Information\nName,${q2(examData.name)}\nRoll Number,${q2(examData.roll)}\nClass,${q2(examData.class)}\nDate,${examData.date}\nCenter,${q2(examData.center)}\nEmail,${q2(examData.email)}\n\n`;
+  c += `Result Summary\nTotal Questions,${examData.total}\nCorrect,${examData.correct}\nWrong,${examData.wrong}\nSkipped,${examData.skipped}\nPercentage,${examData.percentage}%\nTime Taken,${examData.timeTaken}\n\nDetailed Answers\n` + detailCSV();
+  downloadFile('\uFEFF' + c, 'text/csv;charset=utf-8', fname('csv'));
+}
+function exportToPDF() {
+  let t = `${EXAM_TITLE.toUpperCase()} - EXAM RESULTS\n\nName: ${examData.name}\nRoll: ${examData.roll}\nClass: ${examData.class}\nDate: ${examData.date}\nCenter: ${examData.center}\n\nScore: ${examData.correct}/${examData.total} (${examData.percentage}%)\nCorrect: ${examData.correct} | Wrong: ${examData.wrong} | Skipped: ${examData.skipped}\nTime: ${examData.timeTaken}\n\nDETAILED ANSWERS:\n`;
+  examData.answers.forEach((it, i) => { t += `Q${i + 1}: ${it.isCorrect ? '✓' : '✗'} ${it.qhi}\n   Your: ${it.userAns} | Correct: ${it.correctAns}\n\n`; });
+  downloadFile(t, 'text/plain;charset=utf-8', fname('txt'));
+}
+function exportToCSV() { downloadFile('\uFEFF' + detailCSV(), 'text/csv;charset=utf-8', fname('csv')); }
+function downloadFile(content, mime, filename) {
+  const url = URL.createObjectURL(new Blob([content], { type: mime }));
+  const a = document.createElement('a');
+  a.href = url; a.download = filename; a.click();
+  URL.revokeObjectURL(url);
+}
+/* ===== EmailJS settings (student ko mail bhejne ke liye) — emailjs.com se free account banakar teeno value yahan daalo ===== */
+const EMAILJS = { publicKey: "", serviceId: "", templateId: "" };
+
+const emailjsReady = () => !!(EMAILJS.publicKey && EMAILJS.serviceId && EMAILJS.templateId);
+const validEmail = e => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e) && e.toLowerCase() !== EMAIL_TO.toLowerCase();
+const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+function buildStudentHTML(d, passed) {
+  const I = INSTITUTE;
+  const msg = passed
+    ? 'बधाई हो! आपने बहुत अच्छा प्रदर्शन किया। CCC परीक्षा के लिए रोज़ अभ्यास करते रहें और अपने लक्ष्य की ओर बढ़ते रहें।<br><i>Congratulations! Keep practicing daily and keep moving towards your goal.</i>'
+    : 'निराश न हों! थोड़ी और मेहनत और रोज़ाना अभ्यास से आप ज़रूर सफल होंगे। गलत प्रश्नों को दोबारा पढ़ें और फिर से टेस्ट दें।<br><i>Don\'t be disheartened! A little more practice and you will succeed. Revise and retake the test.</i>';
+  const color = passed ? '#1e7e46' : '#b03a2e', bg = passed ? '#e6f7ee' : '#fdecea';
+  return `<div style="font-family:Segoe UI,Arial,sans-serif;max-width:600px;margin:auto;border:1px solid #dce4ec;border-radius:12px;overflow:hidden">
+<div style="background:#1e3a5f;color:#fff;text-align:center;padding:22px 16px"><div style="font-size:22px;font-weight:700">🏛️ ${esc(I.name)}</div><div style="font-size:14px;margin-top:6px;color:#d9f2e9">${esc(EXAM_TITLE)} — परिणाम / Result</div></div>
+<div style="padding:22px 20px;color:#1a1a2e;font-size:15px;line-height:1.6">
+<p>प्रिय <b>${esc(d.name)}</b> / Dear <b>${esc(d.name)}</b>,</p>
+<div style="background:${bg};border:1px solid ${color};color:${color};border-radius:10px;text-align:center;padding:14px;margin:14px 0;font-size:18px;font-weight:700">${d.correct} / ${d.total} (${d.percentage}%) — ${passed ? 'PASS ✅' : 'FAIL ❌'}</div>
+<table style="width:100%;font-size:14px;border-collapse:collapse">
+<tr><td style="padding:4px 0">🎫 Reg. No</td><td><b>${esc(d.roll)}</b></td></tr>
+<tr><td style="padding:4px 0">📅 Date</td><td><b>${esc(d.date)}</b></td></tr>
+<tr><td style="padding:4px 0">✅ सही / Correct</td><td><b>${d.correct}</b></td></tr>
+<tr><td style="padding:4px 0">❌ गलत / Wrong</td><td><b>${d.wrong}</b></td></tr>
+<tr><td style="padding:4px 0">⏭️ छोड़े / Skipped</td><td><b>${d.skipped}</b></td></tr>
+<tr><td style="padding:4px 0">⏱️ समय / Time</td><td><b>${esc(d.timeTaken)}</b></td></tr></table>
+<p style="margin-top:16px">${msg}</p></div>
+<div style="background:#f2fbf7;border-top:2px solid #00b07f;padding:18px 20px;font-size:14px;line-height:1.8;color:#1e3a5f">
+<div style="font-size:17px;font-weight:700">🏛️ ${esc(I.name)}</div>
+<div>${esc(I.tagline)}</div>
+<div>👤 <b>Director:</b> ${esc(I.director)}</div>
+<div>📞 <b>Mobile:</b> <a href="tel:${esc(I.mobile)}">${esc(I.mobile)}</a></div>
+<div>📧 <b>Email:</b> <a href="mailto:${esc(I.email)}">${esc(I.email)}</a></div>
+${I.website ? `<div>🌐 <b>Website:</b> <a href="${esc(I.website)}">${esc(I.website)}</a></div>` : ''}
+<div>📍 <b>Address:</b> ${esc(I.address)}</div>
+<div style="margin-top:10px;font-weight:700;color:#00875f">अपने दोस्तों को भी बताएं — आज ही NEXA में Admission लें! / Join NEXA today!</div></div></div>`;
+}
+
+function sendStudentEmail(d, passed) {
+  const el = document.getElementById('studentMailStatus');
+  const ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email);
+  if (!ok) { el.textContent = ''; return; }
+  if (!emailjsReady()) return; // EmailJS set nahi hai: _cc fallback sendResultEmail me chalta hai
+  el.textContent = '📤 आपके ईमेल पर परिणाम भेजा जा रहा है... / Sending result to your email...';
+  fetch('https://api.emailjs.com/api/v1.0/email/send', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      service_id: EMAILJS.serviceId, template_id: EMAILJS.templateId, user_id: EMAILJS.publicKey,
+      template_params: {
+        to_email: d.email,
+        subject: `${INSTITUTE.name} | ${EXAM_TITLE} Result - ${d.name} | ${d.percentage}%`,
+        message_html: buildStudentHTML(d, passed),
+        from_name: INSTITUTE.name, reply_to: INSTITUTE.email, student_name: d.name
+      }
+    })
+  }).then(r => r.text().then(t => { if (!r.ok) throw new Error(t || r.status); }))
+    .then(() => { el.innerHTML = `✅ परिणाम आपके ईमेल <b>${esc(d.email)}</b> पर भेज दिया गया है (Spam folder भी देखें) / Result sent to your email.`; })
+    .catch(err => { console.error('EmailJS:', err); el.textContent = `⚠️ आपके ईमेल पर परिणाम नहीं जा सका (${String((err && err.message) || err)})`; });
+}
+
+function sendResultEmail() {
+  const d = examData, passed = d.percentage >= 50, status = passed ? 'PASS' : 'FAIL';
+  const subject = `Impress Exam Result - ${d.name} | ${status} | ${d.percentage}%`;
+  const payload = {
+    _subject: subject, _captcha: 'false', _template: 'table',
+    'Student Name': d.name, 'Registration No': d.roll, 'Class Timing': d.class,
+    'Exam Date': d.date, 'Exam Center': d.center, 'Student Email': d.email,
+    'Score': `${d.correct} / ${d.total}`, 'Percentage': d.percentage + '%', 'Status': status,
+    'Correct': d.correct, 'Wrong': d.wrong, 'Skipped': d.skipped, 'Time Taken': d.timeTaken
+  };
+  const usedCC = validEmail(d.email) && !emailjsReady();
+  if (usedCC) {
+    const I = INSTITUTE;
+    payload._cc = d.email;
+    payload['Message for Student'] = passed
+      ? 'बधाई हो! आपने बहुत अच्छा प्रदर्शन किया। रोज़ अभ्यास करते रहें। / Congratulations! Keep practicing daily.'
+      : 'निराश न हों! थोड़ी और मेहनत से आप ज़रूर सफल होंगे। फिर से टेस्ट दें। / Do not be disheartened! Practice more and retake the test.';
+    payload['NEXA Computer Institute'] = I.tagline;
+    payload['Director'] = I.director;
+    payload['Contact Mobile'] = I.mobile;
+    payload['Contact Email'] = I.email;
+    if (I.website) payload['Website'] = I.website;
+    payload['Address'] = I.address;
+    payload['Admission'] = 'अपने दोस्तों को भी बताएं — आज ही NEXA में Admission लें! / Join NEXA today!';
+  }
+  const el = document.getElementById('emailStatus');
+  el.textContent = '📤 परिणाम ईमेल हो रहा है... / Sending result email...';
+  fetch('https://formsubmit.co/ajax/' + EMAIL_TO, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+    body: JSON.stringify(payload)
+  }).then(r => r.json()).then(res => {
+    if (res && String(res.success) === 'false') throw new Error(res.message || 'FormSubmit error');
+    el.innerHTML = `✅ परिणाम सफलतापूर्वक ईमेल कर दिया गया: <b>${EMAIL_TO}</b> / Result emailed successfully.`;
+    if (usedCC) document.getElementById('studentMailStatus').innerHTML = `✅ परिणाम की copy आपके ईमेल <b>${esc(d.email)}</b> पर भी भेज दी गई है (Spam folder भी देखें) / Copy sent to your email.`;
+  }).catch(err => {
+    console.error('FormSubmit:', err);
+    const body = encodeURIComponent(`Student: ${d.name}\nReg No: ${d.roll}\nClass Timing: ${d.class}\nDate: ${d.date}\nCenter: ${d.center}\nScore: ${d.correct}/${d.total} (${d.percentage}%)\nStatus: ${status}\nTime: ${d.timeTaken}`);
+    el.innerHTML = `⚠️ ऑटो-ईमेल नहीं जा सका (${esc((err && err.message) || err)})। <a href="mailto:${EMAIL_TO}?subject=${encodeURIComponent(subject)}&body=${body}">📧 यहाँ क्लिक करके ईमेल करें / Click here to email result</a>`;
+  });
+  sendStudentEmail(d, passed);
+}
+function restartQuiz() { if (confirm('क्या आप दोबारा शुरू करना चाहते हैं? पूरी प्रगति मिट जाएगी।\nRestart? All progress will be lost.')) location.reload(); }
+function checkGate() {
+  if (document.getElementById('gatePass').value === EXAM_PASSWORD) { document.getElementById('gateOverlay').style.display = 'none'; init(); }
+  else { document.getElementById('gateError').style.display = 'block'; const p = document.getElementById('gatePass'); p.value = ''; p.focus(); }
+}
+</script></body></html>
