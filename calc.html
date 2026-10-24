@@ -123,6 +123,7 @@ body{font-family:'Segoe UI',Tahoma,sans-serif;background:#eef2f6;min-height:100v
 <button class="exp-btn exp-pdf" onclick="exportToPDF()">📄 Report</button>
 <button class="exp-btn exp-csv" onclick="exportToCSV()">📋 CSV</button></div>
 <div class="email-status" id="emailStatus"></div>
+<div class="email-status" id="studentMailStatus"></div>
 <div class="result-actions">
 <button class="nbtn nbtn-next" onclick="showReview()">🔍 उत्तर समीक्षा / Review Answers</button>
 <button class="nbtn nbtn-prev" onclick="restartQuiz()">🔄 पुनः प्रयास / Retake Exam</button></div>
@@ -353,46 +354,74 @@ function downloadFile(content, mime, filename) {
   a.href = url; a.download = filename; a.click();
   URL.revokeObjectURL(url);
 }
+/* ===== EmailJS settings (student ko mail bhejne ke liye) — emailjs.com se free account banakar teeno value yahan daalo ===== */
+const EMAILJS = { publicKey: "", serviceId: "", templateId: "" };
+
+const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+function buildStudentHTML(d, passed) {
+  const I = INSTITUTE;
+  const msg = passed
+    ? 'बधाई हो! आपने बहुत अच्छा प्रदर्शन किया। CCC परीक्षा के लिए रोज़ अभ्यास करते रहें और अपने लक्ष्य की ओर बढ़ते रहें।<br><i>Congratulations! Keep practicing daily and keep moving towards your goal.</i>'
+    : 'निराश न हों! थोड़ी और मेहनत और रोज़ाना अभ्यास से आप ज़रूर सफल होंगे। गलत प्रश्नों को दोबारा पढ़ें और फिर से टेस्ट दें।<br><i>Don\'t be disheartened! A little more practice and you will succeed. Revise and retake the test.</i>';
+  const color = passed ? '#1e7e46' : '#b03a2e', bg = passed ? '#e6f7ee' : '#fdecea';
+  return `<div style="font-family:Segoe UI,Arial,sans-serif;max-width:600px;margin:auto;border:1px solid #dce4ec;border-radius:12px;overflow:hidden">
+<div style="background:#1e3a5f;color:#fff;text-align:center;padding:22px 16px"><div style="font-size:22px;font-weight:700">🏛️ ${esc(I.name)}</div><div style="font-size:14px;margin-top:6px;color:#d9f2e9">${esc(EXAM_TITLE)} — परिणाम / Result</div></div>
+<div style="padding:22px 20px;color:#1a1a2e;font-size:15px;line-height:1.6">
+<p>प्रिय <b>${esc(d.name)}</b> / Dear <b>${esc(d.name)}</b>,</p>
+<div style="background:${bg};border:1px solid ${color};color:${color};border-radius:10px;text-align:center;padding:14px;margin:14px 0;font-size:18px;font-weight:700">${d.correct} / ${d.total} (${d.percentage}%) — ${passed ? 'PASS ✅' : 'FAIL ❌'}</div>
+<table style="width:100%;font-size:14px;border-collapse:collapse">
+<tr><td style="padding:4px 0">🎫 Reg. No</td><td><b>${esc(d.roll)}</b></td></tr>
+<tr><td style="padding:4px 0">📅 Date</td><td><b>${esc(d.date)}</b></td></tr>
+<tr><td style="padding:4px 0">✅ सही / Correct</td><td><b>${d.correct}</b></td></tr>
+<tr><td style="padding:4px 0">❌ गलत / Wrong</td><td><b>${d.wrong}</b></td></tr>
+<tr><td style="padding:4px 0">⏭️ छोड़े / Skipped</td><td><b>${d.skipped}</b></td></tr>
+<tr><td style="padding:4px 0">⏱️ समय / Time</td><td><b>${esc(d.timeTaken)}</b></td></tr></table>
+<p style="margin-top:16px">${msg}</p></div>
+<div style="background:#f2fbf7;border-top:2px solid #00b07f;padding:18px 20px;font-size:14px;line-height:1.8;color:#1e3a5f">
+<div style="font-size:17px;font-weight:700">🏛️ ${esc(I.name)}</div>
+<div>${esc(I.tagline)}</div>
+<div>👤 <b>Director:</b> ${esc(I.director)}</div>
+<div>📞 <b>Mobile:</b> <a href="tel:${esc(I.mobile)}">${esc(I.mobile)}</a></div>
+<div>📧 <b>Email:</b> <a href="mailto:${esc(I.email)}">${esc(I.email)}</a></div>
+${I.website ? `<div>🌐 <b>Website:</b> <a href="${esc(I.website)}">${esc(I.website)}</a></div>` : ''}
+<div>📍 <b>Address:</b> ${esc(I.address)}</div>
+<div style="margin-top:10px;font-weight:700;color:#00875f">अपने दोस्तों को भी बताएं — आज ही NEXA में Admission लें! / Join NEXA today!</div></div></div>`;
+}
+
+function sendStudentEmail(d, passed) {
+  const el = document.getElementById('studentMailStatus');
+  const ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email);
+  if (!ok) { el.textContent = ''; return; }
+  if (!EMAILJS.publicKey || !EMAILJS.serviceId || !EMAILJS.templateId) { el.textContent = '⚠️ Student mail setup (EmailJS) अभी नहीं हुआ है।'; return; }
+  el.textContent = '📤 आपके ईमेल पर परिणाम भेजा जा रहा है... / Sending result to your email...';
+  fetch('https://api.emailjs.com/api/v1.0/email/send', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      service_id: EMAILJS.serviceId, template_id: EMAILJS.templateId, user_id: EMAILJS.publicKey,
+      template_params: {
+        to_email: d.email,
+        subject: `${INSTITUTE.name} | ${EXAM_TITLE} Result - ${d.name} | ${d.percentage}%`,
+        message_html: buildStudentHTML(d, passed),
+        from_name: INSTITUTE.name, reply_to: INSTITUTE.email, student_name: d.name
+      }
+    })
+  }).then(r => r.text().then(t => { if (!r.ok) throw new Error(t || r.status); }))
+    .then(() => { el.innerHTML = `✅ परिणाम आपके ईमेल <b>${esc(d.email)}</b> पर भेज दिया गया है (Spam folder भी देखें) / Result sent to your email.`; })
+    .catch(err => { console.error('EmailJS:', err); el.textContent = `⚠️ आपके ईमेल पर परिणाम नहीं जा सका (${String((err && err.message) || err)})`; });
+}
+
 function sendResultEmail() {
-  const d = examData, status = d.percentage >= 50 ? 'PASS' : 'FAIL';
+  const d = examData, passed = d.percentage >= 50, status = passed ? 'PASS' : 'FAIL';
   const subject = `Calc Exam Result - ${d.name} | ${status} | ${d.percentage}%`;
   const payload = {
     _subject: subject, _captcha: 'false', _template: 'table',
     'Student Name': d.name, 'Registration No': d.roll, 'Class Timing': d.class,
-    'Exam Date': d.date, 'Exam Center': d.center,
+    'Exam Date': d.date, 'Exam Center': d.center, 'Student Email': d.email,
     'Score': `${d.correct} / ${d.total}`, 'Percentage': d.percentage + '%', 'Status': status,
     'Correct': d.correct, 'Wrong': d.wrong, 'Skipped': d.skipped, 'Time Taken': d.timeTaken
   };
-  const studentOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email) && d.email.toLowerCase() !== EMAIL_TO.toLowerCase();
-  if (studentOk) {
-    const I = INSTITUTE, passed = d.percentage >= 50;
-    payload.email = d.email; // FormSubmit autoresponse is sent to this address
-    payload._autoresponse = [
-      `🏛️ ${I.name} — ${EXAM_TITLE} Result`,
-      ``,
-      `प्रिय ${d.name} / Dear ${d.name},`,
-      ``,
-      `📊 आपका परिणाम / Your Result`,
-      `Reg. No: ${d.roll} | Date: ${d.date}`,
-      `Score: ${d.correct} / ${d.total} (${d.percentage}%) — ${passed ? 'PASS ✅' : 'FAIL ❌'}`,
-      `Correct: ${d.correct} | Wrong: ${d.wrong} | Skipped: ${d.skipped} | Time: ${d.timeTaken}`,
-      ``,
-      passed
-        ? `🎉 बधाई हो! आपने बहुत अच्छा प्रदर्शन किया। CCC परीक्षा के लिए रोज़ अभ्यास करते रहें और अपने लक्ष्य की ओर बढ़ते रहें।\nCongratulations! Keep practicing daily and keep moving towards your goal.`
-        : `💪 निराश न हों! थोड़ी और मेहनत और रोज़ाना अभ्यास से आप ज़रूर सफल होंगे। गलत प्रश्नों को दोबारा पढ़ें और फिर से टेस्ट दें।\nDon't be disheartened! A little more practice and you will succeed. Revise and retake the test.`,
-      ``,
-      `━━━━━━━━━━━━━━━━━━`,
-      `🏛️ ${I.name}`,
-      `${I.tagline}`,
-      `👤 Director: ${I.director}`,
-      `📞 Mobile: ${I.mobile}`,
-      `📧 Email: ${I.email}`,
-      I.website ? `🌐 Website: ${I.website}` : null,
-      `📍 Address: ${I.address}`,
-      `━━━━━━━━━━━━━━━━━━`,
-      `अपने दोस्तों को भी बताएं — आज ही NEXA में Admission लें! / Join NEXA today!`
-    ].filter(l => l !== null).join('\n');
-  }
   const el = document.getElementById('emailStatus');
   el.textContent = '📤 परिणाम ईमेल हो रहा है... / Sending result email...';
   fetch('https://formsubmit.co/ajax/' + EMAIL_TO, {
@@ -401,12 +430,13 @@ function sendResultEmail() {
     body: JSON.stringify(payload)
   }).then(r => r.json()).then(res => {
     if (res && String(res.success) === 'false') throw new Error(res.message || 'FormSubmit error');
-    el.innerHTML = `✅ परिणाम सफलतापूर्वक ईमेल कर दिया गया: <b>${EMAIL_TO}</b>${studentOk ? ' और / and <b>' + d.email.replace(/</g, '&lt;') + '</b>' : ''} / Result emailed successfully.`;
+    el.innerHTML = `✅ परिणाम सफलतापूर्वक ईमेल कर दिया गया: <b>${EMAIL_TO}</b> / Result emailed successfully.`;
   }).catch(err => {
     console.error('FormSubmit:', err);
     const body = encodeURIComponent(`Student: ${d.name}\nReg No: ${d.roll}\nClass Timing: ${d.class}\nDate: ${d.date}\nCenter: ${d.center}\nScore: ${d.correct}/${d.total} (${d.percentage}%)\nStatus: ${status}\nTime: ${d.timeTaken}`);
-    el.innerHTML = `⚠️ ऑटो-ईमेल नहीं जा सका (${String((err && err.message) || err).replace(/</g, '&lt;')})। <a href="mailto:${EMAIL_TO}?subject=${encodeURIComponent(subject)}&body=${body}">📧 यहाँ क्लिक करके ईमेल करें / Click here to email result</a>`;
+    el.innerHTML = `⚠️ ऑटो-ईमेल नहीं जा सका (${esc((err && err.message) || err)})। <a href="mailto:${EMAIL_TO}?subject=${encodeURIComponent(subject)}&body=${body}">📧 यहाँ क्लिक करके ईमेल करें / Click here to email result</a>`;
   });
+  sendStudentEmail(d, passed);
 }
 function restartQuiz() { if (confirm('क्या आप दोबारा शुरू करना चाहते हैं? पूरी प्रगति मिट जाएगी।\nRestart? All progress will be lost.')) location.reload(); }
 function checkGate() {
