@@ -394,22 +394,23 @@ function sendResultEmail() {
   const el = document.getElementById('emailStatus');
   el.textContent = '📤 परिणाम ईमेल हो रहा है... / Sending result email...';
   let req;
+  const ac = new AbortController(), tm = setTimeout(() => ac.abort(), 20000);
   if (WEB3FORMS_KEY) {
     const w3 = { access_key: WEB3FORMS_KEY, subject: subject, from_name: INSTITUTE.name };
     Object.keys(payload).forEach(k => { if (k[0] !== '_') w3[k] = payload[k]; });
     req = fetch('https://api.web3forms.com/submit', {
-      method: 'POST',
+      method: 'POST', signal: ac.signal,
       headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
       body: JSON.stringify(w3)
     });
   } else {
     req = fetch('https://formsubmit.co/ajax/' + EMAIL_TO, {
-      method: 'POST',
+      method: 'POST', signal: ac.signal,
       headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
       body: JSON.stringify(payload)
     });
   }
-  req.then(r => r.json()).then(res => {
+  req.then(r => { clearTimeout(tm); return r.json(); }).then(res => {
     if (res && String(res.success) === 'false') throw new Error(res.message || 'Mail service error');
     el.innerHTML = `✅ परिणाम सफलतापूर्वक ईमेल कर दिया गया: <b>${EMAIL_TO}</b> / Result emailed successfully.`;
     if (usedCC) document.getElementById('studentMailStatus').innerHTML = `✅ परिणाम की copy आपके ईमेल <b>${esc(d.email)}</b> पर भी भेज दी गई है (Spam folder भी देखें) / Copy sent to your email.`;
