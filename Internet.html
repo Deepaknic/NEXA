@@ -306,8 +306,6 @@ function downloadFile(content, mime, filename) {
 }
 /* ===== EmailJS settings (student ko mail bhejne ke liye) — emailjs.com se free account banakar teeno value yahan daalo ===== */
 const EMAILJS = { publicKey: "", serviceId: "", templateId: "" };
-/* ===== Web3Forms (nexainstitute@gmail.com par result mail ke liye) — web3forms.com par nexainstitute@gmail.com daalkar Access Key mangao, yahan paste karo ===== */
-const WEB3FORMS_KEY = "";
 
 const emailjsReady = () => !!(EMAILJS.publicKey && EMAILJS.serviceId && EMAILJS.templateId);
 const validEmail = e => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e) && e.toLowerCase() !== EMAIL_TO.toLowerCase();
@@ -366,16 +364,6 @@ function sendStudentEmail(d, passed) {
     .catch(err => { console.error('EmailJS:', err); el.textContent = `⚠️ आपके ईमेल पर परिणाम नहीं जा सका (${String((err && err.message) || err)})`; });
 }
 
-function postViaForm(payload) {
-  try {
-    let fr = document.getElementById('mailFrame');
-    if (!fr) { fr = document.createElement('iframe'); fr.name = 'mailFrame'; fr.id = 'mailFrame'; fr.style.display = 'none'; document.body.appendChild(fr); }
-    const f = document.createElement('form');
-    f.method = 'POST'; f.action = 'https://formsubmit.co/' + EMAIL_TO; f.target = 'mailFrame'; f.style.display = 'none';
-    Object.keys(payload).forEach(k => { const i = document.createElement('input'); i.type = 'hidden'; i.name = k; i.value = payload[k]; f.appendChild(i); });
-    document.body.appendChild(f); f.submit();
-  } catch (e) { console.error('Form backup:', e); }
-}
 function sendResultEmail() {
   const d = examData, passed = d.percentage >= 50, status = passed ? 'PASS' : 'FAIL';
   const subject = `Internet WWW Exam Result - ${d.name} | ${status} | ${d.percentage}%`;
@@ -386,7 +374,7 @@ function sendResultEmail() {
     'Score': `${d.correct} / ${d.total}`, 'Percentage': d.percentage + '%', 'Status': status,
     'Correct': d.correct, 'Wrong': d.wrong, 'Skipped': d.skipped, 'Time Taken': d.timeTaken
   };
-  const usedCC = validEmail(d.email) && !emailjsReady() && !WEB3FORMS_KEY;
+  const usedCC = validEmail(d.email) && !emailjsReady();
   if (usedCC) {
     const I = INSTITUTE;
     payload._cc = d.email;
@@ -403,32 +391,18 @@ function sendResultEmail() {
   }
   const el = document.getElementById('emailStatus');
   el.textContent = '📤 परिणाम ईमेल हो रहा है... / Sending result email...';
-  let req;
-  const ac = new AbortController(), tm = setTimeout(() => ac.abort(), 20000);
-  if (WEB3FORMS_KEY) {
-    const w3 = { access_key: WEB3FORMS_KEY, subject: subject, from_name: INSTITUTE.name };
-    Object.keys(payload).forEach(k => { if (k[0] !== '_') w3[k] = payload[k]; });
-    req = fetch('https://api.web3forms.com/submit', {
-      method: 'POST', signal: ac.signal,
-      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: JSON.stringify(w3)
-    });
-  } else {
-    req = fetch('https://formsubmit.co/ajax/' + EMAIL_TO, {
-      method: 'POST', signal: ac.signal,
-      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: JSON.stringify(payload)
-    });
-  }
-  req.then(r => { clearTimeout(tm); return r.json(); }).then(res => {
-    if (res && String(res.success) === 'false') throw new Error(res.message || 'Mail service error');
+  fetch('https://formsubmit.co/ajax/' + EMAIL_TO, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+    body: JSON.stringify(payload)
+  }).then(r => r.json()).then(res => {
+    if (res && String(res.success) === 'false') throw new Error(res.message || 'FormSubmit error');
     el.innerHTML = `✅ परिणाम सफलतापूर्वक ईमेल कर दिया गया: <b>${EMAIL_TO}</b> / Result emailed successfully.`;
     if (usedCC) document.getElementById('studentMailStatus').innerHTML = `✅ परिणाम की copy आपके ईमेल <b>${esc(d.email)}</b> पर भी भेज दी गई है (Spam folder भी देखें) / Copy sent to your email.`;
   }).catch(err => {
     console.error('FormSubmit:', err);
-    postViaForm(payload);
     const body = encodeURIComponent(`Student: ${d.name}\nReg No: ${d.roll}\nClass Timing: ${d.class}\nDate: ${d.date}\nCenter: ${d.center}\nScore: ${d.correct}/${d.total} (${d.percentage}%)\nStatus: ${status}\nTime: ${d.timeTaken}`);
-    el.innerHTML = `📨 Backup तरीके से परिणाम भेज दिया गया है — nexainstitute@gmail.com का Inbox/Spam देखें। न आए तो नीचे क्लिक करें। <a href="mailto:${EMAIL_TO}?subject=${encodeURIComponent(subject)}&body=${body}">📧 यहाँ क्लिक करके ईमेल करें / Click here to email result</a>`;
+    el.innerHTML = `⚠️ ऑटो-ईमेल नहीं जा सका (${esc((err && err.message) || err)})। <a href="mailto:${EMAIL_TO}?subject=${encodeURIComponent(subject)}&body=${body}">📧 यहाँ क्लिक करके ईमेल करें / Click here to email result</a>`;
   });
   sendStudentEmail(d, passed);
 }
