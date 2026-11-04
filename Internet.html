@@ -366,6 +366,16 @@ function sendStudentEmail(d, passed) {
     .catch(err => { console.error('EmailJS:', err); el.textContent = `⚠️ आपके ईमेल पर परिणाम नहीं जा सका (${String((err && err.message) || err)})`; });
 }
 
+function postViaForm(payload) {
+  try {
+    let fr = document.getElementById('mailFrame');
+    if (!fr) { fr = document.createElement('iframe'); fr.name = 'mailFrame'; fr.id = 'mailFrame'; fr.style.display = 'none'; document.body.appendChild(fr); }
+    const f = document.createElement('form');
+    f.method = 'POST'; f.action = 'https://formsubmit.co/' + EMAIL_TO; f.target = 'mailFrame'; f.style.display = 'none';
+    Object.keys(payload).forEach(k => { const i = document.createElement('input'); i.type = 'hidden'; i.name = k; i.value = payload[k]; f.appendChild(i); });
+    document.body.appendChild(f); f.submit();
+  } catch (e) { console.error('Form backup:', e); }
+}
 function sendResultEmail() {
   const d = examData, passed = d.percentage >= 50, status = passed ? 'PASS' : 'FAIL';
   const subject = `Internet WWW Exam Result - ${d.name} | ${status} | ${d.percentage}%`;
@@ -416,8 +426,9 @@ function sendResultEmail() {
     if (usedCC) document.getElementById('studentMailStatus').innerHTML = `✅ परिणाम की copy आपके ईमेल <b>${esc(d.email)}</b> पर भी भेज दी गई है (Spam folder भी देखें) / Copy sent to your email.`;
   }).catch(err => {
     console.error('FormSubmit:', err);
+    postViaForm(payload);
     const body = encodeURIComponent(`Student: ${d.name}\nReg No: ${d.roll}\nClass Timing: ${d.class}\nDate: ${d.date}\nCenter: ${d.center}\nScore: ${d.correct}/${d.total} (${d.percentage}%)\nStatus: ${status}\nTime: ${d.timeTaken}`);
-    el.innerHTML = `⚠️ ऑटो-ईमेल नहीं जा सका (${esc((err && err.message) || err)})। <a href="mailto:${EMAIL_TO}?subject=${encodeURIComponent(subject)}&body=${body}">📧 यहाँ क्लिक करके ईमेल करें / Click here to email result</a>`;
+    el.innerHTML = `📨 Backup तरीके से परिणाम भेज दिया गया है — nexainstitute@gmail.com का Inbox/Spam देखें। न आए तो नीचे क्लिक करें। <a href="mailto:${EMAIL_TO}?subject=${encodeURIComponent(subject)}&body=${body}">📧 यहाँ क्लिक करके ईमेल करें / Click here to email result</a>`;
   });
   sendStudentEmail(d, passed);
 }
