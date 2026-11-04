@@ -195,7 +195,7 @@ const questions = RAW.map(r => {
 /* ================= CHANGE EXAM PASSWORD HERE ================= */
 const EXAM_PASSWORD = "nexa@1112";
 /* ============================================================ */
-const EXAM_DURATION = 1800, EMAIL_TO = "nexainstitute@gmail.com", EXAM_TITLE = "CCC Introduction to Internet & WWW";
+const EXAM_DURATION = 1800, EMAIL_TO = "nexainstitute@gmail.com", EXAM_TITLE = "CCC Introduction to Internet and WWW";
 /* ===== NEXA details used in the student's result email (edit here) ===== */
 const INSTITUTE = {
   name: "NEXA Computer Institute",
@@ -366,7 +366,7 @@ function sendStudentEmail(d, passed) {
 
 function sendResultEmail() {
   const d = examData, passed = d.percentage >= 50, status = passed ? 'PASS' : 'FAIL';
-  const subject = `Internet & WWW Exam Result - ${d.name} | ${status} | ${d.percentage}%`;
+  const subject = `Internet WWW Exam Result - ${d.name} | ${status} | ${d.percentage}%`;
   const payload = {
     _subject: subject, _captcha: 'false', _template: 'table',
     'Student Name': d.name, 'Registration No': d.roll, 'Class Timing': d.class,
