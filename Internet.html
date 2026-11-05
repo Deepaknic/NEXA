@@ -407,7 +407,7 @@ function sendResultEmail() {
 
   // pehle student CC ke saath; fail ho to bina CC ke institute ko zaroor bhejo
   const run = wantCC
-    ? post({ ...base, ...ccExtra }).then(() => true).catch(() => post(base).then(() => false))
+    ? post({ ...base, ...ccExtra }, 0).then(() => true).catch(() => post(base).then(() => false))
     : post(base).then(() => false);
 
   run.then(ccOk => {
@@ -415,7 +415,7 @@ function sendResultEmail() {
     if (wantCC) {
       document.getElementById('studentMailStatus').innerHTML = ccOk
         ? `✅ परिणाम की copy आपके ईमेल <b>${esc(d.email)}</b> पर भी भेज दी गई है (Spam folder भी देखें) / Copy sent to your email.`
-        : `⚠️ आपके ईमेल <b>${esc(d.email)}</b> पर copy नहीं जा सकी — कृपया ईमेल सही लिखा है या नहीं जाँचें।`;
+        : `ℹ️ परिणाम NEXA Institute को भेज दिया गया है। (आपके ईमेल पर copy नहीं जा सकी।)`;
     }
   }).catch(err => {
     console.error('FormSubmit:', err);
