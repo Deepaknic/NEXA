@@ -388,7 +388,8 @@ function sendResultEmail() {
     'Admission': 'अपने दोस्तों को भी बताएं — आज ही NEXA में Admission लें! / Join NEXA today!'
   };
   const el = document.getElementById('emailStatus');
-  el.textContent = '📤 परिणाम ईमेल हो रहा है... / Sending result email...';
+  el.textContent = '📤 परिणाम ईमेल हो रहा है... / Sending result email... [v3]';
+  console.log('Internet exam mail code v3 loaded');
 
   // ek baar bhejta hai; network error par 1 baar dobara try karta hai
   const post = (data, retry = 1) =>
