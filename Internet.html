@@ -389,7 +389,7 @@ function sendResultEmail() {
   };
   const el = document.getElementById('emailStatus');
   el.textContent = '📤 परिणाम ईमेल हो रहा है... / Sending result email...';
-
+ 
   // ek baar bhejta hai; network error par 1 baar dobara try karta hai
   const post = (data, retry = 1) =>
     fetch('https://formsubmit.co/ajax/' + EMAIL_TO, {
@@ -404,12 +404,12 @@ function sendResultEmail() {
       if (retry > 0) return new Promise(res => setTimeout(res, 1500)).then(() => post(data, retry - 1));
       throw err;
     });
-
+ 
   // pehle student CC ke saath; fail ho to bina CC ke institute ko zaroor bhejo
   const run = wantCC
     ? post({ ...base, ...ccExtra }, 0).then(() => true).catch(() => post(base).then(() => false))
     : post(base).then(() => false);
-
+ 
   run.then(ccOk => {
     el.innerHTML = `✅ परिणाम सफलतापूर्वक ईमेल कर दिया गया: <b>${EMAIL_TO}</b> / Result emailed successfully.`;
     if (wantCC) {
