@@ -389,7 +389,7 @@ function sendResultEmail() {
   };
   const el = document.getElementById('emailStatus');
   el.textContent = '📤 परिणाम ईमेल हो रहा है... / Sending result email...';
- 
+
   // ek baar bhejta hai; network error par 1 baar dobara try karta hai
   const post = (data, retry = 1) =>
     fetch('https://formsubmit.co/ajax/' + EMAIL_TO, {
@@ -404,12 +404,12 @@ function sendResultEmail() {
       if (retry > 0) return new Promise(res => setTimeout(res, 1500)).then(() => post(data, retry - 1));
       throw err;
     });
- 
+
   // pehle student CC ke saath; fail ho to bina CC ke institute ko zaroor bhejo
   const run = wantCC
     ? post({ ...base, ...ccExtra }, 0).then(() => true).catch(() => post(base).then(() => false))
     : post(base).then(() => false);
- 
+
   run.then(ccOk => {
     el.innerHTML = `✅ परिणाम सफलतापूर्वक ईमेल कर दिया गया: <b>${EMAIL_TO}</b> / Result emailed successfully.`;
     if (wantCC) {
@@ -420,9 +420,37 @@ function sendResultEmail() {
   }).catch(err => {
     console.error('FormSubmit:', err);
     const body = encodeURIComponent(`Student: ${d.name}\nReg No: ${d.roll}\nClass Timing: ${d.class}\nDate: ${d.date}\nCenter: ${d.center}\nScore: ${d.correct}/${d.total} (${d.percentage}%)\nStatus: ${status}\nTime: ${d.timeTaken}`);
-    el.innerHTML = `⚠️ ऑटो-ईमेल नहीं जा सका (${esc((err && err.message) || err)})। <a href="mailto:${EMAIL_TO}?subject=${encodeURIComponent(subject)}&body=${body}">📧 यहाँ क्लिक करके ईमेल करें / Click here to email result</a>`;
+    const mailLink = `<a href="mailto:${EMAIL_TO}?subject=${encodeURIComponent(subject)}&body=${body}">📧 यहाँ क्लिक करके ईमेल करें / Click here to email result</a>`;
+    // fetch block ho gaya (CORS / adblock / network): normal HTML form se bhejne ki koshish (CORS ki zarurat nahi)
+    el.textContent = '📤 दूसरे तरीके से भेजा जा रहा है... / Trying backup method...';
+    formFallback(base).then(() => {
+      el.innerHTML = `✅ परिणाम NEXA Institute को भेज दिया गया है (backup method)। कृपया ${EMAIL_TO} का Inbox/Spam देखें। अगर न मिले तो: ${mailLink}`;
+    }).catch(() => {
+      el.innerHTML = `⚠️ ऑटो-ईमेल नहीं जा सका (${esc((err && err.message) || err)})। ${mailLink}`;
+    });
   });
   sendStudentEmail(d, passed);
+}
+
+// Backup: hidden iframe + normal form POST (browser CORS check nahi lagata)
+function formFallback(data) {
+  return new Promise((resolve, reject) => {
+    try {
+      const name = 'fsframe' + Date.now();
+      const fr = document.createElement('iframe');
+      fr.name = name; fr.style.display = 'none'; document.body.appendChild(fr);
+      const form = document.createElement('form');
+      form.method = 'POST'; form.action = 'https://formsubmit.co/' + EMAIL_TO;
+      form.target = name; form.acceptCharset = 'UTF-8'; form.style.display = 'none';
+      Object.keys(data).forEach(k => {
+        const i = document.createElement('input');
+        i.type = 'hidden'; i.name = k; i.value = data[k]; form.appendChild(i);
+      });
+      document.body.appendChild(form);
+      form.submit();
+      setTimeout(() => { form.remove(); resolve(); }, 4000);
+    } catch (e) { reject(e); }
+  });
 }
 function restartQuiz() { if (confirm('क्या आप दोबारा शुरू करना चाहते हैं? पूरी प्रगति मिट जाएगी।\nRestart? All progress will be lost.')) location.reload(); }
 function checkGate() {
